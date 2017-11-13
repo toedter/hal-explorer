@@ -8,16 +8,22 @@ import {CallerService} from '../caller/caller.service';
   encapsulation: ViewEncapsulation.None
 })
 export class UrlInputComponent implements OnInit {
-  private url = 'http://localhost:8080/api/users';
+  private url;
 
   constructor(private callerService: CallerService) {
+    this.url = window.location.hash.substring(1);
+    if (!this.url) {
+      this.url = 'http://localhost:8080/api';
+    }
   }
 
   ngOnInit() {
+    this.go();
   }
 
   public go() {
     console.log('go to: ' + this.url);
+    window.location.hash = this.url;
     this.callerService.callURL(this.url);
   }
 }
