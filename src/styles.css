@@ -1,0 +1,9 @@
+/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/bootstrap/dist/css/cosmo.min.css";
+
+pre {padding: 5px; margin: 5px; }
+.string { color: #1e9a18; }
+.number { color: darkorange; }
+.boolean { color: #326e86; }
+.null { color: magenta; }
+.hal { color: #e4720f; }
