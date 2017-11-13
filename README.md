@@ -1,4 +1,10 @@
-# HalB
+# Hal-Explorer
+
+An API Explorer for HAL based REST APIs.
+Inspired by Mike Kelly's Hal-Browser, see https://github.com/mikekelly/hal-browser
+
+This project is in a very early stage, stay tuned...
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
 
