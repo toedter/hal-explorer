@@ -13,7 +13,8 @@ export class ResponseExplorerComponent implements OnInit {
   private properties: string;
   private links: Link[];
 
-  constructor(private callerService: CallerService, private jsonHighlighterService: JsonHighlighterService) {
+  constructor(private callerService: CallerService,
+              private jsonHighlighterService: JsonHighlighterService) {
   }
 
   ngOnInit() {
@@ -39,9 +40,14 @@ export class ResponseExplorerComponent implements OnInit {
         },
         error => console.error('ResponseBodyComponent: ' + error));
   }
+
+  public followLink(link: string) {
+    console.log('link: ' + link);
+    window.location.hash = link;
+  }
 }
 
 class Link {
-  constructor(private rel: string, private title: string) {
+  constructor(private rel: string, private href: string) {
   }
 }

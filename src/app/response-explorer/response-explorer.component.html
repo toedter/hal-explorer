@@ -5,17 +5,12 @@
         <h4>Properties</h4>
       </div>
 
-      <div class="bs-component">
-        <table class="table table-striped table-sm">
-          <tbody>
-          <tr>
-            <td><pre [innerHTML]="properties">></pre></td>
-          </tr>
-          </tbody>
-        </table>
+      <div class="card info">
+        <div class="card-text">
+          <pre [innerHTML]="properties">></pre>
+        </div>
       </div>
-
-
+      <br>
       <div class="legend">
         <h4>Links</h4>
       </div>
@@ -25,7 +20,7 @@
           <tbody>
           <tr *ngFor="let link of links">
             <td>{{link.rel}}</td>
-            <td>{{link.title}}</td>
+            <td (click)="followLink(link.href)">{{link.href}}</td>
           </tr>
           </tbody>
         </table>

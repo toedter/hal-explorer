@@ -19,10 +19,12 @@ export class CallerService {
   }
 
   public callURL(url: string) {
+    console.log('calling: ' + url);
     const myHeaders: HttpHeaders = new HttpHeaders(
       {
         'Accept': 'application/hal+json, application/json, */*'
       });
+
     this.http.get(url, {headers: myHeaders, observe: 'response'}).subscribe(
       (response: HttpResponse<any>) => {
         console.log(response);
@@ -30,7 +32,7 @@ export class CallerService {
         this.responseSubject.next(response);
       },
       err => {
-        console.log('Error occured.');
+        console.log('Error occured:' + err.toString());
       }
     );
   }
