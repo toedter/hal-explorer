@@ -25,6 +25,10 @@ export class CallerService {
         'Accept': 'application/hal+json, application/json, */*'
       });
 
+    if (url.includes('{')) {
+      url = url.substring(0, url.indexOf('{'));
+    }
+
     this.http.get(url, {headers: myHeaders, observe: 'response'}).subscribe(
       (response: HttpResponse<any>) => {
         console.log(response);

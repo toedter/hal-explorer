@@ -12,6 +12,7 @@ import {JsonHighlighterService} from '../json-highlighter/json-highlighter.servi
 export class ResponseExplorerComponent implements OnInit {
   private properties: string;
   private links: Link[];
+  private embedded: EmbeddedRessource[];
 
   constructor(private callerService: CallerService,
               private jsonHighlighterService: JsonHighlighterService) {
@@ -29,11 +30,19 @@ export class ResponseExplorerComponent implements OnInit {
           const links = response.body._links;
           this.links = new Array(0);
           if (links) {
-
             Object.getOwnPropertyNames(links).forEach(
               (val: string, index: number, array) => {
-                console.log(val + ' -> ' + links[val]);
                 this.links.push(new Link(val, links[val].href));
+              }
+            );
+          }
+
+          const embedded = response.body._embedded;
+          this.embedded = new Array(0);
+          if (embedded) {
+            Object.getOwnPropertyNames(embedded).forEach(
+              (val: string, index: number, array) => {
+                this.embedded.push(new EmbeddedRessource(val, embedded[val]));
               }
             );
           }
@@ -49,5 +58,10 @@ export class ResponseExplorerComponent implements OnInit {
 
 class Link {
   constructor(private rel: string, private href: string) {
+  }
+}
+
+class EmbeddedRessource {
+  constructor(private name: string, private content: string) {
   }
 }
