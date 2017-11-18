@@ -19,7 +19,6 @@ export class CallerService {
   }
 
   public callURL(url: string) {
-    console.log('calling: ' + url);
     const myHeaders: HttpHeaders = new HttpHeaders(
       {
         'Accept': 'application/hal+json, application/json, */*'
@@ -31,7 +30,6 @@ export class CallerService {
 
     this.http.get(url, {headers: myHeaders, observe: 'response'}).subscribe(
       (response: HttpResponse<any>) => {
-        console.log(response);
         this.httpResponse = response;
         this.responseSubject.next(response);
       },

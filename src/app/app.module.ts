@@ -2,7 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {UrlInputComponent} from './url-input/url-input.component';
-import {ResponseBodyComponent} from './response-body/response-body.component';
+import {ResponseBodyComponent} from './response-details/response-details.component';
 import {CallerService} from './caller/caller.service';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';

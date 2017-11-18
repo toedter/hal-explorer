@@ -5,8 +5,8 @@ import {JsonHighlighterService} from '../json-highlighter/json-highlighter.servi
 
 @Component({
   selector: 'app-response-body',
-  templateUrl: './response-body.component.html',
-  styleUrls: ['./response-body.component.css'],
+  templateUrl: './response-details.component.html',
+  styleUrls: ['./response-details.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class ResponseBodyComponent implements OnInit {
@@ -29,7 +29,6 @@ export class ResponseBodyComponent implements OnInit {
           this.responseHeaders = new Array(responseHeaderKeys.length);
           for (const i in responseHeaderKeys) {
             const key: string = responseHeaderKeys[i];
-            console.log('key: ' + key);
             const responseHeader: ResponseHeader = new ResponseHeader(key, response.headers.get(key));
             this.responseHeaders[i] = responseHeader;
           }

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ResponseBodyComponent } from './response-body.component';
+import { ResponseBodyComponent } from './response-details.component';
 
 describe('ResponseBodyComponent', () => {
   let component: ResponseBodyComponent;

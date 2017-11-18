@@ -24,14 +24,12 @@ export class UrlInputComponent implements OnInit {
   }
 
   public go() {
-    console.log('go to: ' + this.url);
     this.callerService.callURL(this.url);
     window.location.hash = this.url;
   }
 
   public goFromHashChange() {
     this.url = window.location.hash.substring(1);
-    console.log('go after hash change to: ' + this.url);
     this.callerService.callURL(this.url);
   }
 
