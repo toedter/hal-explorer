@@ -10,10 +10,10 @@ import {JsonHighlighterService} from '../json-highlighter/json-highlighter.servi
   encapsulation: ViewEncapsulation.None
 })
 export class ResponseBodyComponent implements OnInit {
-  private responseBody: string;
-  private responseHeaders: ResponseHeader[];
-  private responseStatus: number;
-  private responseStatusText: string;
+  responseBody: string;
+  responseHeaders: ResponseHeader[];
+  responseStatus: number;
+  responseStatusText: string;
 
   constructor(private callerService: CallerService, private jsonHighlighterService: JsonHighlighterService) {
   }

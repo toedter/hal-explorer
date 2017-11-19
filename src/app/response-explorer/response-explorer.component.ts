@@ -17,9 +17,9 @@ export class ResponseExplorerComponent implements OnInit {
   private links: Link[];
   private embedded: EmbeddedRessource[];
 
-  private showProperties: boolean;
-  private showLinks: boolean;
-  private showEmbedded: boolean;
+  showProperties: boolean;
+  showLinks: boolean;
+  showEmbedded: boolean;
 
   constructor(private callerService: CallerService,
               private jsonHighlighterService: JsonHighlighterService) {

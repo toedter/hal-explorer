@@ -8,7 +8,7 @@ import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  private themes: string[] = [
+  themes: string[] = [
     'Default',
     'Cerulean',
     'Cosmo',
@@ -33,8 +33,8 @@ export class AppComponent {
     'Yeti'
   ];
 
-  private isCustomTheme = false;
-  private selectedThemeUrl: SafeResourceUrl;
+  isCustomTheme = false;
+  selectedThemeUrl: SafeResourceUrl;
 
   constructor(private sanitizer: DomSanitizer) {
   };

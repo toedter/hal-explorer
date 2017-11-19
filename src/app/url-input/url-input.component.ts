@@ -8,7 +8,7 @@ import {CallerService} from '../caller/caller.service';
   encapsulation: ViewEncapsulation.None
 })
 export class UrlInputComponent implements OnInit {
-  private url;
+  url;
 
   constructor(private callerService: CallerService) {
     this.url = window.location.hash.substring(1);
