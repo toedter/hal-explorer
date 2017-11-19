@@ -11,11 +11,18 @@ export class CallerService {
   private responseSubject: Subject<HttpResponse<any>> = new Subject<HttpResponse<any>>();
   private responseObservable: Observable<HttpResponse<any>> = this.responseSubject.asObservable();
 
+  private needInfoSubject: Subject<string> = new Subject<string>();
+  private needInfoObservable: Observable<string> = this.needInfoSubject.asObservable();
+
   constructor(private http: HttpClient) {
   }
 
-  public getResponse(): Observable<HttpResponse<any>> {
+  public getResponseObservable(): Observable<HttpResponse<any>> {
     return this.responseObservable;
+  }
+
+  public getNeedInfoObservable(): Observable<string> {
+    return this.needInfoObservable;
   }
 
   public callURL(url: string) {
@@ -26,10 +33,13 @@ export class CallerService {
 
     if (url.includes('{')) {
       url = url.substring(0, url.indexOf('{'));
+      this.needInfoSubject.next(url);
+      return;
     }
 
     this.http.get(url, {headers: myHeaders, observe: 'response'}).subscribe(
       (response: HttpResponse<any>) => {
+        window.location.hash = url;
         this.httpResponse = response;
         this.responseSubject.next(response);
       },

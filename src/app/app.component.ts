@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -36,8 +35,7 @@ export class AppComponent {
   isCustomTheme = false;
   selectedThemeUrl: SafeResourceUrl;
 
-  constructor(private sanitizer: DomSanitizer) {
-  };
+  constructor(private sanitizer: DomSanitizer) {}
 
   changeTheme(theme: string) {
     if (theme === this.themes[0]) {

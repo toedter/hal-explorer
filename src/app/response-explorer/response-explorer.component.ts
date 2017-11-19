@@ -29,7 +29,7 @@ export class ResponseExplorerComponent implements OnInit {
     if (this.jsonRoot) {
       this.processJsonObject(this.jsonRoot);
     } else {
-      this.callerService.getResponse()
+      this.callerService.getResponseObservable()
         .subscribe((response: HttpResponse<any>) => {
             const json = Object.assign({}, response.body);
             this.processJsonObject(json);
@@ -91,7 +91,7 @@ export class ResponseExplorerComponent implements OnInit {
   }
 
   public followLink(link: string) {
-    window.location.hash = link;
+    this.callerService.callURL(link);
   }
 }
 

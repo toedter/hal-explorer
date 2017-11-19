@@ -19,7 +19,7 @@ export class ResponseBodyComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.callerService.getResponse()
+    this.callerService.getResponseObservable()
       .subscribe((response: HttpResponse<any>) => {
           this.responseStatus = response.status;
           this.responseStatusText = response.statusText;
