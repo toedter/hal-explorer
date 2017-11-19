@@ -2,8 +2,8 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 pre {padding: 5px; margin: 5px; color: inherit !important}
-.string { color: var(--success); }
-.number { color: var(--info); }
-.boolean { color: var(--primary);}
-.null { color: var(--danger); }
-.hal { color: var(--warning); }
+.string { color: var(--success, #1e9a18); }
+.number { color: var(--info, darkorange); }
+.boolean { color: var(--primary, #326e86);}
+.null { color: var(--danger, magenta); }
+.hal { color: var(--warning, #e4720f); }
