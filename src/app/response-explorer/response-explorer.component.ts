@@ -43,8 +43,6 @@ export class ResponseExplorerComponent implements OnInit {
       this.prefix = '';
     }
 
-    console.log('prefix= ' + this.prefix);
-
     this.showProperties = false;
     this.showLinks = false;
     this.showEmbedded = false;
