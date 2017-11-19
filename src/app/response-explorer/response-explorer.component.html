@@ -21,10 +21,23 @@
 
         <div class="bs-component">
           <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+              <th scope="col">Relation</th>
+              <th scope="col">Name</th>
+              <th scope="col">Title</th>
+              <th scope="col">HTTP</th>
+              <th scope="col">
+                <div class='text-right'>Docu.</div>
+              </th>
+            </tr>
+            </thead>
             <tbody>
             <tr *ngFor="let link of links">
               <td>{{link.rel}}</td>
-              <td align="right">
+              <td>{{link.name}}</td>
+              <td>{{link.title}}</td>
+              <td>
                 <button class="btn btn-outline-success btn-sm" (click)="followLink(link.href)">GET</button>
                 <button class="btn btn-outline-info btn-sm" (click)="followLink(link.href)">POST</button>
                 <button class="btn btn-outline-warning btn-sm" (click)="followLink(link.href)">PUT</button>
@@ -47,25 +60,36 @@
         </div>
 
         <div>
-          <div class="card" *ngFor="let embeddedResource of embedded; let a = index" [attr.id]="'accordion_' + a">
+          <div class="card" *ngFor="let embeddedResource of embedded; let i1 = index" [attr.id]="prefix + 'item_' + i1">
             <div class="card-header">
-              <a data-toggle="collapse" [attr.data-parent]="'#accordion_' + a" [attr.href]="'#embedded-type_' + a">
+              <a data-toggle="collapse" [attr.data-parent]="'#' + prefix + 'item_' + i1"
+                 [attr.href]="'#' + prefix + 'embedded_' + i1">
                 <h5>{{embeddedResource.name}}</h5></a>
             </div>
-            <div [attr.id]="'embedded-type_' + a" class="panel-collapse collapse">
-              <div class="card" *ngFor="let subEmbeddedResource of embeddedResource.content; let i = index"
-                   [attr.id]="'accordion_' + a + '_' + i">
+
+            <div *ngIf="embeddedResource.isArray" [attr.id]="prefix + 'embedded_' + i1" class="collapse show">
+              <div class="card collapse" *ngFor="let subEmbeddedResource of embeddedResource.content; let i2 = index"
+                   [attr.id]="prefix + 'item_' + i1 + '_' + i2">
                 <div class="card-header">
-                  <a data-toggle="collapse" [attr.data-parent]="'#accordion_' + a + '_' + i"
-                     [attr.href]="'#embedded_object_' + i">{{embeddedResource.name}}[{{i}}]</a>
+                  <a data-toggle="collapse" [attr.data-parent]="'#' + prefix + 'item_' + i1 + '_' + i2"
+                     [attr.href]="'#' + prefix + 'embedded_object_' + i2">{{embeddedResource.name}} [{{i2}}]</a>
                 </div>
-                <div [attr.id]="'embedded_object_' + i" class="collapse">
+                <div [attr.id]="prefix + 'embedded_object_' + i2" class="collapse">
                   <div class="card-body">
-                    <app-response-explorer [jsonRoot]="subEmbeddedResource"></app-response-explorer>
+                    <app-response-explorer [jsonRoot]="subEmbeddedResource"
+                                           [prefix]="prefix + 'x_'"></app-response-explorer>
                   </div>
                 </div>
               </div>
             </div>
+
+            <div *ngIf="!embeddedResource.isArray" [attr.id]="prefix + 'embedded_' + i1" class="collapse">
+              <div class="card-body">
+                <app-response-explorer [jsonRoot]="embeddedResource.content"
+                                       [prefix]="prefix + 'x_'"></app-response-explorer>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

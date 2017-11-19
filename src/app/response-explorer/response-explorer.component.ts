@@ -11,6 +11,7 @@ import {JsonHighlighterService} from '../json-highlighter/json-highlighter.servi
 })
 export class ResponseExplorerComponent implements OnInit {
   @Input() private jsonRoot: any;
+  @Input() private prefix;
 
   private properties: string;
   private links: Link[];
@@ -38,6 +39,12 @@ export class ResponseExplorerComponent implements OnInit {
   }
 
   private processJsonObject(json: any) {
+    if (!this.prefix) {
+      this.prefix = '';
+    }
+
+    console.log('prefix= ' + this.prefix);
+
     this.showProperties = false;
     this.showLinks = false;
     this.showEmbedded = false;
@@ -60,8 +67,15 @@ export class ResponseExplorerComponent implements OnInit {
     if (links) {
       this.showLinks = true;
       Object.getOwnPropertyNames(links).forEach(
-        (val: string, index: number, array) => {
-          this.links.push(new Link(val, links[val].href));
+        (val: string, index: number, array: string[]) => {
+          if (links[val] instanceof Array) {
+            links[val].forEach(
+              (entry: Link, i: number) => {
+                this.links.push(new Link(val + ' [' + i + ']', entry.href, entry.title, entry.name));
+              });
+          } else {
+            this.links.push(new Link(val, links[val].href, links[val].title, links[val].name));
+          }
         }
       );
     }
@@ -72,7 +86,7 @@ export class ResponseExplorerComponent implements OnInit {
       this.showEmbedded = true;
       Object.getOwnPropertyNames(embedded).forEach(
         (val: string, index: number, array) => {
-          this.embedded.push(new EmbeddedRessource(val, embedded[val]));
+          this.embedded.push(new EmbeddedRessource(val, embedded[val], embedded[val] instanceof Array));
         }
       );
     }
@@ -84,11 +98,11 @@ export class ResponseExplorerComponent implements OnInit {
 }
 
 class Link {
-  constructor(private rel: string, private href: string) {
+  constructor(public rel: string, public href: string, public title: string, public name: string) {
   }
 }
 
 class EmbeddedRessource {
-  constructor(private name: string, private content: any) {
+  constructor(public name: string, public content: any, public isArray: boolean) {
   }
 }
