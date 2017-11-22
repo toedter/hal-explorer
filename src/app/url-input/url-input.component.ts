@@ -53,9 +53,11 @@ export class UrlInputComponent implements OnInit {
     console.log('input changed');
     const templatedUrl = this.urlTemplateEvent.templatedUrl;
     this.newRequestUrl = templatedUrl.substring(0, templatedUrl.indexOf('{'));
+    let separator = '?';
     for (const parameter of this.urlTemplateEvent.parameters) {
       if (parameter.value.length > 0) {
-        this.newRequestUrl =  this.newRequestUrl + '?' + parameter.key + '=' + parameter.value;
+        this.newRequestUrl =  this.newRequestUrl + separator + parameter.key + '=' + parameter.value;
+        separator = '&';
       }
     }
   }

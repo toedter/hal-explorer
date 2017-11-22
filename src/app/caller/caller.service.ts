@@ -4,6 +4,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
+import {URITemplate} from 'uri-templates';
+import * as utpl from 'uri-templates';
 
 export enum EventType { NeedUrlTemplate}
 
@@ -35,8 +37,13 @@ export class CallerService {
       });
 
     if (url.includes('{')) {
-      const event = new UrlTemplateEvent(EventType.NeedUrlTemplate,
-        url, [new UrlTemplateParameter('page', '0'), new UrlTemplateParameter('size', '20')]);
+      const uriTemplate: URITemplate = utpl(url);
+      const uriTemplateParameters: UrlTemplateParameter[] = new Array();
+      for (const param of (<any>uriTemplate).varNames) {
+        uriTemplateParameters.push(new UrlTemplateParameter(param, ''));
+      }
+
+      const event = new UrlTemplateEvent(EventType.NeedUrlTemplate, url, uriTemplateParameters);
       this.needInfoSubject.next(event);
       return;
     }
