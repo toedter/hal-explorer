@@ -5,14 +5,17 @@ import 'rxjs/add/operator/catch';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 
+export enum EventType { NeedUrlTemplate}
+
 @Injectable()
 export class CallerService {
+
   private httpResponse: HttpResponse<any>;
   private responseSubject: Subject<HttpResponse<any>> = new Subject<HttpResponse<any>>();
   private responseObservable: Observable<HttpResponse<any>> = this.responseSubject.asObservable();
 
-  private needInfoSubject: Subject<string> = new Subject<string>();
-  private needInfoObservable: Observable<string> = this.needInfoSubject.asObservable();
+  private needInfoSubject: Subject<any> = new Subject<any>();
+  private needInfoObservable: Observable<any> = this.needInfoSubject.asObservable();
 
   constructor(private http: HttpClient) {
   }
@@ -32,8 +35,9 @@ export class CallerService {
       });
 
     if (url.includes('{')) {
-      url = url.substring(0, url.indexOf('{'));
-      this.needInfoSubject.next(url);
+      const event = new UrlTemplateEvent(EventType.NeedUrlTemplate,
+        url, [new UrlTemplateParameter('page', '0'), new UrlTemplateParameter('size', '20')]);
+      this.needInfoSubject.next(event);
       return;
     }
 
@@ -47,5 +51,15 @@ export class CallerService {
         console.log('Error occured:' + err.toString());
       }
     );
+  }
+}
+
+export class UrlTemplateEvent {
+  constructor(public type: EventType, public templatedUrl, public parameters: UrlTemplateParameter[]) {
+  }
+}
+
+export class UrlTemplateParameter {
+  constructor(public key: string, public value: string) {
   }
 }

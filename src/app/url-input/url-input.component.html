@@ -23,6 +23,10 @@
 
 <div id="requestModalTrigger" data-toggle="modal" data-target="#requestInputModal"></div>
 
+<!--
+<div *ngIf="urlTemplateEvent">
+-->
+
 <div class="modal fade" id="requestInputModal" role="dialog" aria-labelledby="requestInputModalLabel"
      aria-hidden="false">
   <div class="modal-dialog" role="document">
@@ -35,19 +39,25 @@
       </div>
       <div class="modal-body">
         <div class="bs-component">
-          <table class="table table-striped table-sm">
-            <tr>
-              <td>URL:</td>
-              <td>{{newRequestUrl}}</td>
+
+          <pre>{{urlTemplateEvent.templatedUrl}}</pre>
+
+          <table class="table table-sm">
+            <tbody>
+            <tr *ngFor="let parameter of urlTemplateEvent.parameters">
+              <td>{{parameter.key}}</td>
+              <td><input [ngModel]="parameter.value" (keypress)="inputChanged()"></td>
             </tr>
+            </tbody>
           </table>
+
+          <pre>{{newRequestUrl}}</pre>
+
         </div>
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="goToNew()">Go!</button>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="goToNew()">Go!</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-

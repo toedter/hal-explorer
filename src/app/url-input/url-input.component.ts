@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CallerService} from '../caller/caller.service';
+import {CallerService, EventType, UrlTemplateEvent, UrlTemplateParameter} from '../caller/caller.service';
 import * as $ from 'jquery';
 
 @Component({
@@ -9,6 +9,7 @@ import * as $ from 'jquery';
 })
 export class UrlInputComponent implements OnInit {
   url: string;
+  urlTemplateEvent: UrlTemplateEvent = new UrlTemplateEvent(EventType.NeedUrlTemplate, '', []);
   newRequestUrl: string;
 
   constructor(private callerService: CallerService) {
@@ -22,10 +23,14 @@ export class UrlInputComponent implements OnInit {
     }
     window.addEventListener('hashchange', () => this.goFromHashChange(), false);
 
-    this.callerService.getNeedInfoObservable().subscribe((value: string) => {
+    this.callerService.getNeedInfoObservable().subscribe((value: any) => {
       console.log('Got caller service notification: ' + value);
-      this.newRequestUrl = value;
-      $('#requestModalTrigger').click();
+      if (value.type === EventType.NeedUrlTemplate) {
+        const event: UrlTemplateEvent = <UrlTemplateEvent>value;
+        this.urlTemplateEvent = event;
+        this.inputChanged();
+        $('#requestModalTrigger').click();
+      }
     });
 
     this.go();
@@ -44,4 +49,14 @@ export class UrlInputComponent implements OnInit {
     this.callerService.callURL(this.url);
   }
 
+  public inputChanged() {
+    console.log('input changed');
+    const templatedUrl = this.urlTemplateEvent.templatedUrl;
+    this.newRequestUrl = templatedUrl.substring(0, templatedUrl.indexOf('{'));
+    for (const parameter of this.urlTemplateEvent.parameters) {
+      if (parameter.value.length > 0) {
+        this.newRequestUrl =  this.newRequestUrl + '?' + parameter.key + '=' + parameter.value;
+      }
+    }
+  }
 }
