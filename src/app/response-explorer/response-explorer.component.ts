@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {HttpResponse} from '@angular/common/http';
-import {CallerService} from '../caller/caller.service';
+import {Command, RequestService} from '../request/request.service';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
 
 @Component({
@@ -21,7 +21,9 @@ export class ResponseExplorerComponent implements OnInit {
   showLinks: boolean;
   showEmbedded: boolean;
 
-  constructor(private callerService: CallerService,
+  private command = Command;
+
+  constructor(private requestService: RequestService,
               private jsonHighlighterService: JsonHighlighterService) {
   }
 
@@ -29,7 +31,7 @@ export class ResponseExplorerComponent implements OnInit {
     if (this.jsonRoot) {
       this.processJsonObject(this.jsonRoot);
     } else {
-      this.callerService.getResponseObservable()
+      this.requestService.getResponseObservable()
         .subscribe((response: HttpResponse<any>) => {
             const json = Object.assign({}, response.body);
             this.processJsonObject(json);
@@ -90,8 +92,8 @@ export class ResponseExplorerComponent implements OnInit {
     }
   }
 
-  public followLink(link: string) {
-    this.callerService.callURL(link);
+  public processCommand(command: Command, link: string) {
+    this.requestService.processCommand(command, link);
   }
 }
 

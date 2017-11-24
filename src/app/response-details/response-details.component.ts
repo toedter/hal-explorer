@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {CallerService} from '../caller/caller.service';
+import {RequestService} from '../request/request.service';
 import {HttpHeaders, HttpResponse} from '@angular/common/http';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
 
@@ -15,11 +15,11 @@ export class ResponseBodyComponent implements OnInit {
   responseStatus: number;
   responseStatusText: string;
 
-  constructor(private callerService: CallerService, private jsonHighlighterService: JsonHighlighterService) {
+  constructor(private requestService: RequestService, private jsonHighlighterService: JsonHighlighterService) {
   }
 
   ngOnInit() {
-    this.callerService.getResponseObservable()
+    this.requestService.getResponseObservable()
       .subscribe((response: HttpResponse<any>) => {
           this.responseStatus = response.status;
           this.responseStatusText = response.statusText;

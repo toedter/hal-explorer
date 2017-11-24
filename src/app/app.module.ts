@@ -1,9 +1,9 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
-import {UrlInputComponent} from './url-input/url-input.component';
+import {RequestComponent} from './request/request.component';
 import {ResponseBodyComponent} from './response-details/response-details.component';
-import {CallerService} from './caller/caller.service';
+import {RequestService} from './request/request.service';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {JsonHighlighterService} from './json-highlighter/json-highlighter.service';
@@ -13,7 +13,7 @@ import {DocumentationComponent} from './documentation/documentation.component';
 @NgModule({
   declarations: [
     AppComponent,
-    UrlInputComponent,
+    RequestComponent,
     ResponseBodyComponent,
     ResponseExplorerComponent,
     DocumentationComponent
@@ -21,7 +21,7 @@ import {DocumentationComponent} from './documentation/documentation.component';
   imports: [
     BrowserModule, FormsModule, HttpClientModule
   ],
-  providers: [CallerService, JsonHighlighterService],
+  providers: [RequestService, JsonHighlighterService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

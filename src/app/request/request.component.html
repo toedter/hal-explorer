@@ -1,0 +1,95 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="page-header">
+        <h3>Explorer</h3>
+      </div>
+
+      <div class="legend">
+        <h4>Enter URL</h4>
+      </div>
+
+      <form (ngSubmit)="getUri()">
+        <div class="input-group">
+          <input [(ngModel)]="uri" type="url" class="form-control" id="InputApiUrl"
+                 placeholder="Enter API URL" name="url">
+
+          <button type="submit" id="go" class="btn btn-primary">Go!</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="requestModalTrigger" data-toggle="modal" data-target="#requestInputModal"></div>
+
+<div class="modal fade" id="requestInputModal" role="dialog" aria-labelledby="requestInputModalLabel"
+     aria-hidden="false">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="aboutModalLabel">Template Request Input</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="uriTemplate">URI Template</label>
+            <pre class="form-control" id="uriTemplate">{{uriTemplateEvent.templatedUrl}}</pre>
+          </div>
+
+          <div class="form-group">
+            <label for="parameters">Parameters</label>
+            <div id="parameters" class="form-group row" *ngFor="let parameter of uriTemplateEvent.parameters">
+              <label class="col-sm-2 col-form-label">{{parameter.key}}</label>
+              <div class="col-sm-10">
+                <input class="form-control" [(ngModel)]="parameter.value" (keyup)="inputChanged()"
+                       name="{{parameter.key}}">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="expandedURI">Expanded URI</label>
+            <pre class="form-control" id="expandedURI">{{newRequestUrl}}</pre>
+          </div>
+        </form>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="getExpandedUri()">Go!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="HttpRequestTrigger" data-toggle="modal" data-target="#httpRequestModal"></div>
+
+<div class="modal fade" id="httpRequestModal" role="dialog" aria-hidden="false">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">HTTP Request Input</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="uri">URI</label>
+            <pre class="form-control" id="uri">{{httpRequestEvent.uri}}</pre>
+          </div>
+          <div class="form-group">
+            <label for="body">Body</label>
+            <textarea [(ngModel)]="postRequestBody" class="form-control" id="body" rows="5" name="bodyArea"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="postUri()">Go!</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
