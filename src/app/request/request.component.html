@@ -35,9 +35,11 @@
       </div>
       <div class="modal-body">
         <form>
-          <div class="form-group">
-            <label for="uriTemplate">URI Template</label>
-            <pre class="form-control" id="uriTemplate">{{uriTemplateEvent.templatedUrl}}</pre>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="uriTemplate">URI Template</label>
+            <div class="col-sm-10">
+              <div class="form-control" id="uriTemplate">{{uriTemplateEvent.templatedUrl}}</div>
+            </div>
           </div>
 
           <div class="form-group">
@@ -51,14 +53,17 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <label for="expandedURI">Expanded URI</label>
-            <pre class="form-control" id="expandedURI">{{newRequestUrl}}</pre>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="expandedURI">Expanded URI</label>
+            <div class="col-sm-10">
+              <div class="form-control" id="expandedURI">{{newRequestUrl}}</div>
+            </div>
           </div>
+
         </form>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="getExpandedUri()">Go!</button>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="getExpandedUri()">Go!</button>
       </div>
     </div>
   </div>
@@ -77,19 +82,38 @@
       </div>
       <div class="modal-body">
         <form>
-          <div class="form-group">
-            <label for="uri">URI</label>
-            <pre class="form-control" id="uri">{{httpRequestEvent.uri}}</pre>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="uri">URI</label>
+            <div class="col-sm-10">
+              <div class="form-control" id="uri">{{httpRequestEvent.uri}}</div>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="body">Body</label>
-            <textarea [(ngModel)]="postRequestBody" class="form-control" id="body" rows="5" name="bodyArea"></textarea>
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="expandedURI">HTTP Method</label>
+            <div class="col-sm-10">
+              <select class="custom-select">
+                <option selected>POST</option>
+                <option value="1">PUT</option>
+                <option value="2">PATCH</option>
+                <option value="3">DELETE</option>
+              </select>
+            </div>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="postUri()">Go!</button>
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="body">Body</label>
+            <div class="col-sm-10">
+              <textarea [(ngModel)]="postRequestBody" class="form-control" id="body" rows="5"
+                        name="bodyArea"></textarea>
+            </div>
           </div>
         </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="postUri()">Go!</button>
       </div>
     </div>
   </div>
 </div>
+

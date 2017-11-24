@@ -93,6 +93,21 @@ export class RequestService {
       this.needInfoSubject.next(event);
       return;
 
+    } else if (command === Command.Delete) {
+      if (uri.includes('{')) {
+        uri = uri.substring(0, uri.indexOf('{'));
+      }
+      this.http.delete(uri, {headers: this.defaultHeaders, observe: 'response'}).subscribe(
+        (response: HttpResponse<any>) => {
+          window.location.hash = uri;
+          this.httpResponse = response;
+          this.responseSubject.next(response);
+        },
+        err => {
+          console.log('Error occured: ' + err.message);
+        }
+      );
+
     } else {
       console.log(('got Command: ' + command));
     }
