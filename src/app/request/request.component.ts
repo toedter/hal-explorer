@@ -13,6 +13,8 @@ export class RequestComponent implements OnInit {
   httpRequestEvent: HttpRequestEvent = new HttpRequestEvent(EventType.FillHttpRequest, Command.Post, '');
   newRequestUrl: string;
   postRequestBody: string;
+  selectedHttpMethod: Command;
+  commandPlaceholder = Command;
 
   constructor(private requestService: RequestService) {
   }
@@ -26,7 +28,6 @@ export class RequestComponent implements OnInit {
     window.addEventListener('hashchange', () => this.goFromHashChange(), false);
 
     this.requestService.getNeedInfoObservable().subscribe((value: any) => {
-      console.log('Got caller service notification: ' + value);
       if (value.type === EventType.FillUriTemplate) {
         const event: UriTemplateEvent = <UriTemplateEvent>value;
         this.uriTemplateEvent = event;
@@ -36,9 +37,9 @@ export class RequestComponent implements OnInit {
         const event: HttpRequestEvent = <HttpRequestEvent>value;
         this.httpRequestEvent = event;
         this.inputChanged();
+        this.selectedHttpMethod = event.command;
         $('#HttpRequestTrigger').click();
       }
-
     });
 
     this.getUri();
@@ -52,8 +53,8 @@ export class RequestComponent implements OnInit {
     this.requestService.getUri(this.newRequestUrl);
   }
 
-  public postUri() {
-    this.requestService.postUri(this.httpRequestEvent.uri, this.postRequestBody);
+  public createOrUpdateResource() {
+      this.requestService.requestUri(this.httpRequestEvent.uri, Command[this.selectedHttpMethod], this.postRequestBody);
   }
 
   public goFromHashChange() {
@@ -62,7 +63,6 @@ export class RequestComponent implements OnInit {
   }
 
   public inputChanged() {
-    console.log('input changed');
     const templatedUrl = this.uriTemplateEvent.templatedUrl;
     this.newRequestUrl = templatedUrl.substring(0, templatedUrl.indexOf('{'));
     let separator = '?';

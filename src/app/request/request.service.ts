@@ -26,6 +26,7 @@ export class RequestService {
       'Accept': 'application/hal+json, application/json, */*'
     });
 
+
   constructor(private http: HttpClient) {
   }
 
@@ -41,26 +42,21 @@ export class RequestService {
     this.processCommand(Command.Get, uri);
   }
 
-  public postUri(uri: string, body: string) {
+  public requestUri(uri: string, httpMethod: string, body: string) {
     const jsonObjectBody = JSON.parse(body);
 
-    this.http.post(uri, jsonObjectBody, {headers: this.defaultHeaders, observe: 'response'}).subscribe(
+    this.http.request(httpMethod, uri, {headers: this.defaultHeaders, observe: 'response', body: jsonObjectBody}).subscribe(
       (response: HttpResponse<any>) => {
-        const location = response.headers.get('location');
-        if (location) {
-          window.location.hash = location;
-        }
         this.httpResponse = response;
         this.responseSubject.next(response);
       },
       err => {
-        console.log('Error occured: ' + err.message);
+        console.log('Error: ' + err.message);
       }
     );
   }
 
   public processCommand(command: Command, uri: string) {
-
     if (command === Command.Get) {
       if (uri.includes('{')) {
         const uriTemplate: URITemplate = utpl(uri);
@@ -74,7 +70,6 @@ export class RequestService {
         return;
       }
 
-
       this.http.get(uri, {headers: this.defaultHeaders, observe: 'response'}).subscribe(
         (response: HttpResponse<any>) => {
           window.location.hash = uri;
@@ -82,14 +77,14 @@ export class RequestService {
           this.responseSubject.next(response);
         },
         err => {
-          console.log('Error occured: ' + err.message);
+          console.log('Error: ' + err.message);
         }
       );
-    } else if (command === Command.Post) {
+    } else if (command === Command.Post || command === Command.Put || command === Command.Patch) {
       if (uri.includes('{')) {
         uri = uri.substring(0, uri.indexOf('{'));
       }
-      const event = new HttpRequestEvent(EventType.FillHttpRequest, Command.Post, uri);
+      const event = new HttpRequestEvent(EventType.FillHttpRequest, command, uri);
       this.needInfoSubject.next(event);
       return;
 
@@ -104,7 +99,7 @@ export class RequestService {
           this.responseSubject.next(response);
         },
         err => {
-          console.log('Error occured: ' + err.message);
+          console.log('Error: ' + err.message);
         }
       );
 

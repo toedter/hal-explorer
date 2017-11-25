@@ -92,15 +92,13 @@
           <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="expandedURI">HTTP Method</label>
             <div class="col-sm-10">
-              <select class="custom-select">
-                <option selected>POST</option>
-                <option value="1">PUT</option>
-                <option value="2">PATCH</option>
-                <option value="3">DELETE</option>
+              <select [(ngModel)]="selectedHttpMethod" class="custom-select" name="httpAction">
+                <option [value]="commandPlaceholder.Post">{{commandPlaceholder[commandPlaceholder.Post]}}</option>
+                <option [value]="commandPlaceholder.Put">{{commandPlaceholder[commandPlaceholder.Put]}}</option>
+                <option [value]="commandPlaceholder.Patch">{{commandPlaceholder[commandPlaceholder.Patch]}}</option>
               </select>
             </div>
           </div>
-
           <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="body">Body</label>
             <div class="col-sm-10">
@@ -111,7 +109,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="postUri()">Go!</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="createOrUpdateResource()">Go!</button>
       </div>
     </div>
   </div>
