@@ -38,14 +38,14 @@
               <td>{{link.name}}</td>
               <td>{{link.title}}</td>
               <td>
-                <button class="btn btn-outline-success btn-sm" (click)="processCommand(command.Get, link.href)">GET</button>
-                <button class="btn btn-outline-info btn-sm" (click)="processCommand(command.Post, link.href)">POST</button>
-                <button class="btn btn-outline-warning btn-sm" (click)="processCommand(command.Put, link.href)">PUT</button>
-                <button class="btn btn-outline-warning btn-sm" (click)="processCommand(command.Patch, link.href)">PATCH</button>
-                <button class="btn btn-outline-danger btn-sm" (click)="processCommand(command.Delete, link.href)">DEL</button>
+                <button class="btn btn-outline-success btn-sm" (click)="processCommand(command.Get, link.href)" title="GET Request"><div class="get-icon"></div></button>
+                <button class="btn btn-outline-info btn-sm" (click)="processCommand(command.Post, link.href)" title="POST Request"><div class="create-icon"></div></button>
+                <button class="btn btn-outline-warning btn-sm" (click)="processCommand(command.Put, link.href)" title="PUT Request"><div class="change-icon"></div></button>
+                <button class="btn btn-outline-warning btn-sm" (click)="processCommand(command.Patch, link.href)" title="PATCH Request"><div class="change-icon"></div></button>
+                <button class="btn btn-outline-danger btn-sm" (click)="processCommand(command.Delete, link.href)" title="DELETE Request"><div class="delete-icon"></div></button>
               </td>
               <td align="right">
-                <button class="btn btn-outline-dark btn-sm" (click)="processCommand(command.Document, link.href)">DOC</button>
+                <button class="btn btn-outline-dark btn-sm" (click)="processCommand(command.Document, link.href)" title="Show Documentation"><div class="book-icon"></div></button>
               </td>
             </tr>
             </tbody>
