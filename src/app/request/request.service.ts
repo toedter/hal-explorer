@@ -21,6 +21,9 @@ export class RequestService {
   private needInfoSubject: Subject<any> = new Subject<any>();
   private needInfoObservable: Observable<any> = this.needInfoSubject.asObservable();
 
+  private documentationSubject: Subject<string> = new Subject<string>();
+  private documentationObservable: Observable<string> = this.documentationSubject.asObservable();
+
   private defaultHeaders: HttpHeaders = new HttpHeaders(
     {
       'Accept': 'application/hal+json, application/json, */*'
@@ -36,6 +39,10 @@ export class RequestService {
 
   public getNeedInfoObservable(): Observable<string> {
     return this.needInfoObservable;
+  }
+
+  public getDocumentationObservable(): Observable<string> {
+    return this.documentationObservable;
   }
 
   public getUri(uri: string) {
@@ -103,6 +110,9 @@ export class RequestService {
         }
       );
 
+    } else if (command === Command.Document) {
+      console.log('doc: ' + uri);
+      this.documentationSubject.next(uri);
     } else {
       console.log(('got Command: ' + command));
     }
@@ -123,3 +133,4 @@ export class UrlTemplateParameter {
   constructor(public key: string, public value: string) {
   }
 }
+

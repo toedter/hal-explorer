@@ -45,7 +45,7 @@
                 <button class="btn btn-outline-danger btn-sm" (click)="processCommand(command.Delete, link.href)" title="DELETE Request"><div class="delete-icon"></div></button>
               </td>
               <td align="right">
-                <button class="btn btn-outline-dark btn-sm" (click)="processCommand(command.Document, link.href)" title="Show Documentation"><div class="book-icon"></div></button>
+                <button *ngIf="link.docUri" class="btn btn-outline-dark btn-sm" (click)="processCommand(command.Document, link.docUri)" title="Show Documentation"><div class="book-icon"></div></button>
               </td>
             </tr>
             </tbody>

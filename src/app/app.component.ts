@@ -1,12 +1,13 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {RequestService} from './request/request.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   themes: string[] = [
     'Default',
     'Cerulean',
@@ -34,8 +35,22 @@ export class AppComponent {
 
   isCustomTheme = false;
   selectedThemeUrl: SafeResourceUrl;
+  showDocumentation: boolean;
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(private requestService: RequestService, private sanitizer: DomSanitizer) {
+  }
+
+  ngOnInit(): void {
+    this.requestService.getResponseObservable()
+      .subscribe(() => {
+        this.showDocumentation = false;
+      });
+    this.requestService.getDocumentationObservable()
+      .subscribe(() => {
+        console.log('AppComponent got notified');
+        this.showDocumentation = true;
+      });
+  }
 
   changeTheme(theme: string) {
     if (theme === this.themes[0]) {

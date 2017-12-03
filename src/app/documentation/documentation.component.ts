@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {RequestService} from '../request/request.service';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-documentation',
@@ -8,18 +9,21 @@ import {HttpClient} from '@angular/common/http';
   encapsulation: ViewEncapsulation.None
 })
 export class DocumentationComponent implements OnInit {
-  private docUrl = 'http://localhost:8080/docs/html5/users.html';
-  private documentation: string;
+  private docUri: SafeResourceUrl;
 
-  constructor(private http: HttpClient) {
+  constructor(private requestService: RequestService, private sanitizer: DomSanitizer) {
   }
 
   ngOnInit() {
-    // this.http.get(this.docUrl, {responseType: 'blob'}).subscribe(data => {
-    //   // Read the result field from the JSON response.
-    //   this.documentation = <any> (<Blob>data).slice();
-    //   console.log(this.documentation);
-    // });
+    this.requestService.getDocumentationObservable()
+      .subscribe((docUri: string) => {
+          console.log('DocumentationComponent got notified');
+          this.docUri = this.sanitizer.bypassSecurityTrustResourceUrl(docUri);
+        },
+        error => console.error('DocumentationComponent: ' + error));
+    this.requestService.getResponseObservable()
+      .subscribe(() => {
+        this.docUri = undefined;
+      });
   }
-
 }

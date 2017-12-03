@@ -65,12 +65,17 @@ export class ResponseExplorerComponent implements OnInit {
     const links = json._links;
     this.links = new Array(0);
     if (links) {
+      const curieLinks: Link[] = new Array(0);
       this.showLinks = true;
       Object.getOwnPropertyNames(links).forEach(
         (val: string, index: number, array: string[]) => {
           if (links[val] instanceof Array) {
             links[val].forEach(
               (entry: Link, i: number) => {
+                if (val === 'curies') {
+                  curieLinks.push(entry);
+                  console.log('Link name: ' + entry.name);
+                }
                 this.links.push(new Link(val + ' [' + i + ']', entry.href, entry.title, entry.name));
               });
           } else {
@@ -78,6 +83,15 @@ export class ResponseExplorerComponent implements OnInit {
           }
         }
       );
+
+      curieLinks.forEach((curie: Link, index: number, array: Link[]) => {
+        this.links.forEach((link: Link, index2: number, array2: Link[]) => {
+          const curiePrefix = curie.name + ':';
+          if (link.rel !== 'curies' && link.rel.startsWith(curiePrefix)) {
+            link.docUri = curie.href.replace('{rel}', link.rel.replace(curiePrefix, ''));
+          }
+        });
+      });
     }
 
     const embedded = json._embedded;
@@ -98,7 +112,7 @@ export class ResponseExplorerComponent implements OnInit {
 }
 
 class Link {
-  constructor(public rel: string, public href: string, public title: string, public name: string) {
+  constructor(public rel: string, public href: string, public title: string, public name: string, public docUri?: string) {
   }
 }
 
