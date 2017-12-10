@@ -38,3 +38,6 @@
   width: 2em;
 }
 
+.card-header.d-flex {
+  padding: 0.2rem 0.5rem;
+}

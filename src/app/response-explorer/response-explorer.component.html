@@ -38,14 +38,37 @@
               <td>{{link.name}}</td>
               <td>{{link.title}}</td>
               <td>
-                <button class="btn btn-outline-success btn-sm" (click)="processCommand(command.Get, link.href)" title="GET Request"><div class="get-icon"></div></button>
-                <button class="btn btn-outline-info btn-sm" (click)="processCommand(command.Post, link.href)" title="POST Request"><div class="create-icon"></div></button>
-                <button class="btn btn-outline-warning btn-sm" (click)="processCommand(command.Put, link.href)" title="PUT Request"><div class="change-icon"></div></button>
-                <button class="btn btn-outline-warning btn-sm" (click)="processCommand(command.Patch, link.href)" title="PATCH Request"><div class="change-icon"></div></button>
-                <button class="btn btn-outline-danger btn-sm" (click)="processCommand(command.Delete, link.href)" title="DELETE Request"><div class="delete-icon"></div></button>
+                <button class="badge ml-auto px-2 btn btn-outline-success btn-sm"
+                        (click)="processCommand(command.Get, link.href)"
+                        title="GET Request">
+                  <div class="get-icon"></div>
+                </button>
+                <button class="badge ml-auto px-2 btn btn-outline-info btn-sm"
+                        (click)="processCommand(command.Post, link.href)"
+                        title="POST Request">
+                  <div class="create-icon"></div>
+                </button>
+                <button class="badge ml-auto px-2 btn btn-outline-warning btn-sm"
+                        (click)="processCommand(command.Put, link.href)"
+                        title="PUT Request">
+                  <div class="change-icon"></div>
+                </button>
+                <button class="badge ml-auto px-2 btn btn-outline-warning btn-sm"
+                        (click)="processCommand(command.Patch, link.href)"
+                        title="PATCH Request">
+                  <div class="change-icon"></div>
+                </button>
+                <button class="badge ml-auto px-2 btn btn-outline-danger btn-sm"
+                        (click)="processCommand(command.Delete, link.href)"
+                        title="DELETE Request">
+                  <div class="delete-icon"></div>
+                </button>
               </td>
               <td align="right">
-                <button *ngIf="link.docUri" class="btn btn-outline-dark btn-sm" (click)="processCommand(command.Document, link.docUri)" title="Show Documentation"><div class="book-icon"></div></button>
+                <button *ngIf="link.docUri" class="badge ml-auto px-2 btn btn-outline-dark btn-sm"
+                        (click)="processCommand(command.Document, link.docUri)" title="Show Documentation">
+                  <div class="book-icon"></div>
+                </button>
               </td>
             </tr>
             </tbody>
@@ -61,7 +84,7 @@
 
         <div>
           <div class="card" *ngFor="let embeddedResource of embedded; let i1 = index" [attr.id]="prefix + 'item_' + i1">
-            <div class="card-header">
+            <div class="card-header d-flex">
               <a data-toggle="collapse" [attr.data-parent]="'#' + prefix + 'item_' + i1"
                  [attr.href]="'#' + prefix + 'embedded_' + i1">
                 <h5>{{embeddedResource.name}}</h5></a>
@@ -70,9 +93,13 @@
             <div *ngIf="embeddedResource.isArray" [attr.id]="prefix + 'embedded_' + i1" class="collapse show">
               <div class="card collapse" *ngFor="let subEmbeddedResource of embeddedResource.content; let i2 = index"
                    [attr.id]="prefix + 'item_' + i1 + '_' + i2">
-                <div class="card-header">
+                <div class="card-header d-flex">
                   <a data-toggle="collapse" [attr.data-parent]="'#' + prefix + 'item_' + i1 + '_' + i2"
                      [attr.href]="'#' + prefix + 'embedded_object_' + i2">{{embeddedResource.name}} [{{i2}}]</a>
+                  <button class="badge ml-auto px-2 btn btn-outline-dark btn-sm"
+                          (click)="processCommand(command.Document, embeddedResource.docUri)" title="Show Documentation">
+                    <div class="book-icon"></div>
+                  </button>
                 </div>
                 <div [attr.id]="prefix + 'embedded_object_' + i2" class="collapse">
                   <div class="card-body">

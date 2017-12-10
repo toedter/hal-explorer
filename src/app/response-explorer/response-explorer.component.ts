@@ -64,8 +64,8 @@ export class ResponseExplorerComponent implements OnInit {
 
     const links = json._links;
     this.links = new Array(0);
+    const curieLinks: Link[] = new Array(0);
     if (links) {
-      const curieLinks: Link[] = new Array(0);
       this.showLinks = true;
       Object.getOwnPropertyNames(links).forEach(
         (val: string, index: number, array: string[]) => {
@@ -98,9 +98,17 @@ export class ResponseExplorerComponent implements OnInit {
     this.embedded = new Array(0);
     if (embedded) {
       this.showEmbedded = true;
+      let docUri;
+      curieLinks.forEach((curie: Link, index: number, array: Link[]) => {
+          const curiePrefix = curie.name + ':';
+          if (Object.keys(embedded)[0].startsWith(curiePrefix)) {
+            docUri = curie.href.replace('{rel}', Object.keys(embedded)[0].replace(curiePrefix, ''));
+          }
+      });
+
       Object.getOwnPropertyNames(embedded).forEach(
         (val: string, index: number, array) => {
-          this.embedded.push(new EmbeddedRessource(val, embedded[val], embedded[val] instanceof Array));
+          this.embedded.push(new EmbeddedRessource(val, embedded[val], embedded[val] instanceof Array, docUri));
         }
       );
     }
@@ -117,6 +125,6 @@ class Link {
 }
 
 class EmbeddedRessource {
-  constructor(public name: string, public content: any, public isArray: boolean) {
+  constructor(public name: string, public content: any, public isArray: boolean, public docUri?: string) {
   }
 }
