@@ -11,7 +11,8 @@ import {JsonHighlighterService} from '../json-highlighter/json-highlighter.servi
 })
 export class ResponseExplorerComponent implements OnInit {
   @Input() private jsonRoot: any;
-  @Input() private prefix;
+  @Input() private prefix: string;
+  @Input() private curieLinks: Link[];
 
   private properties: string;
   private links: Link[];
@@ -64,7 +65,9 @@ export class ResponseExplorerComponent implements OnInit {
 
     const links = json._links;
     this.links = new Array(0);
-    const curieLinks: Link[] = new Array(0);
+    if (!this.curieLinks) {
+      this.curieLinks = new Array(0);
+    }
     if (links) {
       this.showLinks = true;
       Object.getOwnPropertyNames(links).forEach(
@@ -73,7 +76,7 @@ export class ResponseExplorerComponent implements OnInit {
             links[val].forEach(
               (entry: Link, i: number) => {
                 if (val === 'curies') {
-                  curieLinks.push(entry);
+                  this.curieLinks.push(entry);
                   console.log('Link name: ' + entry.name);
                 }
                 this.links.push(new Link(val + ' [' + i + ']', entry.href, entry.title, entry.name));
@@ -84,7 +87,7 @@ export class ResponseExplorerComponent implements OnInit {
         }
       );
 
-      curieLinks.forEach((curie: Link, index: number, array: Link[]) => {
+      this.curieLinks.forEach((curie: Link, index: number, array: Link[]) => {
         this.links.forEach((link: Link, index2: number, array2: Link[]) => {
           const curiePrefix = curie.name + ':';
           if (link.rel !== 'curies' && link.rel.startsWith(curiePrefix)) {
@@ -99,7 +102,7 @@ export class ResponseExplorerComponent implements OnInit {
     if (embedded) {
       this.showEmbedded = true;
       let docUri;
-      curieLinks.forEach((curie: Link, index: number, array: Link[]) => {
+      this.curieLinks.forEach((curie: Link, index: number, array: Link[]) => {
           const curiePrefix = curie.name + ':';
           if (Object.keys(embedded)[0].startsWith(curiePrefix)) {
             docUri = curie.href.replace('{rel}', Object.keys(embedded)[0].replace(curiePrefix, ''));

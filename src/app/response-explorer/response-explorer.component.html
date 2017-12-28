@@ -65,7 +65,7 @@
                 </button>
               </td>
               <td align="right">
-                <button *ngIf="link.docUri" class="badge ml-auto px-2 btn btn-outline-dark btn-sm"
+                <button *ngIf="link.docUri" class="badge ml-auto px-2 btn btn-outline-success btn-sm"
                         (click)="processCommand(command.Document, link.docUri)" title="Show Documentation">
                   <div class="book-icon"></div>
                 </button>
@@ -96,15 +96,18 @@
                 <div class="card-header d-flex">
                   <a data-toggle="collapse" [attr.data-parent]="'#' + prefix + 'item_' + i1 + '_' + i2"
                      [attr.href]="'#' + prefix + 'embedded_object_' + i2">{{embeddedResource.name}} [{{i2}}]</a>
-                  <button class="badge ml-auto px-2 btn btn-outline-dark btn-sm"
-                          (click)="processCommand(command.Document, embeddedResource.docUri)" title="Show Documentation">
+                  <button class="badge ml-auto px-2 btn btn-outline-success btn-sm"
+                          (click)="processCommand(command.Document, embeddedResource.docUri)"
+                          title="Show Documentation">
                     <div class="book-icon"></div>
                   </button>
                 </div>
                 <div [attr.id]="prefix + 'embedded_object_' + i2" class="collapse">
                   <div class="card-body">
                     <app-response-explorer [jsonRoot]="subEmbeddedResource"
-                                           [prefix]="prefix + 'x_'"></app-response-explorer>
+                                           [prefix]="prefix + 'x_'"
+                                           [curieLinks]="curieLinks">
+                    </app-response-explorer>
                   </div>
                 </div>
               </div>
@@ -113,7 +116,9 @@
             <div *ngIf="!embeddedResource.isArray" [attr.id]="prefix + 'embedded_' + i1" class="collapse">
               <div class="card-body">
                 <app-response-explorer [jsonRoot]="embeddedResource.content"
-                                       [prefix]="prefix + 'x_'"></app-response-explorer>
+                                       [prefix]="prefix + 'x_'"
+                                       [curieLinks]="curieLinks">
+                </app-response-explorer>
               </div>
             </div>
 
