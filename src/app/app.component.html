@@ -19,6 +19,14 @@
           <div class="dropdown-item" *ngFor="let theme of themes" (click)="changeTheme(theme)">{{theme}}</div>
         </div>
       </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="dropdown02" data-toggle="dropdown" aria-haspopup="true"
+           aria-expanded="false">Layout</a>
+        <div class="dropdown-menu" aria-labelledby="dropdown02">
+          <div class="dropdown-item" *ngFor="let layout of layouts" (click)="changeLayout(layout)">{{layout}}</div>
+        </div>
+      </li>
+
       <li class="nav-link" data-toggle="modal" data-target="#aboutModal">About</li>
     </ul>
   </div>
@@ -62,8 +70,7 @@
   </div>
 </div>
 
-<!--
-<div class="container-fluid">
+<div *ngIf="!isTwoColumnLayout" class="container-fluid">
   <div class="row">
     <div class="form-group col-md-4">
       <app-url-input></app-url-input>
@@ -78,9 +85,8 @@
     </div>
   </div>
 </div>
--->
 
-<div class="container-fluid">
+<div *ngIf="isTwoColumnLayout" class="container-fluid">
   <div class="row">
     <div class="form-group col-md-6">
       <app-url-input></app-url-input>

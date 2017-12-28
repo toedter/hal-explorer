@@ -33,9 +33,15 @@ export class AppComponent implements OnInit {
     'Yeti'
   ];
 
+  layouts: string[] = [
+    '2 Columns',
+    '3 Columns'
+  ];
+
   isCustomTheme = false;
   selectedThemeUrl: SafeResourceUrl;
   showDocumentation: boolean;
+  isTwoColumnLayout = true;
 
   constructor(private requestService: RequestService, private sanitizer: DomSanitizer) {
   }
@@ -61,4 +67,9 @@ export class AppComponent implements OnInit {
         this.sanitizer.bypassSecurityTrustResourceUrl('http://bootswatch.com/4/' + theme.toLowerCase() + '/bootstrap.min.css');
     }
   }
+
+  changeLayout(layout: string) {
+    this.isTwoColumnLayout = (layout === this.layouts[0]);
+  }
+
 }
