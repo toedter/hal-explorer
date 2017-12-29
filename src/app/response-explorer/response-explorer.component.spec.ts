@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ResponseExplorerComponent } from './response-explorer.component';
+import {RequestService} from '../request/request.service';
+import {HttpClient, HttpHandler} from '@angular/common/http';
+import {AppService} from '../app.service';
+import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
 
 describe('ResponseExplorerComponent', () => {
   let component: ResponseExplorerComponent;
@@ -8,7 +12,8 @@ describe('ResponseExplorerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResponseExplorerComponent ]
+      declarations: [ ResponseExplorerComponent ],
+      providers: [RequestService, AppService, HttpClient, HttpHandler, JsonHighlighterService]
     })
     .compileComponents();
   }));

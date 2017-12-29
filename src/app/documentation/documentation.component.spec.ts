@@ -1,6 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DocumentationComponent } from './documentation.component';
+import {DocumentationComponent} from './documentation.component';
+import {RequestService} from '../request/request.service';
+import {DomSanitizer} from '@angular/platform-browser';
+import {AppService} from '../app.service';
+import {HttpClient} from '@angular/common/http';
 
 describe('DocumentationComponent', () => {
   let component: DocumentationComponent;
@@ -8,7 +12,14 @@ describe('DocumentationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DocumentationComponent ]
+      declarations: [ DocumentationComponent ],
+      providers: [
+        {provide: RequestService, useClass: RequestService},
+        {provide: AppService, useClass: AppServiceMock},
+        {provide: HttpClient, useClass: HttpClientMock},
+        {provide: DomSanitizer, useClass: DomSanitizer}
+      ]
+
     })
     .compileComponents();
   }));
@@ -23,3 +34,7 @@ describe('DocumentationComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+class AppServiceMock {}
+class HttpClientMock {}
+

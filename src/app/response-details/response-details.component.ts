@@ -4,7 +4,7 @@ import {HttpResponse} from '@angular/common/http';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
 
 @Component({
-  selector: 'app-response-body',
+  selector: 'app-response-details',
   templateUrl: './response-details.component.html',
   styleUrls: ['./response-details.component.css'],
   encapsulation: ViewEncapsulation.None

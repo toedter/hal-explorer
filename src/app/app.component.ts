@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
 
   isCustomTheme = false;
   selectedThemeUrl: SafeResourceUrl;
-  showDocumentation: boolean;
+  showDocumentation = false;
   isTwoColumnLayout = true;
 
   constructor(private appService: AppService, private requestService: RequestService, private sanitizer: DomSanitizer) {

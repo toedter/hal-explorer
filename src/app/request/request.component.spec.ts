@@ -1,14 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { RequestComponent } from './request.component';
+import { FormsModule } from '@angular/forms';
+import {RequestService} from './request.service';
+import {HttpClient, HttpHandler} from '@angular/common/http';
+import {AppService} from '../app.service';
+import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
 
-describe('UrlInputComponent', () => {
+describe('RequestComponent', () => {
   let component: RequestComponent;
   let fixture: ComponentFixture<RequestComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RequestComponent ]
+      imports: [ FormsModule ],
+      declarations: [ RequestComponent ],
+      providers: [RequestService, AppService, JsonHighlighterService, HttpClient, HttpHandler]
     })
     .compileComponents();
   }));

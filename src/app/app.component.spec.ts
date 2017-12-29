@@ -1,11 +1,23 @@
-import { TestBed, async } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import {async, TestBed} from '@angular/core/testing';
+import {AppComponent} from './app.component';
+import {Component} from '@angular/core';
+import {AppService} from './app.service';
+import {RequestService} from './request/request.service';
+
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        MockRequestComponent,
+        MockResponseExplorerComponent,
+        MockResponseDetailsComponent,
+        MockDocumentationComponent
       ],
+      providers: [
+        {provide: AppService, useClass: AppServiceMock},
+        {provide: RequestService, useClass: RequestServiceMock}
+      ]
     }).compileComponents();
   }));
   it('should create the app', async(() => {
@@ -13,15 +25,44 @@ describe('AppComponent', () => {
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
-  it(`should have as title 'app'`, async(() => {
+  it(`should not show documentation`, async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app');
-  }));
-  it('should render title in a h3 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h3').textContent).toContain('Welcome to app!');
+    expect(app.showDocumentation).toEqual(false);
   }));
 });
+
+@Component({
+  selector: 'app-url-input',
+  template: ''
+})
+class MockRequestComponent {
+}
+
+@Component({
+  selector: 'app-response-explorer',
+  template: ''
+})
+class MockResponseExplorerComponent {
+}
+
+@Component({
+  selector: 'app-response-details',
+  template: ''
+})
+class MockResponseDetailsComponent {
+}
+
+@Component({
+  selector: 'app-documentation',
+  template: ''
+})
+class MockDocumentationComponent {
+}
+
+class AppServiceMock {
+}
+
+class RequestServiceMock {
+}
+
