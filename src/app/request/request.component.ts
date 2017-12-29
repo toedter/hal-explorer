@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Command, EventType, HttpRequestEvent, RequestService, UriTemplateEvent} from './request.service';
 import * as $ from 'jquery';
+import {AppService} from '../app.service';
 
 @Component({
   selector: 'app-url-input',
@@ -16,16 +17,11 @@ export class RequestComponent implements OnInit {
   selectedHttpMethod: Command;
   commandPlaceholder = Command;
 
-  constructor(private requestService: RequestService) {
+  constructor(private appService: AppService, private requestService: RequestService) {
   }
 
   ngOnInit() {
-    this.uri = window.location.hash.substring(1);
-    if (!this.uri) {
-      this.uri = 'http://localhost:8080/api';
-      window.location.hash = this.uri;
-    }
-    window.addEventListener('hashchange', () => this.goFromHashChange(), false);
+    this.uri = this.appService.getUrl();
 
     this.requestService.getNeedInfoObservable().subscribe((value: any) => {
       if (value.type === EventType.FillUriTemplate) {
@@ -42,6 +38,7 @@ export class RequestComponent implements OnInit {
       }
     });
 
+    this.appService.urlObservable.subscribe(url => this.goFromHashChange(url))
     this.getUri();
   }
 
@@ -57,8 +54,8 @@ export class RequestComponent implements OnInit {
       this.requestService.requestUri(this.httpRequestEvent.uri, Command[this.selectedHttpMethod], this.postRequestBody);
   }
 
-  public goFromHashChange() {
-    this.uri = window.location.hash.substring(1);
+  public goFromHashChange(url: string) {
+    this.uri = url;
     this.requestService.getUri(this.uri);
   }
 

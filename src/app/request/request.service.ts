@@ -6,6 +6,7 @@ import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import * as utpl from 'uri-templates';
 import {URITemplate} from 'uri-templates';
+import {AppService} from '../app.service';
 
 export enum EventType {FillUriTemplate, FillHttpRequest}
 
@@ -30,7 +31,7 @@ export class RequestService {
     });
 
 
-  constructor(private http: HttpClient) {
+  constructor(private appService: AppService, private http: HttpClient) {
   }
 
   public getResponseObservable(): Observable<HttpResponse<any>> {
@@ -79,7 +80,7 @@ export class RequestService {
 
       this.http.get(uri, {headers: this.defaultHeaders, observe: 'response'}).subscribe(
         (response: HttpResponse<any>) => {
-          window.location.hash = uri;
+          this.appService.setUrl(uri);
           this.httpResponse = response;
           this.responseSubject.next(response);
         },

@@ -77,7 +77,6 @@ export class ResponseExplorerComponent implements OnInit {
               (entry: Link, i: number) => {
                 if (val === 'curies') {
                   this.curieLinks.push(entry);
-                  console.log('Link name: ' + entry.name);
                 }
                 this.links.push(new Link(val + ' [' + i + ']', entry.href, entry.title, entry.name));
               });

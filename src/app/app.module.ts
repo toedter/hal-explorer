@@ -9,6 +9,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {JsonHighlighterService} from './json-highlighter/json-highlighter.service';
 import {ResponseExplorerComponent} from './response-explorer/response-explorer.component';
 import {DocumentationComponent} from './documentation/documentation.component';
+import {AppService} from './app.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import {DocumentationComponent} from './documentation/documentation.component';
   imports: [
     BrowserModule, FormsModule, HttpClientModule
   ],
-  providers: [RequestService, JsonHighlighterService],
+  providers: [AppService, RequestService, JsonHighlighterService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

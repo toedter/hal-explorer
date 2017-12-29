@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {RequestService} from './request/request.service';
+import {AppService} from './app.service';
 
 @Component({
   selector: 'app-root',
@@ -43,7 +44,7 @@ export class AppComponent implements OnInit {
   showDocumentation: boolean;
   isTwoColumnLayout = true;
 
-  constructor(private requestService: RequestService, private sanitizer: DomSanitizer) {
+  constructor(private appService: AppService, private requestService: RequestService, private sanitizer: DomSanitizer) {
   }
 
   ngOnInit(): void {
@@ -51,20 +52,25 @@ export class AppComponent implements OnInit {
       .subscribe(() => {
         this.showDocumentation = false;
       });
+
     this.requestService.getDocumentationObservable()
       .subscribe(() => {
-        console.log('AppComponent got notified');
         this.showDocumentation = true;
       });
+
+    this.appService.themeObservable.subscribe(theme => this.changeTheme(theme));
+    this.changeTheme(this.appService.getTheme());
   }
 
   changeTheme(theme: string) {
     if (theme === this.themes[0]) {
       this.isCustomTheme = false;
+      this.appService.setTheme('Default');
     } else {
       this.isCustomTheme = true;
       this.selectedThemeUrl =
         this.sanitizer.bypassSecurityTrustResourceUrl('http://bootswatch.com/4/' + theme.toLowerCase() + '/bootstrap.min.css');
+      this.appService.setTheme(theme);
     }
   }
 

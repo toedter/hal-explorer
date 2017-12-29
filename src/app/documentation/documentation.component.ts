@@ -17,7 +17,6 @@ export class DocumentationComponent implements OnInit {
   ngOnInit() {
     this.requestService.getDocumentationObservable()
       .subscribe((docUri: string) => {
-          console.log('DocumentationComponent got notified');
           this.docUri = this.sanitizer.bypassSecurityTrustResourceUrl(docUri);
         },
         error => console.error('DocumentationComponent: ' + error));
