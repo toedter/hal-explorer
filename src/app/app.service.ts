@@ -18,6 +18,9 @@ export class AppService {
   private themeSubject: Subject<string> = new Subject<string>();
   private _themeObservable: Observable<string> = this.themeSubject.asObservable();
 
+  private layoutSubject: Subject<string> = new Subject<string>();
+  private _layoutObservable: Observable<string> = this.layoutSubject.asObservable();
+
   constructor() {
     this.handleLocationHash();
     window.addEventListener('hashchange', () => this.handleLocationHash(), false);
@@ -29,6 +32,10 @@ export class AppService {
 
   get themeObservable(): Observable<string> {
     return this._themeObservable;
+  }
+
+  get layoutObservable(): Observable<string> {
+    return this._layoutObservable;
   }
 
   getUrl(): string {
@@ -48,6 +55,16 @@ export class AppService {
   setTheme(theme: string) {
     this.themeParamBackup = this.themeParam;
     this.themeParam = theme;
+    this.setLocationHash();
+  }
+
+  getLayout() {
+    return this.layoutParam;
+  }
+
+  setLayout(layout: string) {
+    this.layoutParamBackup = this.layoutParam;
+    this.layoutParam = layout;
     this.setLocationHash();
   }
 
@@ -86,6 +103,10 @@ export class AppService {
 
     if (this.themeParamBackup !== this.themeParam) {
       this.themeSubject.next(this.themeParam);
+    }
+
+    if (this.layoutParamBackup !== this.layoutParam) {
+      this.layoutSubject.next(this.layoutParam);
     }
   }
 

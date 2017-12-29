@@ -60,6 +60,9 @@ export class AppComponent implements OnInit {
 
     this.appService.themeObservable.subscribe(theme => this.changeTheme(theme));
     this.changeTheme(this.appService.getTheme());
+
+    this.appService.layoutObservable.subscribe(layout => this.changeLayout(layout));
+    this.changeLayout(this.appService.getLayout());
   }
 
   changeTheme(theme: string) {
@@ -75,7 +78,8 @@ export class AppComponent implements OnInit {
   }
 
   changeLayout(layout: string) {
-    this.isTwoColumnLayout = (layout === this.layouts[0]);
+    this.isTwoColumnLayout = (layout === this.layouts[0]) || (layout === '2');
+    this.appService.setLayout(layout.substring(0, 1));
   }
 
 }
