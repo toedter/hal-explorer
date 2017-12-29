@@ -38,7 +38,7 @@ export class RequestComponent implements OnInit {
       }
     });
 
-    this.appService.urlObservable.subscribe(url => this.goFromHashChange(url))
+    this.appService.urlObservable.subscribe(url => this.goFromHashChange(url));
     this.getUri();
   }
 

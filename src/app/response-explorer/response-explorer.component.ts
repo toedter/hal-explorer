@@ -71,7 +71,7 @@ export class ResponseExplorerComponent implements OnInit {
     if (links) {
       this.showLinks = true;
       Object.getOwnPropertyNames(links).forEach(
-        (val: string, index: number, array: string[]) => {
+        (val: string) => {
           if (links[val] instanceof Array) {
             links[val].forEach(
               (entry: Link, i: number) => {
@@ -86,8 +86,8 @@ export class ResponseExplorerComponent implements OnInit {
         }
       );
 
-      this.curieLinks.forEach((curie: Link, index: number, array: Link[]) => {
-        this.links.forEach((link: Link, index2: number, array2: Link[]) => {
+      this.curieLinks.forEach((curie: Link) => {
+        this.links.forEach((link: Link) => {
           const curiePrefix = curie.name + ':';
           if (link.rel !== 'curies' && link.rel.startsWith(curiePrefix)) {
             link.docUri = curie.href.replace('{rel}', link.rel.replace(curiePrefix, ''));
@@ -101,7 +101,7 @@ export class ResponseExplorerComponent implements OnInit {
     if (embedded) {
       this.showEmbedded = true;
       let docUri;
-      this.curieLinks.forEach((curie: Link, index: number, array: Link[]) => {
+      this.curieLinks.forEach((curie: Link) => {
           const curiePrefix = curie.name + ':';
           if (Object.keys(embedded)[0].startsWith(curiePrefix)) {
             docUri = curie.href.replace('{rel}', Object.keys(embedded)[0].replace(curiePrefix, ''));
@@ -109,7 +109,7 @@ export class ResponseExplorerComponent implements OnInit {
       });
 
       Object.getOwnPropertyNames(embedded).forEach(
-        (val: string, index: number, array) => {
+        (val: string) => {
           this.embedded.push(new EmbeddedRessource(val, embedded[val], embedded[val] instanceof Array, docUri));
         }
       );
