@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {RequestService} from '../request/request.service';
-import {HttpHeaders, HttpResponse} from '@angular/common/http';
+import {HttpResponse} from '@angular/common/http';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
 
 @Component({
@@ -28,9 +28,11 @@ export class ResponseBodyComponent implements OnInit {
           const responseHeaderKeys: string[] = response.headers.keys();
           this.responseHeaders = new Array(responseHeaderKeys.length);
           for (const i in responseHeaderKeys) {
-            const key: string = responseHeaderKeys[i];
-            const responseHeader: ResponseHeader = new ResponseHeader(key, response.headers.get(key));
-            this.responseHeaders[i] = responseHeader;
+            if (responseHeaderKeys.hasOwnProperty(i)) {
+              const key: string = responseHeaderKeys[i];
+              const responseHeader: ResponseHeader = new ResponseHeader(key, response.headers.get(key));
+              this.responseHeaders[i] = responseHeader;
+            }
           }
         },
         error => console.error('ResponseBodyComponent: ' + error));
