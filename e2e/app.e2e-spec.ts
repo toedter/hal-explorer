@@ -1,14 +1,20 @@
-import { AppPage } from './app.po';
+import {AppPage} from './app.po';
+import {browser} from 'protractor';
 
-describe('hal-b App', () => {
+describe('HAL-Explorer App', () => {
   let page: AppPage;
 
   beforeEach(() => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
+  it('should have title "HAL-Explorer"', async () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    expect(await browser.getTitle()).toBe('HAL-Explorer');
+  });
+
+  it('should display "Explorer" section title', () => {
+    page.navigateTo();
+    expect(page.getExplorerText()).toEqual('Explorer');
   });
 });
