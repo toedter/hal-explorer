@@ -9,7 +9,7 @@ import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
   encapsulation: ViewEncapsulation.None
 })
 export class DocumentationComponent implements OnInit {
-  private docUri: SafeResourceUrl;
+  docUri: SafeResourceUrl;
 
   constructor(private requestService: RequestService, private sanitizer: DomSanitizer) {
   }
