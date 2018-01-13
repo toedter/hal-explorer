@@ -25,13 +25,15 @@ export class RequestService {
   private documentationSubject: Subject<string> = new Subject<string>();
   private documentationObservable: Observable<string> = this.documentationSubject.asObservable();
 
-  private defaultHeaders: HttpHeaders = new HttpHeaders(
+  private requestHeaders: HttpHeaders = new HttpHeaders(
     {
       'Accept': 'application/hal+json, application/json, */*'
     });
+  private customRequestHeaders: RequestHeader[];
 
 
   constructor(private appService: AppService, private http: HttpClient) {
+    console.log(this.requestHeaders);
   }
 
   public getResponseObservable(): Observable<HttpResponse<any>> {
@@ -53,7 +55,7 @@ export class RequestService {
   public requestUri(uri: string, httpMethod: string, body: string) {
     const jsonObjectBody = JSON.parse(body);
 
-    this.http.request(httpMethod, uri, {headers: this.defaultHeaders, observe: 'response', body: jsonObjectBody}).subscribe(
+    this.http.request(httpMethod, uri, {headers: this.requestHeaders, observe: 'response', body: jsonObjectBody}).subscribe(
       (response: HttpResponse<any>) => {
         this.httpResponse = response;
         this.responseSubject.next(response);
@@ -78,7 +80,7 @@ export class RequestService {
         return;
       }
 
-      this.http.get(uri, {headers: this.defaultHeaders, observe: 'response'}).subscribe(
+      this.http.get(uri, {headers: this.requestHeaders, observe: 'response'}).subscribe(
         (response: HttpResponse<any>) => {
           this.appService.setUrl(uri);
           this.httpResponse = response;
@@ -100,7 +102,7 @@ export class RequestService {
       if (uri.includes('{')) {
         uri = uri.substring(0, uri.indexOf('{'));
       }
-      this.http.delete(uri, {headers: this.defaultHeaders, observe: 'response'}).subscribe(
+      this.http.delete(uri, {headers: this.requestHeaders, observe: 'response'}).subscribe(
         (response: HttpResponse<any>) => {
           window.location.hash = uri;
           this.httpResponse = response;
@@ -118,6 +120,17 @@ export class RequestService {
       console.log(('got Command: ' + command));
     }
   }
+
+  setCustomHeaders(requestHeaders: RequestHeader[]) {
+    this.requestHeaders = new HttpHeaders(
+      {
+        'requestHeader.key': 'application/hal+json, application/json, */*'
+      });
+    for (const requestHeader of requestHeaders) {
+      this.requestHeaders = this.requestHeaders.append(requestHeader.key, requestHeader.value);
+    }
+    this.customRequestHeaders = requestHeaders;
+  }
 }
 
 export class UriTemplateEvent {
@@ -130,7 +143,17 @@ export class HttpRequestEvent {
   }
 }
 
+export class RequestHeaderEvent {
+  constructor(public type: EventType, public command: Command, public uri: string) {
+  }
+}
+
 export class UrlTemplateParameter {
+  constructor(public key: string, public value: string) {
+  }
+}
+
+export class RequestHeader {
   constructor(public key: string, public value: string) {
   }
 }
