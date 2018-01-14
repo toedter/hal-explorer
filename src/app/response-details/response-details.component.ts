@@ -21,17 +21,11 @@ export class ResponseBodyComponent implements OnInit {
   ngOnInit() {
     this.requestService.getResponseObservable()
       .subscribe((response: HttpResponse<any>) => {
-          console.log('response : ' + response.headers);
-          const myHeader = response.headers.get('ETag');
-          console.log('etag: ' + myHeader);
-
-
           this.responseStatus = response.status;
           this.responseStatusText = response.statusText;
           this.responseBody =
             this.jsonHighlighterService.syntaxHighlight(JSON.stringify(response.body, undefined, 2));
           const responseHeaderKeys: string[] = response.headers.keys();
-          console.log('response header keys: ' + responseHeaderKeys);
           this.responseHeaders = new Array(responseHeaderKeys.length);
           for (const i in responseHeaderKeys) {
             if (responseHeaderKeys.hasOwnProperty(i)) {

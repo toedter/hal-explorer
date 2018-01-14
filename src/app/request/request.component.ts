@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Command, EventType, HttpRequestEvent, RequestHeader, RequestService, UriTemplateEvent} from './request.service';
+import {Command, EventType, HttpRequestEvent, RequestService, UriTemplateEvent} from './request.service';
 import * as $ from 'jquery';
-import {AppService} from '../app.service';
+import {AppService, RequestHeader} from '../app.service';
 
 @Component({
   selector: 'app-url-input',
@@ -26,7 +26,7 @@ export class RequestComponent implements OnInit {
   ngOnInit() {
     this.uri = this.appService.getUrl();
 
-    this.requestHeaders = new Array();
+    this.tempRequestHeaders = this.appService.getCustomRequestHeaders();
 
     this.requestService.getNeedInfoObservable().subscribe((value: any) => {
       if (value.type === EventType.FillUriTemplate) {
@@ -44,6 +44,12 @@ export class RequestComponent implements OnInit {
     });
 
     this.appService.urlObservable.subscribe(url => this.goFromHashChange(url));
+    this.appService.requestHeadersObservable.subscribe(requestHeaders => {
+      this.tempRequestHeaders = requestHeaders;
+      this.updateRequestHeaders();
+    });
+
+    this.updateRequestHeaders();
     this.getUri();
   }
 
@@ -89,19 +95,19 @@ export class RequestComponent implements OnInit {
     $('#requestHeadersModalTrigger').click();
   }
 
-  public editHeadersDialogOk() {
+  public updateRequestHeaders() {
     this.requestHeaders = new Array();
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < this.tempRequestHeaders.length; i++) {
       const key: string = this.tempRequestHeaders[i].key.trim();
       const value: string = this.tempRequestHeaders[i].value.trim();
 
       if (key.length > 0 && value.length > 0) {
-        console.log('pushing: ' + key + ':' + value);
         this.requestHeaders.push(new RequestHeader(key, value));
       }
     }
     this.requestService.setCustomHeaders(this.requestHeaders);
     this.hasCustomRequestHeaders = this.requestHeaders.length > 0;
+    this.appService.setCustomRequestHeaders(this.requestHeaders);
   }
 }
 

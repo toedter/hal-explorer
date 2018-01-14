@@ -7,10 +7,12 @@ export class AppService {
   private urlParam: string;
   private themeParam: string;
   private layoutParam: string;
+  private customRequestHeaders: RequestHeader[];
 
   private urlParamBackup: string;
   private themeParamBackup: string;
   private layoutParamBackup: string;
+  private customRequestHeadersBackup: RequestHeader[];
 
   private urlSubject: Subject<string> = new Subject<string>();
   private _urlObservable: Observable<string> = this.urlSubject.asObservable();
@@ -20,6 +22,9 @@ export class AppService {
 
   private layoutSubject: Subject<string> = new Subject<string>();
   private _layoutObservable: Observable<string> = this.layoutSubject.asObservable();
+
+  private requestHeadersSubject: Subject<RequestHeader[]> = new Subject<RequestHeader[]>();
+  private _requestHeadersObservable: Observable<RequestHeader[]> = this.requestHeadersSubject.asObservable();
 
   constructor() {
     this.handleLocationHash();
@@ -38,6 +43,10 @@ export class AppService {
     return this._layoutObservable;
   }
 
+  get requestHeadersObservable(): Observable<RequestHeader[]> {
+    return this._requestHeadersObservable;
+  }
+
   getUrl(): string {
     return this.urlParam;
   }
@@ -48,7 +57,7 @@ export class AppService {
     this.setLocationHash();
   }
 
-  getTheme() {
+  getTheme(): string {
     return this.themeParam;
   }
 
@@ -58,7 +67,7 @@ export class AppService {
     this.setLocationHash();
   }
 
-  getLayout() {
+  getLayout(): string {
     return this.layoutParam;
   }
 
@@ -68,9 +77,19 @@ export class AppService {
     this.setLocationHash();
   }
 
+  getCustomRequestHeaders(): RequestHeader[] {
+    return this.customRequestHeaders;
+  }
+
+  setCustomRequestHeaders(requestHeaders: RequestHeader[]) {
+    this.customRequestHeadersBackup = this.customRequestHeaders.map(requestHeader => Object.assign({}, requestHeader));
+    this.customRequestHeaders = requestHeaders;
+    this.setLocationHash();
+  }
+
   private handleLocationHash() {
     if (!this.urlParam) {
-      this.urlParam = 'http://localhost:8080/api';
+      this.urlParam = '';
     }
     if (!this.themeParam) {
       this.themeParam = 'Default';
@@ -78,6 +97,8 @@ export class AppService {
     if (!this.layoutParam) {
       this.layoutParam = '2';
     }
+
+    const tempCustomRequestHeaders: RequestHeader[] = new Array(5);
 
     const fragment = location.hash.substring(1);
     const regex = /([^&=]+)=([^&]*)/g;
@@ -90,6 +111,26 @@ export class AppService {
         m = regex.exec(fragment);
       } else if (key === 'layout') {
         this.layoutParam = decodeURIComponent(m[2]);
+        m = regex.exec(fragment);
+      } else if (key.startsWith('hkey')) {
+        const headerKeyParam = decodeURIComponent(m[2]);
+        const headerKeyIndex: number = Number(key.substring(4));
+        const requestHeader = tempCustomRequestHeaders[headerKeyIndex];
+        if (requestHeader) {
+          requestHeader.key = headerKeyParam;
+        } else {
+          tempCustomRequestHeaders[headerKeyIndex] = new RequestHeader(headerKeyParam, '');
+        }
+        m = regex.exec(fragment);
+      } else if (key.startsWith('hval')) {
+        const headerValueParam = decodeURIComponent(m[2]);
+        const headerValueIndex: number = Number(key.substring(4));
+        const requestHeader = tempCustomRequestHeaders[headerValueIndex];
+        if (requestHeader) {
+          requestHeader.value = headerValueParam;
+        } else {
+          console.log('error in fragmet parameters: found request header value' + headerValueParam + ' without corresponding key');
+        }
         m = regex.exec(fragment);
       } else if (key === 'url') {
         this.urlParam = fragment.substring(fragment.indexOf('url=') + 4);
@@ -108,9 +149,50 @@ export class AppService {
     if (this.layoutParamBackup !== this.layoutParam) {
       this.layoutSubject.next(this.layoutParam);
     }
+
+    this.customRequestHeaders = new Array();
+    let publishRequestHeaders = false;
+    for (let i = 0; i < 5; i++) {
+      if (tempCustomRequestHeaders[i] && tempCustomRequestHeaders[i].key && tempCustomRequestHeaders[i].value.length > 0) {
+        this.customRequestHeaders.push(tempCustomRequestHeaders[i]);
+        publishRequestHeaders = true;
+      }
+    }
+    if(publishRequestHeaders) {
+      this.requestHeadersSubject.next(this.customRequestHeaders);
+    }
   }
 
   private setLocationHash() {
-    window.location.hash = 'theme=' + this.themeParam + '&layout=' + this.layoutParam + '&url=' + this.urlParam;
+    let newLocationHash = '';
+    let andPrefix = '';
+
+    if (this.themeParam !== 'Default') {
+      newLocationHash += andPrefix + 'theme=' + this.themeParam;
+      andPrefix = '&';
+    }
+
+    if (this.layoutParam !== '2') {
+      newLocationHash += andPrefix + 'layout=' + this.layoutParam;
+      andPrefix = '&';
+    }
+
+    for (let i = 0; i < this.customRequestHeaders.length; i++) {
+      newLocationHash += andPrefix + 'hkey' + i + '=' + this.customRequestHeaders[i].key +
+        '&' + 'hval' + i + '=' + this.customRequestHeaders[i].value;
+      andPrefix = '&';
+    }
+
+    if (this.urlParam !== '') {
+      newLocationHash += andPrefix + 'url=' + this.urlParam;
+    }
+
+    window.location.hash = newLocationHash;
   }
 }
+
+export class RequestHeader {
+  constructor(public key: string, public value: string) {
+  }
+}
+

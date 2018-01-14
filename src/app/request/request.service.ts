@@ -6,7 +6,7 @@ import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import * as utpl from 'uri-templates';
 import {URITemplate} from 'uri-templates';
-import {AppService} from '../app.service';
+import {AppService, RequestHeader} from '../app.service';
 
 export enum EventType {FillUriTemplate, FillHttpRequest}
 
@@ -33,7 +33,6 @@ export class RequestService {
 
 
   constructor(private appService: AppService, private http: HttpClient) {
-    console.log(this.requestHeaders);
   }
 
   public getResponseObservable(): Observable<HttpResponse<any>> {
@@ -114,7 +113,6 @@ export class RequestService {
       );
 
     } else if (command === Command.Document) {
-      console.log('doc: ' + uri);
       this.documentationSubject.next(uri);
     } else {
       console.log(('got Command: ' + command));
@@ -149,11 +147,6 @@ export class RequestHeaderEvent {
 }
 
 export class UrlTemplateParameter {
-  constructor(public key: string, public value: string) {
-  }
-}
-
-export class RequestHeader {
   constructor(public key: string, public value: string) {
   }
 }
