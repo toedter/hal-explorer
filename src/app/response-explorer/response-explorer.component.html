@@ -29,7 +29,7 @@
                 <th scope="col">Title</th>
                 <th scope="col">HTTP</th>
                 <th scope="col">
-                  <div class='text-right'>Docu.</div>
+                  <div class='text-right'>Doc</div>
                 </th>
               </tr>
               </thead>
@@ -42,33 +42,33 @@
                   <button class="badge ml-auto px-2 btn btn-outline-success btn-sm"
                           (click)="processCommand(command.Get, link.href)"
                           title="GET Request">
-                    <div class="get-icon"></div>
+                    <fa name="chevron-left"></fa>
                   </button>
                   <button class="badge ml-auto px-2 btn btn-outline-info btn-sm"
                           (click)="processCommand(command.Post, link.href)"
                           title="POST Request">
-                    <div class="create-icon"></div>
+                    <fa name="plus"></fa>
                   </button>
                   <button class="badge ml-auto px-2 btn btn-outline-warning btn-sm"
                           (click)="processCommand(command.Put, link.href)"
                           title="PUT Request">
-                    <div class="change-icon"></div>
+                    <fa name="chevron-right"></fa>
                   </button>
                   <button class="badge ml-auto px-2 btn btn-outline-warning btn-sm"
                           (click)="processCommand(command.Patch, link.href)"
                           title="PATCH Request">
-                    <div class="change-icon"></div>
+                    <fa name="chevron-right"></fa>
                   </button>
                   <button class="badge ml-auto px-2 btn btn-outline-danger btn-sm"
                           (click)="processCommand(command.Delete, link.href)"
                           title="DELETE Request">
-                    <div class="delete-icon"></div>
+                    <fa name="times"></fa>
                   </button>
                 </td>
                 <td align="right">
                   <button *ngIf="link.docUri" class="badge ml-auto px-2 btn btn-outline-success btn-sm"
                           (click)="processCommand(command.Document, link.docUri)" title="Show Documentation">
-                    <div class="book-icon"></div>
+                    <fa name="book"></fa>
                   </button>
                 </td>
               </tr>
@@ -93,7 +93,8 @@
             </div>
 
             <div *ngIf="embeddedResource.isArray" [attr.id]="prefix + 'embedded_' + i1" class="collapse show">
-              <div class="card collapse show" *ngFor="let subEmbeddedResource of embeddedResource.content; let i2 = index"
+              <div class="card collapse show"
+                   *ngFor="let subEmbeddedResource of embeddedResource.content; let i2 = index"
                    [attr.id]="prefix + 'item_' + i1 + '_' + i2">
                 <div class="card-header d-flex">
                   <a data-toggle="collapse" [attr.data-parent]="'#' + prefix + 'item_' + i1 + '_' + i2"
@@ -101,7 +102,7 @@
                   <button class="badge ml-auto px-2 btn btn-outline-success btn-sm"
                           (click)="processCommand(command.Document, embeddedResource.docUri)"
                           title="Show Documentation">
-                    <div class="book-icon"></div>
+                    <fa name="book"></fa>
                   </button>
                 </div>
                 <div [attr.id]="prefix + 'embedded_object_' + i2" class="collapse">
