@@ -10,19 +10,19 @@ import {JsonHighlighterService} from '../json-highlighter/json-highlighter.servi
   encapsulation: ViewEncapsulation.None
 })
 export class ResponseExplorerComponent implements OnInit {
-  @Input() private jsonRoot: any;
-  @Input() private prefix: string;
-  @Input() private curieLinks: Link[];
+  @Input() jsonRoot: any;
+  @Input() prefix: string;
+  @Input() curieLinks: Link[];
 
-  private properties: string;
-  private links: Link[];
-  private embedded: EmbeddedRessource[];
+  properties: string;
+  links: Link[];
+  embedded: EmbeddedRessource[];
 
   showProperties: boolean;
   showLinks: boolean;
   showEmbedded: boolean;
 
-  private command = Command;
+  command = Command;
 
   constructor(private requestService: RequestService,
               private jsonHighlighterService: JsonHighlighterService) {

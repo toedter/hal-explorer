@@ -93,7 +93,7 @@
             </div>
 
             <div *ngIf="embeddedResource.isArray" [attr.id]="prefix + 'embedded_' + i1" class="collapse show">
-              <div class="card collapse" *ngFor="let subEmbeddedResource of embeddedResource.content; let i2 = index"
+              <div class="card collapse show" *ngFor="let subEmbeddedResource of embeddedResource.content; let i2 = index"
                    [attr.id]="prefix + 'item_' + i1 + '_' + i2">
                 <div class="card-header d-flex">
                   <a data-toggle="collapse" [attr.data-parent]="'#' + prefix + 'item_' + i1 + '_' + i2"
