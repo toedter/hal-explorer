@@ -10,7 +10,6 @@ import {JsonHighlighterService} from './json-highlighter/json-highlighter.servic
 import {ResponseExplorerComponent} from './response-explorer/response-explorer.component';
 import {DocumentationComponent} from './documentation/documentation.component';
 import {AppService} from './app.service';
-import {AngularFontAwesomeModule} from 'angular-font-awesome';
 
 @NgModule({
   declarations: [
@@ -21,7 +20,7 @@ import {AngularFontAwesomeModule} from 'angular-font-awesome';
     DocumentationComponent
   ],
   imports: [
-    BrowserModule, FormsModule, HttpClientModule, AngularFontAwesomeModule
+    BrowserModule, FormsModule, HttpClientModule
   ],
   providers: [AppService, RequestService, JsonHighlighterService],
   bootstrap: [AppComponent]
