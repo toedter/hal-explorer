@@ -72,7 +72,7 @@ export class AppComponent implements OnInit {
     } else {
       this.isCustomTheme = true;
       this.selectedThemeUrl =
-        this.sanitizer.bypassSecurityTrustResourceUrl('http://bootswatch.com/4/' + theme.toLowerCase() + '/bootstrap.min.css');
+        this.sanitizer.bypassSecurityTrustResourceUrl('https://bootswatch.com/4/' + theme.toLowerCase() + '/bootstrap.min.css');
       this.appService.setTheme(theme);
     }
   }
