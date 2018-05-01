@@ -66,7 +66,7 @@
                   </button>
                 </td>
                 <td align="right">
-                  <button *ngIf="link.docUri" class="icon-book badge ml-auto px-2 btn btn-outline-success btn-sm"
+                  <button *ngIf="link.docUri" class="icon-book badge ml-auto px-2 btn btn-outline-info btn-sm"
                           (click)="processCommand(command.Document, link.docUri)" title="Show Documentation">
                   </button>
                 </td>
@@ -98,7 +98,7 @@
                 <div class="card-header d-flex">
                   <a data-toggle="collapse" [attr.data-parent]="'#' + prefix + 'item_' + i1 + '_' + i2"
                      [attr.href]="'#' + prefix + 'embedded_object_' + i2">{{embeddedResource.name}} [{{i2}}]</a>
-                  <button class="icon-book badge ml-auto px-2 btn btn-outline-success btn-sm"
+                  <button class="icon-book badge ml-auto px-2 btn btn-outline-info btn-sm"
                           (click)="processCommand(command.Document, embeddedResource.docUri)"
                           title="Show Documentation">
                   </button>

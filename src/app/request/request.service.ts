@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {Observable} from 'rxjs/Observable';
@@ -87,6 +87,10 @@ export class RequestService {
         },
         err => {
           console.log('Error: ' + err.message);
+          this.appService.setUrl(uri);
+          err.body = undefined;
+          this.httpResponse = <HttpResponse<any>>err;
+          this.responseSubject.next(err);
         }
       );
     } else if (command === Command.Post || command === Command.Put || command === Command.Patch) {

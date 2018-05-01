@@ -167,7 +167,7 @@ export class AppService {
     let newLocationHash = '';
     let andPrefix = '';
 
-    if (this.themeParam !== 'Default') {
+    if (this.themeParam.toLowerCase() !== 'default') {
       newLocationHash += andPrefix + 'theme=' + this.themeParam;
       andPrefix = '&';
     }
