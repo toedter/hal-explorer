@@ -1,7 +1,7 @@
 # HAL Explorer
 
 An API Explorer for [HAL](http://stateless.co/hal_specification.html) based REST APIs,
-inspired by Mike Kelly's Hal-Browser, see https://github.com/mikekelly/hal-browser
+inspired by Mike Kelly's HAL-Browser, see https://github.com/mikekelly/hal-browser
 
 HAL Explorer can be used to browse and explore HAL based hypermedia APIs.
 
