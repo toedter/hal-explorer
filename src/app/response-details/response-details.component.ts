@@ -9,7 +9,7 @@ import {JsonHighlighterService} from '../json-highlighter/json-highlighter.servi
   styleUrls: ['./response-details.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class ResponseBodyComponent implements OnInit {
+export class ResponseDetailsComponent implements OnInit {
   responseBody: string;
   responseHeaders: ResponseHeader[];
   responseStatus: number;

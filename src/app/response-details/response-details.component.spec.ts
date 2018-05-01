@@ -1,25 +1,25 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ResponseBodyComponent } from './response-details.component';
+import { ResponseDetailsComponent } from './response-details.component';
 import {RequestService} from '../request/request.service';
 import {HttpClient, HttpHandler} from '@angular/common/http';
 import {AppService} from '../app.service';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
 
 describe('ResponseDetailsComponent', () => {
-  let component: ResponseBodyComponent;
-  let fixture: ComponentFixture<ResponseBodyComponent>;
+  let component: ResponseDetailsComponent;
+  let fixture: ComponentFixture<ResponseDetailsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResponseBodyComponent ],
+      declarations: [ ResponseDetailsComponent ],
       providers: [RequestService, AppService, JsonHighlighterService, HttpClient, HttpHandler]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ResponseBodyComponent);
+    fixture = TestBed.createComponent(ResponseDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
