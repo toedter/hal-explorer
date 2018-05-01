@@ -52,7 +52,7 @@
             </tr>
             <tr>
               <td>Version:</td>
-              <td>0.1</td>
+              <td>0.9</td>
             </tr>
             <tr>
               <td>GitHub:</td>
@@ -94,7 +94,7 @@
       <app-response-explorer></app-response-explorer>
     </div>
     <div class="form-group col-md-6">
-      <app-response-details *ngIf="!showDocumentation"></app-response-details>
+      <app-response-details [hidden]="showDocumentation"></app-response-details>
       <app-documentation></app-documentation>
     </div>
   </div>
