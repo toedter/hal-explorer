@@ -19,7 +19,7 @@ HAL Explorer can be used to browse and explore HAL based hypermedia APIs.
 
 ## Demo
 
-You can play with a running demo [here](https://chatty42.herokuapp.com/hal-explorer/index.html#theme=Cosmo&url=https://chatty42.herokuapp.com/api)
+You can play with a running demo [here](https://chatty42.herokuapp.com/hal-explorer/index.html#theme=Cosmo&url=https://chatty42.herokuapp.com/api).
 I host this demo at Heroku, so please give it a little time to warm-up (This might take up to 1 minute).
 
 ## Development server
