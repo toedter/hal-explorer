@@ -5,7 +5,7 @@ export class AppPage {
     return browser.get('/');
   }
 
-  getExplorerText() {
-    return element(by.css('app-root h3')).getText();
+  getEditHeadersButtonText() {
+    return element(by.buttonText('Edit Headers')).getText();
   }
 }

@@ -8,13 +8,13 @@ describe('HAL-Explorer App', () => {
     page = new AppPage();
   });
 
-  it('should have title "HAL-Explorer"', async () => {
+  it('should have title "HAL Explorer"', async () => {
     page.navigateTo();
-    expect(await browser.getTitle()).toBe('HAL-Explorer');
+    expect(await browser.getTitle()).toBe('HAL Explorer');
   });
 
-  it('should display "Explorer" section title', () => {
+  it('should display "Edit Headers" as button text', () => {
     page.navigateTo();
-    expect(page.getExplorerText()).toEqual('Explorer');
+    expect(page.getEditHeadersButtonText()).toEqual('Edit Headers');
   });
 });
