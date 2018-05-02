@@ -2,6 +2,12 @@ import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 
+
+export class RequestHeader {
+  constructor(public key: string, public value: string) {
+  }
+}
+
 @Injectable()
 export class AppService {
   private urlParam: string;
@@ -150,7 +156,7 @@ export class AppService {
       this.layoutSubject.next(this.layoutParam);
     }
 
-    this.customRequestHeaders = new Array();
+    this.customRequestHeaders = [];
     let publishRequestHeaders = false;
     for (let i = 0; i < 5; i++) {
       if (tempCustomRequestHeaders[i] && tempCustomRequestHeaders[i].key && tempCustomRequestHeaders[i].value.length > 0) {
@@ -158,7 +164,8 @@ export class AppService {
         publishRequestHeaders = true;
       }
     }
-    if(publishRequestHeaders) {
+
+    if (publishRequestHeaders) {
       this.requestHeadersSubject.next(this.customRequestHeaders);
     }
   }
@@ -188,11 +195,6 @@ export class AppService {
     }
 
     window.location.hash = newLocationHash;
-  }
-}
-
-export class RequestHeader {
-  constructor(public key: string, public value: string) {
   }
 }
 

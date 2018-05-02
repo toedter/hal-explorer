@@ -6,6 +6,9 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {AppService} from '../app.service';
 import {HttpClient} from '@angular/common/http';
 
+class AppServiceMock {}
+class HttpClientMock {}
+
 describe('DocumentationComponent', () => {
   let component: DocumentationComponent;
   let fixture: ComponentFixture<DocumentationComponent>;
@@ -35,6 +38,4 @@ describe('DocumentationComponent', () => {
   });
 });
 
-class AppServiceMock {}
-class HttpClientMock {}
 

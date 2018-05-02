@@ -33,13 +33,13 @@ export class RequestComponent implements OnInit {
         const event: UriTemplateEvent = <UriTemplateEvent>value;
         this.uriTemplateEvent = event;
         this.inputChanged();
-        $('#requestModalTrigger').click();
+        $('#requestModalTrigger').trigger( 'click' );
       } else if (value.type === EventType.FillHttpRequest) {
         const event: HttpRequestEvent = <HttpRequestEvent>value;
         this.httpRequestEvent = event;
         this.inputChanged();
         this.selectedHttpMethod = event.command;
-        $('#HttpRequestTrigger').click();
+        $('#HttpRequestTrigger').trigger( 'click' );
       }
     });
 
@@ -92,7 +92,7 @@ export class RequestComponent implements OnInit {
       }
     }
 
-    $('#requestHeadersModalTrigger').click();
+    $('#requestHeadersModalTrigger').trigger( 'click' );
   }
 
   public updateRequestHeaders() {

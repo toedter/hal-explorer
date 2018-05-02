@@ -3,6 +3,12 @@ import {RequestService} from '../request/request.service';
 import {HttpResponse} from '@angular/common/http';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
 
+
+class ResponseHeader {
+  constructor(private key: string, private value: string) {
+  }
+}
+
 @Component({
   selector: 'app-response-details',
   templateUrl: './response-details.component.html',
@@ -36,10 +42,5 @@ export class ResponseDetailsComponent implements OnInit {
           }
         },
         error => console.error('ResponseBodyComponent: ' + error));
-  }
-}
-
-class ResponseHeader {
-  constructor(private key: string, private value: string) {
   }
 }

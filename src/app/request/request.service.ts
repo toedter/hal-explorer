@@ -12,6 +12,27 @@ export enum EventType {FillUriTemplate, FillHttpRequest}
 
 export enum Command {Get, Post, Put, Patch, Delete, Document}
 
+export class UriTemplateEvent {
+  constructor(public type: EventType, public templatedUrl, public parameters: UrlTemplateParameter[]) {
+  }
+}
+
+export class HttpRequestEvent {
+  constructor(public type: EventType, public command: Command, public uri: string) {
+  }
+}
+
+export class RequestHeaderEvent {
+  constructor(public type: EventType, public command: Command, public uri: string) {
+  }
+}
+
+export class UrlTemplateParameter {
+  constructor(public key: string, public value: string) {
+  }
+}
+
+
 @Injectable()
 export class RequestService {
 
@@ -138,24 +159,3 @@ export class RequestService {
     this.customRequestHeaders = requestHeaders;
   }
 }
-
-export class UriTemplateEvent {
-  constructor(public type: EventType, public templatedUrl, public parameters: UrlTemplateParameter[]) {
-  }
-}
-
-export class HttpRequestEvent {
-  constructor(public type: EventType, public command: Command, public uri: string) {
-  }
-}
-
-export class RequestHeaderEvent {
-  constructor(public type: EventType, public command: Command, public uri: string) {
-  }
-}
-
-export class UrlTemplateParameter {
-  constructor(public key: string, public value: string) {
-  }
-}
-

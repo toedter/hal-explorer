@@ -3,6 +3,16 @@ import {HttpResponse} from '@angular/common/http';
 import {Command, RequestService} from '../request/request.service';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
 
+class Link {
+  constructor(public rel: string, public href: string, public title: string, public name: string, public docUri?: string) {
+  }
+}
+
+class EmbeddedRessource {
+  constructor(public name: string, public content: any, public isArray: boolean, public docUri?: string) {
+  }
+}
+
 @Component({
   selector: 'app-response-explorer',
   templateUrl: './response-explorer.component.html',
@@ -118,15 +128,5 @@ export class ResponseExplorerComponent implements OnInit {
 
   public processCommand(command: Command, link: string) {
     this.requestService.processCommand(command, link);
-  }
-}
-
-class Link {
-  constructor(public rel: string, public href: string, public title: string, public name: string, public docUri?: string) {
-  }
-}
-
-class EmbeddedRessource {
-  constructor(public name: string, public content: any, public isArray: boolean, public docUri?: string) {
   }
 }
