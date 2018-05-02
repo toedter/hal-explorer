@@ -48,6 +48,10 @@ export class RequestService {
   }
 
   public getUri(uri: string) {
+    if (!uri || uri.trim().length === 0) {
+      return;
+    }
+
     this.processCommand(Command.Get, uri);
   }
 
