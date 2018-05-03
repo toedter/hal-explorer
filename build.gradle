@@ -1,0 +1,21 @@
+plugins {
+    id "com.moowork.node" version "1.2.0"
+}
+
+node {
+    version = '8.11.1'
+    download = true
+    workDir = file("${rootProject.buildDir}/node")
+    nodeModulesDir = file("${project.projectDir}")
+}
+
+npm_install.inputs.file new File(projectDir, "package.json")
+npm_install.outputs.dir new File(projectDir, "node_modules")
+
+npm_run_build.inputs.dir new File(projectDir, "src")
+npm_run_build.outputs.dir new File(projectDir, "dist")
+
+task build {}
+build.dependsOn npm_run_build
+
+
