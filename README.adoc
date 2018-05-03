@@ -1,7 +1,7 @@
 # HAL Explorer
 
 
-image:https://travis-ci.org/toedter/hal-explorer.svg?branch=master[Build Status, link="https://travis-ci.org/toedter/chatty"]
+image:https://travis-ci.org/toedter/hal-explorer.svg?branch=master[Build Status, link="https://travis-ci.org/toedter/hal-explorer"]
 image:https://img.shields.io/badge/license-MIT-blue.svg["MIT", link="http://toedter.mit-license.org"]
 
 An API Explorer for http://stateless.co/hal_specification.html[HAL] based REST APIs,
