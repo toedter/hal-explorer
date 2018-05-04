@@ -7,6 +7,7 @@ import {Subject} from 'rxjs/Subject';
 import * as utpl from 'uri-templates';
 import {URITemplate} from 'uri-templates';
 import {AppService, RequestHeader} from '../app.service';
+import * as HttpStatus from 'http-status-codes';
 
 export enum EventType {FillUriTemplate, FillHttpRequest}
 
@@ -76,16 +77,28 @@ export class RequestService {
     this.processCommand(Command.Get, uri);
   }
 
-  public requestUri(uri: string, httpMethod: string, body: string) {
-    const jsonObjectBody = JSON.parse(body);
-
-    this.http.request(httpMethod, uri, {headers: this.requestHeaders, observe: 'response', body: jsonObjectBody}).subscribe(
+  public requestUri(uri: string, httpMethod: string, body?: string) {
+    this.appService.setUrl(uri);
+    this.http.request(httpMethod, uri, {headers: this.requestHeaders, observe: 'response', body: body}).subscribe(
       (response: HttpResponse<any>) => {
+        (<any>response).statusText = HttpStatus.getStatusText(response.status);
         this.httpResponse = response;
         this.responseSubject.next(response);
       },
-      err => {
-        console.log('Error: ' + err.message);
+      (error: HttpErrorResponse) => {
+        const statusText = HttpStatus.getStatusText(error.status);
+        if (error.error instanceof ErrorEvent) {
+          console.error('An error event occurred:', error.error.message);
+        } else {
+          // console.error(`Backend returned code ${error.status}, body: ${error.error}`);
+          const errorBody = error.error;
+
+          this.httpResponse = new HttpResponse({
+            body: errorBody, headers: error.headers,
+            status: error.status, statusText: statusText, url: error.url
+          });
+          this.responseSubject.next(this.httpResponse);
+        }
       }
     );
   }
@@ -104,20 +117,7 @@ export class RequestService {
         return;
       }
 
-      this.http.get(uri, {headers: this.requestHeaders, observe: 'response'}).subscribe(
-        (response: HttpResponse<any>) => {
-          this.appService.setUrl(uri);
-          this.httpResponse = response;
-          this.responseSubject.next(response);
-        },
-        err => {
-          console.log('Error: ' + err.message);
-          this.appService.setUrl(uri);
-          err.body = undefined;
-          this.httpResponse = <HttpResponse<any>>err;
-          this.responseSubject.next(err);
-        }
-      );
+      this.requestUri(uri, 'GET');
     } else if (command === Command.Post || command === Command.Put || command === Command.Patch) {
       if (uri.includes('{')) {
         uri = uri.substring(0, uri.indexOf('{'));
@@ -130,16 +130,7 @@ export class RequestService {
       if (uri.includes('{')) {
         uri = uri.substring(0, uri.indexOf('{'));
       }
-      this.http.delete(uri, {headers: this.requestHeaders, observe: 'response'}).subscribe(
-        (response: HttpResponse<any>) => {
-          window.location.hash = uri;
-          this.httpResponse = response;
-          this.responseSubject.next(response);
-        },
-        err => {
-          console.log('Error: ' + err.message);
-        }
-      );
+      this.requestUri(uri, 'DELETE');
 
     } else if (command === Command.Document) {
       this.documentationSubject.next(uri);
