@@ -78,8 +78,13 @@ export class RequestService {
   }
 
   public requestUri(uri: string, httpMethod: string, body?: string) {
+
+    let headers = this.requestHeaders;
+    if (httpMethod.toLowerCase() === 'post' || httpMethod.toLowerCase() === 'put' || httpMethod.toLowerCase() === 'patch') {
+      headers = headers.set('Content-Type', 'application/json; charset=utf-8');
+    }
     this.appService.setUrl(uri);
-    this.http.request(httpMethod, uri, {headers: this.requestHeaders, observe: 'response', body: body}).subscribe(
+    this.http.request(httpMethod, uri, {headers: headers, observe: 'response', body: body}).subscribe(
       (response: HttpResponse<any>) => {
         (<any>response).statusText = HttpStatus.getStatusText(response.status);
         this.httpResponse = response;
