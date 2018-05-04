@@ -32,5 +32,10 @@ Run `npm start` for a dev server. Navigate to http://localhost:4200/. The app wi
 
 ## Build
 
-Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Run `npm run build` to build the project in production mode. The build artifacts will be stored in the `dist/` directory.
+
+## Gradle/Java Build Support
+
+If you have Java installed, you can also build the project with Gradle. The Gradle build will install node.js locally in the project directory.
+Run `./gradlew build` to build the project in production mode. The build artifacts will be stored in the `dist/` directory.
 
