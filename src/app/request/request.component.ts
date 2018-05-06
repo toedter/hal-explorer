@@ -13,12 +13,14 @@ export class RequestComponent implements OnInit {
   uriTemplateEvent: UriTemplateEvent = new UriTemplateEvent(EventType.FillUriTemplate, '', []);
   httpRequestEvent: HttpRequestEvent = new HttpRequestEvent(EventType.FillHttpRequest, Command.Post, '');
   newRequestUrl: string;
-  postRequestBody: string;
+  requestBody: string;
   selectedHttpMethod: Command;
   commandPlaceholder = Command;
   requestHeaders: RequestHeader[];
   tempRequestHeaders: RequestHeader[];
   hasCustomRequestHeaders: boolean;
+  jsonSchemaKeys: string[];
+  jsonSchema: any;
 
   constructor(private appService: AppService, private requestService: RequestService) {
   }
@@ -33,13 +35,21 @@ export class RequestComponent implements OnInit {
         const event: UriTemplateEvent = <UriTemplateEvent>value;
         this.uriTemplateEvent = event;
         this.inputChanged();
-        $('#requestModalTrigger').trigger( 'click' );
+        $('#requestModalTrigger').trigger('click');
       } else if (value.type === EventType.FillHttpRequest) {
         const event: HttpRequestEvent = <HttpRequestEvent>value;
         this.httpRequestEvent = event;
+        if (event.jsonSchema) {
+          this.jsonSchema = event.jsonSchema.properties;
+          this.jsonSchemaKeys = Object.keys(this.jsonSchema);
+        } else {
+          this.jsonSchema = undefined;
+          this.jsonSchemaKeys = undefined;
+        }
         this.inputChanged();
+        this.requestBody = '';
         this.selectedHttpMethod = event.command;
-        $('#HttpRequestTrigger').trigger( 'click' );
+        $('#HttpRequestTrigger').trigger('click');
       }
     });
 
@@ -62,7 +72,7 @@ export class RequestComponent implements OnInit {
   }
 
   public createOrUpdateResource() {
-    this.requestService.requestUri(this.httpRequestEvent.uri, Command[this.selectedHttpMethod], this.postRequestBody);
+    this.requestService.requestUri(this.httpRequestEvent.uri, Command[this.selectedHttpMethod], this.requestBody);
   }
 
   public goFromHashChange(url: string) {
@@ -82,6 +92,24 @@ export class RequestComponent implements OnInit {
     }
   }
 
+  public requestBodyChanged() {
+    let hasProperties = false;
+    this.requestBody = '{\n';
+    if (this.jsonSchema) {
+      for (const key of this.jsonSchemaKeys) {
+        if (this.jsonSchema[key].value && this.jsonSchema[key].value.length > 0) {
+          if (hasProperties) {
+            this.requestBody += ',\n';
+          }
+          this.requestBody += '  "' + key + '": ' + (this.jsonSchema[key].type !== 'integer' ? '"' : '')
+            + this.jsonSchema[key].value + (this.jsonSchema[key].type !== 'integer' ? '"' : '');
+          hasProperties = true;
+        }
+      }
+    }
+    this.requestBody += '\n}';
+  }
+
   public showEditHeadersDialog() {
     this.tempRequestHeaders = new Array();
     for (let i = 0; i < 5; i++) {
@@ -92,7 +120,7 @@ export class RequestComponent implements OnInit {
       }
     }
 
-    $('#requestHeadersModalTrigger').trigger( 'click' );
+    $('#requestHeadersModalTrigger').trigger('click');
   }
 
   public updateRequestHeaders() {
@@ -109,6 +137,19 @@ export class RequestComponent implements OnInit {
     this.hasCustomRequestHeaders = this.requestHeaders.length > 0;
     this.appService.setCustomRequestHeaders(this.requestHeaders);
   }
+
+  public getTooltip(key: string): string {
+    if (!this.jsonSchema) {
+      return '';
+    }
+    let tooltip = this.jsonSchema[key].type;
+    if (this.jsonSchema[key].format) {
+      tooltip += ' in ' + this.jsonSchema[key].format + ' format';
+    }
+    return tooltip;
+  }
+
+  public getInputType(key: string): string {
+    return this.requestService.getInputType(this.jsonSchema[key].type, this.jsonSchema[key].format);
+  }
 }
-
-

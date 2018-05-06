@@ -114,10 +114,21 @@
               </select>
             </div>
           </div>
+          <div *ngIf="jsonSchema">
+            <hr>
+            <label class="text-info">Profile</label>
+            <div class="form-group row" *ngFor="let key of jsonSchemaKeys">
+              <label [title]="getTooltip(key)" class="text-info col-sm-2 col-form-label" for="expandedURI">{{jsonSchema[key].title}}</label>
+              <div class="col-sm-10">
+                <input [type]="getInputType(key)" class="form-control" [(ngModel)]="jsonSchema[key].value" [ngModelOptions]="{standalone: true}" (keyup)="requestBodyChanged()">
+              </div>
+            </div>
+            <hr>
+          </div>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="body">Body</label>
             <div class="col-sm-10">
-              <textarea [(ngModel)]="postRequestBody" class="form-control" id="body" rows="5"
+              <textarea [(ngModel)]="requestBody" class="form-control" id="body" rows="5"
                         name="bodyArea"></textarea>
             </div>
           </div>
@@ -131,9 +142,9 @@
   </div>
 </div>
 
-<div id="requestHeadersModalTrigger" data-toggle="modal" data-target="#requesHeadersModal"></div>
+<div id="requestHeadersModalTrigger" data-toggle="modal" data-target="#requestHeadersModal"></div>
 
-<div class="modal fade" id="requesHeadersModal" role="dialog" aria-labelledby="requestHeadersModalLabel"
+<div class="modal fade" id="requestHeadersModal" role="dialog" aria-labelledby="requestHeadersModalLabel"
      aria-hidden="false">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -167,7 +178,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="updateRequestHeaders()">OK</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="updateRequestHeaders()">OK
+        </button>
       </div>
     </div>
   </div>

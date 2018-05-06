@@ -19,7 +19,7 @@ export class UriTemplateEvent {
 }
 
 export class HttpRequestEvent {
-  constructor(public type: EventType, public command: Command, public uri: string) {
+  constructor(public type: EventType, public command: Command, public uri: string, public jsonSchema?: any) {
   }
 }
 
@@ -52,6 +52,7 @@ export class RequestService {
       'Accept': 'application/hal+json, application/json, */*'
     });
   private customRequestHeaders: RequestHeader[];
+  private jsonSchema: any;
 
 
   constructor(private appService: AppService, private http: HttpClient) {
@@ -128,7 +129,7 @@ export class RequestService {
         uri = uri.substring(0, uri.indexOf('{'));
       }
       const event = new HttpRequestEvent(EventType.FillHttpRequest, command, uri);
-      this.needInfoSubject.next(event);
+      this.getJsonSchema(event);
       return;
 
     } else if (command === Command.Delete) {
@@ -144,7 +145,75 @@ export class RequestService {
     }
   }
 
-  setCustomHeaders(requestHeaders: RequestHeader[]) {
+  public getJsonSchema(httpRequestEvent: HttpRequestEvent) {
+    this.http.request('HEAD', httpRequestEvent.uri, {observe: 'response'}).subscribe(
+      (response: HttpResponse<any>) => {
+        const linkHeader = response.headers.get('Link');
+        if (linkHeader) {
+          const w3cLinks = linkHeader.split(',');
+          let profileUrl;
+          w3cLinks.forEach(function (w3cLink) {
+            const parts = w3cLink.split(';');
+
+            const hrefWrappedWithBrackets = parts[0];
+            const href = hrefWrappedWithBrackets.slice(1, parts[0].length - 1);
+
+            const w3cRel = parts[1];
+            const relWrappedWithQuotes = w3cRel.split('=')[1];
+            const rel = relWrappedWithQuotes.slice(1, relWrappedWithQuotes.length - 1);
+
+            if (rel.toLowerCase() === 'profile') {
+              profileUrl = href;
+            }
+          });
+
+          if (profileUrl) {
+            const headers = new HttpHeaders(
+              {
+                'Accept': 'application/schema+json'
+              });
+
+            this.http.get(profileUrl, {headers: headers, observe: 'response'}).subscribe(
+              (httpResponse: HttpResponse<any>) => {
+                const jsonSchema = httpResponse.body;
+
+                // this would be for removing link relations from the POST, PUT and PATCH editor
+                //
+                // Object.keys(jsonSchema.properties).forEach(function (property) {
+                //   if (jsonSchema.properties[property].hasOwnProperty('format') &&
+                //     jsonSchema.properties[property].format === 'uri') {
+                //     delete jsonSchema.properties[property];
+                //   }
+                // });
+
+                // since we use those properties to generate a editor for POST, PUT and PATCH,
+                // "readOnly" properties should not be displayed
+                Object.keys(jsonSchema.properties).forEach(function (property) {
+                  if (jsonSchema.properties[property].hasOwnProperty('readOnly') &&
+                    jsonSchema.properties[property].readOnly === true) {
+                    delete jsonSchema.properties[property];
+                  }
+                });
+
+                httpRequestEvent.jsonSchema = jsonSchema;
+                this.needInfoSubject.next(httpRequestEvent);
+              },
+              () => {
+                console.error('Cannot get JSON schema for:', profileUrl);
+                this.needInfoSubject.next(httpRequestEvent);
+              }
+            );
+          }
+        }
+        this.needInfoSubject.next(httpRequestEvent);
+      },
+      () => {
+        this.needInfoSubject.next(httpRequestEvent);
+      }
+    );
+  }
+
+  public setCustomHeaders(requestHeaders: RequestHeader[]) {
     this.requestHeaders = new HttpHeaders(
       {
         'requestHeader.key': 'application/hal+json, application/json, */*'
@@ -153,5 +222,29 @@ export class RequestService {
       this.requestHeaders = this.requestHeaders.append(requestHeader.key, requestHeader.value);
     }
     this.customRequestHeaders = requestHeaders;
+  }
+
+  public getInputType(jsonSchemaType: string, jsonSchemaFormat: string): string {
+    switch (jsonSchemaType.toLowerCase()) {
+      case 'integer':
+        return 'number';
+      case 'string':
+        if (jsonSchemaFormat) {
+          switch (jsonSchemaFormat.toLowerCase()) {
+            // The following enables the dat time editor in most browsers
+            // I have disabled this because the date time formats
+            // are often very different, so type=text is more flexible
+            //
+            // case 'date-time':
+            //   return 'datetime-local';
+            case 'uri':
+              return 'url';
+          }
+        }
+        return 'text';
+
+      default:
+        return 'text';
+    }
   }
 }
