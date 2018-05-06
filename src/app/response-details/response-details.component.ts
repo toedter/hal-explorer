@@ -28,7 +28,11 @@ export class ResponseDetailsComponent implements OnInit {
     this.requestService.getResponseObservable()
       .subscribe((response: HttpResponse<any>) => {
           this.responseStatus = response.status;
-          this.responseStatusText = response.statusText;
+          if(response.status !== 0) {
+            this.responseStatusText = response.statusText;
+          } else {
+            this.responseStatusText = '';
+          }
           this.responseBody =
             this.jsonHighlighterService.syntaxHighlight(JSON.stringify(response.body, undefined, 2));
           const responseHeaderKeys: string[] = response.headers.keys();

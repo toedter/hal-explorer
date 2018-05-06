@@ -92,7 +92,11 @@ export class RequestService {
         this.responseSubject.next(response);
       },
       (error: HttpErrorResponse) => {
-        const statusText = HttpStatus.getStatusText(error.status);
+        let statusText = '';
+        if (error.status !== 0) {
+          statusText = HttpStatus.getStatusText(error.status);
+        }
+
         if (error.error instanceof ErrorEvent) {
           console.error('An error event occurred:', error.error.message);
         } else {
