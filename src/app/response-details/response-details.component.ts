@@ -28,7 +28,7 @@ export class ResponseDetailsComponent implements OnInit {
     this.requestService.getResponseObservable()
       .subscribe((response: HttpResponse<any>) => {
           this.responseStatus = response.status;
-          if(response.status !== 0) {
+          if (response.status !== 0) {
             this.responseStatusText = response.statusText;
           } else {
             this.responseStatusText = '';
