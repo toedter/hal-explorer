@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import * as utpl from 'uri-templates';
 import {URITemplate} from 'uri-templates';
 import {AppService, RequestHeader} from '../app.service';
@@ -99,7 +98,10 @@ export class RequestService {
           console.error('An error event occurred:', error.error.message);
         } else {
           // console.error(`Backend returned code ${error.status}, body: ${error.error}`);
-          const errorBody = error.error;
+          let errorBody = '';
+          if (error.status !== 0) {
+            errorBody = error.error;
+          }
 
           this.httpResponse = new HttpResponse({
             body: errorBody, headers: error.headers,
@@ -218,7 +220,7 @@ export class RequestService {
   public setCustomHeaders(requestHeaders: RequestHeader[]) {
     this.requestHeaders = new HttpHeaders(
       {
-        'requestHeader.key': 'application/hal+json, application/json, */*'
+        'Accept': 'application/hal+json, application/json, */*'
       });
     for (const requestHeader of requestHeaders) {
       this.requestHeaders = this.requestHeaders.append(requestHeader.key, requestHeader.value);
