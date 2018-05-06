@@ -20,16 +20,10 @@ export class HttpRequestEvent {
   }
 }
 
-export class RequestHeaderEvent {
-  constructor(public type: EventType, public command: Command, public uri: string) {
-  }
-}
-
 export class UrlTemplateParameter {
   constructor(public key: string, public value: string) {
   }
 }
-
 
 @Injectable()
 export class RequestService {
@@ -49,8 +43,6 @@ export class RequestService {
       'Accept': 'application/hal+json, application/json, */*'
     });
   private customRequestHeaders: RequestHeader[];
-  private jsonSchema: any;
-
 
   constructor(private appService: AppService, private http: HttpClient) {
   }
@@ -71,7 +63,6 @@ export class RequestService {
     if (!uri || uri.trim().length === 0) {
       return;
     }
-
     this.processCommand(Command.Get, uri);
   }
 
@@ -228,7 +219,7 @@ export class RequestService {
     this.customRequestHeaders = requestHeaders;
   }
 
-  public getInputType(jsonSchemaType: string, jsonSchemaFormat: string): string {
+  public getInputType(jsonSchemaType: string, jsonSchemaFormat?: string): string {
     switch (jsonSchemaType.toLowerCase()) {
       case 'integer':
         return 'number';
