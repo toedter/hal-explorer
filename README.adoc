@@ -20,7 +20,7 @@ image:hal-explorer.jpg[HAL Explorer screenshot]
 * Bootswatch themes
 * 2 layouts (2 column or 3 column)
 * API URL, theme, layout and request headers stored in URL fragment
-* Support of Spring Data Rest profiles to populate properties in request editor
+* Support for Spring Data Rest profiles to populate properties in request editor
 
 ## Demo
 
