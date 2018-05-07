@@ -3,7 +3,6 @@ import {RequestService} from '../request/request.service';
 import {HttpResponse} from '@angular/common/http';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
 
-
 class ResponseHeader {
   constructor(private key: string, private value: string) {
   }
@@ -22,6 +21,7 @@ export class ResponseDetailsComponent implements OnInit {
   responseStatusText: string;
 
   constructor(private requestService: RequestService, private jsonHighlighterService: JsonHighlighterService) {
+    this.responseStatus = 0;
   }
 
   ngOnInit() {
