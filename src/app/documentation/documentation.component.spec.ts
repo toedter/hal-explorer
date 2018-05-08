@@ -8,6 +8,7 @@ import {HttpClient} from '@angular/common/http';
 
 class AppServiceMock {}
 class HttpClientMock {}
+class DomSanitizerMock {}
 
 describe('DocumentationComponent', () => {
   let component: DocumentationComponent;
@@ -20,7 +21,7 @@ describe('DocumentationComponent', () => {
         {provide: RequestService, useClass: RequestService},
         {provide: AppService, useClass: AppServiceMock},
         {provide: HttpClient, useClass: HttpClientMock},
-        {provide: DomSanitizer, useClass: DomSanitizer}
+        {provide: DomSanitizer, useClass: DomSanitizerMock}
       ]
 
     })
