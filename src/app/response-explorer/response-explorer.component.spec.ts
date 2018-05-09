@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, getTestBed, TestBed} from '@angular/core/testing';
 
 import {ResponseExplorerComponent} from './response-explorer.component';
 import {RequestService} from '../request/request.service';
@@ -6,21 +6,32 @@ import {HttpResponse} from '@angular/common/http';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
 
 class ObservableMock {
+  private callback: Function;
+  hasSubscribed = false;
+
   subscribe(next?: (value: HttpResponse<any>) => void, error?: (error: any) => void) {
-    // console.log('subscribed');
-    next(new HttpResponse<any>());
+    this.callback = next;
+    this.hasSubscribed = true;
+  }
+
+  next(response: HttpResponse<any>) {
+    this.callback(response);
   }
 }
 
 class RequestServiceMock {
-  getResponseObservable() {
-    return new ObservableMock();
+  observableMock: ObservableMock = new ObservableMock();
+
+  public getResponseObservable() {
+    return this.observableMock;
   }
 }
 
 class JsonHighlighterServiceMock {
+  syntaxHighlightInvoked = false;
+
   syntaxHighlight() {
-    // console.log('syntaxHighlight invoked');
+    this.syntaxHighlightInvoked = true;
   }
 }
 
@@ -30,13 +41,13 @@ describe('ResponseExplorerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResponseExplorerComponent ],
+      declarations: [ResponseExplorerComponent],
       providers: [
         {provide: RequestService, useClass: RequestServiceMock},
         {provide: JsonHighlighterService, useClass: JsonHighlighterServiceMock}
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -48,4 +59,49 @@ describe('ResponseExplorerComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should subscribe to request service\'s response observable', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+
+    expect(requestServiceMock.observableMock.hasSubscribed).toBeTruthy();
+  });
+
+  it('should syntax highlight json', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+    const jsonHighlighterServiceMock: JsonHighlighterServiceMock = getTestBed().get(JsonHighlighterService);
+
+    requestServiceMock.observableMock.next(new HttpResponse({body: {key: 'test'}}));
+
+    expect(jsonHighlighterServiceMock.syntaxHighlightInvoked).toBeTruthy();
+  });
+
+  it('should not syntax highlight json when response body has no properties', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+    const jsonHighlighterServiceMock: JsonHighlighterServiceMock = getTestBed().get(JsonHighlighterService);
+
+    requestServiceMock.observableMock.next(new HttpResponse({body: {}}));
+
+    expect(jsonHighlighterServiceMock.syntaxHighlightInvoked).toBeFalsy();
+  });
+
+  it('should parse empty response body', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+
+    requestServiceMock.observableMock.next(new HttpResponse({body: {}}));
+
+    expect(component.showProperties).toBeFalsy();
+    expect(component.showLinks).toBeFalsy();
+    expect(component.showEmbedded).toBeFalsy();
+  });
+
+  it('should parse HAL response body', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+
+    requestServiceMock.observableMock.next(new HttpResponse({body: {property: '1', _links: {}, _embedded: {}}}));
+
+    expect(component.showProperties).toBeTruthy();
+    expect(component.showLinks).toBeTruthy();
+    expect(component.showEmbedded).toBeTruthy();
+  });
+
 });
