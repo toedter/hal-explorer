@@ -8,10 +8,10 @@
           aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="#">
+  <div class="navbar-brand">
     <img src="favicon.ico" width="30" height="30" class="d-inline-block align-top" alt="">
     HAL Explorer
-  </a>
+  </div>
   <div class="collapse navbar-collapse" id="navbar1">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown">
@@ -32,7 +32,7 @@
           <a class="dropdown-item" href="#" *ngFor="let layout of layouts" (click)="changeLayout(layout)">{{layout}}</a>
         </div>
       </li>
-      <li class="nav-link" data-toggle="modal" data-target="#aboutModal">About</li>
+      <a class="nav-link" href="#" data-toggle="modal" data-target="#aboutModal">About</a>
     </ul>
   </div>
 </nav>
