@@ -1,5 +1,6 @@
 import {AppPage} from './app.po';
-import {browser} from 'protractor';
+import {browser, protractor} from 'protractor';
+import {AppConfig} from './app.config';
 
 describe('HAL-Explorer App', () => {
   let page: AppPage;
@@ -17,4 +18,15 @@ describe('HAL-Explorer App', () => {
     page.navigateTo();
     expect(page.getEditHeadersButtonText()).toEqual('Edit Headers');
   });
+
+  it('should not display HAL sections at startup', () => {
+    page.navigateTo();
+    expect(page.getPropertiesSection().isPresent()).toBeFalsy();
+  });
+
+  it('should display HAL sections when rendering HAL resource', () => {
+    page.navigateTo('/#url=' + AppConfig.getChattyApiUrl() + '/users');
+    expect(page.getPropertiesSection().isPresent()).toBeTruthy();
+  });
+
 });

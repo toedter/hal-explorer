@@ -42,6 +42,14 @@ Run `./gradlew build` to build the project in production mode. The build artifac
 
 The easiest way to integrate HAL Explorer into your backend would be to clone this Git repo, do a production build and then copy the content of the dist folder to a location accessable by your backend server. When you use Spring Boot, a good location in your projects source tree would be src/main/java/resources/static/hal-explorer. See https://github.com/toedter/chatty for a concrete integration example.
 
+== Running tests
+
+Run `npm test` to run the unit test suite against your default browser,
+run `npm test` to run the unit test suite against headless Chrome.
+
+To run the e2e tests you must have Docker installed.
+The e2e tests start a real Spring Boot based backend in a Docker container which is then used by HAL Explorer.
+
 [[license]]
 == License
 
