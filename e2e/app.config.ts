@@ -8,6 +8,6 @@ export class AppConfig {
       // TODO: find out, if Hyper-V is used
       return 'http://192.168.99.100:8080/api';
     }
-    return 'http://localhost:8080/api';
+    return 'http://127.0.0.1:8080/api';
   }
 }

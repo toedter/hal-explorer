@@ -22,5 +22,5 @@ script:
   - npm run lint
   - npm run build
   - npm run test-headless
-  - docker pull kaitoedter/chatty
+  - docker run -d -p 127.0.0.1:8080:8080 --name chatty-server kaitoedter/chatty
   - npm run e2e-headless
