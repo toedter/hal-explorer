@@ -20,5 +20,5 @@ script:
   - npm run lint
   - npm run build
   - npm run test-headless
-  - docker pull kaitoedter/chatty
-  - npm run e2e-headless
+#  - docker pull kaitoedter/chatty
+#  - npm run e2e-headless
