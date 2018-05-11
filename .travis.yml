@@ -1,5 +1,8 @@
 language: node_js
 
+services:
+  - docker
+
 node_js:
   - "8"
 
@@ -16,4 +19,5 @@ install:
 script:
   - npm run lint
   - npm run test-headless
+  - npm run e2e-headless
   - npm run build

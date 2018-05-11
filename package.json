@@ -9,7 +9,8 @@
     "test": "ng test",
     "test-headless": "ng test --browsers ChromeHeadless --watch=false",
     "lint": "ng lint",
-    "e2e": "docker run -d -p 8080:8080 --name chatty-server kaitoedter/chatty & ng e2e & docker rm -f chatty-server"
+    "e2e": "docker run -d -p 8080:8080 --name chatty-server kaitoedter/chatty & ng e2e & docker rm -f chatty-server",
+    "e2e-headless": "docker run -d -p 8080:8080 --name chatty-server kaitoedter/chatty & ng e2e --protractor-config protractor.conf.headless.js & docker rm -f chatty-server"
   },
   "private": true,
   "dependencies": {
