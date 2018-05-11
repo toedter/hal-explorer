@@ -18,6 +18,7 @@ install:
 
 script:
   - npm run lint
-  - npm run test-headless
-  - npm run e2e-headless
   - npm run build
+  - npm run test-headless
+  - docker pull kaitoedter/chatty
+  - npm run e2e-headless
