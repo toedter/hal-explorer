@@ -41,7 +41,7 @@ describe('HAL-Explorer App', () => {
     expect(page.getFirstPropertiesSection().isDisplayed()).toBeTruthy();
     expect(page.getFirstLinksSection().isDisplayed()).toBeTruthy();
     expect(page.getEmbeddedSection().isDisplayed()).toBeTruthy();
-    expectResponseDetailsAreDisplayed()
+    expectResponseDetailsAreDisplayed();
   });
 
   it('should display only Links section when rendering root api', () => {
