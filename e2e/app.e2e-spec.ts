@@ -52,5 +52,21 @@ describe('HAL-Explorer App', () => {
     expectResponseDetailsAreDisplayed();
   });
 
+  it('should display POST request dialog', () => {
+    page.navigateTo('/#url=' + AppConfig.getChattyApiUrl());
+    page.getFirstPostButton().click();
+    browser.wait(protractor.ExpectedConditions.presenceOf(page.getGoButton()),
+      5000, 'Element "Go!"-Button taking too long to appear in the DOM');
+    expect(page.getGoButton().isDisplayed()).toBeTruthy();
+  });
+
+  it('should display user profile in POST request dialog', () => {
+    page.navigateTo('/#url=' + AppConfig.getChattyApiUrl() + '/users');
+    page.getFirstPostButton().click();
+    const fullnameProfileLabel = page.getFullnameProfileLabel();
+    browser.wait(protractor.ExpectedConditions.presenceOf(fullnameProfileLabel),
+      5000, 'Label "Full name" taking too long to appear in the DOM');
+  });
+
 });
 

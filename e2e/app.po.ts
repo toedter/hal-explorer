@@ -1,6 +1,4 @@
 import {browser, by, element, ElementFinder} from 'protractor';
-import {AppConfig} from './app.config';
-import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 export class AppPage {
   navigateTo(url?: string) {
@@ -48,4 +46,17 @@ export class AppPage {
     const elementFinder = element(by.cssContainingText('h5', 'Documentation'));
     return elementFinder;
   }
+
+  getFirstPostButton(): ElementFinder {
+    return element.all(by.css('.icon-plus')).first();
+  }
+
+  getGoButton(): ElementFinder {
+    return element(by.id('updateDialogGoButton'));
+  }
+
+  getFullnameProfileLabel(): ElementFinder {
+    return element(by.cssContainingText('.col-form-label', 'Full name'));
+  }
+
 }
