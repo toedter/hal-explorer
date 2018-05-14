@@ -33,6 +33,20 @@ class MockResponseDetailsComponent {
 class MockDocumentationComponent {
 }
 
+class ObservableMock {
+  private callback: Function;
+  hasSubscribed = false;
+
+  subscribe(next?: (value: any) => void, error?: (error: any) => void) {
+    this.callback = next;
+    this.hasSubscribed = true;
+  }
+
+  next(input: any) {
+    this.callback(input);
+  }
+}
+
 class AppServiceMock {
   themeObservable: ObservableMock = new ObservableMock();
   layoutObservable: ObservableMock = new ObservableMock();
@@ -49,20 +63,6 @@ class AppServiceMock {
   }
 
   setLayout(layout: string) {
-  }
-}
-
-class ObservableMock {
-  private callback: Function;
-  hasSubscribed = false;
-
-  subscribe(next?: (value: any) => void, error?: (error: any) => void) {
-    this.callback = next;
-    this.hasSubscribed = true;
-  }
-
-  next(input: any) {
-    this.callback(input);
   }
 }
 
