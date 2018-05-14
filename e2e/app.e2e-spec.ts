@@ -57,7 +57,6 @@ describe('HAL-Explorer App', () => {
     page.getFirstPostButton().click();
     browser.wait(protractor.ExpectedConditions.presenceOf(page.getGoButton()),
       5000, 'Element "Go!"-Button taking too long to appear in the DOM');
-    expect(page.getGoButton().isDisplayed()).toBeTruthy();
   });
 
   it('should display user profile in POST request dialog', () => {
