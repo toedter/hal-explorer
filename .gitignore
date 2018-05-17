@@ -44,3 +44,7 @@ Thumbs.db
 # Gradle
 build
 .gradle
+
+# sonarqube
+.scannerwork
+

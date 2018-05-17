@@ -7,7 +7,7 @@
     "start": "ng serve",
     "build": "ng build --prod",
     "test": "ng test",
-    "test-headless": "ng test --browsers ChromeHeadless --watch=false",
+    "test-headless": "ng test --browsers ChromeHeadless --code-coverage --watch=false",
     "test-headless-watch": "ng test --browsers ChromeHeadless --watch=true --code-coverage",
     "lint": "ng lint",
     "e2e": "docker run -d -p 8080:8080 --name chatty-server kaitoedter/chatty & ng e2e & docker rm -f chatty-server",
