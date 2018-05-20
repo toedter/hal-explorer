@@ -135,7 +135,7 @@ export class AppService {
         if (requestHeader) {
           requestHeader.value = headerValueParam;
         } else {
-          console.log('error in fragmet parameters: found request header value' + headerValueParam + ' without corresponding key');
+          console.log('error in fragment parameters: found request header value' + headerValueParam + ' without corresponding key');
         }
         m = regex.exec(fragment);
       } else if (key === 'url') {
