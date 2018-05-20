@@ -78,9 +78,13 @@ export class AppService {
   }
 
   setLayout(layout: string) {
-    this.layoutParamBackup = this.layoutParam;
-    this.layoutParam = layout;
-    this.setLocationHash();
+    if (layout === '2' || layout === '3') {
+      this.layoutParamBackup = this.layoutParam;
+      this.layoutParam = layout;
+      this.setLocationHash();
+    } else {
+      console.error('Cannot set unknown layout: ' + layout);
+    }
   }
 
   getCustomRequestHeaders(): RequestHeader[] {

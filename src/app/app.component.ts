@@ -66,20 +66,16 @@ export class AppComponent implements OnInit {
   }
 
   changeTheme(theme: string) {
-    if (theme === this.themes[0]) {
-      this.isCustomTheme = false;
-      this.appService.setTheme('Default');
-    } else {
-      this.isCustomTheme = true;
+    this.isCustomTheme = theme !== this.themes[0];
+    if (this.isCustomTheme) {
       this.selectedThemeUrl =
         this.sanitizer.bypassSecurityTrustResourceUrl('https://bootswatch.com/4/' + theme.toLowerCase() + '/bootstrap.min.css');
-      this.appService.setTheme(theme);
     }
+    this.appService.setTheme(theme);
   }
 
   changeLayout(layout: string) {
-    this.isTwoColumnLayout = (layout === this.layouts[0]) || (layout === '2');
     this.appService.setLayout(layout.substring(0, 1));
+    this.isTwoColumnLayout = this.appService.getLayout() === '2';
   }
-
 }
