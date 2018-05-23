@@ -25,7 +25,7 @@ image:hal-explorer.jpg[HAL Explorer screenshot]
 You can play with a running demo https://chatty42.herokuapp.com/hal-explorer/index.html#theme=Cosmo&url=https://chatty42.herokuapp.com/api[here].
 I host this demo at Heroku, so please give it a little time to warm up (This might take up to 1 minute).
 
-== Development server
+== Development Server
 
 Run `npm start` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
 
@@ -42,7 +42,7 @@ Run `./gradlew build` to build the project in production mode. The build artifac
 
 The easiest way to integrate HAL Explorer into your backend would be to clone this Git repo, do a production build and then copy the content of the dist folder to a location accessable by your backend server. When you use Spring Boot, a good location in your projects source tree would be src/main/java/resources/static/hal-explorer. See https://github.com/toedter/chatty for a concrete integration example.
 
-== Running tests
+== Running Tests
 
 Run `npm test` to run the unit test suite against your default browser,
 run `npm test` to run the unit test suite against headless Chrome.
