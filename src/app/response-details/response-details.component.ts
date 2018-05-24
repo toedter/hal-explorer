@@ -19,6 +19,7 @@ export class ResponseDetailsComponent implements OnInit {
   responseHeaders: ResponseHeader[];
   responseStatus: number;
   responseStatusText: string;
+  isString: boolean;
 
   constructor(private requestService: RequestService, private jsonHighlighterService: JsonHighlighterService) {
     this.responseStatus = 0;
@@ -35,8 +36,14 @@ export class ResponseDetailsComponent implements OnInit {
           }
           this.responseBody = undefined;
           if (response.body) {
-            this.responseBody =
-              this.jsonHighlighterService.syntaxHighlight(JSON.stringify(response.body, undefined, 2));
+            if (typeof response.body === 'string' || response.body instanceof String) {
+              this.isString = true;
+              this.responseBody = <string>response.body;
+            } else {
+              this.isString = false;
+              this.responseBody =
+                this.jsonHighlighterService.syntaxHighlight(JSON.stringify(response.body, undefined, 2));
+            }
           }
           const responseHeaderKeys: string[] = response.headers.keys();
           this.responseHeaders = new Array(responseHeaderKeys.length);

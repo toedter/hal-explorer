@@ -10,25 +10,31 @@ export class JsonHighlighterService {
       return;
     }
 
-    jsonString = jsonString.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    return jsonString.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
-      function (match) {
-        let cssClass = 'number';
-        if (/^"/.test(match)) {
-          if (/:$/.test(match)) {
-            cssClass = 'key';
-            if (/_embedded/.test(match) || /_links/.test(match) || /curies/.test(match)) {
-              cssClass = 'hal';
+    try {
+      JSON.parse(jsonString);
+
+      jsonString = jsonString.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return jsonString.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+        function (match) {
+          let cssClass = 'number';
+          if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+              cssClass = 'key';
+              if (/_embedded/.test(match) || /_links/.test(match) || /curies/.test(match)) {
+                cssClass = 'hal';
+              }
+            } else {
+              cssClass = 'string';
             }
-          } else {
-            cssClass = 'string';
+          } else if (/true|false/.test(match)) {
+            cssClass = 'boolean';
+          } else if (/null/.test(match)) {
+            cssClass = 'null';
           }
-        } else if (/true|false/.test(match)) {
-          cssClass = 'boolean';
-        } else if (/null/.test(match)) {
-          cssClass = 'null';
-        }
-        return '<span class="' + cssClass + '">' + match + '</span>';
-      });
+          return '<span class="' + cssClass + '">' + match + '</span>';
+        });
+    } catch (e) {
+      return jsonString;
+    }
   }
 }

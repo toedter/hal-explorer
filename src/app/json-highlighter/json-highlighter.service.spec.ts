@@ -34,18 +34,18 @@ describe('JsonHighlighterService', () => {
   }));
 
   it('should highlight number', inject([JsonHighlighterService], (service: JsonHighlighterService) => {
-    const output = jsonHighlighterService.syntaxHighlight('{"number":0');
-    expect(output).toBe('{<span class="key">"number":</span><span class="number">0</span>');
+    const output = jsonHighlighterService.syntaxHighlight('{"number":0}');
+    expect(output).toBe('{<span class="key">"number":</span><span class="number">0</span>}');
   }));
 
   it('should highlight boolean', inject([JsonHighlighterService], (service: JsonHighlighterService) => {
-    const output = jsonHighlighterService.syntaxHighlight('{"key":true');
-    expect(output).toBe('{<span class="key">"key":</span><span class="boolean">true</span>');
+    const output = jsonHighlighterService.syntaxHighlight('{"key":true}');
+    expect(output).toBe('{<span class="key">"key":</span><span class="boolean">true</span>}');
   }));
 
   it('should highlight null', inject([JsonHighlighterService], (service: JsonHighlighterService) => {
-    const output = jsonHighlighterService.syntaxHighlight('{"key":null');
-    expect(output).toBe('{<span class="key">"key":</span><span class="null">null</span>');
+    const output = jsonHighlighterService.syntaxHighlight('{"key":null}');
+    expect(output).toBe('{<span class="key">"key":</span><span class="null">null</span>}');
   }));
 
   it('should not highlight undefined input', inject([JsonHighlighterService], (service: JsonHighlighterService) => {

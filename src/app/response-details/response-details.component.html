@@ -38,7 +38,8 @@
 
         <div class="card info">
           <div class="card-text">
-            <pre [innerHTML]="responseBody">></pre>
+             <pre *ngIf="!isString" [innerHTML]="responseBody">></pre>
+             <pre *ngIf="isString">{{responseBody}}</pre>
           </div>
         </div>
       </div>

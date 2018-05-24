@@ -44,8 +44,11 @@ export class ResponseExplorerComponent implements OnInit {
     } else {
       this.requestService.getResponseObservable()
         .subscribe((response: HttpResponse<any>) => {
-            const json = Object.assign({}, response.body);
-            this.processJsonObject(json);
+            if (!(typeof response.body === 'string' || response.body instanceof String)) {
+              this.processJsonObject(response.body);
+            } else {
+              this.processJsonObject({});
+            }
           },
           error => console.error('ResponseBodyComponent: ' + error));
     }
@@ -112,10 +115,10 @@ export class ResponseExplorerComponent implements OnInit {
       this.showEmbedded = true;
       let docUri;
       this.curieLinks.forEach((curie: Link) => {
-          const curiePrefix = curie.name + ':';
-          if (Object.keys(embedded)[0].startsWith(curiePrefix)) {
-            docUri = curie.href.replace('{rel}', Object.keys(embedded)[0].replace(curiePrefix, ''));
-          }
+        const curiePrefix = curie.name + ':';
+        if (Object.keys(embedded)[0].startsWith(curiePrefix)) {
+          docUri = curie.href.replace('{rel}', Object.keys(embedded)[0].replace(curiePrefix, ''));
+        }
       });
 
       Object.getOwnPropertyNames(embedded).forEach(
