@@ -31,13 +31,15 @@
         </table>
       </div>
 
-      <div class="legend">
-        <h5>Response Body</h5>
-      </div>
+      <div *ngIf="responseBody">
+        <div class="legend">
+          <h5>Response Body</h5>
+        </div>
 
-      <div class="card info">
-        <div class="card-text">
-          <pre [innerHTML]="responseBody">></pre>
+        <div class="card info">
+          <div class="card-text">
+            <pre [innerHTML]="responseBody">></pre>
+          </div>
         </div>
       </div>
 

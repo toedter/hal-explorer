@@ -33,8 +33,11 @@ export class ResponseDetailsComponent implements OnInit {
           } else {
             this.responseStatusText = '';
           }
-          this.responseBody =
-            this.jsonHighlighterService.syntaxHighlight(JSON.stringify(response.body, undefined, 2));
+          this.responseBody = undefined;
+          if (response.body) {
+            this.responseBody =
+              this.jsonHighlighterService.syntaxHighlight(JSON.stringify(response.body, undefined, 2));
+          }
           const responseHeaderKeys: string[] = response.headers.keys();
           this.responseHeaders = new Array(responseHeaderKeys.length);
           for (const i in responseHeaderKeys) {
