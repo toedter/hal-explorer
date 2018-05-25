@@ -55,6 +55,10 @@ export class ResponseExplorerComponent implements OnInit {
   }
 
   private processJsonObject(json: any) {
+    if (!json) {
+      json = {};
+    }
+
     if (!this.prefix) {
       this.prefix = '';
     }

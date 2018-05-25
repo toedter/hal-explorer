@@ -91,7 +91,7 @@ export class RequestService {
           // console.error(`Backend returned code ${error.status}, body: ${error.error}`);
           let errorBody = '';
           if (error.status !== 0) {
-            if (error.error.text) {
+            if (error.error && error.error.text) {
               errorBody = error.error.text;
             } else {
               errorBody = error.error;
