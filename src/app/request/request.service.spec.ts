@@ -1,6 +1,6 @@
 import {TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {RequestService} from './request.service';
+import {Command, RequestService, UriTemplateEvent} from './request.service';
 import {AppService} from '../app.service';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 
@@ -47,6 +47,79 @@ describe('RequestService', () => {
     expect(testRequest.request.headers.keys()).toContain('Accept');
 
     httpMock.verify();
+  });
+
+  it('should set Content-Type request header for POST request', (done) => {
+    requestService.getResponseObservable().subscribe((response: HttpResponse<any>) => {
+      expect(response.body).toBe('body');
+      done();
+    });
+
+    requestService.requestUri('test-request', 'POST', 'body');
+
+    const testRequest = httpMock.expectOne('test-request');
+    testRequest.flush('body');
+
+    expect(testRequest.request.headers.keys()).toContain('Content-Type');
+    expect(testRequest.request.headers.get('Content-Type')).toBe('application/json; charset=utf-8');
+
+    httpMock.verify();
+  });
+
+  it('should process Get command', (done) => {
+    requestService.getResponseObservable().subscribe((response: HttpResponse<any>) => {
+      expect(response.body).toBe('body');
+      done();
+    });
+
+    requestService.processCommand(Command.Get, 'test-request');
+
+    const testRequest = httpMock.expectOne('test-request');
+    testRequest.flush('body');
+
+    expect(testRequest.request.method).toBe('GET');
+
+    httpMock.verify();
+  });
+
+
+  it('should process Post command', () => {
+    requestService.processCommand(Command.Post, 'test-request');
+
+    const testRequest = httpMock.expectOne('test-request');
+    testRequest.flush('body');
+
+    // first do a head request to figure out if there are available profiles
+    expect(testRequest.request.method).toBe('HEAD');
+
+    httpMock.verify();
+  });
+
+  it('should handle error', (done) => {
+    requestService.getResponseObservable().subscribe((response: HttpResponse<any>) => {
+      expect(response.body).toBe('Invalid request parameters');
+      done();
+    });
+
+    requestService.processCommand(Command.Get, 'test-request');
+
+    const mockErrorResponse = {
+      status: 404, statusText: 'Bad Request'
+    };
+    const data = 'Invalid request parameters';
+    httpMock.expectOne('test-request').flush(data, mockErrorResponse);
+
+    httpMock.verify();
+  });
+
+  it('should handle templated URLs', (done) => {
+    requestService.getNeedInfoObservable().subscribe((event: any) => {
+      const templateEvent: UriTemplateEvent = <UriTemplateEvent>event;
+      expect(templateEvent.templatedUrl).toBe('http://localhost{page}');
+      expect(templateEvent.parameters[0].key).toBe('page');
+      done();
+    });
+    requestService.processCommand(Command.Get, 'http://localhost{page}');
   });
 
 });
