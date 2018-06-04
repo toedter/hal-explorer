@@ -1,7 +1,7 @@
 import {async, ComponentFixture, getTestBed, TestBed} from '@angular/core/testing';
 
 import {ResponseExplorerComponent} from './response-explorer.component';
-import {RequestService} from '../request/request.service';
+import {Command, RequestService} from '../request/request.service';
 import {HttpResponse} from '@angular/common/http';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
 
@@ -21,9 +21,14 @@ class ObservableMock {
 
 class RequestServiceMock {
   observableMock: ObservableMock = new ObservableMock();
+  requestServiceProcessCommandInvoked = false;
 
   public getResponseObservable() {
     return this.observableMock;
+  }
+
+  public processCommand(command: Command, link: string) {
+    this.requestServiceProcessCommandInvoked = true;
   }
 }
 
@@ -98,27 +103,27 @@ describe('ResponseExplorerComponent', () => {
     const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
     /* tslint:disable */
     const halResponse = {
-      "text": "hello all!",
-      "timeStamp": "2018-06-02T17:12:07.335Z",
-      "_links": {
-        "self": {
-          "href": "https://chatty42.herokuapp.com/api/messages/1"
+      'text': 'hello all!',
+      'timeStamp': '2018-06-02T17:12:07.335Z',
+      '_links': {
+        'self': {
+          'href': 'https://chatty42.herokuapp.com/api/messages/1'
         },
-        "chatty:chatMessage": {
-          "href": "https://chatty42.herokuapp.com/api/messages/1{?projection}",
-          "templated": true
+        'chatty:chatMessage': {
+          'href': 'https://chatty42.herokuapp.com/api/messages/1{?projection}',
+          'templated': true
         },
-        "curies": [
+        'curies': [
           {
-            "href": "https://chatty42.herokuapp.com/api/../docs/html5/{rel}.html",
-            "name": "chatty",
-            "templated": true
+            'href': 'https://chatty42.herokuapp.com/api/../docs/html5/{rel}.html',
+            'name': 'chatty',
+            'templated': true
           }
         ]
       },
-      "_embedded": {
-        "chatty:author": {
-          "name": "John"
+      '_embedded': {
+        'chatty:author': {
+          'name': 'John'
         },
       }
     };
@@ -128,6 +133,16 @@ describe('ResponseExplorerComponent', () => {
     expect(component.showProperties).toBeTruthy();
     expect(component.showLinks).toBeTruthy();
     expect(component.showEmbedded).toBeTruthy();
+    expect(component.links.length).toBe(3);
+    expect(component.embedded.length).toBe(1);
+  });
+
+  it('should invoke request service when processing command', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+
+    component.processCommand(Command.Get, 'link');
+
+    expect(requestServiceMock.requestServiceProcessCommandInvoked).toBeTruthy();
   });
 
 });
