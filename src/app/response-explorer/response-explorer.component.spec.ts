@@ -96,8 +96,34 @@ describe('ResponseExplorerComponent', () => {
 
   it('should parse HAL response body', () => {
     const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
-
-    requestServiceMock.observableMock.next(new HttpResponse({body: {property: '1', _links: {}, _embedded: {}}}));
+    /* tslint:disable */
+    const halResponse = {
+      "text": "hello all!",
+      "timeStamp": "2018-06-02T17:12:07.335Z",
+      "_links": {
+        "self": {
+          "href": "https://chatty42.herokuapp.com/api/messages/1"
+        },
+        "chatty:chatMessage": {
+          "href": "https://chatty42.herokuapp.com/api/messages/1{?projection}",
+          "templated": true
+        },
+        "curies": [
+          {
+            "href": "https://chatty42.herokuapp.com/api/../docs/html5/{rel}.html",
+            "name": "chatty",
+            "templated": true
+          }
+        ]
+      },
+      "_embedded": {
+        "chatty:author": {
+          "name": "John"
+        },
+      }
+    };
+    /* tslint:enable */
+    requestServiceMock.observableMock.next(new HttpResponse({body: halResponse}));
 
     expect(component.showProperties).toBeTruthy();
     expect(component.showLinks).toBeTruthy();
