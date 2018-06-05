@@ -1,21 +1,34 @@
-///<reference path="../../../node_modules/rxjs/internal/Observable.d.ts"/>
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, getTestBed, TestBed} from '@angular/core/testing';
 
 import {ResponseDetailsComponent} from './response-details.component';
-import {RequestService} from '../request/request.service';
+import {Command, RequestService} from '../request/request.service';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
-import {HttpResponse} from '@angular/common/http';
+import {HttpHeaders, HttpResponse} from '@angular/common/http';
 
 class ObservableMock {
+  private callback: Function;
+  hasSubscribed = false;
+
   subscribe(next?: (value: HttpResponse<any>) => void, error?: (error: any) => void) {
-    // console.log('subscribed');
-    next(new HttpResponse<any>());
+    this.callback = next;
+    this.hasSubscribed = true;
+  }
+
+  next(response: HttpResponse<any>) {
+    this.callback(response);
   }
 }
 
 class RequestServiceMock {
-  getResponseObservable() {
-    return new ObservableMock();
+  observableMock: ObservableMock = new ObservableMock();
+  requestServiceProcessCommandInvoked = false;
+
+  public getResponseObservable() {
+    return this.observableMock;
+  }
+
+  public processCommand(command: Command, link: string) {
+    this.requestServiceProcessCommandInvoked = true;
   }
 }
 
@@ -47,5 +60,43 @@ describe('ResponseDetailsComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should handle json HTTP response', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+
+    requestServiceMock.getResponseObservable().next(new HttpResponse({body: {key: 'test'}}));
+
+    expect(component.responseStatus).toBe(200);
+    expect(component.isString).toBeFalsy();
+  });
+
+  it('should handle string HTTP response', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+
+    requestServiceMock.getResponseObservable().next(new HttpResponse({body: 'string'}));
+
+    expect(component.responseStatus).toBe(200);
+    expect(component.isString).toBeTruthy();
+  });
+
+  it('should handle HTTP response headers', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+    const responseHeaders: HttpHeaders = new HttpHeaders(
+      {
+        'key': 'value'
+      });
+    requestServiceMock.getResponseObservable().next(new HttpResponse({headers: responseHeaders}));
+
+    expect(component.responseStatus).toBe(200);
+    expect(component.responseHeaders.length).toBe(1);
+  });
+
+  it('should handle HTTP response status 0', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+    requestServiceMock.getResponseObservable().next(new HttpResponse({status: 0}));
+
+    expect(component.responseStatus).toBe(0);
+    expect(component.responseStatusText).toBe('');
   });
 });
