@@ -162,7 +162,7 @@ describe('RequestService', () => {
     });
 
     const httpRequestEvent: HttpRequestEvent = new HttpRequestEvent(null, null, 'schema-request');
-    requestService.getJsonSchema(httpRequestEvent)
+    requestService.getJsonSchema(httpRequestEvent);
 
     const jsonSchemaRequest = httpMock.expectOne('schema-request');
     const responseHeaders: HttpHeaders = new HttpHeaders(
