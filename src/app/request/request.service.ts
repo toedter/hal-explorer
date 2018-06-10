@@ -51,7 +51,7 @@ export class RequestService {
     return this.responseObservable;
   }
 
-  public getNeedInfoObservable(): Observable<string> {
+  public getNeedInfoObservable(): Observable<any> {
     return this.needInfoObservable;
   }
 
@@ -147,6 +147,7 @@ export class RequestService {
   public getJsonSchema(httpRequestEvent: HttpRequestEvent) {
     this.http.request('HEAD', httpRequestEvent.uri, {observe: 'response'}).subscribe(
       (response: HttpResponse<any>) => {
+        let hasProfile = false;
         const linkHeader = response.headers.get('Link');
         if (linkHeader) {
           const w3cLinks = linkHeader.split(',');
@@ -167,6 +168,7 @@ export class RequestService {
           });
 
           if (profileUrl) {
+            hasProfile = true;
             const headers = new HttpHeaders(
               {
                 'Accept': 'application/schema+json'
@@ -204,7 +206,10 @@ export class RequestService {
             );
           }
         }
-        this.needInfoSubject.next(httpRequestEvent);
+
+        if (!hasProfile) {
+          this.needInfoSubject.next(httpRequestEvent);
+        }
       },
       () => {
         this.needInfoSubject.next(httpRequestEvent);
