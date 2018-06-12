@@ -40,7 +40,7 @@ Run `./gradlew build` to build the project in production mode. The build artifac
 
 == Integration in your Backends
 
-If you wat to use a released version of HAL Explorer in a Java based project, you could define a dependency to the HAL Explorer WebJar.
+If you want to use a released version of HAL Explorer in a Java based project, you could define a dependency to the HAL Explorer WebJar.
 
 Maven:
 [source,xml]
