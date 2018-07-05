@@ -93,7 +93,7 @@
                 <div class="card-header d-flex">
                   <a data-toggle="collapse" [attr.data-parent]="'#' + prefix + 'item_' + i1 + '_' + i2"
                      [attr.href]="'#' + prefix + 'embedded_object_' + i2">{{embeddedResource.name}} [{{i2}}]</a>
-                  <button class="icon-book ml-auto btn btn-outline-info btn-sm nav-button"
+                  <button *ngIf="embeddedResource.docUri" class="icon-book ml-auto btn btn-outline-info btn-sm nav-button"
                           (click)="processCommand(command.Document, embeddedResource.docUri)"
                           title="Show Documentation">
                   </button>
