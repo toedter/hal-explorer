@@ -34,7 +34,7 @@ export class RequestComponent implements OnInit {
       if (value.type === EventType.FillUriTemplate) {
         const event: UriTemplateEvent = <UriTemplateEvent>value;
         this.uriTemplateEvent = event;
-        this.inputChanged();
+        this.computeUriFromTemplate();
         $('#requestModalTrigger').trigger('click');
       } else if (value.type === EventType.FillHttpRequest) {
         const event: HttpRequestEvent = <HttpRequestEvent>value;
@@ -46,7 +46,6 @@ export class RequestComponent implements OnInit {
           this.jsonSchema = undefined;
           this.jsonSchemaKeys = undefined;
         }
-        this.inputChanged();
         this.requestBody = '';
         this.selectedHttpMethod = event.command;
         $('#HttpRequestTrigger').trigger('click');
@@ -80,7 +79,7 @@ export class RequestComponent implements OnInit {
     this.requestService.getUri(this.uri);
   }
 
-  public inputChanged() {
+  public computeUriFromTemplate() {
     const templatedUrl = this.uriTemplateEvent.templatedUrl;
     this.newRequestUrl = templatedUrl.substring(0, templatedUrl.indexOf('{'));
     let separator = '?';
