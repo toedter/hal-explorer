@@ -174,8 +174,11 @@ export class RequestService {
               {
                 'Accept': 'application/schema+json'
               });
-            for (const requestHeader of this.customRequestHeaders) {
-              headers = headers.append(requestHeader.key, requestHeader.value);
+
+            if (this.customRequestHeaders) {
+              for (const requestHeader of this.customRequestHeaders) {
+                headers = headers.append(requestHeader.key, requestHeader.value);
+              }
             }
 
             this.http.get(profileUrl, {headers: headers, observe: 'response'}).subscribe(
