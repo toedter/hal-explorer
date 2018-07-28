@@ -145,7 +145,8 @@ export class RequestService {
   }
 
   public getJsonSchema(httpRequestEvent: HttpRequestEvent) {
-    this.http.request('HEAD', httpRequestEvent.uri, {observe: 'response'}).subscribe(
+    this.http.request('HEAD', httpRequestEvent.uri,
+      {headers: this.requestHeaders, observe: 'response'}).subscribe(
       (response: HttpResponse<any>) => {
         let hasProfile = false;
         const linkHeader = response.headers.get('Link');
@@ -169,10 +170,13 @@ export class RequestService {
 
           if (profileUrl) {
             hasProfile = true;
-            const headers = new HttpHeaders(
+            let headers = new HttpHeaders(
               {
                 'Accept': 'application/schema+json'
               });
+            for (const requestHeader of this.customRequestHeaders) {
+              headers = headers.append(requestHeader.key, requestHeader.value);
+            }
 
             this.http.get(profileUrl, {headers: headers, observe: 'response'}).subscribe(
               (httpResponse: HttpResponse<any>) => {
@@ -218,6 +222,7 @@ export class RequestService {
   }
 
   public setCustomHeaders(requestHeaders: RequestHeader[]) {
+    this.customRequestHeaders = requestHeaders;
     this.requestHeaders = new HttpHeaders(
       {
         'Accept': 'application/hal+json, application/json, */*'
@@ -225,7 +230,6 @@ export class RequestService {
     for (const requestHeader of requestHeaders) {
       this.requestHeaders = this.requestHeaders.append(requestHeader.key, requestHeader.value);
     }
-    this.customRequestHeaders = requestHeaders;
   }
 
   public getInputType(jsonSchemaType: string, jsonSchemaFormat?: string): string {
