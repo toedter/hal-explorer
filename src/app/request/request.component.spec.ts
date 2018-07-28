@@ -184,19 +184,19 @@ describe('RequestComponent', () => {
   });
 
   it('should get tooltip with no json schema', () => {
-    const tooltip = component.getTooltip('x')
+    const tooltip = component.getTooltip('x');
     expect(tooltip).toBe('');
   });
 
   it('should get tooltip with json schema', () => {
     component.jsonSchema = jsonSchema.properties;
-    const tooltip = component.getTooltip('email')
+    const tooltip = component.getTooltip('email');
     expect(tooltip).toBe('string');
   });
 
   it('should get tooltip with json schema with format attribute', () => {
     component.jsonSchema = jsonSchema.properties;
-    const tooltip = component.getTooltip('messages')
+    const tooltip = component.getTooltip('messages');
     expect(tooltip).toBe('string in uri format');
   });
 
