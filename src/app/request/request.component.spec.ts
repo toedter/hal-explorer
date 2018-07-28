@@ -49,6 +49,8 @@ class RequestServiceMock {
   responseObservableMock: ObservableMock = new ObservableMock();
   needInfoObservableMock: ObservableMock = new ObservableMock();
 
+  getUriCalledWith: string;
+
   public getResponseObservable() {
     return this.responseObservableMock;
   }
@@ -61,6 +63,7 @@ class RequestServiceMock {
   }
 
   public getUri(uri: string) {
+    this.getUriCalledWith = uri;
   }
 }
 
@@ -71,6 +74,38 @@ class JsonHighlighterServiceMock {
     this.syntaxHighlightInvoked = true;
   }
 }
+
+/* tslint:disable */
+const jsonSchema: any = {
+  'title': 'User',
+  'properties': {
+    'fullName': {
+      'title': 'Full name',
+      'readOnly': false,
+      'type': 'string'
+    },
+    'messages': {
+      'title': 'Messages',
+      'readOnly': true,
+      'type': 'string',
+      'format': 'uri'
+    },
+    'id': {
+      'title': 'Id',
+      'readOnly': false,
+      'type': 'string'
+    },
+    'email': {
+      'title': 'Email',
+      'readOnly': false,
+      'type': 'string'
+    }
+  },
+  'definitions': {},
+  'type': 'object',
+  '$schema': 'http://json-schema.org/draft-04/schema#'
+};
+/* tslint:enable */
 
 describe('RequestComponent', () => {
   let component: RequestComponent;
@@ -118,6 +153,59 @@ describe('RequestComponent', () => {
     const event: HttpRequestEvent = new HttpRequestEvent(EventType.FillHttpRequest, Command.Post, 'http://localhost/api/things');
     requestServiceMock.getNeedInfoObservable().next(event);
     expect(component.newRequestUrl).toBe(undefined);
+    expect(component.jsonSchema).toBe(undefined);
+  });
+
+  it('should fill http request with json schema', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+
+    const event: HttpRequestEvent =
+      new HttpRequestEvent(EventType.FillHttpRequest, Command.Post, 'http://localhost/api/things', jsonSchema);
+    requestServiceMock.getNeedInfoObservable().next(event);
+    expect(component.jsonSchema.toString).toEqual(jsonSchema.toString);
+  });
+
+  it('should get expanded uri', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+    component.newRequestUrl = 'http://localhost';
+
+    component.getExpandedUri();
+    expect(requestServiceMock.getUriCalledWith).toBe('http://localhost');
+  });
+
+  it('should get change request body based on json schema', () => {
+    component.jsonSchema = jsonSchema.properties;
+    component.jsonSchema.email.value = 'kai@toedter.com';
+    component.jsonSchema.fullName.value = 'Kai Toedter';
+    component.jsonSchemaKeys = ['email', 'fullName'];
+
+    component.requestBodyChanged();
+    expect(component.requestBody).toBe('{\n  "email": "kai@toedter.com",\n  "fullName": "Kai Toedter"\n}');
+  });
+
+  it('should get tooltip with no json schema', () => {
+    const tooltip = component.getTooltip('x')
+    expect(tooltip).toBe('');
+  });
+
+  it('should get tooltip with json schema', () => {
+    component.jsonSchema = jsonSchema.properties;
+    const tooltip = component.getTooltip('email')
+    expect(tooltip).toBe('string');
+  });
+
+  it('should get tooltip with json schema with format attribute', () => {
+    component.jsonSchema = jsonSchema.properties;
+    const tooltip = component.getTooltip('messages')
+    expect(tooltip).toBe('string in uri format');
+  });
+
+  it('should go from hash change', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+    component.newRequestUrl = 'http://localhost';
+
+    component.goFromHashChange('http://localhost');
+    expect(requestServiceMock.getUriCalledWith).toBe('http://localhost');
   });
 
 });

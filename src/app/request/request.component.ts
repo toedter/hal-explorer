@@ -74,8 +74,8 @@ export class RequestComponent implements OnInit {
     this.requestService.requestUri(this.httpRequestEvent.uri, Command[this.selectedHttpMethod], this.requestBody);
   }
 
-  public goFromHashChange(url: string) {
-    this.uri = url;
+  public goFromHashChange(uri: string) {
+    this.uri = uri;
     this.requestService.getUri(this.uri);
   }
 
