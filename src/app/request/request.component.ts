@@ -19,7 +19,6 @@ export class RequestComponent implements OnInit {
   requestHeaders: RequestHeader[];
   tempRequestHeaders: RequestHeader[];
   hasCustomRequestHeaders: boolean;
-  jsonSchemaKeys: string[];
   jsonSchema: any;
 
   constructor(private appService: AppService, private requestService: RequestService) {
@@ -41,10 +40,8 @@ export class RequestComponent implements OnInit {
         this.httpRequestEvent = event;
         if (event.jsonSchema) {
           this.jsonSchema = event.jsonSchema.properties;
-          this.jsonSchemaKeys = Object.keys(this.jsonSchema);
         } else {
           this.jsonSchema = undefined;
-          this.jsonSchemaKeys = undefined;
         }
         this.requestBody = '';
         this.selectedHttpMethod = event.command;
@@ -95,7 +92,7 @@ export class RequestComponent implements OnInit {
     let hasProperties = false;
     this.requestBody = '{\n';
     if (this.jsonSchema) {
-      for (const key of this.jsonSchemaKeys) {
+      for (const key of Object.keys(this.jsonSchema)) {
         if (this.jsonSchema[key].value && this.jsonSchema[key].value.length > 0) {
           if (hasProperties) {
             this.requestBody += ',\n';
@@ -110,7 +107,7 @@ export class RequestComponent implements OnInit {
   }
 
   public showEditHeadersDialog() {
-    this.tempRequestHeaders = new Array();
+    this.tempRequestHeaders = [];
     for (let i = 0; i < 5; i++) {
       if (this.requestHeaders.length > i) {
         this.tempRequestHeaders.push(new RequestHeader(this.requestHeaders[i].key, this.requestHeaders[i].value));
@@ -123,7 +120,7 @@ export class RequestComponent implements OnInit {
   }
 
   public updateRequestHeaders() {
-    this.requestHeaders = new Array();
+    this.requestHeaders = [];
     for (let i = 0; i < this.tempRequestHeaders.length; i++) {
       const key: string = this.tempRequestHeaders[i].key.trim();
       const value: string = this.tempRequestHeaders[i].value.trim();
