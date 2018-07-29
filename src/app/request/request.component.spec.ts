@@ -177,10 +177,9 @@ describe('RequestComponent', () => {
     component.jsonSchema = jsonSchema.properties;
     component.jsonSchema.email.value = 'kai@toedter.com';
     component.jsonSchema.fullName.value = 'Kai Toedter';
-    component.jsonSchemaKeys = ['email', 'fullName'];
 
     component.requestBodyChanged();
-    expect(component.requestBody).toBe('{\n  "email": "kai@toedter.com",\n  "fullName": "Kai Toedter"\n}');
+    expect(component.requestBody).toBe('{\n  "fullName": "Kai Toedter",\n  "email": "kai@toedter.com"\n}');
   });
 
   it('should get tooltip with no json schema', () => {
