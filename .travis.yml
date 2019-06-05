@@ -16,11 +16,11 @@ before_script:
       - "sudo chmod 4755 /opt/google/chrome/chrome-sandbox"
 
 install:
-  - npm install
+  - yarn
 
 script:
-  - npm run lint
-  - npm run build
-  - npm run test-headless
+  - yarn lint
+  - yarn build
+  - yarn test-headless
   - docker run -d -p 127.0.0.1:8080:8080 --name chatty-server kaitoedter/chatty
-  - npm run e2e-headless
+  - yarn e2e-headless
