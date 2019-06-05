@@ -1,21 +1,30 @@
 plugins {
-    id "com.moowork.node" version "1.2.0"
+  id "com.moowork.node" version "1.2.0"
 }
 
 node {
-    version = '8.11.1'
-    download = true
-    workDir = file("${rootProject.buildDir}/node")
-    nodeModulesDir = file("${project.projectDir}")
+  version = '10.16.0'
+  download = true
+  workDir = file("${rootProject.buildDir}/node")
+  nodeModulesDir = file("${project.projectDir}")
 }
 
-npm_install.inputs.file new File(projectDir, "package.json")
-npm_install.outputs.dir new File(projectDir, "node_modules")
+yarn_install.inputs.file new File(projectDir, "package.json")
+yarn_install.inputs.file new File(projectDir, "yarn.lock")
+yarn_install.outputs.dir new File(projectDir, "node_modules")
 
-npm_run_build.inputs.dir new File(projectDir, "src")
-npm_run_build.outputs.dir new File(projectDir, "dist")
+yarn_build.inputs.dir new File(projectDir, "src")
+yarn_build.outputs.dir new File(projectDir, "dist")
 
-task build {}
-build.dependsOn npm_run_build
+yarn_build.dependsOn yarn_install, yarn_lint //, yarn_test
 
+task clean() {
+  doFirst {
+    delete "dist"
+    delete "build"
+  }
+}
 
+task build
+
+build.dependsOn yarn_build
