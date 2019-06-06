@@ -33,7 +33,7 @@ describe('RequestService', () => {
     expect(requestService.getInputType('something else')).toBe('text');
   });
 
-  it('should set standard request headers', (done) => {
+  it('should set default accept request header', (done) => {
     requestService.getResponseObservable().subscribe((response: HttpResponse<any>) => {
       expect(response.body).toBe('body');
       done();
@@ -46,6 +46,26 @@ describe('RequestService', () => {
 
     expect(testRequest.request.headers.keys()).toContain('Accept');
 
+    httpMock.verify();
+  });
+
+  it('should not set default accept request header when custom accept header exists', (done) => {
+    requestService.getResponseObservable().subscribe((response: HttpResponse<any>) => {
+      expect(response.body).toBe('body');
+      done();
+    });
+
+    const customAcceptHeader = new RequestHeader('Accept', 'foo/bar');
+
+    requestService.setCustomHeaders([customAcceptHeader]);
+    requestService.getUri('test-request');
+
+    const testRequest = httpMock.expectOne('test-request');
+    testRequest.flush('body');
+
+    expect(testRequest.request.headers.keys()).toContain('Accept');
+    expect(testRequest.request.headers.keys().length).toBe(1);
+    expect(testRequest.request.headers.get('Accept')).toBe('foo/bar');
     httpMock.verify();
   });
 
@@ -174,34 +194,34 @@ describe('RequestService', () => {
 
     /* tslint:disable */
     const jsonSchema: any = {
-      "title" : "User",
-      "properties" : {
-        "fullName" : {
-          "title" : "Full name",
-          "readOnly" : false,
-          "type" : "string"
+      'title': 'User',
+      'properties': {
+        'fullName': {
+          'title': 'Full name',
+          'readOnly': false,
+          'type': 'string'
         },
-        "messages" : {
-          "title" : "Messages",
-          "readOnly" : true,
-          "type" : "string",
-          "format" : "uri"
+        'messages': {
+          'title': 'Messages',
+          'readOnly': true,
+          'type': 'string',
+          'format': 'uri'
         },
-        "id" : {
-          "title" : "Id",
-          "readOnly" : false,
-          "type" : "string"
+        'id': {
+          'title': 'Id',
+          'readOnly': false,
+          'type': 'string'
         },
-        "email" : {
-          "title" : "Email",
-          "readOnly" : false,
-          "type" : "string"
+        'email': {
+          'title': 'Email',
+          'readOnly': false,
+          'type': 'string'
         }
       },
-      "definitions" : { },
-      "type" : "object",
-      "$schema" : "http://json-schema.org/draft-04/schema#"
-    }
+      'definitions': {},
+      'type': 'object',
+      '$schema': 'http://json-schema.org/draft-04/schema#'
+    };
     /* tslint:enable */
 
     const profileRequest = httpMock.expectOne('https://chatty42.herokuapp.com/api/profile/users');

@@ -226,12 +226,17 @@ export class RequestService {
 
   public setCustomHeaders(requestHeaders: RequestHeader[]) {
     this.customRequestHeaders = requestHeaders;
-    this.requestHeaders = new HttpHeaders(
-      {
-        'Accept': 'application/hal+json, application/json, */*'
-      });
+    this.requestHeaders = new HttpHeaders();
+    let addDefaultAcceptHeader = true;
     for (const requestHeader of requestHeaders) {
+      if (requestHeader.key.toLowerCase() === 'accept') {
+        addDefaultAcceptHeader = false;
+      }
       this.requestHeaders = this.requestHeaders.append(requestHeader.key, requestHeader.value);
+    }
+    if (addDefaultAcceptHeader === true) {
+      this.requestHeaders = this.requestHeaders.append(
+        'Accept', 'application/hal+json, application/json, */*');
     }
   }
 
