@@ -3,6 +3,7 @@ import {HttpClientTestingModule, HttpTestingController} from '@angular/common/ht
 import {Command, HttpRequestEvent, RequestService, UriTemplateEvent} from './request.service';
 import {AppService, RequestHeader} from '../app.service';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {Type} from '@angular/core';
 
 describe('RequestService', () => {
   let requestService: RequestService;
@@ -17,7 +18,7 @@ describe('RequestService', () => {
     });
     requestService = TestBed.get(RequestService);
     appService = TestBed.get(AppService);
-    httpMock = TestBed.get(HttpTestingController);
+    httpMock = TestBed.get(HttpTestingController as Type<HttpTestingController>);
     httpClient = TestBed.get(HttpClient);
   });
 
