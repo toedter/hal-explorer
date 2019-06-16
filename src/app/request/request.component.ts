@@ -20,13 +20,16 @@ export class RequestComponent implements OnInit {
   tempRequestHeaders: RequestHeader[];
   hasCustomRequestHeaders: boolean;
   jsonSchema: any;
+  halFormsProperties: any;
+  halFormsTemplates: any;
 
   constructor(private appService: AppService, private requestService: RequestService) {
   }
 
   ngOnInit() {
+    this.jsonSchema = undefined;
+    this.halFormsProperties = undefined;
     this.uri = this.appService.getUrl();
-
     this.tempRequestHeaders = this.appService.getCustomRequestHeaders();
 
     this.requestService.getNeedInfoObservable().subscribe((value: any) => {
@@ -40,8 +43,10 @@ export class RequestComponent implements OnInit {
         this.httpRequestEvent = event;
         if (event.jsonSchema) {
           this.jsonSchema = event.jsonSchema.properties;
-        } else {
-          this.jsonSchema = undefined;
+        }
+        if (event.halFormsTemplates) {
+          this.halFormsTemplates = event.halFormsTemplates;
+          this.halFormsProperties = this.halFormsTemplates.default.properties;
         }
         this.requestBody = '';
         this.selectedHttpMethod = event.command;
@@ -102,7 +107,19 @@ export class RequestComponent implements OnInit {
           hasProperties = true;
         }
       }
+    } else if (this.halFormsProperties) {
+      for (const item of this.halFormsProperties) {
+        if (item.name && item.value) {
+          if (hasProperties) {
+            this.requestBody += ',\n';
+          }
+          this.requestBody += '  "' + item.name + '": ' + '"'
+            + item.value + '"';
+          hasProperties = true;
+        }
+      }
     }
+
     this.requestBody += '\n}';
   }
 
@@ -147,5 +164,21 @@ export class RequestComponent implements OnInit {
 
   public getInputType(key: string): string {
     return this.requestService.getInputType(this.jsonSchema[key].type, this.jsonSchema[key].format);
+  }
+
+  public supportsHttpMethod(command: Command): boolean {
+    if (!this.halFormsProperties) {
+      return true;
+    }
+
+    let hasHttpMethod = false;
+    Object.getOwnPropertyNames(this.halFormsTemplates).forEach(
+      (val: string) => {
+        if (this.halFormsTemplates[val].method === Command[command].toLowerCase()) {
+          hasHttpMethod = true;
+        }
+      }
+    );
+    return hasHttpMethod;
   }
 }

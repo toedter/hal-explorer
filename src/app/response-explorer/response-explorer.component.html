@@ -1,127 +1,142 @@
 <div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <div *ngIf="showProperties">
-        <div class="legend">
-          <h5>JSON Properties</h5>
-        </div>
-
-        <div class="card info">
-          <div class="card-text">
-            <pre [innerHTML]="properties"></pre>
-          </div>
-        </div>
-        <br>
-      </div>
-
-      <div *ngIf="showLinks">
-        <div class="legend">
-          <h5>Links</h5>
-        </div>
-
-        <div class="bs-component">
-          <div class="table-responsive-sm">
-            <table class="table table-striped table-sm">
-              <thead>
-              <tr>
-                <th scope="col">Relation</th>
-                <th scope="col">Name</th>
-                <th scope="col">Title</th>
-                <th scope="col">HTTP</th>
-                <th scope="col">
-                  <div class='text-right'>Doc</div>
-                </th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr *ngFor="let link of links">
-                <td>{{link.rel}}</td>
-                <td>{{link.name}}</td>
-                <td>{{link.title}}</td>
-                <td>
-                  <button class="icon-left-open ml-1 btn btn-outline-success btn-sm nav-button"
-                          (click)="processCommand(command.Get, link.href)"
-                          title="GET Request">
-                  </button>
-                  <button class="icon-plus ml-1 btn btn-outline-info btn-sm nav-button"
-                          (click)="processCommand(command.Post, link.href)"
-                          title="POST Request">
-                  </button>
-                  <button class="icon-right-open ml-1 btn btn-outline-warning btn-sm nav-button"
-                          (click)="processCommand(command.Put, link.href)"
-                          title="PUT Request">
-                  </button>
-                  <button class="icon-right-open ml-1 btn btn-outline-warning btn-sm nav-button"
-                          (click)="processCommand(command.Patch, link.href)"
-                          title="PATCH Request">
-                  </button>
-                  <button class="icon-cancel ml-1 btn btn-outline-danger btn-sm nav-button"
-                          (click)="processCommand(command.Delete, link.href)"
-                          title="DELETE Request">
-                  </button>
-                </td>
-                <td align="right">
-                  <button *ngIf="link.docUri" class="icon-book ml-auto btn btn-outline-info btn-sm nav-button"
-                          (click)="processCommand(command.Document, link.docUri)" title="Show Documentation">
-                  </button>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <br>
-      </div>
-
-      <div *ngIf="showEmbedded">
-        <div class="legend">
-          <h5>Embedded Resources</h5>
-        </div>
-
-        <div>
-          <div class="card" *ngFor="let embeddedResource of embedded; let i1 = index" [attr.id]="prefix + 'item_' + i1">
-            <div class="card-header d-flex">
-              <a data-toggle="collapse" [attr.data-parent]="'#' + prefix + 'item_' + i1"
-                 [attr.href]="'#' + prefix + 'embedded_' + i1">
-                <h5>{{embeddedResource.name}}</h5></a>
-            </div>
-
-            <div *ngIf="embeddedResource.isArray" [attr.id]="prefix + 'embedded_' + i1" class="collapse show">
-              <div class="card collapse show"
-                   *ngFor="let subEmbeddedResource of embeddedResource.content; let i2 = index"
-                   [attr.id]="prefix + 'item_' + i1 + '_' + i2">
-                <div class="card-header d-flex">
-                  <a data-toggle="collapse" [attr.data-parent]="'#' + prefix + 'item_' + i1 + '_' + i2"
-                     [attr.href]="'#' + prefix + 'embedded_object_' + i2">{{embeddedResource.name}} [{{i2}}]</a>
-                  <button *ngIf="embeddedResource.docUri" class="icon-book ml-auto btn btn-outline-info btn-sm nav-button"
-                          (click)="processCommand(command.Document, embeddedResource.docUri)"
-                          title="Show Documentation">
-                  </button>
+    <div class="row">
+        <div class="col-lg-12">
+            <div *ngIf="showProperties">
+                <div class="legend">
+                    <h5>JSON Properties</h5>
                 </div>
-                <div [attr.id]="prefix + 'embedded_object_' + i2" class="collapse">
-                  <div class="card-body">
-                    <app-response-explorer [jsonRoot]="subEmbeddedResource"
-                                           [prefix]="prefix + 'x_'"
-                                           [curieLinks]="curieLinks">
-                    </app-response-explorer>
-                  </div>
+
+                <div class="card info">
+                    <div class="card-text">
+                        <pre [innerHTML]="properties"></pre>
+                    </div>
                 </div>
-              </div>
+                <br>
             </div>
 
-            <div *ngIf="!embeddedResource.isArray" [attr.id]="prefix + 'embedded_' + i1" class="collapse">
-              <div class="card-body">
-                <app-response-explorer [jsonRoot]="embeddedResource.content"
-                                       [prefix]="prefix + 'x_'"
-                                       [curieLinks]="curieLinks">
-                </app-response-explorer>
-              </div>
+            <div *ngIf="showLinks">
+                <div class="legend">
+                    <h5>Links</h5>
+                </div>
+
+                <div class="bs-component">
+                    <div class="table-responsive-sm">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th scope="col">Relation</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">HTTP</th>
+                                <th scope="col">
+                                    <div class='text-right'>Doc</div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let link of links">
+                                <td *ngIf="link.rel === 'self'">{{link.rel}}
+                                    <span *ngIf="hasHalFormsTemplates"> (HAL-FORMS)</span>
+                                </td>
+                                <td *ngIf="link.rel !== 'self'">{{link.rel}}</td>
+                                <td>{{link.name}}</td>
+                                <td>{{link.title}}</td>
+                                <td>
+                                    <button [class]="'icon-left-open ml-1 btn btn-outline-success btn-sm nav-button ' + getLinkButtonClass(link.rel, command.Get)"
+                                            [disabled]="isButtonDisabled(link.rel, command.Get)"
+                                            (click)="processCommand(command.Get, link.href)"
+                                            title="GET Request">
+                                    </button>
+                                    <button [class]="'icon-plus ml-1 btn btn-outline-info btn-sm nav-button ' + getLinkButtonClass(link.rel, command.Post)"
+                                            [disabled]="isButtonDisabled(link.rel, command.Post)"
+                                            (click)="processCommand(command.Post, link.href)"
+                                            title="POST Request">
+                                    </button>
+                                    <button [class]="'icon-right-open ml-1 btn btn-outline-warning btn-sm nav-button ' + getLinkButtonClass(link.rel, command.Put)"
+                                            [disabled]="isButtonDisabled(link.rel, command.Put)"
+                                            (click)="processCommand(command.Put, link.href)"
+                                            title="PUT Request">
+                                    </button>
+                                    <button [class]="'icon-right-open ml-1 btn btn-outline-warning btn-sm nav-button ' + getLinkButtonClass(link.rel, command.Patch)"
+                                            [disabled]="isButtonDisabled(link.rel, command.Patch)"
+                                            (click)="processCommand(command.Patch, link.href)"
+                                            title="PATCH Request">
+                                    </button>
+                                    <button [class]="'icon-cancel ml-1 btn btn-outline-danger btn-sm nav-button ' + getLinkButtonClass(link.rel, command.Delete)"
+                                            [disabled]="isButtonDisabled(link.rel, command.Delete)"
+                                            (click)="processCommand(command.Delete, link.href)"
+                                            title="DELETE Request">
+                                    </button>
+                                </td>
+                                <td align="right">
+                                    <button *ngIf="link.docUri"
+                                            class="icon-book ml-auto btn btn-outline-info btn-sm nav-button"
+                                            (click)="processCommand(command.Document, link.docUri)"
+                                            title="Show Documentation">
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <br>
             </div>
 
-          </div>
+            <div *ngIf="showEmbedded">
+                <div class="legend">
+                    <h5>Embedded Resources</h5>
+                </div>
+
+                <div>
+                    <div class="card" *ngFor="let embeddedResource of embedded; let i1 = index"
+                         [attr.id]="prefix + 'item_' + i1">
+                        <div class="card-header d-flex">
+                            <a data-toggle="collapse" [attr.data-parent]="'#' + prefix + 'item_' + i1"
+                               [attr.href]="'#' + prefix + 'embedded_' + i1">
+                                <h5>{{embeddedResource.name}}</h5></a>
+                        </div>
+
+                        <div *ngIf="embeddedResource.isArray" [attr.id]="prefix + 'embedded_' + i1"
+                             class="collapse show">
+                            <div class="card collapse show"
+                                 *ngFor="let subEmbeddedResource of embeddedResource.content; let i2 = index"
+                                 [attr.id]="prefix + 'item_' + i1 + '_' + i2">
+                                <div class="card-header d-flex">
+                                    <a data-toggle="collapse"
+                                       [attr.data-parent]="'#' + prefix + 'item_' + i1 + '_' + i2"
+                                       [attr.href]="'#' + prefix + 'embedded_object_' + i2">{{embeddedResource.name}}
+                                        [{{i2}}]</a>
+                                    <button *ngIf="embeddedResource.docUri"
+                                            class="icon-book ml-auto btn btn-outline-info btn-sm nav-button"
+                                            (click)="processCommand(command.Document, embeddedResource.docUri)"
+                                            title="Show Documentation">
+                                    </button>
+                                </div>
+                                <div [attr.id]="prefix + 'embedded_object_' + i2" class="collapse">
+                                    <div class="card-body">
+                                        <app-response-explorer [jsonRoot]="subEmbeddedResource"
+                                                               [prefix]="prefix + 'x_'"
+                                                               [curieLinks]="curieLinks">
+                                        </app-response-explorer>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="!embeddedResource.isArray" [attr.id]="prefix + 'embedded_' + i1" class="collapse">
+                            <div class="card-body">
+                                <app-response-explorer [jsonRoot]="embeddedResource.content"
+                                                       [prefix]="prefix + 'x_'"
+                                                       [curieLinks]="curieLinks">
+                                </app-response-explorer>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
-      </div>
-
     </div>
-  </div>
 </div>

@@ -20,7 +20,7 @@ export class JsonHighlighterService {
           if (/^"/.test(match)) {
             if (/:$/.test(match)) {
               cssClass = 'key';
-              if (/_embedded/.test(match) || /_links/.test(match) || /curies/.test(match)) {
+              if (/_embedded/.test(match) || /_links/.test(match) || /_templates/.test(match) || /curies/.test(match)) {
                 cssClass = 'hal';
               }
             } else {

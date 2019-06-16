@@ -27,10 +27,12 @@ export class ResponseExplorerComponent implements OnInit {
   properties: string;
   links: Link[];
   embedded: EmbeddedRessource[];
+  templates: {};
 
   showProperties: boolean;
   showLinks: boolean;
   showEmbedded: boolean;
+  hasHalFormsTemplates: boolean;
 
   command = Command;
 
@@ -66,6 +68,7 @@ export class ResponseExplorerComponent implements OnInit {
     this.showProperties = false;
     this.showLinks = false;
     this.showEmbedded = false;
+    this.hasHalFormsTemplates = false;
 
     this.properties = null;
     this.links = null;
@@ -74,6 +77,8 @@ export class ResponseExplorerComponent implements OnInit {
     const jsonProperties = Object.assign({}, json);
     delete jsonProperties._links;
     delete jsonProperties._embedded;
+    delete jsonProperties._templates; // HAL-FORMS
+
     if (Object.keys(jsonProperties).length > 0) {
       this.showProperties = true;
       this.properties =
@@ -131,9 +136,45 @@ export class ResponseExplorerComponent implements OnInit {
         }
       );
     }
+
+    if (json._templates) {
+      this.hasHalFormsTemplates = true;
+      this.templates = json._templates;
+    }
   }
 
-  public processCommand(command: Command, link: string) {
-    this.requestService.processCommand(command, link);
+  processCommand(command: Command, link: string) {
+    this.requestService.processCommand(command, link, this.templates);
   }
+
+  getLinkButtonClass(rel: string, command: Command): string {
+    if (rel === 'self' && this.hasHalFormsTemplates) {
+      let cssClass = 'btn-outline-light';
+      Object.getOwnPropertyNames(this.templates).forEach(
+        (val: string) => {
+          if (this.templates[val].method === Command[command].toLowerCase()) {
+            cssClass = '';
+          }
+        }
+      );
+      return cssClass;
+    }
+    return '';
+  }
+
+  isButtonDisabled(rel: string, command: Command): boolean {
+    if (rel === 'self' && this.hasHalFormsTemplates) {
+      let isDisabled = true;
+      Object.getOwnPropertyNames(this.templates).forEach(
+        (val: string) => {
+          if (this.templates[val].method === Command[command].toLowerCase()) {
+            isDisabled = false;
+          }
+        }
+      );
+      return isDisabled;
+    }
+    return false;
+  }
+
 }

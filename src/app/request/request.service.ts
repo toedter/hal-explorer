@@ -16,7 +16,8 @@ export class UriTemplateEvent {
 }
 
 export class HttpRequestEvent {
-  constructor(public type: EventType, public command: Command, public uri: string, public jsonSchema?: any) {
+  constructor(public type: EventType, public command: Command,
+              public uri: string, public jsonSchema?: any, public halFormsTemplates?: any) {
   }
 }
 
@@ -108,7 +109,7 @@ export class RequestService {
     );
   }
 
-  public processCommand(command: Command, uri: string) {
+  public processCommand(command: Command, uri: string, halFormsTemplates?: any) {
     if (command === Command.Get) {
       if (uri.includes('{')) {
         const uriTemplate: URITemplate = utpl(uri);
@@ -129,6 +130,9 @@ export class RequestService {
       }
       const event = new HttpRequestEvent(EventType.FillHttpRequest, command, uri);
       this.getJsonSchema(event);
+      if (halFormsTemplates) {
+        this.getHalFormsTemplates(event, halFormsTemplates);
+      }
       return;
 
     } else if (command === Command.Delete) {
@@ -224,6 +228,10 @@ export class RequestService {
     );
   }
 
+  public getHalFormsTemplates(httpRequestEvent: HttpRequestEvent, halFormsTemplate: any) {
+    httpRequestEvent.halFormsTemplates = halFormsTemplate;
+  }
+
   public setCustomHeaders(requestHeaders: RequestHeader[]) {
     this.customRequestHeaders = requestHeaders;
     this.requestHeaders = new HttpHeaders();
@@ -236,7 +244,7 @@ export class RequestService {
     }
     if (addDefaultAcceptHeader === true) {
       this.requestHeaders = this.requestHeaders.append(
-        'Accept', 'application/hal+json, application/json, */*');
+        'Accept', 'application/prs.hal-forms+json, application/hal+json, application/json, */*');
     }
   }
 
