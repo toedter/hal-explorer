@@ -6,6 +6,7 @@ image:https://img.shields.io/badge/license-MIT-blue.svg["MIT", link="http://toed
 
 With HAL Explorer you can browse and explore http://stateless.co/hal_specification.html[HAL] based RESTful Hypermedia APIs.
 HAL Explorer was inspired by Mike Kelly's https://github.com/mikekelly/hal-browser[HAL-Browser].
+HAL Explorer supports both Spring Profiles as well as HAL-FORMS.
 
 == Screenshot
 image:hal-explorer.jpg[HAL Explorer screenshot]
@@ -16,9 +17,11 @@ image:hal-explorer.jpg[HAL Explorer screenshot]
 * Syntax highlighted response body
 * Custom request headers
 * Bootswatch themes
-* 2 layouts
+* 2 layouts (2 column or 3 column for documentation)
 * API URL, theme, layout and request headers stored in URL fragment
 * Support for Spring Data Rest profiles to populate properties in request editor
+* Support for HAL-FORMS (_templates) to populate properties in request editor and to provide only supported HTTP methods for self link
+
 
 == Demo
 
@@ -27,11 +30,11 @@ I host this demo at Heroku, so please give it a little time to warm up (This mig
 
 == Development Server
 
-Run `npm start` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+Run `yarn start` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
 
 == Build
 
-Run `npm run build` to build the project in production mode. The build artifacts will be stored in the `dist/` directory.
+Run `yarn build` to build the project in production mode. The build artifacts will be stored in the `dist/` directory.
 
 == Gradle/Java Build Support
 
@@ -60,12 +63,14 @@ do a production build and then copy the content of the dist folder to a location
 
 == Running Tests
 
-Run `npm test` to run the unit test suite against your default browser,
-run `npm run test-headless` to run the unit test suite against headless Chrome.
+Run `yarn test` to run the unit test suite against your default browser,
+run `yarn test-headless` to run the unit test suite against headless Chrome.
 
 To run the e2e tests you must have Docker installed.
 The e2e tests start a real Spring Boot based backend in a Docker container which is then used by HAL Explorer.
-Run `npm run e2e` to run the e2e test suite against your default browser.
+Run `yarn e2e` to run the e2e test suite against your default browser,
+run `yarn e2e-headless` to run the e2e test suite against headless Chrome.
+
 Take a look at `package.json` for more test options.
 
 [[license]]
