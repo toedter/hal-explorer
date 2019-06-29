@@ -136,15 +136,25 @@ describe('RequestComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should fill uri template', () => {
+  it('should fill uri template with query params', () => {
     const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
     const uriTemplateParameters: UrlTemplateParameter[] = [];
     uriTemplateParameters.push(new UrlTemplateParameter('page', '0'));
     uriTemplateParameters.push(new UrlTemplateParameter('size', '10'));
     const event: UriTemplateEvent = new UriTemplateEvent(
-      EventType.FillUriTemplate, 'http://localhost/api/things{page,size}', uriTemplateParameters);
+      EventType.FillUriTemplate, 'http://localhost/api/things{?page,size}', uriTemplateParameters);
     requestServiceMock.getNeedInfoObservable().next(event);
     expect(component.newRequestUrl).toBe('http://localhost/api/things?page=0&size=10');
+  });
+
+  it('should fill uri template with simple params', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+    const uriTemplateParameters: UrlTemplateParameter[] = [];
+    uriTemplateParameters.push(new UrlTemplateParameter('id', '1234'));
+    const event: UriTemplateEvent = new UriTemplateEvent(
+      EventType.FillUriTemplate, 'http://localhost/api/things/{id}', uriTemplateParameters);
+    requestServiceMock.getNeedInfoObservable().next(event);
+    expect(component.newRequestUrl).toBe('http://localhost/api/things/1234');
   });
 
   it('should fill http request', () => {

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Command, EventType, HttpRequestEvent, RequestService, UriTemplateEvent} from './request.service';
 import * as $ from 'jquery';
+import * as utpl from 'uri-templates';
 import {AppService, RequestHeader} from '../app.service';
 
 @Component({
@@ -82,15 +83,14 @@ export class RequestComponent implements OnInit {
   }
 
   public computeUriFromTemplate() {
-    const templatedUrl = this.uriTemplateEvent.templatedUrl;
-    this.newRequestUrl = templatedUrl.substring(0, templatedUrl.indexOf('{'));
-    let separator = '?';
+    const uriTemplate = utpl(this.uriTemplateEvent.templatedUrl);
+    const templateParams = {};
     for (const parameter of this.uriTemplateEvent.parameters) {
       if (parameter.value.length > 0) {
-        this.newRequestUrl = this.newRequestUrl + separator + parameter.key + '=' + parameter.value;
-        separator = '&';
+        templateParams[parameter.key] = parameter.value;
       }
     }
+    this.newRequestUrl = uriTemplate.fill(templateParams);
   }
 
   public requestBodyChanged() {
