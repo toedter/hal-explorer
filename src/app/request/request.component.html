@@ -103,15 +103,15 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label" for="uri">URI</label>
-                        <div class="col-sm-10">
+                        <label class="col-sm-3 col-form-label" for="uri">URI</label>
+                        <div class="col-sm-9">
                             <div class="form-control" id="uri">{{httpRequestEvent.uri}}</div>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label" for="expandedURI">HTTP Method</label>
-                        <div class="col-sm-10">
+                        <label class="col-sm-3 col-form-label" for="expandedURI">HTTP Method</label>
+                        <div class="col-sm-9">
                             <select [(ngModel)]="selectedHttpMethod" class="custom-select" name="httpAction">
                                 <option *ngIf="supportsHttpMethod(commandPlaceholder.Post)"
                                         [value]="commandPlaceholder.Post">{{commandPlaceholder[commandPlaceholder.Post]}}</option>
@@ -128,9 +128,9 @@
                         <label class="text-info">Spring Profile (JSON Schema)</label>
                         <div class="form-group row" *ngFor="let item of jsonSchema | keyvalue">
                             <label [title]="getTooltip(item.key)"
-                                   class="text-info col-sm-2 col-form-label"
+                                   class="text-info col-sm-3 col-form-label"
                                    for="expandedURI">{{jsonSchema[item.key].title}}</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-9">
                                 <input [type]="getInputType(item.key)" class="form-control"
                                        [(ngModel)]="jsonSchema[item.key].value" [ngModelOptions]="{standalone: true}"
                                        (keyup)="requestBodyChanged()">
@@ -140,13 +140,13 @@
                     </div>
                     <div *ngIf="halFormsProperties">
                         <hr>
-                        <label class="text-info">HAL-FORMS Properties</label>
+                        <label class="text-info">HAL-FORMS Properties <span *ngIf="halFormsDialogTitle"> [{{halFormsDialogTitle}}]</span></label>
                         <div class="form-group row" *ngFor="let item of halFormsProperties">
 
-                            <label [title]="item.prompt" class="text-info col-sm-2 col-form-label"
+                            <label [title]="item.prompt" class="text-info col-sm-3 col-form-label"
                                    for="expandedURI">{{item.prompt}}
                                 <span *ngIf="item.required">*</span></label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-9">
                                 <input class="form-control" [(ngModel)]="item.value"
                                        [ngModelOptions]="{standalone: true}" (keyup)="requestBodyChanged()">
                             </div>
@@ -155,8 +155,8 @@
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label" for="body">Body</label>
-                        <div class="col-sm-10">
+                        <label class="col-sm-3 col-form-label" for="body">Body</label>
+                        <div class="col-sm-9">
               <textarea [(ngModel)]="requestBody" class="form-control" id="body" rows="5"
                         name="bodyArea"></textarea>
                         </div>

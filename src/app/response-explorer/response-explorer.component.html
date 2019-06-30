@@ -117,7 +117,8 @@
                                     <div class="card-body">
                                         <app-response-explorer [jsonRoot]="subEmbeddedResource"
                                                                [prefix]="prefix + 'x_'"
-                                                               [curieLinks]="curieLinks">
+                                                               [curieLinks]="curieLinks"
+                                                               [isHalFormsMediaType]="isHalFormsMediaType">
                                         </app-response-explorer>
                                     </div>
                                 </div>
@@ -128,7 +129,8 @@
                             <div class="card-body">
                                 <app-response-explorer [jsonRoot]="embeddedResource.content"
                                                        [prefix]="prefix + 'x_'"
-                                                       [curieLinks]="curieLinks">
+                                                       [curieLinks]="curieLinks"
+                                                       [isHalFormsMediaType]="isHalFormsMediaType">
                                 </app-response-explorer>
                             </div>
                         </div>

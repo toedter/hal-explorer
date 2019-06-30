@@ -23,6 +23,7 @@ export class ResponseExplorerComponent implements OnInit {
   @Input() jsonRoot: any;
   @Input() prefix: string;
   @Input() curieLinks: Link[];
+  @Input() isHalFormsMediaType: boolean;
 
   properties: string;
   links: Link[];
@@ -46,6 +47,10 @@ export class ResponseExplorerComponent implements OnInit {
     } else {
       this.requestService.getResponseObservable()
         .subscribe((response: HttpResponse<any>) => {
+            if (response.headers.get('content-type') === 'application/prs.hal-forms+json') {
+              this.isHalFormsMediaType = true;
+            }
+
             if (!(typeof response.body === 'string' || response.body instanceof String)) {
               this.processJsonObject(response.body);
             } else {
@@ -137,7 +142,7 @@ export class ResponseExplorerComponent implements OnInit {
       );
     }
 
-    if (json._templates) {
+    if (this.isHalFormsMediaType && json._templates) {
       this.hasHalFormsTemplates = true;
       this.templates = json._templates;
     }
@@ -148,30 +153,42 @@ export class ResponseExplorerComponent implements OnInit {
   }
 
   getLinkButtonClass(rel: string, command: Command): string {
-    if (rel === 'self' && this.hasHalFormsTemplates) {
+    if (Command[command].toLowerCase() === 'get') {
+      return '';
+    }
+
+    if (this.isHalFormsMediaType) {
       let cssClass = 'btn-outline-light';
-      Object.getOwnPropertyNames(this.templates).forEach(
-        (val: string) => {
-          if (this.templates[val].method === Command[command].toLowerCase()) {
-            cssClass = '';
+      if (rel === 'self' && this.templates) {
+        Object.getOwnPropertyNames(this.templates).forEach(
+          (val: string) => {
+            if (this.templates[val].method === Command[command].toLowerCase()) {
+              cssClass = '';
+            }
           }
-        }
-      );
+        );
+      }
       return cssClass;
     }
     return '';
   }
 
   isButtonDisabled(rel: string, command: Command): boolean {
-    if (rel === 'self' && this.hasHalFormsTemplates) {
+    if (Command[command].toLowerCase() === 'get') {
+      return false;
+    }
+
+    if (this.isHalFormsMediaType) {
       let isDisabled = true;
-      Object.getOwnPropertyNames(this.templates).forEach(
-        (val: string) => {
-          if (this.templates[val].method === Command[command].toLowerCase()) {
-            isDisabled = false;
+      if (rel === 'self' && this.templates) {
+        Object.getOwnPropertyNames(this.templates).forEach(
+          (val: string) => {
+            if (this.templates[val].method === Command[command].toLowerCase()) {
+              isDisabled = false;
+            }
           }
-        }
-      );
+        );
+      }
       return isDisabled;
     }
     return false;

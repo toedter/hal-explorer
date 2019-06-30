@@ -23,6 +23,7 @@ export class RequestComponent implements OnInit {
   jsonSchema: any;
   halFormsProperties: any;
   halFormsTemplates: any;
+  halFormsDialogTitle: string;
 
   constructor(private appService: AppService, private requestService: RequestService) {
   }
@@ -47,7 +48,8 @@ export class RequestComponent implements OnInit {
         }
         if (event.halFormsTemplates) {
           this.halFormsTemplates = event.halFormsTemplates;
-          this.halFormsProperties = this.halFormsTemplates.default.properties;
+          this.halFormsProperties = this.getHalFormsPropertiesForHttpMethod(event.command);
+          this.halFormsDialogTitle = this.getHalFormsTitleForHttpMethod(event.command);
         }
         this.requestBody = '';
         this.selectedHttpMethod = event.command;
@@ -174,11 +176,44 @@ export class RequestComponent implements OnInit {
     let hasHttpMethod = false;
     Object.getOwnPropertyNames(this.halFormsTemplates).forEach(
       (val: string) => {
-        if (this.halFormsTemplates[val].method === Command[command].toLowerCase()) {
+        if (this.halFormsTemplates[val].method === Command[command].toLowerCase() && this.selectedHttpMethod === command) {
           hasHttpMethod = true;
         }
       }
     );
     return hasHttpMethod;
   }
+
+  public getHalFormsPropertiesForHttpMethod(command: Command): Object {
+    let properties;
+    if (!this.halFormsTemplates) {
+      return properties;
+    }
+
+    Object.getOwnPropertyNames(this.halFormsTemplates).forEach(
+      (val: string) => {
+        if (this.halFormsTemplates[val].method === Command[command].toLowerCase()) {
+          properties = this.halFormsTemplates[val].properties;
+        }
+      }
+    );
+    return properties;
+  }
+
+  public getHalFormsTitleForHttpMethod(command: Command): string {
+    let title;
+    if (!this.halFormsTemplates) {
+      return title;
+    }
+
+    Object.getOwnPropertyNames(this.halFormsTemplates).forEach(
+      (val: string) => {
+        if (this.halFormsTemplates[val].method === Command[command].toLowerCase()) {
+          title = this.halFormsTemplates[val].title;
+        }
+      }
+    );
+    return title;
+  }
+
 }
