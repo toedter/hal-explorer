@@ -5,7 +5,7 @@ import * as utpl from 'uri-templates';
 import {AppService, RequestHeader} from '../app.service';
 
 @Component({
-  selector: 'app-url-input',
+  selector: 'app-uri-input',
   templateUrl: './request.component.html',
   styleUrls: ['./request.component.css']
 })
@@ -13,7 +13,7 @@ export class RequestComponent implements OnInit {
   uri: string;
   uriTemplateEvent: UriTemplateEvent = new UriTemplateEvent(EventType.FillUriTemplate, '', []);
   httpRequestEvent: HttpRequestEvent = new HttpRequestEvent(EventType.FillHttpRequest, Command.Post, '');
-  newRequestUrl: string;
+  newRequestUri: string;
   requestBody: string;
   selectedHttpMethod: Command;
   commandPlaceholder = Command;
@@ -31,7 +31,7 @@ export class RequestComponent implements OnInit {
   ngOnInit() {
     this.jsonSchema = undefined;
     this.halFormsProperties = undefined;
-    this.uri = this.appService.getUrl();
+    this.uri = this.appService.getUri();
     this.tempRequestHeaders = this.appService.getCustomRequestHeaders();
 
     this.requestService.getNeedInfoObservable().subscribe((value: any) => {
@@ -57,7 +57,7 @@ export class RequestComponent implements OnInit {
       }
     });
 
-    this.appService.urlObservable.subscribe(url => this.goFromHashChange(url));
+    this.appService.uriObservable.subscribe(url => this.goFromHashChange(url));
     this.appService.requestHeadersObservable.subscribe(requestHeaders => {
       this.tempRequestHeaders = requestHeaders;
       this.updateRequestHeaders();
@@ -72,7 +72,7 @@ export class RequestComponent implements OnInit {
   }
 
   public getExpandedUri() {
-    this.requestService.getUri(this.newRequestUrl);
+    this.requestService.getUri(this.newRequestUri);
   }
 
   public createOrUpdateResource() {
@@ -85,14 +85,14 @@ export class RequestComponent implements OnInit {
   }
 
   public computeUriFromTemplate() {
-    const uriTemplate = utpl(this.uriTemplateEvent.templatedUrl);
+    const uriTemplate = utpl(this.uriTemplateEvent.templatedUri);
     const templateParams = {};
     for (const parameter of this.uriTemplateEvent.parameters) {
       if (parameter.value.length > 0) {
         templateParams[parameter.key] = parameter.value;
       }
     }
-    this.newRequestUrl = uriTemplate.fill(templateParams);
+    this.newRequestUri = uriTemplate.fill(templateParams);
   }
 
   public requestBodyChanged() {

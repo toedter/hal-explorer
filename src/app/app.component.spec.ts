@@ -6,7 +6,7 @@ import {RequestService} from './request/request.service';
 import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-url-input',
+  selector: 'app-uri-input',
   template: ''
 })
 class MockRequestComponent {

@@ -11,7 +11,7 @@ export enum EventType {FillUriTemplate, FillHttpRequest}
 export enum Command {Get, Post, Put, Patch, Delete, Document}
 
 export class UriTemplateEvent {
-  constructor(public type: EventType, public templatedUrl, public parameters: UrlTemplateParameter[]) {
+  constructor(public type: EventType, public templatedUri, public parameters: UriTemplateParameter[]) {
   }
 }
 
@@ -21,7 +21,7 @@ export class HttpRequestEvent {
   }
 }
 
-export class UrlTemplateParameter {
+export class UriTemplateParameter {
   constructor(public key: string, public value: string) {
   }
 }
@@ -73,7 +73,7 @@ export class RequestService {
     if (httpMethod.toLowerCase() === 'post' || httpMethod.toLowerCase() === 'put' || httpMethod.toLowerCase() === 'patch') {
       headers = headers.set('Content-Type', 'application/json; charset=utf-8');
     }
-    this.appService.setUrl(uri);
+    this.appService.setUri(uri);
     this.http.request(httpMethod, uri, {headers: headers, observe: 'response', body: body}).subscribe(
       (response: HttpResponse<any>) => {
         (<any>response).statusText = HttpStatus.getStatusText(response.status);
@@ -113,9 +113,9 @@ export class RequestService {
     if (command === Command.Get) {
       if (uri.includes('{')) {
         const uriTemplate: URITemplate = utpl(uri);
-        const uriTemplateParameters: UrlTemplateParameter[] = new Array();
+        const uriTemplateParameters: UriTemplateParameter[] = new Array();
         for (const param of (<any>uriTemplate).varNames) {
-          uriTemplateParameters.push(new UrlTemplateParameter(param, ''));
+          uriTemplateParameters.push(new UriTemplateParameter(param, ''));
         }
 
         const event = new UriTemplateEvent(EventType.FillUriTemplate, uri, uriTemplateParameters);
@@ -156,7 +156,7 @@ export class RequestService {
         const linkHeader = response.headers.get('Link');
         if (linkHeader) {
           const w3cLinks = linkHeader.split(',');
-          let profileUrl;
+          let profileUri;
           w3cLinks.forEach(function (w3cLink) {
             const parts = w3cLink.split(';');
 
@@ -168,11 +168,11 @@ export class RequestService {
             const rel = relWrappedWithQuotes.slice(1, relWrappedWithQuotes.length - 1);
 
             if (rel.toLowerCase() === 'profile') {
-              profileUrl = href;
+              profileUri = href;
             }
           });
 
-          if (profileUrl) {
+          if (profileUri) {
             hasProfile = true;
             let headers = new HttpHeaders(
               {
@@ -185,7 +185,7 @@ export class RequestService {
               }
             }
 
-            this.http.get(profileUrl, {headers: headers, observe: 'response'}).subscribe(
+            this.http.get(profileUri, {headers: headers, observe: 'response'}).subscribe(
               (httpResponse: HttpResponse<any>) => {
                 const jsonSchema = httpResponse.body;
 
@@ -211,7 +211,7 @@ export class RequestService {
                 this.needInfoSubject.next(httpRequestEvent);
               },
               () => {
-                console.error('Cannot get JSON schema for:', profileUrl);
+                console.error('Cannot get JSON schema for:', profileUri);
                 this.needInfoSubject.next(httpRequestEvent);
               }
             );

@@ -138,10 +138,10 @@ describe('RequestService', () => {
     httpMock.verify();
   });
 
-  it('should handle templated URLs', (done) => {
+  it('should handle templated URIs', (done) => {
     requestService.getNeedInfoObservable().subscribe((event: any) => {
       const templateEvent: UriTemplateEvent = <UriTemplateEvent>event;
-      expect(templateEvent.templatedUrl).toBe('http://localhost{page}');
+      expect(templateEvent.templatedUri).toBe('http://localhost{page}');
       expect(templateEvent.parameters[0].key).toBe('page');
       done();
     });

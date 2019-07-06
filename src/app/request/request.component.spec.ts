@@ -1,7 +1,14 @@
 import {async, ComponentFixture, getTestBed, TestBed} from '@angular/core/testing';
 import {RequestComponent} from './request.component';
 import {FormsModule} from '@angular/forms';
-import {Command, EventType, HttpRequestEvent, RequestService, UriTemplateEvent, UrlTemplateParameter} from './request.service';
+import {
+  Command,
+  EventType,
+  HttpRequestEvent,
+  RequestService,
+  UriTemplateEvent,
+  UriTemplateParameter
+} from './request.service';
 import {AppService, RequestHeader} from '../app.service';
 import {HttpClient} from '@angular/common/http';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
@@ -21,10 +28,10 @@ class ObservableMock {
 }
 
 class AppServiceMock {
-  _urlObservable: ObservableMock = new ObservableMock();
+  _uriObservable: ObservableMock = new ObservableMock();
   _requestHeadersObservable: ObservableMock = new ObservableMock();
 
-  getUrl(): string {
+  getUri(): string {
     return 'http://localhost/api';
   }
 
@@ -35,8 +42,8 @@ class AppServiceMock {
   setCustomRequestHeaders(requestHeaders: RequestHeader[]) {
   }
 
-  get urlObservable(): ObservableMock {
-    return this._urlObservable;
+  get uriObservable(): ObservableMock {
+    return this._uriObservable;
   }
 
   get requestHeadersObservable(): ObservableMock {
@@ -138,23 +145,23 @@ describe('RequestComponent', () => {
 
   it('should fill uri template with query params', () => {
     const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
-    const uriTemplateParameters: UrlTemplateParameter[] = [];
-    uriTemplateParameters.push(new UrlTemplateParameter('page', '0'));
-    uriTemplateParameters.push(new UrlTemplateParameter('size', '10'));
+    const uriTemplateParameters: UriTemplateParameter[] = [];
+    uriTemplateParameters.push(new UriTemplateParameter('page', '0'));
+    uriTemplateParameters.push(new UriTemplateParameter('size', '10'));
     const event: UriTemplateEvent = new UriTemplateEvent(
       EventType.FillUriTemplate, 'http://localhost/api/things{?page,size}', uriTemplateParameters);
     requestServiceMock.getNeedInfoObservable().next(event);
-    expect(component.newRequestUrl).toBe('http://localhost/api/things?page=0&size=10');
+    expect(component.newRequestUri).toBe('http://localhost/api/things?page=0&size=10');
   });
 
   it('should fill uri template with simple params', () => {
     const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
-    const uriTemplateParameters: UrlTemplateParameter[] = [];
-    uriTemplateParameters.push(new UrlTemplateParameter('id', '1234'));
+    const uriTemplateParameters: UriTemplateParameter[] = [];
+    uriTemplateParameters.push(new UriTemplateParameter('id', '1234'));
     const event: UriTemplateEvent = new UriTemplateEvent(
       EventType.FillUriTemplate, 'http://localhost/api/things/{id}', uriTemplateParameters);
     requestServiceMock.getNeedInfoObservable().next(event);
-    expect(component.newRequestUrl).toBe('http://localhost/api/things/1234');
+    expect(component.newRequestUri).toBe('http://localhost/api/things/1234');
   });
 
   it('should fill http request', () => {
@@ -162,7 +169,7 @@ describe('RequestComponent', () => {
 
     const event: HttpRequestEvent = new HttpRequestEvent(EventType.FillHttpRequest, Command.Post, 'http://localhost/api/things');
     requestServiceMock.getNeedInfoObservable().next(event);
-    expect(component.newRequestUrl).toBe(undefined);
+    expect(component.newRequestUri).toBe(undefined);
     expect(component.jsonSchema).toBe(undefined);
   });
 
@@ -177,7 +184,7 @@ describe('RequestComponent', () => {
 
   it('should get expanded uri', () => {
     const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
-    component.newRequestUrl = 'http://localhost';
+    component.newRequestUri = 'http://localhost';
 
     component.getExpandedUri();
     expect(requestServiceMock.getUriCalledWith).toBe('http://localhost');
@@ -211,7 +218,7 @@ describe('RequestComponent', () => {
 
   it('should go from hash change', () => {
     const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
-    component.newRequestUrl = 'http://localhost';
+    component.newRequestUri = 'http://localhost';
 
     component.goFromHashChange('http://localhost');
     expect(requestServiceMock.getUriCalledWith).toBe('http://localhost');

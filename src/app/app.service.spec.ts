@@ -50,14 +50,14 @@ describe('AppService', () => {
   });
 
   it('should parse window location hash', () => {
-    window.location.hash = '#theme=Cosmo&layout=3&hkey0=accept&hval0=text/plain&url=https://chatty42.herokuapp.com/api/users';
+    window.location.hash = '#theme=Cosmo&layout=3&hkey0=accept&hval0=text/plain&uri=https://chatty42.herokuapp.com/api/users';
     service = new AppService();
 
     expect(service.getCustomRequestHeaders()[0].key).toBe('accept');
     expect(service.getCustomRequestHeaders()[0].value).toBe('text/plain');
     expect(service.getLayout()).toBe('3');
     expect(service.getTheme()).toBe('Cosmo');
-    expect(service.getUrl()).toBe('https://chatty42.herokuapp.com/api/users');
+    expect(service.getUri()).toBe('https://chatty42.herokuapp.com/api/users');
 
   });
 

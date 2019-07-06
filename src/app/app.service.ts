@@ -10,18 +10,18 @@ export class RequestHeader {
 
 @Injectable()
 export class AppService {
-  private urlParam: string;
+  private uriParam: string;
   private themeParam: string;
   private layoutParam: string;
   private customRequestHeaders: RequestHeader[];
 
-  private urlParamBackup: string;
+  private uriParamBackup: string;
   private themeParamBackup: string;
   private layoutParamBackup: string;
   private customRequestHeadersBackup: RequestHeader[];
 
-  private urlSubject: Subject<string> = new Subject<string>();
-  private _urlObservable: Observable<string> = this.urlSubject.asObservable();
+  private uriSubject: Subject<string> = new Subject<string>();
+  private _uriObservable: Observable<string> = this.uriSubject.asObservable();
 
   private themeSubject: Subject<string> = new Subject<string>();
   private _themeObservable: Observable<string> = this.themeSubject.asObservable();
@@ -37,8 +37,8 @@ export class AppService {
     window.addEventListener('hashchange', () => this.handleLocationHash(), false);
   }
 
-  get urlObservable(): Observable<string> {
-    return this._urlObservable;
+  get uriObservable(): Observable<string> {
+    return this._uriObservable;
   }
 
   get themeObservable(): Observable<string> {
@@ -53,13 +53,13 @@ export class AppService {
     return this._requestHeadersObservable;
   }
 
-  getUrl(): string {
-    return this.urlParam;
+  getUri(): string {
+    return this.uriParam;
   }
 
-  setUrl(url: string) {
-    this.urlParamBackup = this.urlParam;
-    this.urlParam = url;
+  setUri(uri: string) {
+    this.uriParamBackup = this.uriParam;
+    this.uriParam = uri;
     this.setLocationHash();
   }
 
@@ -98,8 +98,8 @@ export class AppService {
   }
 
   private handleLocationHash() {
-    if (!this.urlParam) {
-      this.urlParam = '';
+    if (!this.uriParam) {
+      this.uriParam = '';
     }
     if (!this.themeParam) {
       this.themeParam = 'Default';
@@ -142,16 +142,19 @@ export class AppService {
           console.log('error in fragment parameters: found request header value' + headerValueParam + ' without corresponding key');
         }
         m = regex.exec(fragment);
-      } else if (key === 'url') {
-        this.urlParam = fragment.substring(fragment.indexOf('url=') + 4);
+      } else if (key === 'url') { // keep this for backward compatibility
+        this.uriParam = fragment.substring(fragment.indexOf('url=') + 4);
+        m = null;
+      } else if (key === 'uri') { // uri ist the new parameter that replaced url
+        this.uriParam = fragment.substring(fragment.indexOf('uri=') + 4);
         m = null;
       } else {
         m = regex.exec(fragment);
       }
     }
 
-    if (this.urlParamBackup !== this.urlParam) {
-      this.urlSubject.next(this.urlParam);
+    if (this.uriParamBackup !== this.uriParam) {
+      this.uriSubject.next(this.uriParam);
     }
 
     if (this.themeParamBackup !== this.themeParam) {
@@ -196,8 +199,8 @@ export class AppService {
       andPrefix = '&';
     }
 
-    if (this.urlParam !== '') {
-      newLocationHash += andPrefix + 'url=' + this.urlParam;
+    if (this.uriParam !== '') {
+      newLocationHash += andPrefix + 'uri=' + this.uriParam;
     }
 
     window.location.hash = newLocationHash;
