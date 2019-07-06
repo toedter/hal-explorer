@@ -145,6 +145,8 @@ export class AppService {
       } else if (key === 'url') {
         this.urlParam = fragment.substring(fragment.indexOf('url=') + 4);
         m = null;
+      } else {
+        m = regex.exec(fragment);
       }
     }
 
