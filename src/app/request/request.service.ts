@@ -41,7 +41,7 @@ export class RequestService {
 
   private requestHeaders: HttpHeaders = new HttpHeaders(
     {
-      'Accept': 'application/hal+json, application/json, */*'
+      'Accept': 'application/prs.hal-forms+json, application/hal+json, application/json, */*'
     });
   private customRequestHeaders: RequestHeader[];
 
