@@ -47,7 +47,8 @@ export class ResponseExplorerComponent implements OnInit {
     } else {
       this.requestService.getResponseObservable()
         .subscribe((response: HttpResponse<any>) => {
-            if (response.headers.get('content-type').startsWith('application/prs.hal-forms+json')) {
+            const contentType = response.headers.get('content-type')
+            if (contentType && contentType.startsWith('application/prs.hal-forms+json')) {
               this.isHalFormsMediaType = true;
             }
 
