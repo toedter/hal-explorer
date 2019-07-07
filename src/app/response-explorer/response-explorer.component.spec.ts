@@ -2,8 +2,67 @@ import {async, ComponentFixture, getTestBed, TestBed} from '@angular/core/testin
 
 import {ResponseExplorerComponent} from './response-explorer.component';
 import {Command, RequestService} from '../request/request.service';
-import {HttpResponse} from '@angular/common/http';
+import {HttpHeaders, HttpResponse} from '@angular/common/http';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
+
+/* tslint:disable */
+const halFormsResponse = {
+  'title': 'The Shawshank Redemption',
+  'year': 1994,
+  '_links': {
+    'self': {
+      'href': 'http://localhost:4200/api/movies/1'
+    },
+    'movies': {
+      'href': 'http://localhost:4200/api/movies{?size,page}',
+      'templated': true
+    }
+  },
+  '_templates': {
+    'default': {
+      'title': 'Ändere Film',
+      'method': 'put',
+      'contentType': '',
+      'properties': [
+        {
+          'name': 'title',
+          'prompt': 'Titel',
+          'required': true
+        },
+        {
+          'name': 'year',
+          'prompt': 'Jahr',
+          'required': true
+        }
+      ]
+    },
+    'updateMoviePartially': {
+      'title': 'Ändere Film (partiell)',
+      'method': 'patch',
+      'contentType': '',
+      'properties': [
+        {
+          'name': 'title',
+          'prompt': 'Titel',
+          'required': false
+        },
+        {
+          'name': 'year',
+          'prompt': 'Jahr',
+          'required': false
+        }
+      ]
+    },
+    'deleteMovie': {
+      'title': 'Lösche Film',
+      'method': 'delete',
+      'contentType': '',
+      'properties': []
+    }
+  }
+};
+
+/* tslint:enable */
 
 class ObservableMock {
   private callback: Function;
@@ -133,8 +192,51 @@ describe('ResponseExplorerComponent', () => {
     expect(component.showProperties).toBeTruthy();
     expect(component.showLinks).toBeTruthy();
     expect(component.showEmbedded).toBeTruthy();
+    expect(component.hasHalFormsTemplates).toBeFalsy();
     expect(component.links.length).toBe(3);
     expect(component.embedded.length).toBe(1);
+  });
+
+  it('should parse HAL-FORMS response body', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+
+    const responseHeaders: HttpHeaders = new HttpHeaders(
+      {
+        'content-type': 'application/prs.hal-forms+json'
+      });
+    requestServiceMock.observableMock.next(new HttpResponse({headers: responseHeaders, body: halFormsResponse}));
+
+    expect(component.showProperties).toBeTruthy();
+    expect(component.showLinks).toBeTruthy();
+    expect(component.showEmbedded).toBeFalsy();
+    expect(component.links.length).toBe(2);
+    expect(component.embedded.length).toBe(0);
+    expect(component.hasHalFormsTemplates).toBeTruthy();
+  });
+
+  it('should get HAL-FORMS link button class and state', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+
+    const responseHeaders: HttpHeaders = new HttpHeaders(
+      {
+        'content-type': 'application/prs.hal-forms+json'
+      });
+    requestServiceMock.observableMock.next(new HttpResponse({headers: responseHeaders, body: halFormsResponse}));
+
+    expect(component.getLinkButtonClass('self', Command.Get)).toBe('');
+    expect(component.isButtonDisabled('self', Command.Get)).toBeFalsy();
+
+    expect(component.getLinkButtonClass('self', Command.Post)).toBe('btn-outline-light');
+    expect(component.isButtonDisabled('self', Command.Post)).toBeTruthy();
+
+    expect(component.getLinkButtonClass('self', Command.Put)).toBe('');
+    expect(component.isButtonDisabled('self', Command.Put)).toBeFalsy();
+
+    expect(component.getLinkButtonClass('self', Command.Patch)).toBe('');
+    expect(component.isButtonDisabled('self', Command.Patch)).toBeFalsy();
+
+    expect(component.getLinkButtonClass('self', Command.Delete)).toBe('');
+    expect(component.isButtonDisabled('self', Command.Delete)).toBeFalsy();
   });
 
   it('should invoke request service when processing command', () => {

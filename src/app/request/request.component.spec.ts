@@ -112,6 +112,51 @@ const jsonSchema: any = {
   'type': 'object',
   '$schema': 'http://json-schema.org/draft-04/schema#'
 };
+
+const halFormsTemplates = {
+  '_templates': {
+    'default': {
+      'title': 'Change Movie',
+      'method': 'put',
+      'contentType': '',
+      'properties': [
+        {
+          'name': 'title',
+          'prompt': 'Titel',
+          'required': true
+        },
+        {
+          'name': 'year',
+          'prompt': 'Jahr',
+          'required': true
+        }
+      ]
+    },
+    'updateMoviePartially': {
+      'title': 'Change Movie (partially)',
+      'method': 'patch',
+      'contentType': '',
+      'properties': [
+        {
+          'name': 'title',
+          'prompt': 'Titel',
+          'required': false
+        },
+        {
+          'name': 'year',
+          'prompt': 'Jahr',
+          'required': false
+        }
+      ]
+    },
+    'deleteMovie': {
+      'title': 'Delete Movie',
+      'method': 'delete',
+      'contentType': '',
+      'properties': []
+    }
+  }
+};
 /* tslint:enable */
 
 describe('RequestComponent', () => {
@@ -182,6 +227,35 @@ describe('RequestComponent', () => {
     expect(component.jsonSchema.toString).toEqual(jsonSchema.toString);
   });
 
+  it('should fill http request with HAL-FORMS template properties', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+
+    const event: HttpRequestEvent =
+      new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
+        undefined, halFormsTemplates._templates);
+
+    requestServiceMock.getNeedInfoObservable().next(event);
+
+    expect(component.halFormsTemplates.toString).toEqual(halFormsTemplates.toString);
+    expect(component.halFormsDialogTitle).toEqual('Change Movie');
+    expect(component.halFormsProperties.toString).toEqual(halFormsTemplates._templates.default.properties.toString);
+  });
+
+  it('should support HTTP method with HAL-FORMS', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+
+    const event: HttpRequestEvent =
+      new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
+        undefined, halFormsTemplates._templates);
+
+    requestServiceMock.getNeedInfoObservable().next(event);
+
+    expect(component.supportsHttpMethod(Command.Put)).toBeTruthy();
+    expect(component.supportsHttpMethod(Command.Patch)).toBeFalsy();
+    expect(component.supportsHttpMethod(Command.Delete)).toBeFalsy();
+    expect(component.supportsHttpMethod(Command.Post)).toBeFalsy();
+  });
+
   it('should get expanded uri', () => {
     const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
     component.newRequestUri = 'http://localhost';
@@ -197,6 +271,17 @@ describe('RequestComponent', () => {
 
     component.requestBodyChanged();
     expect(component.requestBody).toBe('{\n  "fullName": "Kai Toedter",\n  "email": "kai@toedter.com"\n}');
+  });
+
+  it('should get change request body based on HAL-FORMS', () => {
+    component.halFormsTemplates = halFormsTemplates;
+    component.halFormsProperties = halFormsTemplates._templates.default.properties;
+    component.halFormsProperties[0].value = 'Movie Title';
+    component.halFormsProperties[1].value = '2019';
+
+    component.requestBodyChanged();
+
+    expect(component.requestBody).toBe('{\n  "title": "Movie Title",\n  "year": "2019"\n}');
   });
 
   it('should get tooltip with no json schema', () => {
