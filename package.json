@@ -13,7 +13,6 @@
     "e2e": "docker run -d -p 8080:8080 --name chatty-server kaitoedter/chatty & ng e2e & docker rm -f chatty-server",
     "e2e-headless": "ng e2e --protractor-config protractor.conf.headless.js"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "~8.2.13",
     "@angular/common": "~8.2.13",
