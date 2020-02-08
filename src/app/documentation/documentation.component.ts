@@ -45,4 +45,4 @@ export function getDocHeight(doc) {
   iFrame.style.height = '10px'; // reset to minimal height ...
   iFrame.style.height = getDocHeight(doc) + 4 + 'px';
   iFrame.style.visibility = 'visible';
-}
+};
