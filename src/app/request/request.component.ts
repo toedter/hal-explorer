@@ -36,12 +36,12 @@ export class RequestComponent implements OnInit {
 
     this.requestService.getNeedInfoObservable().subscribe((value: any) => {
       if (value.type === EventType.FillUriTemplate) {
-        const event: UriTemplateEvent = <UriTemplateEvent>value;
+        const event: UriTemplateEvent = value as UriTemplateEvent;
         this.uriTemplateEvent = event;
         this.computeUriFromTemplate();
         $('#requestModalTrigger').trigger('click');
       } else if (value.type === EventType.FillHttpRequest) {
-        const event: HttpRequestEvent = <HttpRequestEvent>value;
+        const event: HttpRequestEvent = value as HttpRequestEvent;
         this.httpRequestEvent = event;
         if (event.jsonSchema) {
           this.jsonSchema = event.jsonSchema.properties;
@@ -140,9 +140,9 @@ export class RequestComponent implements OnInit {
 
   public updateRequestHeaders() {
     this.requestHeaders = [];
-    for (let i = 0; i < this.tempRequestHeaders.length; i++) {
-      const key: string = this.tempRequestHeaders[i].key.trim();
-      const value: string = this.tempRequestHeaders[i].value.trim();
+    for (const requestHeader of this.tempRequestHeaders) {
+      const key: string = requestHeader.key.trim();
+      const value: string = requestHeader.value.trim();
 
       if (key.length > 0 && value.length > 0) {
         this.requestHeaders.push(new RequestHeader(key, value));
@@ -184,7 +184,7 @@ export class RequestComponent implements OnInit {
     return hasHttpMethod;
   }
 
-  public getHalFormsPropertiesForHttpMethod(command: Command): Object {
+  public getHalFormsPropertiesForHttpMethod(command: Command) {
     let properties;
     if (!this.halFormsTemplates) {
       return properties;

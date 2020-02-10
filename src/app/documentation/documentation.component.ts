@@ -27,17 +27,18 @@ export class DocumentationComponent implements OnInit {
   }
 }
 
-// The following functions are from https://www.dyn-web.com/tutorials/iframes/height/
+// The following functions ported to Typescript from from https://www.dyn-web.com/tutorials/iframes/height/
 export function getDocHeight(doc) {
   doc = doc || document;
   // stackoverflow.com/questions/1145850/
-  const body = doc.body, html = doc.documentElement;
+  const body = doc.body;
+  const html = doc.documentElement;
   const height = Math.max(body.scrollHeight, body.offsetHeight,
     html.clientHeight, html.scrollHeight, html.offsetHeight);
   return height;
 }
 
-(<any>window).setIframeHeight = function(id) {
+(window as any).setIframeHeight = (id) => {
   const iFrame: any = document.getElementById(id);
   const doc = iFrame.contentDocument ? iFrame.contentDocument :
     iFrame.contentWindow.document;

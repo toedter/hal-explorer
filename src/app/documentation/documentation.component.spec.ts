@@ -5,7 +5,7 @@ import {RequestService} from '../request/request.service';
 import {DomSanitizer} from '@angular/platform-browser';
 
 class ObservableMock {
-  private callback: Function;
+  private callback: (value: any) => void;
   hasSubscribed = false;
 
   subscribe(next?: (value: any) => void, error?: (error: any) => void) {
@@ -64,7 +64,7 @@ describe('DocumentationComponent', () => {
   });
 
   it('should set doc uri', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
 
     requestServiceMock.documentationObservableMock.next('/doc');
 
@@ -72,7 +72,7 @@ describe('DocumentationComponent', () => {
   });
 
   it('should unset doc uri on response arrival', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
 
     requestServiceMock.documentationObservableMock.next('/doc');
     requestServiceMock.responseObservableMock.next('response');

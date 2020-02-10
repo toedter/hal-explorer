@@ -16,10 +16,10 @@ describe('RequestService', () => {
       imports: [HttpClientTestingModule],
       providers: [RequestService, AppService, HttpClient]
     });
-    requestService = TestBed.get(RequestService);
-    appService = TestBed.get(AppService);
-    httpMock = TestBed.get(HttpTestingController as Type<HttpTestingController>);
-    httpClient = TestBed.get(HttpClient);
+    requestService = TestBed.inject(RequestService);
+    appService = TestBed.inject(AppService);
+    httpMock = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
+    httpClient = TestBed.inject(HttpClient);
   });
 
   it('should be created', () => {
@@ -140,7 +140,7 @@ describe('RequestService', () => {
 
   it('should handle templated URIs', (done) => {
     requestService.getNeedInfoObservable().subscribe((event: any) => {
-      const templateEvent: UriTemplateEvent = <UriTemplateEvent>event;
+      const templateEvent: UriTemplateEvent = event as UriTemplateEvent;
       expect(templateEvent.templatedUri).toBe('http://localhost{page}');
       expect(templateEvent.parameters[0].key).toBe('page');
       done();
@@ -188,7 +188,7 @@ describe('RequestService', () => {
     const jsonSchemaRequest = httpMock.expectOne('schema-request');
     const responseHeaders: HttpHeaders = new HttpHeaders(
       {
-        'Link': '<https://chatty42.herokuapp.com/api/users>;rel="self",<https://chatty42.herokuapp.com/api/profile/users>;rel="profile"'
+        Link: '<https://chatty42.herokuapp.com/api/users>;rel="self",<https://chatty42.herokuapp.com/api/profile/users>;rel="profile"'
       });
     jsonSchemaRequest.flush(null, {headers: responseHeaders});
     expect(jsonSchemaRequest.request.method).toBe('HEAD');

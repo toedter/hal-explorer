@@ -34,7 +34,7 @@ class MockDocumentationComponent {
 }
 
 class ObservableMock {
-  private callback: Function;
+  private callback: (value: any) => void;
   hasSubscribed = false;
 
   subscribe(next?: (value: any) => void, error?: (error: any) => void) {
@@ -120,7 +120,7 @@ describe('AppComponent', () => {
   }));
 
   it('should show documentation', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
 
     requestServiceMock.documentationObservableMock.next('/doc');
 
@@ -128,7 +128,7 @@ describe('AppComponent', () => {
   });
 
   it('should not show documentation after getting response', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
 
     requestServiceMock.documentationObservableMock.next('/doc');
     requestServiceMock.responseObservableMock.next('response');

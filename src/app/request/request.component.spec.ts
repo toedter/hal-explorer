@@ -14,7 +14,7 @@ import {HttpClient} from '@angular/common/http';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
 
 class ObservableMock {
-  private callback: Function;
+  private callback: (value: any) => void;
   hasSubscribed = false;
 
   subscribe(next?: (value: any) => void, error?: (error: any) => void) {
@@ -28,7 +28,9 @@ class ObservableMock {
 }
 
 class AppServiceMock {
+  // tslint:disable-next-line:variable-name
   _uriObservable: ObservableMock = new ObservableMock();
+  // tslint:disable-next-line:variable-name
   _requestHeadersObservable: ObservableMock = new ObservableMock();
 
   getUri(): string {
@@ -189,7 +191,7 @@ describe('RequestComponent', () => {
   });
 
   it('should fill uri template with query params', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
     const uriTemplateParameters: UriTemplateParameter[] = [];
     uriTemplateParameters.push(new UriTemplateParameter('page', '0'));
     uriTemplateParameters.push(new UriTemplateParameter('size', '10'));
@@ -200,7 +202,7 @@ describe('RequestComponent', () => {
   });
 
   it('should fill uri template with simple params', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
     const uriTemplateParameters: UriTemplateParameter[] = [];
     uriTemplateParameters.push(new UriTemplateParameter('id', '1234'));
     const event: UriTemplateEvent = new UriTemplateEvent(
@@ -210,7 +212,7 @@ describe('RequestComponent', () => {
   });
 
   it('should fill http request', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
 
     const event: HttpRequestEvent = new HttpRequestEvent(EventType.FillHttpRequest, Command.Post, 'http://localhost/api/things');
     requestServiceMock.getNeedInfoObservable().next(event);
@@ -219,7 +221,7 @@ describe('RequestComponent', () => {
   });
 
   it('should fill http request with json schema', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
 
     const event: HttpRequestEvent =
       new HttpRequestEvent(EventType.FillHttpRequest, Command.Post, 'http://localhost/api/things', jsonSchema);
@@ -228,7 +230,7 @@ describe('RequestComponent', () => {
   });
 
   it('should fill http request with HAL-FORMS template properties', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
 
     const event: HttpRequestEvent =
       new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
@@ -242,7 +244,7 @@ describe('RequestComponent', () => {
   });
 
   it('should support HTTP method with HAL-FORMS', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
 
     const event: HttpRequestEvent =
       new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
@@ -257,7 +259,7 @@ describe('RequestComponent', () => {
   });
 
   it('should get expanded uri', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
     component.newRequestUri = 'http://localhost';
 
     component.getExpandedUri();
@@ -302,7 +304,7 @@ describe('RequestComponent', () => {
   });
 
   it('should go from hash change', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().get(RequestService);
+    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
     component.newRequestUri = 'http://localhost';
 
     component.goFromHashChange('http://localhost');
