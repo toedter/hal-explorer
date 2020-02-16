@@ -4,7 +4,8 @@
 image:https://travis-ci.org/toedter/hal-explorer.svg?branch=master[Build Status, link="https://travis-ci.org/toedter/hal-explorer"]
 image:https://img.shields.io/badge/license-MIT-blue.svg["MIT", link="http://toedter.mit-license.org"]
 
-With HAL Explorer you can browse and explore http://stateless.co/hal_specification.html[HAL] based RESTful Hypermedia APIs.
+With HAL Explorer you can browse and explore http://stateless.co/hal_specification.html[HAL]
+and https://rwcbook.github.io/hal-forms/[HAL-FORMS] based RESTful Hypermedia APIs.
 HAL Explorer was inspired by Mike Kelly's https://github.com/mikekelly/hal-browser[HAL-Browser].
 HAL Explorer supports both Spring Profiles and HAL-FORMS.
 
@@ -17,7 +18,7 @@ image:hal-explorer.jpg[HAL Explorer screenshot]
 * Syntax highlighted response body
 * Custom request headers
 * Bootswatch themes
-* 2 layouts (2 column or 3 column for documentation)
+* 2 layouts (2 columns or 3 columns for documentation)
 * API URL, theme, layout and request headers stored in URL fragment
 * Support for Spring Data Rest profiles to populate properties in request editor
 * Support for HAL-FORMS (_templates) to populate properties in request editor and to provide only supported HTTP methods for self link
