@@ -17,6 +17,7 @@ before_script:
 
 install:
   - yarn
+  - npm install -g codecov
 
 script:
   - yarn lint
@@ -24,3 +25,4 @@ script:
   - yarn test-headless
   - docker run -d -p 127.0.0.1:8080:8080 --name chatty-server kaitoedter/chatty
   - yarn e2e-headless
+  - codecov -f .\coverage\lcov.info
