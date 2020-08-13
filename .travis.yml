@@ -23,6 +23,6 @@ script:
   - yarn lint
   - yarn build
   - yarn test-headless
+  - codecov -f ./coverage/ng-test/lcov.info
   - docker run -d -p 127.0.0.1:8080:8080 --name chatty-server kaitoedter/chatty
   - yarn e2e-headless
-  - codecov -f .\coverage\lcov.info
