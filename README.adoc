@@ -7,7 +7,7 @@ image:https://img.shields.io/badge/license-MIT-blue.svg["MIT", link="http://toed
 With HAL Explorer you can browse and explore http://stateless.co/hal_specification.html[HAL]
 and https://rwcbook.github.io/hal-forms/[HAL-FORMS] based RESTful Hypermedia APIs.
 HAL Explorer was inspired by Mike Kelly's https://github.com/mikekelly/hal-browser[HAL-Browser].
-HAL Explorer also supports both Spring Profiles and HAL-FORMS.
+HAL Explorer also supports Spring Profiles.
 
 == Screenshot
 image:hal-explorer.jpg[HAL Explorer screenshot]
