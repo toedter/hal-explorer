@@ -18,7 +18,7 @@ image:hal-explorer.jpg[HAL Explorer screenshot]
 * Syntax highlighted response body
 * Custom request headers
 * Bootswatch themes
-* 2 layouts (2 columns or 3 columns for documentation)
+* 2 layouts (2 columns or 3 columns for the documentation)
 * API URL, theme, layout and request headers stored in URL fragment
 * Support for Spring Data Rest profiles to populate properties in request editor
 * Support for HAL-FORMS (_templates) to populate properties in request editor and to provide only supported HTTP methods for self link
