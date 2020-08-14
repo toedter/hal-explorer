@@ -79,6 +79,19 @@ describe('DocumentationComponent', () => {
 
     expect(component.docUri).toBeUndefined();
   });
+
+  it('should set iFrame height', () => {
+    const iFrame = document.createElement('iframe');
+    const html = '<body>Foo</body>';
+    iFrame.src = 'data:text/html;charset=utf-8,' + encodeURI(html);
+    iFrame.id = 'doc-iframe';
+    document.body.appendChild(iFrame);
+
+    (window as any).setIframeHeight(iFrame.id);
+
+    expect(iFrame.style.height).toBe('12px');
+  });
+
 });
 
 
