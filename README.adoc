@@ -1,5 +1,6 @@
 image:https://travis-ci.org/toedter/hal-explorer.svg?branch=master[Build Status, link="https://travis-ci.org/toedter/hal-explorer"]
 image:https://codecov.io/gh/toedter/hal-explorer/branch/master/graph/badge.svg["coverage", link="https://codecov.io/gh/toedter/hal-explorer"]
+image:https://img.shields.io/maven-central/v/org.webjars/hal-explorer?color=green["maven-central", link="https://search.maven.org/artifact/org.webjars/hal-explorer"]
 image:https://img.shields.io/badge/license-MIT-blue.svg["MIT", link="http://toedter.mit-license.org"]
 
 = HAL Explorer
