@@ -1,4 +1,4 @@
-import {async, ComponentFixture, getTestBed, TestBed} from '@angular/core/testing';
+import { ComponentFixture, getTestBed, TestBed, waitForAsync } from '@angular/core/testing';
 import {AppComponent} from './app.component';
 import {Component} from '@angular/core';
 import {AppService} from './app.service';
@@ -89,7 +89,7 @@ describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
@@ -111,11 +111,11 @@ describe('AppComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create the app', async(() => {
+  it('should create the app', waitForAsync(() => {
     expect(component).toBeTruthy();
   }));
 
-  it(`should not show documentation`, async(() => {
+  it(`should not show documentation`, waitForAsync(() => {
     expect(component.showDocumentation).toBeFalsy();
   }));
 
