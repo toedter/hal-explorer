@@ -195,4 +195,22 @@ export class ResponseExplorerComponent implements OnInit {
     return false;
   }
 
+  getRelTargetUrl(href: string, command: Command): string {
+    let target = href;
+    if (this.isHalFormsMediaType) {
+      if (this.templates) {
+        Object.getOwnPropertyNames(this.templates).forEach(
+          (val: string) => {
+            if (this.templates[val].method === Command[command].toLowerCase()) {
+              if (this.templates[val].target) {
+                target = this.templates[val].target;
+                return;
+              }
+            }
+          }
+        );
+      }
+    }
+    return target;
+  }
 }

@@ -310,5 +310,4 @@ describe('RequestComponent', () => {
     component.goFromHashChange('http://localhost');
     expect(requestServiceMock.getUriCalledWith).toBe('http://localhost');
   });
-
 });

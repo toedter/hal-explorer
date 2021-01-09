@@ -44,27 +44,27 @@
                                 <td>
                                     <button [class]="'icon-left-open ml-1 btn btn-outline-success btn-sm nav-button ' + getLinkButtonClass(link.rel, command.Get)"
                                             [disabled]="isButtonDisabled(link.rel, command.Get)"
-                                            (click)="processCommand(command.Get, link.href)"
+                                            (click)="processCommand(command.Get, getRelTargetUrl(link.href, command.Get))"
                                             title="GET Request">
                                     </button>
                                     <button [class]="'icon-plus ml-1 btn btn-outline-info btn-sm nav-button ' + getLinkButtonClass(link.rel, command.Post)"
                                             [disabled]="isButtonDisabled(link.rel, command.Post)"
-                                            (click)="processCommand(command.Post, link.href)"
+                                            (click)="processCommand(command.Post, getRelTargetUrl(link.href, command.Post))"
                                             title="POST Request">
                                     </button>
                                     <button [class]="'icon-right-open ml-1 btn btn-outline-warning btn-sm nav-button ' + getLinkButtonClass(link.rel, command.Put)"
                                             [disabled]="isButtonDisabled(link.rel, command.Put)"
-                                            (click)="processCommand(command.Put, link.href)"
+                                            (click)="processCommand(command.Put, getRelTargetUrl(link.href, command.Put))"
                                             title="PUT Request">
                                     </button>
                                     <button [class]="'icon-right-open ml-1 btn btn-outline-warning btn-sm nav-button ' + getLinkButtonClass(link.rel, command.Patch)"
                                             [disabled]="isButtonDisabled(link.rel, command.Patch)"
-                                            (click)="processCommand(command.Patch, link.href)"
+                                            (click)="processCommand(command.Patch, getRelTargetUrl(link.href, command.Patch))"
                                             title="PATCH Request">
                                     </button>
                                     <button [class]="'icon-cancel ml-1 btn btn-outline-danger btn-sm nav-button ' + getLinkButtonClass(link.rel, command.Delete)"
                                             [disabled]="isButtonDisabled(link.rel, command.Delete)"
-                                            (click)="processCommand(command.Delete, link.href)"
+                                            (click)="processCommand(command.Delete, getRelTargetUrl(link.href, command.Delete))"
                                             title="DELETE Request">
                                     </button>
                                 </td>
