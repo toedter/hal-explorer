@@ -216,4 +216,21 @@ export class RequestComponent implements OnInit {
     return title;
   }
 
+  getValidationErrors(ngModel: any): string {
+    if (!ngModel.errors) {
+      return '';
+    }
+    let errorMessage = '';
+
+    if (ngModel.errors.required) {
+      errorMessage = 'Value is required\n';
+    }
+
+    if (ngModel.errors.pattern) {
+      errorMessage += 'Value does not match pattern: ' + ngModel.errors.pattern.requiredPattern + '\n';
+    }
+
+    return errorMessage;
+  }
 }
+

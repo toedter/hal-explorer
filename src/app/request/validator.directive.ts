@@ -3,9 +3,9 @@ import {AbstractControl, NG_VALIDATORS, Validator, ValidatorFn, Validators} from
 
 @Directive({
   selector: '[appHalFormsProperty]',
-  providers: [{provide: NG_VALIDATORS, useExisting: HalFormsPropertyValidatorDirective, multi: true}]
+  providers: [{provide: NG_VALIDATORS, useExisting: ValidatorDirective, multi: true}]
 })
-export class HalFormsPropertyValidatorDirective implements Validator {
+export class ValidatorDirective implements Validator {
   @Input('appHalFormsProperty') halFormsProperty: any;
 
   validate(control: AbstractControl): { [key: string]: any } | null {

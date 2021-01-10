@@ -151,8 +151,8 @@
                      for="expandedURI">{{item.prompt}}
                 <span *ngIf="item.required">*</span></label>
               <div class="col-sm-9">
-                <input class="form-control" [(ngModel)]="item.value" name="{{item.name}}"
-                       [appHalFormsProperty]="item" title="test"
+                <input class="form-control" [(ngModel)]="item.value" name="{{item.name}}" #xxx="ngModel"
+                       [appHalFormsProperty]="item" [title]="getValidationErrors(xxx)"
                        (keyup)="requestBodyChanged()">
               </div>
             </div>
