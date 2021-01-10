@@ -10,6 +10,7 @@ import {JsonHighlighterService} from './json-highlighter/json-highlighter.servic
 import {ResponseExplorerComponent} from './response-explorer/response-explorer.component';
 import {DocumentationComponent} from './documentation/documentation.component';
 import {AppService} from './app.service';
+import {HalFormsPropertyValidatorDirective} from './request/HalFormsPropertyValidatorDirective';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {AppService} from './app.service';
     RequestComponent,
     ResponseDetailsComponent,
     ResponseExplorerComponent,
-    DocumentationComponent
+    DocumentationComponent,
+    HalFormsPropertyValidatorDirective
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule

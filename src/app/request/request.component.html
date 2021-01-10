@@ -1,218 +1,224 @@
 <br>
 <div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="bs-component">
-                <form (ngSubmit)="getUri()">
-                    <div class="input-group">
-                        <button type="button" class="btn btn-secondary" (click)="showEditHeadersDialog()">Edit Headers
-                        </button>
-                        <input [(ngModel)]="uri" type="url" class="form-control" id="InputApiUri"
-                               placeholder="Enter API URI" name="uri">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="bs-component">
+        <form (ngSubmit)="getUri()">
+          <div class="input-group">
+            <button type="button" class="btn btn-secondary" (click)="showEditHeadersDialog()">Edit Headers
+            </button>
+            <input [(ngModel)]="uri" type="url" class="form-control" id="InputApiUri"
+                   placeholder="Enter API URI" name="uri">
 
-                        <button type="submit" id="go" class="btn btn-primary">Go!</button>
-                    </div>
-                </form>
-            </div>
+            <button type="submit" id="go" class="btn btn-primary">Go!</button>
+          </div>
+        </form>
+      </div>
 
-            <div *ngIf="hasCustomRequestHeaders">
-                <br>
-                <div class="legend">
-                    <h5>Custom Request Headers</h5>
-                </div>
-
-                <div class="bs-component">
-                    <table class="table table-striped table-sm">
-                        <tbody>
-                        <tr *ngFor="let header of requestHeaders">
-                            <td class="w-25">{{header.key}}</td>
-                            <td class="w-75">{{header.value}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
+      <div *ngIf="hasCustomRequestHeaders">
+        <br>
+        <div class="legend">
+          <h5>Custom Request Headers</h5>
         </div>
+
+        <div class="bs-component">
+          <table class="table table-striped table-sm">
+            <tbody>
+            <tr *ngFor="let header of requestHeaders">
+              <td class="w-25">{{header.key}}</td>
+              <td class="w-75">{{header.value}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
+  </div>
 </div>
 
 <div id="requestModalTrigger" data-toggle="modal" data-target="#requestInputModal"></div>
 
 <div class="modal fade" id="requestInputModal" role="dialog" aria-labelledby="requestInputModalLabel"
      aria-hidden="false">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="aboutModalLabel">Template Request Input</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="aboutModalLabel">Template Request Input</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="uriTemplate">URI Template</label>
+            <div class="col-sm-10">
+              <div class="form-control" id="uriTemplate">{{uriTemplateEvent.templatedUri}}</div>
             </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label" for="uriTemplate">URI Template</label>
-                        <div class="col-sm-10">
-                            <div class="form-control" id="uriTemplate">{{uriTemplateEvent.templatedUri}}</div>
-                        </div>
-                    </div>
+          </div>
 
-                    <div class="form-group">
-                        <label for="parameters">Parameters</label>
-                        <div id="parameters" class="form-group row"
-                             *ngFor="let parameter of uriTemplateEvent.parameters">
-                            <label class="col-sm-2 col-form-label">{{parameter.key}}</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" [(ngModel)]="parameter.value"
-                                       (keyup)="computeUriFromTemplate()"
-                                       name="{{parameter.key}}">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label" for="expandedURI">Expanded URI</label>
-                        <div class="col-sm-10">
-                            <div class="form-control" id="expandedURI">{{newRequestUri}}</div>
-                        </div>
-                    </div>
-
-                </form>
+          <div class="form-group">
+            <label for="parameters">Parameters</label>
+            <div id="parameters" class="form-group row"
+                 *ngFor="let parameter of uriTemplateEvent.parameters">
+              <label class="col-sm-2 col-form-label">{{parameter.key}}</label>
+              <div class="col-sm-10">
+                <input class="form-control" [(ngModel)]="parameter.value"
+                       (keyup)="computeUriFromTemplate()"
+                       name="{{parameter.key}}">
+              </div>
             </div>
-            <div class="modal-footer">
-                <button id="templateDialogGoButton" type="button" class="btn btn-secondary" data-dismiss="modal"
-                        (click)="getExpandedUri()">Go!
-                </button>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="expandedURI">Expanded URI</label>
+            <div class="col-sm-10">
+              <div class="form-control" id="expandedURI">{{newRequestUri}}</div>
             </div>
-        </div>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button id="templateDialogGoButton" type="button" class="btn btn-secondary" data-dismiss="modal"
+                (click)="getExpandedUri()">Go!
+        </button>
+      </div>
     </div>
+  </div>
 </div>
 
 <div id="HttpRequestTrigger" data-toggle="modal" data-target="#httpRequestModal"></div>
 
 <div class="modal fade" id="httpRequestModal" role="dialog" aria-hidden="false">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">HTTP Request Input</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">HTTP Request Input</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #myForm="ngForm">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="uri">URI</label>
+            <div class="col-sm-9">
+              <div class="form-control" id="uri">{{httpRequestEvent.uri}}</div>
             </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label" for="uri">URI</label>
-                        <div class="col-sm-9">
-                            <div class="form-control" id="uri">{{httpRequestEvent.uri}}</div>
-                        </div>
-                    </div>
+          </div>
 
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label" for="expandedURI">HTTP Method</label>
-                        <div class="col-sm-9">
-                            <select [(ngModel)]="selectedHttpMethod" class="custom-select" name="httpAction">
-                                <option *ngIf="supportsHttpMethod(commandPlaceholder.Post)"
-                                        [value]="commandPlaceholder.Post">{{commandPlaceholder[commandPlaceholder.Post]}}</option>
-                                <option *ngIf="supportsHttpMethod(commandPlaceholder.Put)"
-                                        [value]="commandPlaceholder.Put">{{commandPlaceholder[commandPlaceholder.Put]}}</option>
-                                <option *ngIf="supportsHttpMethod(commandPlaceholder.Patch)"
-                                        [value]="commandPlaceholder.Patch">{{commandPlaceholder[commandPlaceholder.Patch]}}</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div *ngIf="jsonSchema">
-                        <hr>
-                        <label class="text-info">Spring Profile (JSON Schema)</label>
-                        <div class="form-group row" *ngFor="let item of jsonSchema | keyvalue">
-                            <label [title]="getTooltip(item.key)"
-                                   class="text-info col-sm-3 col-form-label"
-                                   for="expandedURI">{{jsonSchema[item.key].title}}</label>
-                            <div class="col-sm-9">
-                                <input [type]="getInputType(item.key)" class="form-control"
-                                       [(ngModel)]="jsonSchema[item.key].value" [ngModelOptions]="{standalone: true}"
-                                       (keyup)="requestBodyChanged()">
-                            </div>
-                        </div>
-                        <hr>
-                    </div>
-                    <div *ngIf="halFormsProperties">
-                        <hr>
-                        <label class="text-info">HAL-FORMS Properties <span *ngIf="halFormsDialogTitle"> [{{halFormsDialogTitle}}]</span></label>
-                        <div class="form-group row" *ngFor="let item of halFormsProperties">
-
-                            <label [title]="item.prompt" class="text-info col-sm-3 col-form-label"
-                                   for="expandedURI">{{item.prompt}}
-                                <span *ngIf="item.required">*</span></label>
-                            <div class="col-sm-9">
-                                <input class="form-control" [(ngModel)]="item.value"
-                                       [ngModelOptions]="{standalone: true}" (keyup)="requestBodyChanged()">
-                            </div>
-                        </div>
-                        <hr>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label" for="body">Body</label>
-                        <div class="col-sm-9">
-              <textarea [(ngModel)]="requestBody" class="form-control" id="body" rows="5"
-                        name="bodyArea"></textarea>
-                        </div>
-                    </div>
-                </form>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="expandedURI">HTTP Method</label>
+            <div class="col-sm-9">
+              <select [(ngModel)]="selectedHttpMethod" class="custom-select" name="httpAction">
+                <option *ngIf="supportsHttpMethod(commandPlaceholder.Post)"
+                        [value]="commandPlaceholder.Post">{{commandPlaceholder[commandPlaceholder.Post]}}</option>
+                <option *ngIf="supportsHttpMethod(commandPlaceholder.Put)"
+                        [value]="commandPlaceholder.Put">{{commandPlaceholder[commandPlaceholder.Put]}}</option>
+                <option *ngIf="supportsHttpMethod(commandPlaceholder.Patch)"
+                        [value]="commandPlaceholder.Patch">{{commandPlaceholder[commandPlaceholder.Patch]}}</option>
+              </select>
             </div>
-            <div class="modal-footer">
-                <button id="updateDialogGoButton" type="button" class="btn btn-secondary" data-dismiss="modal"
-                        (click)="createOrUpdateResource()">Go!
-                </button>
+          </div>
+
+          <div *ngIf="jsonSchema">
+            <hr>
+            <label class="text-info">Spring Profile (JSON Schema)</label>
+            <div class="form-group row" *ngFor="let item of jsonSchema | keyvalue">
+              <label [title]="getTooltip(item.key)"
+                     class="text-info col-sm-3 col-form-label"
+                     for="expandedURI">{{jsonSchema[item.key].title}}</label>
+              <div class="col-sm-9">
+                <input [type]="getInputType(item.key)" class="form-control"
+                       [(ngModel)]="jsonSchema[item.key].value" [ngModelOptions]="{standalone: true}"
+                       (keyup)="requestBodyChanged()">
+              </div>
             </div>
-        </div>
+            <hr>
+          </div>
+
+          <div *ngIf="halFormsProperties">
+            <hr>
+            <label class="text-info">HAL-FORMS Properties
+              <span *ngIf="halFormsDialogTitle"> [{{halFormsDialogTitle}}
+                ]</span>
+            </label>
+            <div class="form-group row" *ngFor="let item of halFormsProperties">
+
+              <label [title]="item.prompt" class="text-info col-sm-3 col-form-label"
+                     for="expandedURI">{{item.prompt}}
+                <span *ngIf="item.required">*</span></label>
+              <div class="col-sm-9">
+                <input class="form-control" [(ngModel)]="item.value" name="{{item.name}}"
+                       [appHalFormsProperty]="item" title="test"
+                       (keyup)="requestBodyChanged()">
+              </div>
+            </div>
+            <hr>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="body">Body</label>
+            <div class="col-sm-9">
+            <textarea [(ngModel)]="requestBody" class="form-control" id="body" rows="5"
+                      name="bodyArea">
+            </textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button id="updateDialogGoButton" type="button" class="btn btn-secondary" data-dismiss="modal"
+                (click)="createOrUpdateResource()" [disabled]="myForm.invalid">Go!
+        </button>
+      </div>
     </div>
+  </div>
 </div>
 
 <div id="requestHeadersModalTrigger" data-toggle="modal" data-target="#requestHeadersModal"></div>
 
 <div class="modal fade" id="requestHeadersModal" role="dialog" aria-labelledby="requestHeadersModalLabel"
      aria-hidden="false">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="requestHeadersModalLabel">Request Headers</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="requestHeadersModalLabel">Request Headers</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <div id="titles" class="form-group row">
+              <div class="col-sm-3">
+                Key
+              </div>
+              <div class="col-sm-9">
+                Value
+              </div>
             </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <div id="titles" class="form-group row">
-                            <div class="col-sm-3">
-                                Key
-                            </div>
-                            <div class="col-sm-9">
-                                Value
-                            </div>
-                        </div>
 
-                        <div id="headers" class="form-group row" *ngFor="let header of tempRequestHeaders">
-                            <div class="col-sm-3">
-                                <input class="form-control" [(ngModel)]="header.key"
-                                       [ngModelOptions]="{standalone: true}">
-                            </div>
-                            <div class="col-sm-9">
-                                <input class="form-control" [(ngModel)]="header.value"
-                                       [ngModelOptions]="{standalone: true}">
-                            </div>
-                        </div>
-                    </div>
-                </form>
+            <div id="headers" class="form-group row" *ngFor="let header of tempRequestHeaders">
+              <div class="col-sm-3">
+                <input class="form-control" [(ngModel)]="header.key"
+                       [ngModelOptions]="{standalone: true}">
+              </div>
+              <div class="col-sm-9">
+                <input class="form-control" [(ngModel)]="header.value"
+                       [ngModelOptions]="{standalone: true}">
+              </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="updateRequestHeaders()">OK
-                </button>
-            </div>
-        </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="updateRequestHeaders()">OK
+        </button>
+      </div>
     </div>
+  </div>
 </div>
