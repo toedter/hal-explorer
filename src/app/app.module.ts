@@ -10,7 +10,7 @@ import {JsonHighlighterService} from './json-highlighter/json-highlighter.servic
 import {ResponseExplorerComponent} from './response-explorer/response-explorer.component';
 import {DocumentationComponent} from './documentation/documentation.component';
 import {AppService} from './app.service';
-import {ValidatorDirective} from './request/validator.directive';
+import {RequestValidatorDirective} from './request/request-validator.directive';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,7 @@ import {ValidatorDirective} from './request/validator.directive';
     ResponseDetailsComponent,
     ResponseExplorerComponent,
     DocumentationComponent,
-    ValidatorDirective
+    RequestValidatorDirective
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule

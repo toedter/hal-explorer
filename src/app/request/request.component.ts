@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {Command, EventType, HttpRequestEvent, RequestService, UriTemplateEvent} from './request.service';
+import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import * as utpl from 'uri-templates';
-import {AppService, RequestHeader} from '../app.service';
+import { AppService, RequestHeader } from '../app.service';
+import { Command, EventType, HttpRequestEvent, RequestService, UriTemplateEvent } from './request.service';
 
 @Component({
   selector: 'app-uri-input',
@@ -36,8 +36,7 @@ export class RequestComponent implements OnInit {
 
     this.requestService.getNeedInfoObservable().subscribe((value: any) => {
       if (value.type === EventType.FillUriTemplate) {
-        const event: UriTemplateEvent = value as UriTemplateEvent;
-        this.uriTemplateEvent = event;
+        this.uriTemplateEvent = value as UriTemplateEvent;
         this.computeUriFromTemplate();
         $('#requestModalTrigger').trigger('click');
       } else if (value.type === EventType.FillHttpRequest) {
@@ -220,6 +219,7 @@ export class RequestComponent implements OnInit {
     if (!ngModel.errors) {
       return '';
     }
+
     let errorMessage = '';
 
     if (ngModel.errors.required) {
@@ -228,6 +228,22 @@ export class RequestComponent implements OnInit {
 
     if (ngModel.errors.pattern) {
       errorMessage += 'Value does not match pattern: ' + ngModel.errors.pattern.requiredPattern + '\n';
+    }
+
+    if (ngModel.errors.maxlength) {
+      errorMessage += 'Value does not have required max length: ' + ngModel.errors.maxlength.requiredLength + '\n';
+    }
+
+    if (ngModel.errors.minlength) {
+      errorMessage += 'Value does not have required min length: ' + ngModel.errors.minlength.requiredLength + '\n';
+    }
+
+    if (ngModel.errors.max) {
+      errorMessage += 'Value is bigger than max: ' + ngModel.errors.max.max + '\n';
+    }
+
+    if (ngModel.errors.min) {
+      errorMessage += 'Value is smaller than min: ' + ngModel.errors.min.min + '\n';
     }
 
     return errorMessage;

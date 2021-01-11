@@ -1,6 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { ComponentFixture, getTestBed, TestBed, waitForAsync } from '@angular/core/testing';
-import {RequestComponent} from './request.component';
-import {FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { AppService, RequestHeader } from '../app.service';
+import { JsonHighlighterService } from '../json-highlighter/json-highlighter.service';
+import { RequestComponent } from './request.component';
 import {
   Command,
   EventType,
@@ -9,9 +12,6 @@ import {
   UriTemplateEvent,
   UriTemplateParameter
 } from './request.service';
-import {AppService, RequestHeader} from '../app.service';
-import {HttpClient} from '@angular/common/http';
-import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
 
 class ObservableMock {
   private callback: (value: any) => void;
@@ -23,7 +23,7 @@ class ObservableMock {
   }
 
   next(input: any) {
-    this.callback(input);
+    this.callback( input );
   }
 }
 
@@ -161,121 +161,121 @@ const halFormsTemplates = {
 };
 /* tslint:enable */
 
-describe('RequestComponent', () => {
+describe( 'RequestComponent', () => {
   let component: RequestComponent;
   let fixture: ComponentFixture<RequestComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach( waitForAsync( () => {
+    TestBed.configureTestingModule( {
       imports: [FormsModule],
       declarations: [RequestComponent],
       providers: [
-        {provide: RequestService, useClass: RequestServiceMock},
-        {provide: AppService, useClass: AppServiceMock},
-        {provide: JsonHighlighterService, useClass: JsonHighlighterServiceMock},
+        { provide: RequestService, useClass: RequestServiceMock },
+        { provide: AppService, useClass: AppServiceMock },
+        { provide: JsonHighlighterService, useClass: JsonHighlighterServiceMock },
         HttpClient
       ]
 
-    })
+    } )
       .compileComponents();
-  }));
+  } ) );
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(RequestComponent);
+  beforeEach( () => {
+    fixture = TestBed.createComponent( RequestComponent );
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  } );
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  it( 'should create', () => {
+    expect( component ).toBeTruthy();
+  } );
 
-  it('should fill uri template with query params', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
+  it( 'should fill uri template with query params', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().inject( RequestService ) as any;
     const uriTemplateParameters: UriTemplateParameter[] = [];
-    uriTemplateParameters.push(new UriTemplateParameter('page', '0'));
-    uriTemplateParameters.push(new UriTemplateParameter('size', '10'));
+    uriTemplateParameters.push( new UriTemplateParameter( 'page', '0' ) );
+    uriTemplateParameters.push( new UriTemplateParameter( 'size', '10' ) );
     const event: UriTemplateEvent = new UriTemplateEvent(
-      EventType.FillUriTemplate, 'http://localhost/api/things{?page,size}', uriTemplateParameters);
-    requestServiceMock.getNeedInfoObservable().next(event);
-    expect(component.newRequestUri).toBe('http://localhost/api/things?page=0&size=10');
-  });
+      EventType.FillUriTemplate, 'http://localhost/api/things{?page,size}', uriTemplateParameters );
+    requestServiceMock.getNeedInfoObservable().next( event );
+    expect( component.newRequestUri ).toBe( 'http://localhost/api/things?page=0&size=10' );
+  } );
 
-  it('should fill uri template with simple params', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
+  it( 'should fill uri template with simple params', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().inject( RequestService ) as any;
     const uriTemplateParameters: UriTemplateParameter[] = [];
-    uriTemplateParameters.push(new UriTemplateParameter('id', '1234'));
+    uriTemplateParameters.push( new UriTemplateParameter( 'id', '1234' ) );
     const event: UriTemplateEvent = new UriTemplateEvent(
-      EventType.FillUriTemplate, 'http://localhost/api/things/{id}', uriTemplateParameters);
-    requestServiceMock.getNeedInfoObservable().next(event);
-    expect(component.newRequestUri).toBe('http://localhost/api/things/1234');
-  });
+      EventType.FillUriTemplate, 'http://localhost/api/things/{id}', uriTemplateParameters );
+    requestServiceMock.getNeedInfoObservable().next( event );
+    expect( component.newRequestUri ).toBe( 'http://localhost/api/things/1234' );
+  } );
 
-  it('should fill http request', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
+  it( 'should fill http request', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().inject( RequestService ) as any;
 
-    const event: HttpRequestEvent = new HttpRequestEvent(EventType.FillHttpRequest, Command.Post, 'http://localhost/api/things');
-    requestServiceMock.getNeedInfoObservable().next(event);
-    expect(component.newRequestUri).toBe(undefined);
-    expect(component.jsonSchema).toBe(undefined);
-  });
+    const event: HttpRequestEvent = new HttpRequestEvent( EventType.FillHttpRequest, Command.Post, 'http://localhost/api/things' );
+    requestServiceMock.getNeedInfoObservable().next( event );
+    expect( component.newRequestUri ).toBe( undefined );
+    expect( component.jsonSchema ).toBe( undefined );
+  } );
 
-  it('should fill http request with json schema', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
-
-    const event: HttpRequestEvent =
-      new HttpRequestEvent(EventType.FillHttpRequest, Command.Post, 'http://localhost/api/things', jsonSchema);
-    requestServiceMock.getNeedInfoObservable().next(event);
-    expect(component.jsonSchema.toString).toEqual(jsonSchema.toString);
-  });
-
-  it('should fill http request with HAL-FORMS template properties', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
+  it( 'should fill http request with json schema', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().inject( RequestService ) as any;
 
     const event: HttpRequestEvent =
-      new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
-        undefined, halFormsTemplates._templates);
+      new HttpRequestEvent( EventType.FillHttpRequest, Command.Post, 'http://localhost/api/things', jsonSchema );
+    requestServiceMock.getNeedInfoObservable().next( event );
+    expect( component.jsonSchema.toString ).toEqual( jsonSchema.toString );
+  } );
 
-    requestServiceMock.getNeedInfoObservable().next(event);
-
-    expect(component.halFormsTemplates.toString).toEqual(halFormsTemplates.toString);
-    expect(component.halFormsDialogTitle).toEqual('Change Movie');
-    expect(component.halFormsProperties.toString).toEqual(halFormsTemplates._templates.default.properties.toString);
-  });
-
-  it('should support HTTP method with HAL-FORMS', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
+  it( 'should fill http request with HAL-FORMS template properties', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().inject( RequestService ) as any;
 
     const event: HttpRequestEvent =
-      new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
-        undefined, halFormsTemplates._templates);
+      new HttpRequestEvent( EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
+        undefined, halFormsTemplates._templates );
 
-    requestServiceMock.getNeedInfoObservable().next(event);
+    requestServiceMock.getNeedInfoObservable().next( event );
 
-    expect(component.supportsHttpMethod(Command.Put)).toBeTruthy();
-    expect(component.supportsHttpMethod(Command.Patch)).toBeFalsy();
-    expect(component.supportsHttpMethod(Command.Delete)).toBeFalsy();
-    expect(component.supportsHttpMethod(Command.Post)).toBeFalsy();
-  });
+    expect( component.halFormsTemplates.toString ).toEqual( halFormsTemplates.toString );
+    expect( component.halFormsDialogTitle ).toEqual( 'Change Movie' );
+    expect( component.halFormsProperties.toString ).toEqual( halFormsTemplates._templates.default.properties.toString );
+  } );
 
-  it('should get expanded uri', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
+  it( 'should support HTTP method with HAL-FORMS', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().inject( RequestService ) as any;
+
+    const event: HttpRequestEvent =
+      new HttpRequestEvent( EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
+        undefined, halFormsTemplates._templates );
+
+    requestServiceMock.getNeedInfoObservable().next( event );
+
+    expect( component.supportsHttpMethod( Command.Put ) ).toBeTruthy();
+    expect( component.supportsHttpMethod( Command.Patch ) ).toBeFalsy();
+    expect( component.supportsHttpMethod( Command.Delete ) ).toBeFalsy();
+    expect( component.supportsHttpMethod( Command.Post ) ).toBeFalsy();
+  } );
+
+  it( 'should get expanded uri', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().inject( RequestService ) as any;
     component.newRequestUri = 'http://localhost';
 
     component.getExpandedUri();
-    expect(requestServiceMock.getUriCalledWith).toBe('http://localhost');
-  });
+    expect( requestServiceMock.getUriCalledWith ).toBe( 'http://localhost' );
+  } );
 
-  it('should get change request body based on json schema', () => {
+  it( 'should get change request body based on json schema', () => {
     component.jsonSchema = jsonSchema.properties;
     component.jsonSchema.email.value = 'kai@toedter.com';
     component.jsonSchema.fullName.value = 'Kai Toedter';
 
     component.requestBodyChanged();
-    expect(component.requestBody).toBe('{\n  "fullName": "Kai Toedter",\n  "email": "kai@toedter.com"\n}');
-  });
+    expect( component.requestBody ).toBe( '{\n  "fullName": "Kai Toedter",\n  "email": "kai@toedter.com"\n}' );
+  } );
 
-  it('should get change request body based on HAL-FORMS', () => {
+  it( 'should get change request body based on HAL-FORMS', () => {
     component.halFormsTemplates = halFormsTemplates;
     component.halFormsProperties = halFormsTemplates._templates.default.properties;
     component.halFormsProperties[0].value = 'Movie Title';
@@ -283,31 +283,62 @@ describe('RequestComponent', () => {
 
     component.requestBodyChanged();
 
-    expect(component.requestBody).toBe('{\n  "title": "Movie Title",\n  "year": "2019"\n}');
-  });
+    expect( component.requestBody ).toBe( '{\n  "title": "Movie Title",\n  "year": "2019"\n}' );
+  } );
 
-  it('should get tooltip with no json schema', () => {
-    const tooltip = component.getTooltip('x');
-    expect(tooltip).toBe('');
-  });
+  it( 'should get tooltip with no json schema', () => {
+    const tooltip = component.getTooltip( 'x' );
+    expect( tooltip ).toBe( '' );
+  } );
 
-  it('should get tooltip with json schema', () => {
+  it( 'should get tooltip with json schema', () => {
     component.jsonSchema = jsonSchema.properties;
-    const tooltip = component.getTooltip('email');
-    expect(tooltip).toBe('string');
-  });
+    const tooltip = component.getTooltip( 'email' );
+    expect( tooltip ).toBe( 'string' );
+  } );
 
-  it('should get tooltip with json schema with format attribute', () => {
+  it( 'should get tooltip with json schema with format attribute', () => {
     component.jsonSchema = jsonSchema.properties;
-    const tooltip = component.getTooltip('messages');
-    expect(tooltip).toBe('string in uri format');
-  });
+    const tooltip = component.getTooltip( 'messages' );
+    expect( tooltip ).toBe( 'string in uri format' );
+  } );
 
-  it('should go from hash change', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
+  it( 'should go from hash change', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().inject( RequestService ) as any;
     component.newRequestUri = 'http://localhost';
 
-    component.goFromHashChange('http://localhost');
-    expect(requestServiceMock.getUriCalledWith).toBe('http://localhost');
-  });
-});
+    component.goFromHashChange( 'http://localhost' );
+    expect( requestServiceMock.getUriCalledWith ).toBe( 'http://localhost' );
+  } );
+
+  it( 'should get validation errors', () => {
+    const errors = {
+      errors: {
+        required: true,
+        pattern: {
+          requiredPattern: '\\d{3}$'
+        },
+        maxlength: {
+          requiredLength: 3
+        },
+        minlength: {
+          requiredLength: 1
+        },
+        max: {
+          max: 100
+        },
+        min: {
+          min: 1
+        }
+      }
+    };
+    const errorMessage: string = component.getValidationErrors( errors );
+    const expectedResult = 'Value is required\n'
+      + 'Value does not match pattern: \\d{3}$\n'
+      + 'Value does not have required max length: 3\n'
+      + 'Value does not have required min length: 1\n'
+      + 'Value is bigger than max: 100\n'
+      + 'Value is smaller than min: 1\n';
+    expect( errorMessage ).toBe( expectedResult );
+  } );
+} );
