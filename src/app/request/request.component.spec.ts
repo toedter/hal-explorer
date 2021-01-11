@@ -311,7 +311,7 @@ describe( 'RequestComponent', () => {
     expect( requestServiceMock.getUriCalledWith ).toBe( 'http://localhost' );
   } );
 
-  it( 'should get validation errors', () => {
+  it( 'should get all validation errors', () => {
     const errors = {
       errors: {
         required: true,
@@ -341,4 +341,15 @@ describe( 'RequestComponent', () => {
       + 'Value is smaller than min: 1\n';
     expect( errorMessage ).toBe( expectedResult );
   } );
+
+  it( 'should get no validation errors', () => {
+    const errors = {
+      errors: {
+      }
+    };
+    const errorMessage: string = component.getValidationErrors( errors );
+    const expectedResult = '';
+    expect( errorMessage ).toBe( expectedResult );
+  } );
+
 } );
