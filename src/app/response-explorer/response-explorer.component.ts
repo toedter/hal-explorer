@@ -4,11 +4,12 @@ import {Command, RequestService} from '../request/request.service';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
 
 class Link {
-  constructor(public rel: string, public href: string, public title: string, public name: string, public docUri?: string) {
+  constructor(public rel: string, public href: string,
+              public title: string, public name: string, public docUri?: string) {
   }
 }
 
-class EmbeddedRessource {
+class EmbeddedResource {
   constructor(public name: string, public content: any, public isArray: boolean, public docUri?: string) {
   }
 }
@@ -27,7 +28,7 @@ export class ResponseExplorerComponent implements OnInit {
 
   properties: string;
   links: Link[];
-  embedded: EmbeddedRessource[];
+  embedded: EmbeddedResource[];
   templates: {};
 
   showProperties: boolean;
@@ -138,7 +139,7 @@ export class ResponseExplorerComponent implements OnInit {
 
       Object.getOwnPropertyNames(embedded).forEach(
         (val: string) => {
-          this.embedded.push(new EmbeddedRessource(val, embedded[val], embedded[val] instanceof Array, docUri));
+          this.embedded.push(new EmbeddedResource(val, embedded[val], embedded[val] instanceof Array, docUri));
         }
       );
     }

@@ -5,7 +5,7 @@ export class JsonHighlighterService {
 
   // this in a Typescript adaption from
   // https://stackoverflow.com/questions/4810841/how-can-i-pretty-print-json-using-javascript
-  public syntaxHighlight(jsonString: string): string {
+  syntaxHighlight(jsonString: string): string {
     if (!jsonString) {
       return;
     }

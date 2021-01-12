@@ -28,7 +28,7 @@ export class DocumentationComponent implements OnInit {
 }
 
 // The following functions ported to Typescript from from https://www.dyn-web.com/tutorials/iframes/height/
-export function getDocHeight(doc) {
+export function getDocHeight(doc): number {
   doc = doc || document;
   // stackoverflow.com/questions/1145850/
   const body = doc.body;

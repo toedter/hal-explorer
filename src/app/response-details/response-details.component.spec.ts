@@ -23,11 +23,11 @@ class RequestServiceMock {
   observableMock: ObservableMock = new ObservableMock();
   requestServiceProcessCommandInvoked = false;
 
-  public getResponseObservable() {
+  getResponseObservable() {
     return this.observableMock;
   }
 
-  public processCommand(command: Command, link: string) {
+  processCommand(command: Command, link: string) {
     this.requestServiceProcessCommandInvoked = true;
   }
 }

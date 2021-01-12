@@ -59,20 +59,29 @@ class RequestServiceMock {
   needInfoObservableMock: ObservableMock = new ObservableMock();
 
   getUriCalledWith: string;
+  requestUriCalled: boolean;
 
-  public getResponseObservable() {
+  getResponseObservable() {
     return this.responseObservableMock;
   }
 
-  public getNeedInfoObservable() {
+  getNeedInfoObservable() {
     return this.needInfoObservableMock;
   }
 
-  public setCustomHeaders(requestHeaders: RequestHeader[]) {
+  setCustomHeaders(requestHeaders: RequestHeader[]) {
   }
 
-  public getUri(uri: string) {
+  getUri(uri: string) {
     this.getUriCalledWith = uri;
+  }
+
+  getInputType(jsonSchemaType: string, jsonSchemaFormat?: string): string {
+    return 'number';
+  }
+
+  requestUri(uri: string, httpMethod: string, body?: string) {
+    this.requestUriCalled = true;
   }
 }
 
@@ -343,13 +352,65 @@ describe( 'RequestComponent', () => {
   } );
 
   it( 'should get no validation errors', () => {
+    const errors = {};
+    const errorMessage: string = component.getValidationErrors( errors );
+    expect( errorMessage ).toBe( '' );
+  } );
+
+  it( 'should get no validation errors', () => {
     const errors = {
-      errors: {
-      }
+      errors: {}
     };
     const errorMessage: string = component.getValidationErrors( errors );
     const expectedResult = '';
     expect( errorMessage ).toBe( expectedResult );
+  } );
+
+  it( 'should update request headers', () => {
+    const requestHeader: RequestHeader = new RequestHeader( 'key', 'value' );
+    component.tempRequestHeaders = [requestHeader];
+    component.updateRequestHeaders();
+    expect( component.requestHeaders ).toEqual( component.tempRequestHeaders );
+  } );
+
+  it( 'should update temp request headers', () => {
+    const requestHeader: RequestHeader = new RequestHeader( 'key', 'value' );
+    const emptyRequestHeader: RequestHeader = new RequestHeader( '', '' );
+    component.requestHeaders = [requestHeader];
+    component.showEditHeadersDialog();
+    expect( component.tempRequestHeaders[0] ).toEqual( requestHeader );
+    expect( component.tempRequestHeaders[1] ).toEqual( emptyRequestHeader );
+    expect( component.tempRequestHeaders[2] ).toEqual( emptyRequestHeader );
+    expect( component.tempRequestHeaders[3] ).toEqual( emptyRequestHeader );
+    expect( component.tempRequestHeaders[4] ).toEqual( emptyRequestHeader );
+  } );
+
+  it( 'should get undefined HAL-FORMS properties', () => {
+    const halFormsProperties = component.getHalFormsPropertiesForHttpMethod( null );
+    expect( halFormsProperties ).toBeUndefined();
+  } );
+
+  it( 'should get undefined HAL-FORMS title', () => {
+    const halFormsTitle = component.getHalFormsTitleForHttpMethod( null );
+    expect( halFormsTitle ).toBeUndefined();
+  } );
+
+  it( 'should get JSON Schema input type', () => {
+    component.jsonSchema = {
+      test: {
+        type: 'integer'
+      }
+    };
+
+    const inputType = component.getInputType( 'test' );
+    expect( inputType ).toBe( 'number' );
+  } );
+
+  it( 'should create or update resource', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().inject( RequestService ) as any;
+
+    component.createOrUpdateResource();
+    expect(requestServiceMock.requestUriCalled).toBeTrue();
   } );
 
 } );

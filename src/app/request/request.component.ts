@@ -66,24 +66,24 @@ export class RequestComponent implements OnInit {
     this.getUri();
   }
 
-  public getUri() {
+  getUri() {
     this.requestService.getUri(this.uri);
   }
 
-  public getExpandedUri() {
+  getExpandedUri() {
     this.requestService.getUri(this.newRequestUri);
   }
 
-  public createOrUpdateResource() {
+  createOrUpdateResource() {
     this.requestService.requestUri(this.httpRequestEvent.uri, Command[this.selectedHttpMethod], this.requestBody);
   }
 
-  public goFromHashChange(uri: string) {
+  goFromHashChange(uri: string) {
     this.uri = uri;
     this.requestService.getUri(this.uri);
   }
 
-  public computeUriFromTemplate() {
+  computeUriFromTemplate() {
     const uriTemplate = utpl(this.uriTemplateEvent.templatedUri);
     const templateParams = {};
     for (const parameter of this.uriTemplateEvent.parameters) {
@@ -94,7 +94,7 @@ export class RequestComponent implements OnInit {
     this.newRequestUri = uriTemplate.fill(templateParams);
   }
 
-  public requestBodyChanged() {
+  requestBodyChanged() {
     let hasProperties = false;
     this.requestBody = '{\n';
     if (this.jsonSchema) {
@@ -124,7 +124,7 @@ export class RequestComponent implements OnInit {
     this.requestBody += '\n}';
   }
 
-  public showEditHeadersDialog() {
+  showEditHeadersDialog() {
     this.tempRequestHeaders = [];
     for (let i = 0; i < 5; i++) {
       if (this.requestHeaders.length > i) {
@@ -137,7 +137,7 @@ export class RequestComponent implements OnInit {
     $('#requestHeadersModalTrigger').trigger('click');
   }
 
-  public updateRequestHeaders() {
+  updateRequestHeaders() {
     this.requestHeaders = [];
     for (const requestHeader of this.tempRequestHeaders) {
       const key: string = requestHeader.key.trim();
@@ -152,7 +152,7 @@ export class RequestComponent implements OnInit {
     this.appService.setCustomRequestHeaders(this.requestHeaders);
   }
 
-  public getTooltip(key: string): string {
+  getTooltip(key: string): string {
     if (!this.jsonSchema) {
       return '';
     }
@@ -163,11 +163,11 @@ export class RequestComponent implements OnInit {
     return tooltip;
   }
 
-  public getInputType(key: string): string {
+  getInputType(key: string): string {
     return this.requestService.getInputType(this.jsonSchema[key].type, this.jsonSchema[key].format);
   }
 
-  public supportsHttpMethod(command: Command): boolean {
+  supportsHttpMethod(command: Command): boolean {
     if (!this.halFormsProperties) {
       return true;
     }
@@ -183,7 +183,7 @@ export class RequestComponent implements OnInit {
     return hasHttpMethod;
   }
 
-  public getHalFormsPropertiesForHttpMethod(command: Command) {
+  getHalFormsPropertiesForHttpMethod(command: Command) {
     let properties;
     if (!this.halFormsTemplates) {
       return properties;
@@ -199,7 +199,7 @@ export class RequestComponent implements OnInit {
     return properties;
   }
 
-  public getHalFormsTitleForHttpMethod(command: Command): string {
+  getHalFormsTitleForHttpMethod(command: Command): string {
     let title;
     if (!this.halFormsTemplates) {
       return title;

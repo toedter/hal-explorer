@@ -70,11 +70,11 @@ class RequestServiceMock {
   responseObservableMock: ObservableMock = new ObservableMock();
   documentationObservableMock: ObservableMock = new ObservableMock();
 
-  public getResponseObservable() {
+  getResponseObservable() {
     return this.responseObservableMock;
   }
 
-  public getDocumentationObservable() {
+  getDocumentationObservable() {
     return this.documentationObservableMock;
   }
 }

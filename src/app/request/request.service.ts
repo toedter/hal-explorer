@@ -48,26 +48,26 @@ export class RequestService {
   constructor(private appService: AppService, private http: HttpClient) {
   }
 
-  public getResponseObservable(): Observable<HttpResponse<any>> {
+  getResponseObservable(): Observable<HttpResponse<any>> {
     return this.responseObservable;
   }
 
-  public getNeedInfoObservable(): Observable<any> {
+  getNeedInfoObservable(): Observable<any> {
     return this.needInfoObservable;
   }
 
-  public getDocumentationObservable(): Observable<string> {
+  getDocumentationObservable(): Observable<string> {
     return this.documentationObservable;
   }
 
-  public getUri(uri: string) {
+  getUri(uri: string) {
     if (!uri || uri.trim().length === 0) {
       return;
     }
     this.processCommand( Command.Get, uri );
   }
 
-  public requestUri(uri: string, httpMethod: string, body?: string) {
+  requestUri(uri: string, httpMethod: string, body?: string) {
 
     let headers = this.requestHeaders;
     if (httpMethod.toLowerCase() === 'post' || httpMethod.toLowerCase() === 'put' || httpMethod.toLowerCase() === 'patch') {
@@ -109,7 +109,7 @@ export class RequestService {
     );
   }
 
-  public processCommand(command: Command, uri: string, halFormsTemplates?: any) {
+  processCommand(command: Command, uri: string, halFormsTemplates?: any) {
     if (command === Command.Get) {
       if (uri.includes( '{' )) {
         const uriTemplate: URITemplate = utpl( uri );
@@ -148,7 +148,7 @@ export class RequestService {
     }
   }
 
-  public getJsonSchema(httpRequestEvent: HttpRequestEvent) {
+  getJsonSchema(httpRequestEvent: HttpRequestEvent) {
     this.http.request( 'HEAD', httpRequestEvent.uri,
       { headers: this.requestHeaders, observe: 'response' } ).subscribe(
       (response: HttpResponse<any>) => {
@@ -228,11 +228,11 @@ export class RequestService {
     );
   }
 
-  public getHalFormsTemplates(httpRequestEvent: HttpRequestEvent, halFormsTemplate: any) {
+  getHalFormsTemplates(httpRequestEvent: HttpRequestEvent, halFormsTemplate: any) {
     httpRequestEvent.halFormsTemplates = halFormsTemplate;
   }
 
-  public setCustomHeaders(requestHeaders: RequestHeader[]) {
+  setCustomHeaders(requestHeaders: RequestHeader[]) {
     this.customRequestHeaders = requestHeaders;
     this.requestHeaders = new HttpHeaders();
     let addDefaultAcceptHeader = true;
@@ -248,7 +248,7 @@ export class RequestService {
     }
   }
 
-  public getInputType(jsonSchemaType: string, jsonSchemaFormat?: string): string {
+  getInputType(jsonSchemaType: string, jsonSchemaFormat?: string): string {
     switch (jsonSchemaType.toLowerCase()) {
       case 'integer':
         return 'number';
