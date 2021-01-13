@@ -142,4 +142,18 @@ describe('AppComponent', () => {
     expect(component.isCustomTheme).toBeTruthy();
   });
 
+  it('should react on theme change', () => {
+    const appServiceMock: AppServiceMock = getTestBed().inject(AppService) as any;
+    appServiceMock.themeObservable.next('Cosmo');
+
+    expect(appServiceMock.themeObservable.hasSubscribed).toBeTrue();
+  });
+
+  it('should react on layout change', () => {
+    const appServiceMock: AppServiceMock = getTestBed().inject(AppService) as any;
+    appServiceMock.layoutObservable.next('Cosmo');
+
+    expect(appServiceMock.layoutObservable.hasSubscribed).toBeTrue();
+  });
+
 });

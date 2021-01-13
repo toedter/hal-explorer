@@ -61,5 +61,13 @@ describe('AppService', () => {
 
   });
 
+  it('should get observables', () => {
+    service = new AppService();
+
+    expect(service.layoutObservable).toBeDefined();
+    expect(service.requestHeadersObservable).toBeDefined();
+    expect(service.themeObservable).toBeDefined();
+    expect(service.uriObservable).toBeDefined();
+  });
 
 });

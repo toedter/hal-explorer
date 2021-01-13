@@ -131,7 +131,7 @@ export class RequestService {
       const event = new HttpRequestEvent( EventType.FillHttpRequest, command, uri );
       this.getJsonSchema( event );
       if (halFormsTemplates) {
-        this.getHalFormsTemplates( event, halFormsTemplates );
+        event.halFormsTemplates = halFormsTemplates;
       }
       return;
 
@@ -226,10 +226,6 @@ export class RequestService {
         this.needInfoSubject.next( httpRequestEvent );
       }
     );
-  }
-
-  getHalFormsTemplates(httpRequestEvent: HttpRequestEvent, halFormsTemplate: any) {
-    httpRequestEvent.halFormsTemplates = halFormsTemplate;
   }
 
   setCustomHeaders(requestHeaders: RequestHeader[]) {
