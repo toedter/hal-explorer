@@ -37,7 +37,7 @@ describe( 'HAL-Explorer App', () => {
   } );
 
   it( 'should display HAL sections when rendering users resource', () => {
-    page.navigateTo( '/#url=' + AppConfig.getChattyApiUrl() + '/users' );
+    page.navigateTo( '/#uri=' + AppConfig.getChattyApiUrl() + '/users' );
     expect( page.getFirstPropertiesSection().isDisplayed() ).toBeTruthy();
     expect( page.getFirstLinksSection().isDisplayed() ).toBeTruthy();
     expect( page.getEmbeddedSection().isDisplayed() ).toBeTruthy();
@@ -45,7 +45,7 @@ describe( 'HAL-Explorer App', () => {
   } );
 
   it( 'should display only Links section when rendering root api', () => {
-    page.navigateTo( '/#url=' + AppConfig.getChattyApiUrl() );
+    page.navigateTo( '/#uri=' + AppConfig.getChattyApiUrl() );
     expect( page.getFirstPropertiesSection().isPresent() ).toBeFalsy();
     expect( page.getFirstLinksSection().isDisplayed() ).toBeTruthy();
     expect( page.getEmbeddedSection().isPresent() ).toBeFalsy();
@@ -53,15 +53,17 @@ describe( 'HAL-Explorer App', () => {
   } );
 
   it( 'should display POST request dialog', () => {
-    page.navigateTo( '/#url=' + AppConfig.getChattyApiUrl() );
+    page.navigateTo( '/#uri=' + AppConfig.getChattyApiUrl() );
     page.getFirstPostButton().click();
+    browser.sleep(1000);
     browser.wait( protractor.ExpectedConditions.presenceOf( page.getGoButton() ),
       5000, 'Element "Go!"-Button taking too long to appear in the DOM' );
   } );
 
   it( 'should display user profile in POST request dialog', () => {
-    page.navigateTo( '/#url=' + AppConfig.getChattyApiUrl() + '/users' );
+    page.navigateTo( '/#uri=' + AppConfig.getChattyApiUrl() + '/users' );
     page.getFirstPostButton().click();
+    browser.sleep(1000);
     const fullnameProfileLabel = page.getFullnameProfileLabel();
     browser.wait( protractor.ExpectedConditions.presenceOf( fullnameProfileLabel ),
       5000, 'Label "Full name" taking too long to appear in the DOM' );

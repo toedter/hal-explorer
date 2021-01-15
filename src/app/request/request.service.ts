@@ -149,7 +149,9 @@ export class RequestService {
   }
 
   getJsonSchema(httpRequestEvent: HttpRequestEvent) {
-    this.http.request( 'HEAD', httpRequestEvent.uri,
+    const uriTemplate: URITemplate = utpl( httpRequestEvent.uri );
+    const uri = uriTemplate.fill({});
+    this.http.request( 'HEAD', uri,
       { headers: this.requestHeaders, observe: 'response' } ).subscribe(
       (response: HttpResponse<any>) => {
         let hasProfile = false;
