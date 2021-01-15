@@ -223,9 +223,10 @@ describe( 'RequestComponent', () => {
   it( 'should fill http request', () => {
     const requestServiceMock: RequestServiceMock = getTestBed().inject( RequestService ) as any;
 
-    const event: HttpRequestEvent = new HttpRequestEvent( EventType.FillHttpRequest, Command.Post, 'http://localhost/api/things' );
+    const uri = 'http://localhost/api/things';
+    const event: HttpRequestEvent = new HttpRequestEvent( EventType.FillHttpRequest, Command.Post, uri );
     requestServiceMock.getNeedInfoObservable().next( event );
-    expect( component.newRequestUri ).toBe( undefined );
+    expect( component.newRequestUri ).toBe( uri );
     expect( component.jsonSchema ).toBe( undefined );
   } );
 

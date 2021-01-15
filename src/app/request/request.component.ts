@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as $ from 'jquery';
 import * as utpl from 'uri-templates';
-import { AppService, RequestHeader } from '../app.service';
-import { Command, EventType, HttpRequestEvent, RequestService, UriTemplateEvent } from './request.service';
+import {AppService, RequestHeader} from '../app.service';
+import {Command, EventType, HttpRequestEvent, RequestService, UriTemplateEvent, UriTemplateParameter} from './request.service';
+import {URITemplate} from 'uri-templates';
 
 @Component({
   selector: 'app-uri-input',
@@ -52,6 +53,19 @@ export class RequestComponent implements OnInit {
         }
         this.requestBody = '';
         this.selectedHttpMethod = event.command;
+
+        if (this.isUriTemplated(event.uri)) {
+          const uriTemplate: URITemplate = utpl( event.uri );
+          const uriTemplateParameters: UriTemplateParameter[] = [];
+          for (const param of uriTemplate.varNames) {
+            uriTemplateParameters.push( new UriTemplateParameter( param, '' ) );
+          }
+
+          this.uriTemplateEvent = new UriTemplateEvent( EventType.FillUriTemplate, event.uri, uriTemplateParameters );
+          this.computeUriFromTemplate();
+        } else {
+          this.newRequestUri = event.uri;
+        }
         $('#HttpRequestTrigger').trigger('click');
       }
     });
@@ -75,7 +89,7 @@ export class RequestComponent implements OnInit {
   }
 
   createOrUpdateResource() {
-    this.requestService.requestUri(this.httpRequestEvent.uri, Command[this.selectedHttpMethod], this.requestBody);
+    this.requestService.requestUri(this.newRequestUri, Command[this.selectedHttpMethod], this.requestBody);
   }
 
   goFromHashChange(uri: string) {
@@ -92,6 +106,11 @@ export class RequestComponent implements OnInit {
       }
     }
     this.newRequestUri = uriTemplate.fill(templateParams);
+  }
+
+  isUriTemplated(uri: string) {
+    const uriTemplate = utpl(uri);
+    return uriTemplate.varNames.length > 0;
   }
 
   requestBodyChanged() {

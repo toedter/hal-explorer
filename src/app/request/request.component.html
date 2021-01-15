@@ -92,7 +92,7 @@
 <div id="HttpRequestTrigger" data-toggle="modal" data-target="#httpRequestModal"></div>
 
 <div class="modal fade" id="httpRequestModal" role="dialog" aria-hidden="false">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">HTTP Request Input</h5>
@@ -103,9 +103,33 @@
       <div class="modal-body">
         <form #myForm="ngForm">
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="uri">URI</label>
+            <label class="col-sm-3 col-form-label" for="uri">URI
+              <span *ngIf="isUriTemplated(httpRequestEvent.uri)">Template</span>
+            </label>
             <div class="col-sm-9">
-              <div class="form-control" id="uri">{{httpRequestEvent.uri}}</div>
+              <div class="form-control text-truncate"
+                   title="{{httpRequestEvent.uri}}"
+                   id="uri">{{httpRequestEvent.uri}}</div>
+            </div>
+          </div>
+
+          <div *ngIf="isUriTemplated(httpRequestEvent.uri)" class="form-group">
+            <label for="parameters">Parameters</label>
+            <div id="uri-parameters" class="form-group row"
+                 *ngFor="let parameter of uriTemplateEvent.parameters">
+              <label class="col-sm-3 col-form-label">{{parameter.key}}</label>
+              <div class="col-sm-9">
+                <input class="form-control" [(ngModel)]="parameter.value"
+                       (keyup)="computeUriFromTemplate()"
+                       name="{{parameter.key}}">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="expandedURI2">Expanded URI</label>
+              <div class="col-sm-9">
+                <div class="form-control text-truncate"
+                     title="{{newRequestUri}}" id="expandedURI2">{{newRequestUri}}</div>
+              </div>
             </div>
           </div>
 

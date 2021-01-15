@@ -113,8 +113,8 @@ export class RequestService {
     if (command === Command.Get) {
       if (uri.includes( '{' )) {
         const uriTemplate: URITemplate = utpl( uri );
-        const uriTemplateParameters: UriTemplateParameter[] = new Array();
-        for (const param of (uriTemplate as any).varNames) {
+        const uriTemplateParameters: UriTemplateParameter[] = [];
+        for (const param of uriTemplate.varNames) {
           uriTemplateParameters.push( new UriTemplateParameter( param, '' ) );
         }
 
@@ -125,9 +125,9 @@ export class RequestService {
 
       this.requestUri( uri, 'GET' );
     } else if (command === Command.Post || command === Command.Put || command === Command.Patch) {
-      if (uri.includes( '{' )) {
-        uri = uri.substring( 0, uri.indexOf( '{' ) );
-      }
+      // if (uri.includes( '{' )) {
+      //   uri = uri.substring( 0, uri.indexOf( '{' ) );
+      // }
       const event = new HttpRequestEvent( EventType.FillHttpRequest, command, uri );
       this.getJsonSchema( event );
       if (halFormsTemplates) {
