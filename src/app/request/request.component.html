@@ -37,58 +37,6 @@
   </div>
 </div>
 
-<div id="requestModalTrigger" data-toggle="modal" data-target="#requestInputModal"></div>
-
-<div class="modal fade" id="requestInputModal" role="dialog" aria-labelledby="requestInputModalLabel"
-     aria-hidden="false">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="aboutModalLabel">Template Request Input</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="uriTemplate">URI Template</label>
-            <div class="col-sm-10">
-              <div class="form-control" id="uriTemplate">{{uriTemplateEvent.templatedUri}}</div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="parameters">Parameters</label>
-            <div id="parameters" class="form-group row"
-                 *ngFor="let parameter of uriTemplateEvent.parameters">
-              <label class="col-sm-2 col-form-label">{{parameter.key}}</label>
-              <div class="col-sm-10">
-                <input class="form-control" [(ngModel)]="parameter.value"
-                       (keyup)="computeUriFromTemplate()"
-                       name="{{parameter.key}}">
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="expandedURI">Expanded URI</label>
-            <div class="col-sm-10">
-              <div class="form-control" id="expandedURI">{{newRequestUri}}</div>
-            </div>
-          </div>
-
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button id="templateDialogGoButton" type="button" class="btn btn-secondary" data-dismiss="modal"
-                (click)="getExpandedUri()">Go!
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div id="HttpRequestTrigger" data-toggle="modal" data-target="#httpRequestModal"></div>
 
 <div class="modal fade" id="httpRequestModal" role="dialog" aria-hidden="false">
@@ -114,9 +62,9 @@
           </div>
 
           <div *ngIf="isUriTemplated(httpRequestEvent.uri)" class="form-group">
-            <label for="parameters">Parameters</label>
+            <label>Parameters</label>
             <div id="uri-parameters" class="form-group row"
-                 *ngFor="let parameter of uriTemplateEvent.parameters">
+                 *ngFor="let parameter of uriTemplateParameters">
               <label class="col-sm-3 col-form-label">{{parameter.key}}</label>
               <div class="col-sm-9">
                 <input class="form-control" [(ngModel)]="parameter.value"
@@ -134,16 +82,11 @@
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="expandedURI">HTTP Method</label>
+            <label class="col-sm-3 col-form-label">HTTP Method</label>
             <div class="col-sm-9">
-              <select [(ngModel)]="selectedHttpMethod" class="custom-select" name="httpAction">
-                <option *ngIf="supportsHttpMethod(commandPlaceholder.Post)"
-                        [value]="commandPlaceholder.Post">{{commandPlaceholder[commandPlaceholder.Post]}}</option>
-                <option *ngIf="supportsHttpMethod(commandPlaceholder.Put)"
-                        [value]="commandPlaceholder.Put">{{commandPlaceholder[commandPlaceholder.Put]}}</option>
-                <option *ngIf="supportsHttpMethod(commandPlaceholder.Patch)"
-                        [value]="commandPlaceholder.Patch">{{commandPlaceholder[commandPlaceholder.Patch]}}</option>
-              </select>
+              <div class="form-control text-truncate">
+                {{commandPlaceholder[httpRequestEvent.command]}}
+              </div>
             </div>
           </div>
 
@@ -152,8 +95,8 @@
             <label class="text-info">Spring Profile (JSON Schema)</label>
             <div class="form-group row" *ngFor="let item of jsonSchema | keyvalue">
               <label [title]="getTooltip(item.key)"
-                     class="text-info col-sm-3 col-form-label"
-                     for="expandedURI">{{jsonSchema[item.key].title}}</label>
+                     class="text-info col-sm-3 col-form-label">{{jsonSchema[item.key].title}}
+              </label>
               <div class="col-sm-9">
                 <input [type]="getInputType(item.key)" class="form-control"
                        [(ngModel)]="jsonSchema[item.key].value" [ngModelOptions]="{standalone: true}"
@@ -171,19 +114,20 @@
             </label>
             <div class="form-group row" *ngFor="let item of halFormsProperties">
 
-              <label [title]="item.prompt" class="text-info col-sm-3 col-form-label"
-                     for="expandedURI">{{item.prompt}}
+              <label [title]="item.prompt" class="text-info col-sm-3 col-form-label">
+                {{item.prompt}}
                 <span *ngIf="item.required">*</span></label>
               <div class="col-sm-9">
-                <input class="form-control" [(ngModel)]="item.value" name="{{item.name}}" #xxx="ngModel"
-                       [appHalFormsProperty]="item" [title]="getValidationErrors(xxx)"
+                <input class="form-control" [(ngModel)]="item.value"
+                       name="{{item.name}}" #ngModel="ngModel"
+                       [appHalFormsProperty]="item" [title]="getValidationErrors(ngModel)"
                        (keyup)="requestBodyChanged()">
               </div>
             </div>
             <hr>
           </div>
 
-          <div class="form-group row">
+          <div *ngIf="httpRequestEvent.command !== commandPlaceholder.Get" class="form-group row">
             <label class="col-sm-3 col-form-label" for="body">Body</label>
             <div class="col-sm-9">
             <textarea [(ngModel)]="requestBody" class="form-control" id="body" rows="5"

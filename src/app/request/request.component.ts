@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import * as $ from 'jquery';
 import * as utpl from 'uri-templates';
 import {AppService, RequestHeader} from '../app.service';
-import {Command, EventType, HttpRequestEvent, RequestService, UriTemplateEvent, UriTemplateParameter} from './request.service';
+import {Command, EventType, HttpRequestEvent, RequestService, UriTemplateParameter} from './request.service';
 import {URITemplate} from 'uri-templates';
 
 @Component({
@@ -12,7 +12,8 @@ import {URITemplate} from 'uri-templates';
 })
 export class RequestComponent implements OnInit {
   uri: string;
-  uriTemplateEvent: UriTemplateEvent = new UriTemplateEvent(EventType.FillUriTemplate, '', []);
+  templatedUri: string;
+  uriTemplateParameters: UriTemplateParameter[];
   httpRequestEvent: HttpRequestEvent = new HttpRequestEvent(EventType.FillHttpRequest, Command.Post, '');
   newRequestUri: string;
   requestBody: string;
@@ -36,11 +37,7 @@ export class RequestComponent implements OnInit {
     this.tempRequestHeaders = this.appService.getCustomRequestHeaders();
 
     this.requestService.getNeedInfoObservable().subscribe((value: any) => {
-      if (value.type === EventType.FillUriTemplate) {
-        this.uriTemplateEvent = value as UriTemplateEvent;
-        this.computeUriFromTemplate();
-        $('#requestModalTrigger').trigger('click');
-      } else if (value.type === EventType.FillHttpRequest) {
+      if (value.type === EventType.FillHttpRequest) {
         const event: HttpRequestEvent = value as HttpRequestEvent;
         this.httpRequestEvent = event;
         if (event.jsonSchema) {
@@ -53,15 +50,14 @@ export class RequestComponent implements OnInit {
         }
         this.requestBody = '';
         this.selectedHttpMethod = event.command;
-
+        this.templatedUri = undefined;
         if (this.isUriTemplated(event.uri)) {
-          const uriTemplate: URITemplate = utpl( event.uri );
-          const uriTemplateParameters: UriTemplateParameter[] = [];
+          const uriTemplate: URITemplate = utpl(event.uri);
+          this.uriTemplateParameters = [];
           for (const param of uriTemplate.varNames) {
-            uriTemplateParameters.push( new UriTemplateParameter( param, '' ) );
+            this.uriTemplateParameters.push(new UriTemplateParameter(param, ''));
           }
-
-          this.uriTemplateEvent = new UriTemplateEvent( EventType.FillUriTemplate, event.uri, uriTemplateParameters );
+          this.templatedUri = event.uri;
           this.computeUriFromTemplate();
         } else {
           this.newRequestUri = event.uri;
@@ -98,9 +94,9 @@ export class RequestComponent implements OnInit {
   }
 
   computeUriFromTemplate() {
-    const uriTemplate = utpl(this.uriTemplateEvent.templatedUri);
+    const uriTemplate = utpl(this.templatedUri);
     const templateParams = {};
-    for (const parameter of this.uriTemplateEvent.parameters) {
+    for (const parameter of this.uriTemplateParameters) {
       if (parameter.value.length > 0) {
         templateParams[parameter.key] = parameter.value;
       }

@@ -1,6 +1,6 @@
 import {TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {Command, HttpRequestEvent, RequestService, UriTemplateEvent} from './request.service';
+import {Command, HttpRequestEvent, RequestService} from './request.service';
 import {AppService, RequestHeader} from '../app.service';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Type} from '@angular/core';
@@ -140,12 +140,11 @@ describe('RequestService', () => {
 
   it('should handle templated URIs', (done) => {
     requestService.getNeedInfoObservable().subscribe((event: any) => {
-      const templateEvent: UriTemplateEvent = event as UriTemplateEvent;
-      expect(templateEvent.templatedUri).toBe('http://localhost{page}');
-      expect(templateEvent.parameters[0].key).toBe('page');
+      const templateEvent: HttpRequestEvent = event as HttpRequestEvent;
+      expect(templateEvent.uri).toBe('http://localhost{?page}');
       done();
     });
-    requestService.processCommand(Command.Get, 'http://localhost{page}');
+    requestService.processCommand(Command.Get, 'http://localhost{?page}');
   });
 
   it('should process document command', (done) => {

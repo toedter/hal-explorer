@@ -1,19 +1,14 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {Observable, Subject} from 'rxjs';
 import * as utpl from 'uri-templates';
-import { URITemplate } from 'uri-templates';
-import { AppService, RequestHeader } from '../app.service';
+import {URITemplate} from 'uri-templates';
+import {AppService, RequestHeader} from '../app.service';
 import * as HttpStatus from 'http-status-codes';
 
-export enum EventType {FillUriTemplate, FillHttpRequest}
+export enum EventType {FillHttpRequest}
 
 export enum Command {Get, Post, Put, Patch, Delete, Document}
-
-export class UriTemplateEvent {
-  constructor(public type: EventType, public templatedUri, public parameters: UriTemplateParameter[]) {
-  }
-}
 
 export class HttpRequestEvent {
   constructor(public type: EventType, public command: Command,
@@ -42,7 +37,7 @@ export class RequestService {
   private requestHeaders: HttpHeaders = new HttpHeaders(
     {
       Accept: 'application/prs.hal-forms+json, application/hal+json, application/json, */*'
-    } );
+    });
   private customRequestHeaders: RequestHeader[];
 
   constructor(private appService: AppService, private http: HttpClient) {
@@ -64,30 +59,30 @@ export class RequestService {
     if (!uri || uri.trim().length === 0) {
       return;
     }
-    this.processCommand( Command.Get, uri );
+    this.processCommand(Command.Get, uri);
   }
 
   requestUri(uri: string, httpMethod: string, body?: string) {
 
     let headers = this.requestHeaders;
     if (httpMethod.toLowerCase() === 'post' || httpMethod.toLowerCase() === 'put' || httpMethod.toLowerCase() === 'patch') {
-      headers = headers.set( 'Content-Type', 'application/json; charset=utf-8' );
+      headers = headers.set('Content-Type', 'application/json; charset=utf-8');
     }
-    this.appService.setUri( uri );
-    this.http.request( httpMethod, uri, { headers, observe: 'response', body } ).subscribe(
+    this.appService.setUri(uri);
+    this.http.request(httpMethod, uri, {headers, observe: 'response', body}).subscribe(
       (response: HttpResponse<any>) => {
-        (response as any).statusText = HttpStatus.getStatusText( response.status );
+        (response as any).statusText = HttpStatus.getStatusText(response.status);
         this.httpResponse = response;
-        this.responseSubject.next( response );
+        this.responseSubject.next(response);
       },
       (error: HttpErrorResponse) => {
         let statusText = '';
         if (error.status !== 0) {
-          statusText = HttpStatus.getStatusText( error.status );
+          statusText = HttpStatus.getStatusText(error.status);
         }
 
         if (error.error instanceof ErrorEvent) {
-          console.error( 'An error event occurred:', error.error.message );
+          console.error('An error event occurred:', error.error.message);
         } else {
           // console.error(`Backend returned code ${error.status}, body: ${error.error}`);
           let errorBody = '';
@@ -99,95 +94,84 @@ export class RequestService {
             }
           }
 
-          this.httpResponse = new HttpResponse( {
+          this.httpResponse = new HttpResponse({
             body: errorBody, headers: error.headers,
             status: error.status, statusText, url: error.url
-          } );
-          this.responseSubject.next( this.httpResponse );
+          });
+          this.responseSubject.next(this.httpResponse);
         }
       }
     );
   }
 
   processCommand(command: Command, uri: string, halFormsTemplates?: any) {
-    if (command === Command.Get) {
-      if (uri.includes( '{' )) {
-        const uriTemplate: URITemplate = utpl( uri );
-        const uriTemplateParameters: UriTemplateParameter[] = [];
-        for (const param of uriTemplate.varNames) {
-          uriTemplateParameters.push( new UriTemplateParameter( param, '' ) );
-        }
-
-        const event = new UriTemplateEvent( EventType.FillUriTemplate, uri, uriTemplateParameters );
-        this.needInfoSubject.next( event );
-        return;
+    if (command === Command.Get && !this.isUriTemplated(uri)) {
+      this.requestUri(uri, 'GET');
+    } else if (command === Command.Get || command === Command.Post || command === Command.Put || command === Command.Patch) {
+      const event = new HttpRequestEvent(EventType.FillHttpRequest, command, uri);
+      if (command !== Command.Get) {
+        this.getJsonSchema(event);
+      } else {
+        this.needInfoSubject.next(event);
       }
-
-      this.requestUri( uri, 'GET' );
-    } else if (command === Command.Post || command === Command.Put || command === Command.Patch) {
-      // if (uri.includes( '{' )) {
-      //   uri = uri.substring( 0, uri.indexOf( '{' ) );
-      // }
-      const event = new HttpRequestEvent( EventType.FillHttpRequest, command, uri );
-      this.getJsonSchema( event );
       if (halFormsTemplates) {
         event.halFormsTemplates = halFormsTemplates;
       }
       return;
-
     } else if (command === Command.Delete) {
-      if (uri.includes( '{' )) {
-        uri = uri.substring( 0, uri.indexOf( '{' ) );
+      if (this.isUriTemplated(uri)) {
+        const uriTemplate: URITemplate = utpl(uri);
+        uri = uriTemplate.fill({});
       }
-      this.requestUri( uri, 'DELETE' );
-
+      this.requestUri(uri, 'DELETE');
     } else if (command === Command.Document) {
-      this.documentationSubject.next( uri );
-    } else {
-      console.log( ('got Command: ' + command) );
+      this.documentationSubject.next(uri);
     }
   }
 
   getJsonSchema(httpRequestEvent: HttpRequestEvent) {
-    const uriTemplate: URITemplate = utpl( httpRequestEvent.uri );
-    const uri = uriTemplate.fill({});
-    this.http.request( 'HEAD', uri,
-      { headers: this.requestHeaders, observe: 'response' } ).subscribe(
+    let uri = httpRequestEvent.uri;
+    if (this.isUriTemplated(uri)) {
+      const uriTemplate: URITemplate = utpl(uri);
+      uri = uriTemplate.fill({});
+    }
+    this.http.request('HEAD', uri,
+      {headers: this.requestHeaders, observe: 'response'}).subscribe(
       (response: HttpResponse<any>) => {
         let hasProfile = false;
-        const linkHeader = response.headers.get( 'Link' );
+        const linkHeader = response.headers.get('Link');
         if (linkHeader) {
-          const w3cLinks = linkHeader.split( ',' );
+          const w3cLinks = linkHeader.split(',');
           let profileUri;
-          w3cLinks.forEach( (w3cLink) => {
-            const parts = w3cLink.split( ';' );
+          w3cLinks.forEach((w3cLink) => {
+            const parts = w3cLink.split(';');
 
             const hrefWrappedWithBrackets = parts[0];
-            const href = hrefWrappedWithBrackets.slice( 1, parts[0].length - 1 );
+            const href = hrefWrappedWithBrackets.slice(1, parts[0].length - 1);
 
             const w3cRel = parts[1];
-            const relWrappedWithQuotes = w3cRel.split( '=' )[1];
-            const rel = relWrappedWithQuotes.slice( 1, relWrappedWithQuotes.length - 1 );
+            const relWrappedWithQuotes = w3cRel.split('=')[1];
+            const rel = relWrappedWithQuotes.slice(1, relWrappedWithQuotes.length - 1);
 
             if (rel.toLowerCase() === 'profile') {
               profileUri = href;
             }
-          } );
+          });
 
           if (profileUri) {
             hasProfile = true;
             let headers = new HttpHeaders(
               {
                 Accept: 'application/schema+json'
-              } );
+              });
 
             if (this.customRequestHeaders) {
               for (const requestHeader of this.customRequestHeaders) {
-                headers = headers.append( requestHeader.key, requestHeader.value );
+                headers = headers.append(requestHeader.key, requestHeader.value);
               }
             }
 
-            this.http.get( profileUri, { headers, observe: 'response' } ).subscribe(
+            this.http.get(profileUri, {headers, observe: 'response'}).subscribe(
               (httpResponse: HttpResponse<any>) => {
                 const jsonSchema = httpResponse.body;
 
@@ -202,30 +186,30 @@ export class RequestService {
 
                 // since we use those properties to generate a editor for POST, PUT and PATCH,
                 // "readOnly" properties should not be displayed
-                Object.keys( jsonSchema.properties ).forEach( (property) => {
-                  if (jsonSchema.properties[property].hasOwnProperty( 'readOnly' ) &&
+                Object.keys(jsonSchema.properties).forEach((property) => {
+                  if (jsonSchema.properties[property].hasOwnProperty('readOnly') &&
                     jsonSchema.properties[property].readOnly === true) {
                     delete jsonSchema.properties[property];
                   }
-                } );
+                });
 
                 httpRequestEvent.jsonSchema = jsonSchema;
-                this.needInfoSubject.next( httpRequestEvent );
+                this.needInfoSubject.next(httpRequestEvent);
               },
               () => {
-                console.error( 'Cannot get JSON schema for:', profileUri );
-                this.needInfoSubject.next( httpRequestEvent );
+                console.error('Cannot get JSON schema for:', profileUri);
+                this.needInfoSubject.next(httpRequestEvent);
               }
             );
           }
         }
 
         if (!hasProfile) {
-          this.needInfoSubject.next( httpRequestEvent );
+          this.needInfoSubject.next(httpRequestEvent);
         }
       },
       () => {
-        this.needInfoSubject.next( httpRequestEvent );
+        this.needInfoSubject.next(httpRequestEvent);
       }
     );
   }
@@ -238,11 +222,11 @@ export class RequestService {
       if (requestHeader.key.toLowerCase() === 'accept') {
         addDefaultAcceptHeader = false;
       }
-      this.requestHeaders = this.requestHeaders.append( requestHeader.key, requestHeader.value );
+      this.requestHeaders = this.requestHeaders.append(requestHeader.key, requestHeader.value);
     }
     if (addDefaultAcceptHeader === true) {
       this.requestHeaders = this.requestHeaders.append(
-        'Accept', 'application/prs.hal-forms+json, application/hal+json, application/json, */*' );
+        'Accept', 'application/prs.hal-forms+json, application/hal+json, application/json, */*');
     }
   }
 
@@ -269,4 +253,10 @@ export class RequestService {
         return 'text';
     }
   }
+
+  isUriTemplated(uri: string) {
+    const uriTemplate = utpl(uri);
+    return uriTemplate.varNames.length > 0;
+  }
+
 }
