@@ -1,0 +1,15 @@
+{
+  "_links": {
+    "self": {
+      "href": "http://localhost:3000/api"
+    },
+    "movies": {
+      "href": "http://localhost:3000/api/movies{?size,page}",
+      "templated": true
+    },
+    "directors": {
+      "href": "http://localhost:3000/api/directors{?size,page}",
+      "templated": true
+    }
+  }
+}

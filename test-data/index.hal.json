@@ -1,0 +1,17 @@
+{
+  "_links": {
+    "chatty:users": {
+      "href": "http://localhost:3000/users.hal.json"
+    },
+    "profile": {
+      "href": "http://localhost:3000/api/profile"
+    },
+    "curies": [
+      {
+        "href": "http://localhost:3000/../docs/html5/{rel}.html",
+        "name": "chatty",
+        "templated": true
+      }
+    ]
+  }
+}

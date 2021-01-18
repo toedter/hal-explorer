@@ -37,7 +37,7 @@ describe( 'HAL-Explorer App', () => {
   } );
 
   it( 'should display HAL sections when rendering users resource', () => {
-    page.navigateTo( '/#uri=' + AppConfig.getChattyApiUrl() + '/users' );
+    page.navigateTo( '/#uri=' + AppConfig.getTestServerUrl() + 'movies.hal-forms.json' );
     expect( page.getFirstPropertiesSection().isDisplayed() ).toBeTruthy();
     expect( page.getFirstLinksSection().isDisplayed() ).toBeTruthy();
     expect( page.getEmbeddedSection().isDisplayed() ).toBeTruthy();
@@ -45,7 +45,7 @@ describe( 'HAL-Explorer App', () => {
   } );
 
   it( 'should display only Links section when rendering root api', () => {
-    page.navigateTo( '/#uri=' + AppConfig.getChattyApiUrl() );
+    page.navigateTo( '/#uri=' + AppConfig.getTestServerUrl() + 'index.hal.json' );
     expect( page.getFirstPropertiesSection().isPresent() ).toBeFalsy();
     expect( page.getFirstLinksSection().isDisplayed() ).toBeTruthy();
     expect( page.getEmbeddedSection().isPresent() ).toBeFalsy();
@@ -53,7 +53,7 @@ describe( 'HAL-Explorer App', () => {
   } );
 
   it( 'should display POST request dialog', () => {
-    page.navigateTo( '/#uri=' + AppConfig.getChattyApiUrl() );
+    page.navigateTo( '/#uri=' + AppConfig.getTestServerUrl() + 'movies.hal-forms.json' );
     page.getFirstPostButton().click();
     browser.sleep(1000);
     browser.wait( protractor.ExpectedConditions.presenceOf( page.getGoButton() ),
@@ -61,7 +61,7 @@ describe( 'HAL-Explorer App', () => {
   } );
 
   it( 'should display user profile in POST request dialog', () => {
-    page.navigateTo( '/#uri=' + AppConfig.getChattyApiUrl() + '/users' );
+    page.navigateTo( '/#uri=' + AppConfig.getTestServerUrl() + 'index.hal.json' );
     page.getFirstPostButton().click();
     browser.sleep(1000);
     const fullnameProfileLabel = page.getFullnameProfileLabel();
