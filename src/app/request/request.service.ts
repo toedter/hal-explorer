@@ -71,14 +71,14 @@ export class RequestService {
     this.appService.setUri(uri);
     this.http.request(httpMethod, uri, {headers, observe: 'response', body}).subscribe(
       (response: HttpResponse<any>) => {
-        (response as any).statusText = HttpStatus.getStatusText(response.status);
+        (response as any).statusText = HttpStatus.getReasonPhrase(response.status);
         this.httpResponse = response;
         this.responseSubject.next(response);
       },
       (error: HttpErrorResponse) => {
         let statusText = '';
         if (error.status !== 0) {
-          statusText = HttpStatus.getStatusText(error.status);
+          statusText = HttpStatus.getReasonPhrase(error.status);
         }
 
         if (error.error instanceof ErrorEvent) {
