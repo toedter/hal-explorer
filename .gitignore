@@ -49,3 +49,6 @@ Thumbs.db
 #Gradle
 build
 .gradle
+
+# Yarn
+.yarn
