@@ -109,13 +109,11 @@ export class RequestService {
       this.requestUri(uri, 'GET');
     } else if (command === Command.Get || command === Command.Post || command === Command.Put || command === Command.Patch) {
       const event = new HttpRequestEvent(EventType.FillHttpRequest, command, uri);
-      if (halFormsTemplate) {
+      if (halFormsTemplate || command === Command.Get) {
         event.halFormsTemplate = halFormsTemplate;
-      }
-      if (command === Command.Post || command === Command.Put || command === Command.Patch) {
-        this.getJsonSchema(event);
-      } else {
         this.needInfoSubject.next(event);
+      } else {
+        this.getJsonSchema(event);
       }
       return;
     } else if (command === Command.Delete) {

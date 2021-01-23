@@ -51,12 +51,16 @@ export class AppPage {
     return element.all(by.css('.icon-plus')).first();
   }
 
+  getLastPostButton(): ElementFinder {
+    return element.all(by.css('.icon-plus')).last();
+  }
+
   getLastGetButton(): ElementFinder {
     return element.all(by.css('.icon-left-open')).last();
   }
 
   getGoButton(): ElementFinder {
-    return element(by.id('updateDialogGoButton'));
+    return element(by.id('requestDialogGoButton'));
   }
 
   getFullnameProfileLabel(): ElementFinder {
@@ -71,6 +75,10 @@ export class AppPage {
     return element(by.id('request-input-title'));
   }
 
+  getPost2Input(): ElementFinder {
+    return element(by.id('request-input-post2'));
+  }
+
   getCompletedLabel(): ElementFinder {
     return element(by.cssContainingText('.col-form-label', 'Completed'));
   }
@@ -81,6 +89,10 @@ export class AppPage {
 
   getExpandedUri(): ElementFinder {
     return element(by.id('request-input-expanded-uri'));
+  }
+
+  getPostBody(): ElementFinder {
+    return element(by.id('body'));
   }
 
 }

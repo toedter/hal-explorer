@@ -43,32 +43,32 @@
                 <td>{{link.title}}</td>
                 <td>
                   <button
-                    [class]="'icon-left-open ml-1 btn btn-outline-success btn-sm nav-button ' + getLinkButtonClass(link.rel, link.href, command.Get)"
-                    [disabled]="isButtonDisabled(link.rel, link.href, command.Get)"
+                    [class]="getRequestButtonClass(command.Get) + ' ' + getLinkButtonClass(command.Get)"
+                    [disabled]="isButtonDisabled(command.Get)"
                     (click)="processCommand(command.Get, getRelTargetUrl(link.href, command.Get))"
                     title="GET Request">
                   </button>
                   <button
-                    [class]="'icon-plus ml-1 btn btn-outline-info btn-sm nav-button ' + getLinkButtonClass(link.rel, link.href, command.Post)"
-                    [disabled]="isButtonDisabled(link.rel, link.href, command.Post)"
+                    [class]="getRequestButtonClass(command.Post)  + ' ' + getLinkButtonClass(command.Post)"
+                    [disabled]="isButtonDisabled(command.Post)"
                     (click)="processCommand(command.Post, getRelTargetUrl(link.href, command.Post))"
                     title="POST Request">
                   </button>
                   <button
-                    [class]="'icon-right-open ml-1 btn btn-outline-warning btn-sm nav-button ' + getLinkButtonClass(link.rel, link.href, command.Put)"
-                    [disabled]="isButtonDisabled(link.rel, link.href, command.Put)"
+                    [class]="getRequestButtonClass(command.Put) + ' ' + getLinkButtonClass(command.Put)"
+                    [disabled]="isButtonDisabled(command.Put)"
                     (click)="processCommand(command.Put, getRelTargetUrl(link.href, command.Put))"
                     title="PUT Request">
                   </button>
                   <button
-                    [class]="'icon-right-open ml-1 btn btn-outline-warning btn-sm nav-button ' + getLinkButtonClass(link.rel, link.href, command.Patch)"
-                    [disabled]="isButtonDisabled(link.rel, link.href, command.Patch)"
+                    [class]="getRequestButtonClass(command.Patch) + ' ' + getLinkButtonClass(command.Patch)"
+                    [disabled]="isButtonDisabled(command.Patch)"
                     (click)="processCommand(command.Patch, getRelTargetUrl(link.href, command.Patch))"
                     title="PATCH Request">
                   </button>
                   <button
-                    [class]="'icon-cancel ml-1 btn btn-outline-danger btn-sm nav-button ' + getLinkButtonClass(link.rel, link.href, command.Delete)"
-                    [disabled]="isButtonDisabled(link.rel, link.href, command.Delete)"
+                    [class]="getRequestButtonClass(command.Delete) + ' ' + getLinkButtonClass(command.Delete)"
+                    [disabled]="isButtonDisabled(command.Delete)"
                     (click)="processCommand(command.Delete, getRelTargetUrl(link.href, command.Delete))"
                     title="DELETE Request">
                   </button>
@@ -109,8 +109,7 @@
                 <td>{{template.value.title}}</td>
                 <td>
                   <button
-                    [class]="'icon-left-open ml-1 btn btn-sm nav-button '
-                    + getTemplateButtonClass(template.value.method)"
+                    [class]="getRequestButtonClass(getCommandForTemplateMethod(template.value.method))"
                     (click)="processCommand(getCommandForTemplateMethod(template.value.method),
                      getUrlForTemplateTarget(template.value.target), template)"
                     [disabled]="false"

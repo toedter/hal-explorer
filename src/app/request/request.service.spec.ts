@@ -140,8 +140,8 @@ describe('RequestService', () => {
 
   it('should handle templated URIs', (done) => {
     requestService.getNeedInfoObservable().subscribe((event: any) => {
-      const templateEvent: HttpRequestEvent = event as HttpRequestEvent;
-      expect(templateEvent.uri).toBe('http://localhost{?page}');
+      const httpRequestEvent: HttpRequestEvent = event as HttpRequestEvent;
+      expect(httpRequestEvent.uri).toBe('http://localhost{?page}');
       done();
     });
     requestService.processCommand(Command.Get, 'http://localhost{?page}');

@@ -225,23 +225,23 @@ describe('ResponseExplorerComponent', () => {
 
     const selfRel = 'self';
     const selfHref = 'http://api.com';
-    expect(component.getLinkButtonClass(selfRel, selfHref, Command.Get)).toBe('');
-    expect(component.isButtonDisabled(selfRel, selfHref, Command.Get)).toBeFalse();
+    expect(component.getLinkButtonClass(Command.Get)).toBe('');
+    expect(component.isButtonDisabled(Command.Get)).toBeFalse();
 
-    expect(component.getLinkButtonClass(selfRel, selfHref, Command.Post)).toBe('btn-outline-light');
-    expect(component.isButtonDisabled(selfRel, selfHref, Command.Post)).toBeTrue();
+    expect(component.getLinkButtonClass(Command.Post)).toBe('btn-outline-light');
+    expect(component.isButtonDisabled(Command.Post)).toBeTrue();
 
-    expect(component.getLinkButtonClass(selfRel, selfHref, Command.Put)).toBe('btn-outline-light');
-    expect(component.isButtonDisabled(selfRel, selfHref, Command.Put)).toBeTrue();
+    expect(component.getLinkButtonClass(Command.Put)).toBe('btn-outline-light');
+    expect(component.isButtonDisabled(Command.Put)).toBeTrue();
 
-    expect(component.getLinkButtonClass(selfRel, selfHref, Command.Patch)).toBe('btn-outline-light');
-    expect(component.isButtonDisabled(selfRel, selfHref, Command.Patch)).toBeTrue();
+    expect(component.getLinkButtonClass(Command.Patch)).toBe('btn-outline-light');
+    expect(component.isButtonDisabled(Command.Patch)).toBeTrue();
 
-    expect(component.getLinkButtonClass(selfRel, selfHref, Command.Delete)).toBe('btn-outline-light');
-    expect(component.isButtonDisabled(selfRel, selfHref, Command.Delete)).toBeTrue();
+    expect(component.getLinkButtonClass(Command.Delete)).toBe('btn-outline-light');
+    expect(component.isButtonDisabled(Command.Delete)).toBeTrue();
   });
 
-  it('should get HAL-FORMS template button class and state', () => {
+  it('should get HAL-FORMS request button class and state', () => {
     const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
 
     const responseHeaders: HttpHeaders = new HttpHeaders(
@@ -250,15 +250,15 @@ describe('ResponseExplorerComponent', () => {
       });
     requestServiceMock.observableMock.next(new HttpResponse({headers: responseHeaders, body: halFormsResponse}));
 
-    expect(component.getTemplateButtonClass('GET')).toBe('btn btn-outline-success');
-    expect(component.getTemplateButtonClass('POST')).toBe('btn btn-outline-info');
-    expect(component.getTemplateButtonClass('PUT')).toBe('btn btn-outline-warning');
-    expect(component.getTemplateButtonClass('PATCH')).toBe('btn btn-outline-warning');
-    expect(component.getTemplateButtonClass('DELETE')).toBe('btn btn-outline-danger');
-    expect(component.getTemplateButtonClass('NO HTTP VERB')).toBe('btn btn-outline-success');
+    expect(component.getRequestButtonClass(Command.Get)).toBe('ml-1 btn btn-sm nav-button btn-outline-success icon-left-open');
+    expect(component.getRequestButtonClass(Command.Post)).toBe('ml-1 btn btn-sm nav-button btn-outline-info icon-plus');
+    expect(component.getRequestButtonClass(Command.Put)).toBe('ml-1 btn btn-sm nav-button btn-outline-warning icon-right-open');
+    expect(component.getRequestButtonClass(Command.Patch)).toBe('ml-1 btn btn-sm nav-button btn-outline-warning icon-right-open');
+    expect(component.getRequestButtonClass(Command.Delete)).toBe('ml-1 btn btn-sm nav-button btn-outline-danger icon-cancel');
+    expect(component.getRequestButtonClass(undefined)).toBe('ml-1 btn btn-sm nav-button btn-outline-success icon-left-open');
   });
 
-  it('should populate HAL-FORMS template button class and state', () => {
+  it('should populate HAL-FORMS request button class and state', () => {
     const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
 
     const responseHeaders: HttpHeaders = new HttpHeaders(
@@ -269,7 +269,7 @@ describe('ResponseExplorerComponent', () => {
     const selfRel = 'self';
     const selfHref = 'http://api.com';
 
-    expect(component.getTemplateButtonClass('POST')).toBe('btn btn-outline-info');
+    expect(component.getRequestButtonClass(Command.Post)).toBe('ml-1 btn btn-sm nav-button btn-outline-info icon-plus');
   });
 
   it('should invoke request service when processing command', () => {

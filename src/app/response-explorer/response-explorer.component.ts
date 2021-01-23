@@ -157,14 +157,14 @@ export class ResponseExplorerComponent implements OnInit {
     this.requestService.processCommand(command, link, template);
   }
 
-  getLinkButtonClass(rel: string, href: string, command: Command): string {
+  getLinkButtonClass(command: Command): string {
     if (!this.isHalFormsMediaType || Command[command].toLowerCase() === 'get') {
       return '';
     }
     return 'btn-outline-light';
   }
 
-  isButtonDisabled(rel: string, href: string, command: Command): boolean {
+  isButtonDisabled(command: Command): boolean {
     if (Command[command].toLowerCase() === 'get') {
       return false;
     }
@@ -191,17 +191,18 @@ export class ResponseExplorerComponent implements OnInit {
     return target;
   }
 
-  getTemplateButtonClass(method: string) {
-    if (method.toLowerCase() === Command[Command.Post].toLowerCase()) {
-      return 'btn btn-outline-info';
-    } else if (method.toLowerCase() === Command[Command.Put].toLowerCase()) {
-      return 'btn btn-outline-warning';
-    } else if (method.toLowerCase() === Command[Command.Patch].toLowerCase()) {
-      return 'btn btn-outline-warning';
-    } else if (method.toLowerCase() === Command[Command.Delete].toLowerCase()) {
-      return 'btn btn-outline-danger';
+  getRequestButtonClass(command: Command) {
+    const base = 'ml-1 btn btn-sm nav-button ';
+    if (command === Command.Post) {
+      return base + 'btn-outline-info icon-plus';
+    } else if (command === Command.Put) {
+      return base + 'btn-outline-warning icon-right-open';
+    } else if (command === Command.Patch) {
+      return base + 'btn-outline-warning icon-right-open';
+    } else if (command === Command.Delete) {
+      return base + 'btn-outline-danger icon-cancel';
     }
-    return 'btn btn-outline-success';
+    return base + 'btn-outline-success icon-left-open';
   }
 
   getCommandForTemplateMethod(method: string): Command {
