@@ -123,7 +123,7 @@
               </label>
               <div class="col-sm-9">
                 <input class="form-control" [(ngModel)]="item.value"
-                       name="{{item.name}}" #ngModel="ngModel"
+                       name="{{item.name}}" id="request-input-{{item.name}}" #ngModel="ngModel"
                        [appHalFormsProperty]="item" [title]="getValidationErrors(ngModel)"
                        (keyup)="requestBodyChanged()">
               </div>
@@ -145,7 +145,7 @@
                       || httpRequestEvent.command === commandPlaceholder.Delete" class="form-group row">
             <label class="col-sm-3 col-form-label" for="body">Expanded URI</label>
             <div class="col-sm-9">
-              <div class="form-control text-truncate">
+              <div id="request-input-expanded-uri" class="form-control text-truncate">
                 {{newRequestUri}}
               </div>
             </div>

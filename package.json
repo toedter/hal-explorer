@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
+    "start-with-lite-server": "concurrently \"lite-server\" \"ng serve\" --kill-others --success first",
     "build": "ng build --prod",
     "test": "ng test",
     "test-headless": "ng test --browsers ChromeHeadless --code-coverage --watch=false",

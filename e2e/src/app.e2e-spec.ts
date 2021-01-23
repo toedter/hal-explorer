@@ -69,5 +69,20 @@ describe( 'HAL-Explorer App', () => {
       5000, 'Label "Full name" taking too long to appear in the DOM' );
   } );
 
+  it( 'should display expanded URI in HAL-FORMS get request dialog', () => {
+    page.navigateTo( '/#uri=' + AppConfig.getTestServerUrl() + 'filter.hal-forms.json' );
+    page.getLastGetButton().click();
+    browser.sleep(1000);
+    const titleInput = page.getTitleInput();
+    titleInput.sendKeys('myTitle');
+    const completedInput = page.getCompletedInput();
+    completedInput.sendKeys('true');
+
+    const expandedUri = page.getExpandedUri();
+    expect(expandedUri.getText()).toEqual('http://api.example.org/rels/filter?title=myTitle&completed=true');
+    browser.wait( protractor.ExpectedConditions.presenceOf( titleInput ),
+      5000, 'Input for Title taking too long to appear in the DOM' );
+  } );
+
 } );
 

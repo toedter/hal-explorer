@@ -51,12 +51,36 @@ export class AppPage {
     return element.all(by.css('.icon-plus')).first();
   }
 
+  getLastGetButton(): ElementFinder {
+    return element.all(by.css('.icon-left-open')).last();
+  }
+
   getGoButton(): ElementFinder {
     return element(by.id('updateDialogGoButton'));
   }
 
   getFullnameProfileLabel(): ElementFinder {
     return element(by.cssContainingText('.col-form-label', 'Full name'));
+  }
+
+  getTitleLabel(): ElementFinder {
+    return element(by.cssContainingText('.col-form-label', 'Title'));
+  }
+
+  getTitleInput(): ElementFinder {
+    return element(by.id('request-input-title'));
+  }
+
+  getCompletedLabel(): ElementFinder {
+    return element(by.cssContainingText('.col-form-label', 'Completed'));
+  }
+
+  getCompletedInput(): ElementFinder {
+    return element(by.id('request-input-completed'));
+  }
+
+  getExpandedUri(): ElementFinder {
+    return element(by.id('request-input-expanded-uri'));
   }
 
 }
