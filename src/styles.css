@@ -12,3 +12,8 @@ pre {padding: 5px; margin: 5px; color: inherit !important}
   border-left: 5px solid #a94442; /* red */
 }
 
+.form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: lightgrey;
+  opacity: 1; /* Firefox */
+}
+

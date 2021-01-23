@@ -100,7 +100,7 @@
               <div class="col-sm-9">
                 <input [type]="getInputType(item.key)" class="form-control"
                        [(ngModel)]="jsonSchema[item.key].value" [ngModelOptions]="{standalone: true}"
-                       (keyup)="requestBodyChanged()">
+                       (keyup)="halFormsPropertyChanged()">
               </div>
             </div>
             <hr>
@@ -109,7 +109,7 @@
           <div *ngIf="halFormsProperties">
             <hr>
             <label class="text-info">HAL-FORMS Properties
-              <span *ngIf="halFormsDialogTitle"> [{{halFormsDialogTitle}}]</span>
+              <span *ngIf="halFormsPropertyKey"> [{{halFormsPropertyKey}}]</span>
             </label>
             <div class="form-group row" *ngFor="let item of halFormsProperties">
 
@@ -124,8 +124,10 @@
               <div class="col-sm-9">
                 <input class="form-control" [(ngModel)]="item.value"
                        name="{{item.name}}" id="request-input-{{item.name}}" #ngModel="ngModel"
+                       type="{{item.type}}"
+                       placeholder="{{item.placeholder}}"
                        [appHalFormsProperty]="item" [title]="getValidationErrors(ngModel)"
-                       (keyup)="requestBodyChanged()">
+                       (keyup)="halFormsPropertyChanged()">
               </div>
             </div>
             <hr>
@@ -155,7 +157,7 @@
 
       <div class="modal-footer">
         <button id="updateDialogGoButton" type="button" class="btn btn-secondary" data-dismiss="modal"
-                (click)="createOrUpdateResource()" [disabled]="myForm.invalid">Go!
+                (click)="makeHttpRequest()" [disabled]="myForm.invalid">Go!
         </button>
       </div>
     </div>

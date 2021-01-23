@@ -112,7 +112,7 @@
                     [class]="'icon-left-open ml-1 btn btn-sm nav-button '
                     + getTemplateButtonClass(template.value.method)"
                     (click)="processCommand(getCommandForTemplateMethod(template.value.method),
-                     getUrlForTemplateTarget(template.value.target), true)"
+                     getUrlForTemplateTarget(template.value.target), template)"
                     [disabled]="false"
                     title="{{template.value.method.toUpperCase()}} Request">
                   </button>

@@ -38,11 +38,13 @@
       "properties": [
         {
           "name": "imdbId",
-          "prompt": "IMDB Id"
+          "prompt": "IMDB Id",
+          "placeholder": "e.g. 1765356764"
         },
         {
           "name": "rank",
-          "prompt": "Rank"
+          "prompt": "Rank",
+          "type": "email"
         },
         {
           "name": "rating",
@@ -60,7 +62,8 @@
         {
           "name": "year",
           "prompt": "Release Year",
-          "regex": "\\d{4}$"
+          "regex": "\\d{4}$",
+          "placeholder": "e.g. 1984"
         }
       ]
     }

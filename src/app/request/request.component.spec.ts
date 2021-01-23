@@ -234,31 +234,20 @@ describe('RequestComponent', () => {
 
   it('should fill http request with HAL-FORMS template properties', () => {
     const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
+    const halFormsTemplate = {
+      key: 'default',
+      value: halFormsTemplates._templates.default
+    };
 
     const event: HttpRequestEvent =
       new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
-        undefined, halFormsTemplates._templates);
+        undefined, halFormsTemplate);
 
     requestServiceMock.getNeedInfoObservable().next(event);
 
-    expect(component.halFormsTemplates.toString).toEqual(halFormsTemplates.toString);
-    expect(component.halFormsDialogTitle).toEqual('Change Movie');
-    expect(component.halFormsProperties.toString).toEqual(halFormsTemplates._templates.default.properties.toString);
-  });
-
-  it('should support HTTP method with HAL-FORMS', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
-
-    const event: HttpRequestEvent =
-      new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
-        undefined, halFormsTemplates._templates);
-
-    requestServiceMock.getNeedInfoObservable().next(event);
-
-    expect(component.supportsHttpMethod(Command.Put)).toBeTruthy();
-    expect(component.supportsHttpMethod(Command.Patch)).toBeFalsy();
-    expect(component.supportsHttpMethod(Command.Delete)).toBeFalsy();
-    expect(component.supportsHttpMethod(Command.Post)).toBeFalsy();
+    expect(component.halFormsTemplate).toEqual(halFormsTemplate);
+    expect(component.halFormsPropertyKey).toEqual('Change Movie');
+    expect(component.halFormsProperties).toEqual(halFormsTemplate.value.properties);
   });
 
   it('should get expanded uri', () => {
@@ -274,17 +263,17 @@ describe('RequestComponent', () => {
     component.jsonSchema.email.value = 'kai@toedter.com';
     component.jsonSchema.fullName.value = 'Kai Toedter';
 
-    component.requestBodyChanged();
+    component.halFormsPropertyChanged();
     expect(component.requestBody).toBe('{\n  "fullName": "Kai Toedter",\n  "email": "kai@toedter.com"\n}');
   });
 
   it('should get change request body based on HAL-FORMS', () => {
-    component.halFormsTemplates = halFormsTemplates;
-    component.halFormsProperties = halFormsTemplates._templates.default.properties;
+    component.halFormsTemplate = { value: halFormsTemplates._templates.default };
+    component.halFormsProperties = component.halFormsTemplate.value.properties;
     component.halFormsProperties[0].value = 'Movie Title';
     component.halFormsProperties[1].value = '2019';
 
-    component.requestBodyChanged();
+    component.halFormsPropertyChanged();
 
     expect(component.requestBody).toBe('{\n  "title": "Movie Title",\n  "year": "2019"\n}');
   });
@@ -379,16 +368,6 @@ describe('RequestComponent', () => {
     expect(component.tempRequestHeaders[4]).toEqual(emptyRequestHeader);
   });
 
-  it('should get undefined HAL-FORMS properties', () => {
-    const halFormsProperties = component.getHalFormsPropertiesForHttpMethod(null);
-    expect(halFormsProperties).toBeUndefined();
-  });
-
-  it('should get undefined HAL-FORMS title', () => {
-    const halFormsTitle = component.getHalFormsTitleForHttpMethod(null);
-    expect(halFormsTitle).toBeUndefined();
-  });
-
   it('should get JSON Schema input type', () => {
     component.jsonSchema = {
       test: {
@@ -403,7 +382,7 @@ describe('RequestComponent', () => {
   it('should create or update resource', () => {
     const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
 
-    component.createOrUpdateResource();
+    component.makeHttpRequest();
     expect(requestServiceMock.requestUriCalled).toBeTrue();
   });
 

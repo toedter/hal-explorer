@@ -153,8 +153,8 @@ export class ResponseExplorerComponent implements OnInit {
     }
   }
 
-  processCommand(command: Command, link: string, fromTemplate?: boolean) {
-    this.requestService.processCommand(command, link, this.templates, fromTemplate);
+  processCommand(command: Command, link: string, template?: any) {
+    this.requestService.processCommand(command, link, template);
   }
 
   getLinkButtonClass(rel: string, href: string, command: Command): string {

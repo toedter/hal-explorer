@@ -25,8 +25,8 @@ export class RequestComponent implements OnInit {
   hasCustomRequestHeaders: boolean;
   jsonSchema: any;
   halFormsProperties: any;
-  halFormsTemplates: any;
-  halFormsDialogTitle: string;
+  halFormsTemplate: any;
+  halFormsPropertyKey: string;
 
   constructor(private appService: AppService, private requestService: RequestService) {
   }
@@ -44,10 +44,10 @@ export class RequestComponent implements OnInit {
         if (event.jsonSchema) {
           this.jsonSchema = event.jsonSchema.properties;
         }
-        if (event.halFormsTemplates) {
-          this.halFormsTemplates = event.halFormsTemplates;
-          this.halFormsProperties = this.getHalFormsPropertiesForHttpMethod(event.command);
-          this.halFormsDialogTitle = this.getHalFormsTitleForHttpMethod(event.command);
+        if (event.halFormsTemplate) {
+          this.halFormsTemplate = event.halFormsTemplate;
+          this.halFormsProperties = this.halFormsTemplate.value.properties;
+          this.halFormsPropertyKey = this.halFormsTemplate.value.title;
         }
         this.requestBody = '';
         this.selectedHttpMethod = event.command;
@@ -86,7 +86,7 @@ export class RequestComponent implements OnInit {
     this.requestService.getUri(this.newRequestUri);
   }
 
-  createOrUpdateResource() {
+  makeHttpRequest() {
     this.requestService.requestUri(this.newRequestUri, Command[this.selectedHttpMethod], this.requestBody);
   }
 
@@ -111,7 +111,7 @@ export class RequestComponent implements OnInit {
     return uriTemplate.varNames.length > 0;
   }
 
-  requestBodyChanged() {
+  halFormsPropertyChanged() {
     let hasProperties = false;
     this.requestBody = '{\n';
     this.newRequestUri = this.originalRequestUri;
@@ -128,17 +128,25 @@ export class RequestComponent implements OnInit {
       }
     } else if (this.halFormsProperties) {
       for (const item of this.halFormsProperties) {
+        const httpMethod = this.halFormsTemplate.value.method?.toLowerCase();
+        const hasBody = (httpMethod === 'post' || httpMethod === 'put' || httpMethod === 'patch');
         if (item.name && item.value) {
           if (hasProperties) {
-            this.requestBody += ',\n';
-            this.newRequestUri += '&';
+            if (hasBody) {
+              this.requestBody += ',\n';
+            } else {
+              this.newRequestUri += '&';
+            }
           } else {
-            this.newRequestUri += '?';
+            if (!hasBody) {
+              this.newRequestUri += '?';
+            }
           }
-          this.requestBody += '  "' + item.name + '": ' + '"'
-            + item.value + '"';
-          this.newRequestUri += item.name + '='
-            + item.value;
+          if (hasBody) {
+            this.requestBody += '  "' + item.name + '": ' + '"' + item.value + '"';
+          } else {
+            this.newRequestUri += item.name + '=' + item.value;
+          }
           hasProperties = true;
         }
       }
@@ -188,54 +196,6 @@ export class RequestComponent implements OnInit {
 
   getInputType(key: string): string {
     return this.requestService.getInputType(this.jsonSchema[key].type, this.jsonSchema[key].format);
-  }
-
-  supportsHttpMethod(command: Command): boolean {
-    if (!this.halFormsProperties) {
-      return true;
-    }
-
-    let hasHttpMethod = false;
-    Object.getOwnPropertyNames(this.halFormsTemplates).forEach(
-      (val: string) => {
-        if (this.halFormsTemplates[val].method === Command[command].toLowerCase() && this.selectedHttpMethod === command) {
-          hasHttpMethod = true;
-        }
-      }
-    );
-    return hasHttpMethod;
-  }
-
-  getHalFormsPropertiesForHttpMethod(command: Command) {
-    let properties;
-    if (!this.halFormsTemplates) {
-      return properties;
-    }
-
-    Object.getOwnPropertyNames(this.halFormsTemplates).forEach(
-      (val: string) => {
-        if (this.halFormsTemplates[val].method.toLowerCase() === Command[command].toLowerCase()) {
-          properties = this.halFormsTemplates[val].properties;
-        }
-      }
-    );
-    return properties;
-  }
-
-  getHalFormsTitleForHttpMethod(command: Command): string {
-    let title;
-    if (!this.halFormsTemplates) {
-      return title;
-    }
-
-    Object.getOwnPropertyNames(this.halFormsTemplates).forEach(
-      (val: string) => {
-        if (this.halFormsTemplates[val].method === Command[command].toLowerCase()) {
-          title = this.halFormsTemplates[val].title;
-        }
-      }
-    );
-    return title;
   }
 
   getValidationErrors(ngModel: any): string {

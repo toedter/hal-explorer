@@ -12,7 +12,7 @@ export enum Command {Get, Post, Put, Patch, Delete, Document}
 
 export class HttpRequestEvent {
   constructor(public type: EventType, public command: Command,
-              public uri: string, public jsonSchema?: any, public halFormsTemplates?: any) {
+              public uri: string, public jsonSchema?: any, public halFormsTemplate?: any) {
   }
 }
 
@@ -104,13 +104,13 @@ export class RequestService {
     );
   }
 
-  processCommand(command: Command, uri: string, halFormsTemplates?: any, fromTemplate?: boolean) {
-    if (command === Command.Get && !this.isUriTemplated(uri) && !fromTemplate) {
+  processCommand(command: Command, uri: string, halFormsTemplate?: any) {
+    if (command === Command.Get && !this.isUriTemplated(uri) && !halFormsTemplate) {
       this.requestUri(uri, 'GET');
     } else if (command === Command.Get || command === Command.Post || command === Command.Put || command === Command.Patch) {
       const event = new HttpRequestEvent(EventType.FillHttpRequest, command, uri);
-      if (halFormsTemplates) {
-        event.halFormsTemplates = halFormsTemplates;
+      if (halFormsTemplate) {
+        event.halFormsTemplate = halFormsTemplate;
       }
       if (command === Command.Post || command === Command.Put || command === Command.Patch) {
         this.getJsonSchema(event);
