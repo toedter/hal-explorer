@@ -223,20 +223,53 @@ describe('ResponseExplorerComponent', () => {
       });
     requestServiceMock.observableMock.next(new HttpResponse({headers: responseHeaders, body: halFormsResponse}));
 
-    expect(component.getLinkButtonClass('self', Command.Get)).toBe('');
-    expect(component.isButtonDisabled('self', Command.Get)).toBeFalsy();
+    const selfRel = 'self';
+    const selfHref = 'http://api.com';
+    expect(component.getLinkButtonClass(selfRel, selfHref, Command.Get)).toBe('');
+    expect(component.isButtonDisabled(selfRel, selfHref, Command.Get)).toBeFalse();
 
-    expect(component.getLinkButtonClass('self', Command.Post)).toBe('btn-outline-light');
-    expect(component.isButtonDisabled('self', Command.Post)).toBeTruthy();
+    expect(component.getLinkButtonClass(selfRel, selfHref, Command.Post)).toBe('btn-outline-light');
+    expect(component.isButtonDisabled(selfRel, selfHref, Command.Post)).toBeTrue();
 
-    expect(component.getLinkButtonClass('self', Command.Put)).toBe('');
-    expect(component.isButtonDisabled('self', Command.Put)).toBeFalsy();
+    expect(component.getLinkButtonClass(selfRel, selfHref, Command.Put)).toBe('btn-outline-light');
+    expect(component.isButtonDisabled(selfRel, selfHref, Command.Put)).toBeTrue();
 
-    expect(component.getLinkButtonClass('self', Command.Patch)).toBe('');
-    expect(component.isButtonDisabled('self', Command.Patch)).toBeFalsy();
+    expect(component.getLinkButtonClass(selfRel, selfHref, Command.Patch)).toBe('btn-outline-light');
+    expect(component.isButtonDisabled(selfRel, selfHref, Command.Patch)).toBeTrue();
 
-    expect(component.getLinkButtonClass('self', Command.Delete)).toBe('');
-    expect(component.isButtonDisabled('self', Command.Delete)).toBeFalsy();
+    expect(component.getLinkButtonClass(selfRel, selfHref, Command.Delete)).toBe('btn-outline-light');
+    expect(component.isButtonDisabled(selfRel, selfHref, Command.Delete)).toBeTrue();
+  });
+
+  it('should get HAL-FORMS template button class and state', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
+
+    const responseHeaders: HttpHeaders = new HttpHeaders(
+      {
+        'content-type': 'application/prs.hal-forms+json'
+      });
+    requestServiceMock.observableMock.next(new HttpResponse({headers: responseHeaders, body: halFormsResponse}));
+
+    expect(component.getTemplateButtonClass('GET')).toBe('btn btn-outline-success');
+    expect(component.getTemplateButtonClass('POST')).toBe('btn btn-outline-info');
+    expect(component.getTemplateButtonClass('PUT')).toBe('btn btn-outline-warning');
+    expect(component.getTemplateButtonClass('PATCH')).toBe('btn btn-outline-warning');
+    expect(component.getTemplateButtonClass('DELETE')).toBe('btn btn-outline-danger');
+    expect(component.getTemplateButtonClass('NO HTTP VERB')).toBe('btn btn-outline-success');
+  });
+
+  it('should populate HAL-FORMS template button class and state', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
+
+    const responseHeaders: HttpHeaders = new HttpHeaders(
+      {
+        'content-type': 'application/prs.hal-forms+json'
+      });
+    requestServiceMock.observableMock.next(new HttpResponse({headers: responseHeaders, body: halFormsResponse}));
+    const selfRel = 'self';
+    const selfHref = 'http://api.com';
+
+    expect(component.getTemplateButtonClass('POST')).toBe('btn btn-outline-info');
   });
 
   it('should invoke request service when processing command', () => {
@@ -276,6 +309,23 @@ describe('ResponseExplorerComponent', () => {
     requestServiceMock.observableMock.next(new HttpResponse({headers: responseHeaders, body: halFormsResponseWithTarget}));
 
     expect(component.getRelTargetUrl('xxx', Command.Post)).toBe('http://create-movie.com');
+  });
+
+  it('should get command for template method', () => {
+    const postCommand = component.getCommandForTemplateMethod('POST');
+    const unknownMethodCommand = component.getCommandForTemplateMethod('XXX');
+
+    expect(postCommand).toBe(Command.Post);
+    expect(unknownMethodCommand).toBe(Command.Get);
+  });
+
+  it('should get uri for template target', () => {
+    const href = 'http://api.com';
+    (component.selfLink as any) = {};
+    component.selfLink.href = href;
+
+    expect(component.getUrlForTemplateTarget('xxx')).toBe('xxx');
+    expect(component.getUrlForTemplateTarget(undefined)).toBe(href);
   });
 
 });

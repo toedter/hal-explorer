@@ -28,6 +28,7 @@ export class ResponseExplorerComponent implements OnInit {
 
   properties: string;
   links: Link[];
+  selfLink: Link;
   embedded: EmbeddedResource[];
   templates: {};
 
@@ -65,10 +66,6 @@ export class ResponseExplorerComponent implements OnInit {
   }
 
   private processJsonObject(json: any) {
-    if (!json) {
-      json = {};
-    }
-
     if (!this.prefix) {
       this.prefix = '';
     }
@@ -94,9 +91,10 @@ export class ResponseExplorerComponent implements OnInit {
     }
 
     const links = json._links;
-    this.links = new Array(0);
+    this.links = [];
+    this.selfLink = undefined;
     if (!this.curieLinks) {
-      this.curieLinks = new Array(0);
+      this.curieLinks = [];
     }
     if (links) {
       this.showLinks = true;
@@ -111,7 +109,11 @@ export class ResponseExplorerComponent implements OnInit {
                 this.links.push(new Link(val + ' [' + i + ']', entry.href, entry.title, entry.name));
               });
           } else {
-            this.links.push(new Link(val, links[val].href, links[val].title, links[val].name));
+            const link = new Link(val, links[val].href, links[val].title, links[val].name);
+            this.links.push(link);
+            if (val === 'self') {
+              this.selfLink = link;
+            }
           }
         }
       );
@@ -151,50 +153,23 @@ export class ResponseExplorerComponent implements OnInit {
     }
   }
 
-  processCommand(command: Command, link: string) {
-    this.requestService.processCommand(command, link, this.templates);
+  processCommand(command: Command, link: string, fromTemplate?: boolean) {
+    this.requestService.processCommand(command, link, this.templates, fromTemplate);
   }
 
-  getLinkButtonClass(rel: string, command: Command): string {
-    if (Command[command].toLowerCase() === 'get') {
+  getLinkButtonClass(rel: string, href: string, command: Command): string {
+    if (!this.isHalFormsMediaType || Command[command].toLowerCase() === 'get') {
       return '';
     }
-
-    if (this.isHalFormsMediaType) {
-      let cssClass = 'btn-outline-light';
-      if (rel === 'self' && this.templates) {
-        Object.getOwnPropertyNames(this.templates).forEach(
-          (val: string) => {
-            if (this.templates[val].method === Command[command].toLowerCase()) {
-              cssClass = '';
-            }
-          }
-        );
-      }
-      return cssClass;
-    }
-    return '';
+    return 'btn-outline-light';
   }
 
-  isButtonDisabled(rel: string, command: Command): boolean {
+  isButtonDisabled(rel: string, href: string, command: Command): boolean {
     if (Command[command].toLowerCase() === 'get') {
       return false;
     }
 
-    if (this.isHalFormsMediaType) {
-      let isDisabled = true;
-      if (rel === 'self' && this.templates) {
-        Object.getOwnPropertyNames(this.templates).forEach(
-          (val: string) => {
-            if (this.templates[val].method === Command[command].toLowerCase()) {
-              isDisabled = false;
-            }
-          }
-        );
-      }
-      return isDisabled;
-    }
-    return false;
+    return this.isHalFormsMediaType;
   }
 
   getRelTargetUrl(href: string, command: Command): string {
@@ -214,5 +189,33 @@ export class ResponseExplorerComponent implements OnInit {
       }
     }
     return target;
+  }
+
+  getTemplateButtonClass(method: string) {
+    if (method.toLowerCase() === Command[Command.Post].toLowerCase()) {
+      return 'btn btn-outline-info';
+    } else if (method.toLowerCase() === Command[Command.Put].toLowerCase()) {
+      return 'btn btn-outline-warning';
+    } else if (method.toLowerCase() === Command[Command.Patch].toLowerCase()) {
+      return 'btn btn-outline-warning';
+    } else if (method.toLowerCase() === Command[Command.Delete].toLowerCase()) {
+      return 'btn btn-outline-danger';
+    }
+    return 'btn btn-outline-success';
+  }
+
+  getCommandForTemplateMethod(method: string): Command {
+    const command = Command[method[0].toUpperCase() + method.substring(1).toLowerCase()];
+    if (command) {
+      return command;
+    }
+    return Command.Get;
+  }
+
+  getUrlForTemplateTarget(target: string): string {
+    if (target) {
+      return target;
+    }
+    return this.selfLink.href;
   }
 }

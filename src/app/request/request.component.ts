@@ -15,6 +15,7 @@ export class RequestComponent implements OnInit {
   templatedUri: string;
   uriTemplateParameters: UriTemplateParameter[];
   httpRequestEvent: HttpRequestEvent = new HttpRequestEvent(EventType.FillHttpRequest, Command.Post, '');
+  originalRequestUri: string;
   newRequestUri: string;
   requestBody: string;
   selectedHttpMethod: Command;
@@ -60,6 +61,7 @@ export class RequestComponent implements OnInit {
           this.templatedUri = event.uri;
           this.computeUriFromTemplate();
         } else {
+          this.originalRequestUri = event.uri;
           this.newRequestUri = event.uri;
         }
         $('#HttpRequestTrigger').trigger('click');
@@ -112,6 +114,7 @@ export class RequestComponent implements OnInit {
   requestBodyChanged() {
     let hasProperties = false;
     this.requestBody = '{\n';
+    this.newRequestUri = this.originalRequestUri;
     if (this.jsonSchema) {
       for (const key of Object.keys(this.jsonSchema)) {
         if (this.jsonSchema[key].value && this.jsonSchema[key].value.length > 0) {
@@ -128,9 +131,14 @@ export class RequestComponent implements OnInit {
         if (item.name && item.value) {
           if (hasProperties) {
             this.requestBody += ',\n';
+            this.newRequestUri += '&';
+          } else {
+            this.newRequestUri += '?';
           }
           this.requestBody += '  "' + item.name + '": ' + '"'
             + item.value + '"';
+          this.newRequestUri += item.name + '='
+            + item.value;
           hasProperties = true;
         }
       }
@@ -206,7 +214,7 @@ export class RequestComponent implements OnInit {
 
     Object.getOwnPropertyNames(this.halFormsTemplates).forEach(
       (val: string) => {
-        if (this.halFormsTemplates[val].method === Command[command].toLowerCase()) {
+        if (this.halFormsTemplates[val].method.toLowerCase() === Command[command].toLowerCase()) {
           properties = this.halFormsTemplates[val].properties;
         }
       }

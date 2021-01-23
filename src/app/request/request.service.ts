@@ -104,18 +104,18 @@ export class RequestService {
     );
   }
 
-  processCommand(command: Command, uri: string, halFormsTemplates?: any) {
-    if (command === Command.Get && !this.isUriTemplated(uri)) {
+  processCommand(command: Command, uri: string, halFormsTemplates?: any, fromTemplate?: boolean) {
+    if (command === Command.Get && !this.isUriTemplated(uri) && !fromTemplate) {
       this.requestUri(uri, 'GET');
     } else if (command === Command.Get || command === Command.Post || command === Command.Put || command === Command.Patch) {
       const event = new HttpRequestEvent(EventType.FillHttpRequest, command, uri);
-      if (command !== Command.Get) {
+      if (halFormsTemplates) {
+        event.halFormsTemplates = halFormsTemplates;
+      }
+      if (command === Command.Post || command === Command.Put || command === Command.Patch) {
         this.getJsonSchema(event);
       } else {
         this.needInfoSubject.next(event);
-      }
-      if (halFormsTemplates) {
-        event.halFormsTemplates = halFormsTemplates;
       }
       return;
     } else if (command === Command.Delete) {

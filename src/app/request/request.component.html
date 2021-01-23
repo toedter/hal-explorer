@@ -73,10 +73,10 @@
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-3 col-form-label" for="expandedURI2">Expanded URI</label>
+              <label class="col-sm-3 col-form-label" for="expandedURI">Expanded URI</label>
               <div class="col-sm-9">
                 <div class="form-control text-truncate"
-                     title="{{newRequestUri}}" id="expandedURI2">{{newRequestUri}}</div>
+                     title="{{newRequestUri}}" id="expandedURI">{{newRequestUri}}</div>
               </div>
             </div>
           </div>
@@ -109,14 +109,18 @@
           <div *ngIf="halFormsProperties">
             <hr>
             <label class="text-info">HAL-FORMS Properties
-              <span *ngIf="halFormsDialogTitle"> [{{halFormsDialogTitle}}
-                ]</span>
+              <span *ngIf="halFormsDialogTitle"> [{{halFormsDialogTitle}}]</span>
             </label>
             <div class="form-group row" *ngFor="let item of halFormsProperties">
 
-              <label [title]="item.prompt" class="text-info col-sm-3 col-form-label">
+              <label *ngIf="item.prompt" [title]="item.name" class="text-info col-sm-3 col-form-label">
                 {{item.prompt}}
-                <span *ngIf="item.required">*</span></label>
+                <span *ngIf="item.required">*</span>
+              </label>
+              <label *ngIf="!item.prompt" class="text-info col-sm-3 col-form-label">
+                {{item.name}}
+                <span *ngIf="item.required">*</span>
+              </label>
               <div class="col-sm-9">
                 <input class="form-control" [(ngModel)]="item.value"
                        name="{{item.name}}" #ngModel="ngModel"
@@ -127,7 +131,9 @@
             <hr>
           </div>
 
-          <div *ngIf="httpRequestEvent.command !== commandPlaceholder.Get" class="form-group row">
+          <div *ngIf="httpRequestEvent.command === commandPlaceholder.Post
+                      || httpRequestEvent.command === commandPlaceholder.Put
+                      || httpRequestEvent.command === commandPlaceholder.Patch" class="form-group row">
             <label class="col-sm-3 col-form-label" for="body">Body</label>
             <div class="col-sm-9">
             <textarea [(ngModel)]="requestBody" class="form-control" id="body" rows="5"
@@ -135,8 +141,18 @@
             </textarea>
             </div>
           </div>
+          <div *ngIf="httpRequestEvent.command === commandPlaceholder.Get
+                      || httpRequestEvent.command === commandPlaceholder.Delete" class="form-group row">
+            <label class="col-sm-3 col-form-label" for="body">Expanded URI</label>
+            <div class="col-sm-9">
+              <div class="form-control text-truncate">
+                {{newRequestUri}}
+              </div>
+            </div>
+          </div>
         </form>
       </div>
+
       <div class="modal-footer">
         <button id="updateDialogGoButton" type="button" class="btn btn-secondary" data-dismiss="modal"
                 (click)="createOrUpdateResource()" [disabled]="myForm.invalid">Go!
