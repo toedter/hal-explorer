@@ -1,110 +1,45 @@
-import { ComponentFixture, getTestBed, TestBed, waitForAsync } from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {AppComponent} from './app.component';
-import {Component} from '@angular/core';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {AppService} from './app.service';
 import {RequestService} from './request/request.service';
 import {DomSanitizer} from '@angular/platform-browser';
-
-@Component({
-  selector: 'app-uri-input',
-  template: ''
-})
-class MockRequestComponent {
-}
-
-@Component({
-  selector: 'app-response-explorer',
-  template: ''
-})
-class MockResponseExplorerComponent {
-}
-
-@Component({
-  selector: 'app-response-details',
-  template: ''
-})
-class MockResponseDetailsComponent {
-}
-
-@Component({
-  selector: 'app-documentation',
-  template: ''
-})
-class MockDocumentationComponent {
-}
-
-class ObservableMock {
-  private callback: (value: any) => void;
-  hasSubscribed = false;
-
-  subscribe(next?: (value: any) => void, error?: (error: any) => void) {
-    this.callback = next;
-    this.hasSubscribed = true;
-  }
-
-  next(input: any) {
-    this.callback(input);
-  }
-}
-
-class AppServiceMock {
-  themeObservable: ObservableMock = new ObservableMock();
-  layoutObservable: ObservableMock = new ObservableMock();
-
-  getTheme(): string {
-    return 'Default';
-  }
-
-  setTheme(theme: string) {
-  }
-
-  getLayout(): string {
-    return '2 Columns';
-  }
-
-  setLayout(layout: string) {
-  }
-}
-
-class RequestServiceMock {
-  responseObservableMock: ObservableMock = new ObservableMock();
-  documentationObservableMock: ObservableMock = new ObservableMock();
-
-  getResponseObservable() {
-    return this.responseObservableMock;
-  }
-
-  getDocumentationObservable() {
-    return this.documentationObservableMock;
-  }
-}
-
-class DomSanitizerMock {
-  bypassSecurityTrustResourceUrl(docUri) {
-    return docUri;
-  }
-}
+import {Subject} from 'rxjs';
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
+  let documentationSubject;
+  let responseSubject;
+  let themeSubject;
+  let layoutSubject;
 
   beforeEach(waitForAsync(() => {
+    const requestServiceMock = jasmine.createSpyObj(['getResponseObservable', 'getDocumentationObservable']);
+    documentationSubject = new Subject<string>();
+    responseSubject = new Subject<string>();
+    requestServiceMock.getDocumentationObservable.and.returnValue(documentationSubject);
+    requestServiceMock.getResponseObservable.and.returnValue(responseSubject);
+
+    themeSubject = new Subject<string>();
+    layoutSubject = new Subject<string>();
+    const appServiceMock = jasmine.createSpyObj(['getTheme', 'setTheme', 'getLayout', 'setLayout'],
+      {themeObservable: themeSubject, layoutObservable: layoutSubject});
+    appServiceMock.getTheme.and.returnValue('Default');
+    appServiceMock.getLayout.and.returnValue('2');
+    const domSanitizerMock = jasmine.createSpyObj(['bypassSecurityTrustResourceUrl']);
+
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent,
-        MockRequestComponent,
-        MockResponseExplorerComponent,
-        MockResponseDetailsComponent,
-        MockDocumentationComponent
+        AppComponent
       ],
+      schemas: [NO_ERRORS_SCHEMA],
       providers: [
-        {provide: AppService, useClass: AppServiceMock},
-        {provide: RequestService, useClass: RequestServiceMock},
-        {provide: DomSanitizer, useClass: DomSanitizerMock}
+        {provide: AppService, useValue: appServiceMock},
+        {provide: RequestService, useValue: requestServiceMock},
+        {provide: DomSanitizer, useValue: domSanitizerMock}
       ]
     }).compileComponents();
-
 
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
@@ -120,18 +55,14 @@ describe('AppComponent', () => {
   }));
 
   it('should show documentation', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
-
-    requestServiceMock.documentationObservableMock.next('/doc');
+    documentationSubject.next('/doc');
 
     expect(component.showDocumentation).toBeTruthy();
   });
 
   it('should not show documentation after getting response', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
-
-    requestServiceMock.documentationObservableMock.next('/doc');
-    requestServiceMock.responseObservableMock.next('response');
+    documentationSubject.next('/doc');
+    responseSubject.next('response');
 
     expect(component.showDocumentation).toBeFalsy();
   });
@@ -143,17 +74,15 @@ describe('AppComponent', () => {
   });
 
   it('should react on theme change', () => {
-    const appServiceMock: AppServiceMock = getTestBed().inject(AppService) as any;
-    appServiceMock.themeObservable.next('Cosmo');
+    themeSubject.next('Cosmo');
 
-    expect(appServiceMock.themeObservable.hasSubscribed).toBeTrue();
+    expect(component.isCustomTheme).toBeTruthy();
   });
 
   it('should react on layout change', () => {
-    const appServiceMock: AppServiceMock = getTestBed().inject(AppService) as any;
-    appServiceMock.layoutObservable.next('Cosmo');
+    layoutSubject.next('2');
 
-    expect(appServiceMock.layoutObservable.hasSubscribed).toBeTrue();
+    expect(component.isTwoColumnLayout).toBeTrue();
   });
 
 });

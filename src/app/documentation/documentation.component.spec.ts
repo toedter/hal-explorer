@@ -1,42 +1,9 @@
-import {ComponentFixture, getTestBed, TestBed, waitForAsync} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {DocumentationComponent, getDocHeight} from './documentation.component';
 import {RequestService} from '../request/request.service';
 import {DomSanitizer} from '@angular/platform-browser';
-import {Observable, Subject} from 'rxjs';
-
-class ObservableMock {
-  private callback: (value: any) => void;
-  hasSubscribed = false;
-
-  subscribe(next?: (value: any) => void, error?: (error: any) => void) {
-    this.callback = next;
-    this.hasSubscribed = true;
-  }
-
-  next(input: any) {
-    this.callback(input);
-  }
-}
-
-class RequestServiceMock {
-  responseObservableMock: ObservableMock = new ObservableMock();
-  documentationObservableMock: ObservableMock = new ObservableMock();
-
-  getResponseObservable() {
-    return this.responseObservableMock;
-  }
-
-  getDocumentationObservable() {
-    return this.documentationObservableMock;
-  }
-}
-
-class DomSanitizerMock {
-  bypassSecurityTrustResourceUrl(docUri) {
-    return docUri;
-  }
-}
+import {Subject} from 'rxjs';
 
 describe('DocumentationComponent', () => {
   let component: DocumentationComponent;
@@ -51,11 +18,14 @@ describe('DocumentationComponent', () => {
     requestServiceMock.getDocumentationObservable.and.returnValue(documentationSubject);
     requestServiceMock.getResponseObservable.and.returnValue(responseSubject);
 
+    const domSanitizerMock = jasmine.createSpyObj(['bypassSecurityTrustResourceUrl']);
+    domSanitizerMock.bypassSecurityTrustResourceUrl.and.returnValue('/doc');
+
     TestBed.configureTestingModule({
       declarations: [DocumentationComponent],
       providers: [
         {provide: RequestService, useValue: requestServiceMock},
-        {provide: DomSanitizer, useClass: DomSanitizerMock}
+        {provide: DomSanitizer, useValue: domSanitizerMock}
       ]
 
     })

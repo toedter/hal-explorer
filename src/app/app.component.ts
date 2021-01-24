@@ -44,7 +44,10 @@ export class AppComponent implements OnInit {
   showDocumentation = false;
   isTwoColumnLayout = true;
 
-  constructor(private appService: AppService, private requestService: RequestService, private sanitizer: DomSanitizer) {
+  constructor(
+    private appService: AppService,
+    private requestService: RequestService,
+    private sanitizer: DomSanitizer) {
   }
 
   ngOnInit(): void {
