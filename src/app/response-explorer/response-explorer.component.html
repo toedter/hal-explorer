@@ -35,10 +35,7 @@
               </thead>
               <tbody>
               <tr *ngFor="let link of links">
-                <td *ngIf="link.rel === 'self'">{{link.rel}}
-                  <span *ngIf="hasHalFormsTemplates"> (HAL-FORMS)</span>
-                </td>
-                <td *ngIf="link.rel !== 'self'">{{link.rel}}</td>
+                <td>{{link.rel}}</td>
                 <td>{{link.name}}</td>
                 <td>{{link.title}}</td>
                 <td>
