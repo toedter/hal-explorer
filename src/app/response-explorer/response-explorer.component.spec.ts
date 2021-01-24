@@ -4,6 +4,7 @@ import {ResponseExplorerComponent} from './response-explorer.component';
 import {Command, RequestService} from '../request/request.service';
 import {HttpHeaders, HttpResponse} from '@angular/common/http';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
+import {Subject} from 'rxjs';
 
 /* tslint:disable */
 const halFormsResponse = {
@@ -61,54 +62,31 @@ const halFormsResponse = {
     }
   }
 };
-
 /* tslint:enable */
-
-class ObservableMock {
-  private callback: (value: HttpResponse<any>) => void;
-  hasSubscribed = false;
-
-  subscribe(next?: (value: HttpResponse<any>) => void, error?: (error: any) => void) {
-    this.callback = next;
-    this.hasSubscribed = true;
-  }
-
-  next(response: HttpResponse<any>) {
-    this.callback(response);
-  }
-}
-
-class RequestServiceMock {
-  observableMock: ObservableMock = new ObservableMock();
-  requestServiceProcessCommandInvoked = false;
-
-  getResponseObservable() {
-    return this.observableMock;
-  }
-
-  processCommand(command: Command, link: string) {
-    this.requestServiceProcessCommandInvoked = true;
-  }
-}
-
-class JsonHighlighterServiceMock {
-  syntaxHighlightInvoked = false;
-
-  syntaxHighlight() {
-    this.syntaxHighlightInvoked = true;
-  }
-}
 
 describe('ResponseExplorerComponent', () => {
   let component: ResponseExplorerComponent;
   let fixture: ComponentFixture<ResponseExplorerComponent>;
+  let responseSubject;
+  let requestServiceMock;
+  let jsonHighlighterServiceMock;
 
   beforeEach(waitForAsync(() => {
+    requestServiceMock = jasmine.createSpyObj([
+      'getResponseObservable',
+      'getDocumentationObservable',
+      'processCommand']);
+    responseSubject = new Subject<string>();
+    spyOn(responseSubject, 'subscribe').and.callThrough();
+    requestServiceMock.getResponseObservable.and.returnValue(responseSubject);
+
+    jsonHighlighterServiceMock = jasmine.createSpyObj(['syntaxHighlight']);
+
     TestBed.configureTestingModule({
       declarations: [ResponseExplorerComponent],
       providers: [
-        {provide: RequestService, useClass: RequestServiceMock},
-        {provide: JsonHighlighterService, useClass: JsonHighlighterServiceMock}
+        {provide: RequestService, useValue: requestServiceMock},
+        {provide: JsonHighlighterService, useValue: jsonHighlighterServiceMock}
       ]
     })
       .compileComponents();
@@ -125,33 +103,23 @@ describe('ResponseExplorerComponent', () => {
   });
 
   it('should subscribe to request service\'s response observable', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
-
-    expect(requestServiceMock.observableMock.hasSubscribed).toBeTruthy();
+    expect(responseSubject.subscribe).toHaveBeenCalled();
   });
 
   it('should syntax highlight json', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
-    const jsonHighlighterServiceMock: JsonHighlighterServiceMock = getTestBed().inject(JsonHighlighterService) as any;
+    responseSubject.next(new HttpResponse({body: {key: 'test'}}));
 
-    requestServiceMock.observableMock.next(new HttpResponse({body: {key: 'test'}}));
-
-    expect(jsonHighlighterServiceMock.syntaxHighlightInvoked).toBeTruthy();
+    expect(jsonHighlighterServiceMock.syntaxHighlight).toHaveBeenCalled();
   });
 
   it('should not syntax highlight json when response body has no properties', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
-    const jsonHighlighterServiceMock: JsonHighlighterServiceMock = getTestBed().inject(JsonHighlighterService) as any;
+    responseSubject.next(new HttpResponse({body: {}}));
 
-    requestServiceMock.observableMock.next(new HttpResponse({body: {}}));
-
-    expect(jsonHighlighterServiceMock.syntaxHighlightInvoked).toBeFalsy();
+    expect(jsonHighlighterServiceMock.syntaxHighlight).not.toHaveBeenCalled();
   });
 
   it('should parse empty response body', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
-
-    requestServiceMock.observableMock.next(new HttpResponse({body: {}}));
+    responseSubject.next(new HttpResponse({body: {}}));
 
     expect(component.showProperties).toBeFalsy();
     expect(component.showLinks).toBeFalsy();
@@ -159,7 +127,6 @@ describe('ResponseExplorerComponent', () => {
   });
 
   it('should parse HAL response body', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
     /* tslint:disable */
     const halResponse = {
       'text': 'hello all!',
@@ -187,7 +154,7 @@ describe('ResponseExplorerComponent', () => {
       }
     };
     /* tslint:enable */
-    requestServiceMock.observableMock.next(new HttpResponse({body: halResponse}));
+    responseSubject.next(new HttpResponse({body: halResponse}));
 
     expect(component.showProperties).toBeTruthy();
     expect(component.showLinks).toBeTruthy();
@@ -198,13 +165,11 @@ describe('ResponseExplorerComponent', () => {
   });
 
   it('should parse HAL-FORMS response body', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
-
     const responseHeaders: HttpHeaders = new HttpHeaders(
       {
         'content-type': 'application/prs.hal-forms+json'
       });
-    requestServiceMock.observableMock.next(new HttpResponse({headers: responseHeaders, body: halFormsResponse}));
+    responseSubject.next(new HttpResponse({headers: responseHeaders, body: halFormsResponse}));
 
     expect(component.showProperties).toBeTruthy();
     expect(component.showLinks).toBeTruthy();
@@ -215,13 +180,11 @@ describe('ResponseExplorerComponent', () => {
   });
 
   it('should get HAL-FORMS link button class and state', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
-
     const responseHeaders: HttpHeaders = new HttpHeaders(
       {
         'content-type': 'application/prs.hal-forms+json'
       });
-    requestServiceMock.observableMock.next(new HttpResponse({headers: responseHeaders, body: halFormsResponse}));
+    responseSubject.next(new HttpResponse({headers: responseHeaders, body: halFormsResponse}));
 
     const selfRel = 'self';
     const selfHref = 'http://api.com';
@@ -242,13 +205,11 @@ describe('ResponseExplorerComponent', () => {
   });
 
   it('should get HAL-FORMS request button class and state', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
-
     const responseHeaders: HttpHeaders = new HttpHeaders(
       {
         'content-type': 'application/prs.hal-forms+json'
       });
-    requestServiceMock.observableMock.next(new HttpResponse({headers: responseHeaders, body: halFormsResponse}));
+    responseSubject.next(new HttpResponse({headers: responseHeaders, body: halFormsResponse}));
 
     expect(component.getRequestButtonClass(Command.Get)).toBe('ml-1 btn btn-sm nav-button btn-outline-success icon-left-open');
     expect(component.getRequestButtonClass(Command.Post)).toBe('ml-1 btn btn-sm nav-button btn-outline-info icon-plus');
@@ -259,13 +220,11 @@ describe('ResponseExplorerComponent', () => {
   });
 
   it('should populate HAL-FORMS request button class and state', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
-
     const responseHeaders: HttpHeaders = new HttpHeaders(
       {
         'content-type': 'application/prs.hal-forms+json'
       });
-    requestServiceMock.observableMock.next(new HttpResponse({headers: responseHeaders, body: halFormsResponse}));
+    responseSubject.next(new HttpResponse({headers: responseHeaders, body: halFormsResponse}));
     const selfRel = 'self';
     const selfHref = 'http://api.com';
 
@@ -273,16 +232,12 @@ describe('ResponseExplorerComponent', () => {
   });
 
   it('should invoke request service when processing command', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
-
     component.processCommand(Command.Get, 'link');
 
-    expect(requestServiceMock.requestServiceProcessCommandInvoked).toBeTruthy();
+    expect(requestServiceMock.processCommand).toHaveBeenCalled();
   });
 
   it('should get HAL-FORMS target', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
-
     const responseHeaders: HttpHeaders = new HttpHeaders(
       {
         'content-type': 'application/prs.hal-forms+json'
@@ -306,7 +261,7 @@ describe('ResponseExplorerComponent', () => {
       }
     };
 
-    requestServiceMock.observableMock.next(new HttpResponse({headers: responseHeaders, body: halFormsResponseWithTarget}));
+    responseSubject.next(new HttpResponse({headers: responseHeaders, body: halFormsResponseWithTarget}));
 
     expect(component.getRelTargetUrl('xxx', Command.Post)).toBe('http://create-movie.com');
   });

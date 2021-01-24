@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class JsonHighlighterService {
 
-  // this in a Typescript adaption from
+  // this is a TypeScript adaption of
   // https://stackoverflow.com/questions/4810841/how-can-i-pretty-print-json-using-javascript
   syntaxHighlight(jsonString: string): string {
     if (!jsonString) {
