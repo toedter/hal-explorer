@@ -52,4 +52,9 @@ describe( 'JsonHighlighterService', () => {
     const output = jsonHighlighterService.syntaxHighlight( undefined );
     expect( output ).toBeUndefined();
   } ) );
+
+  it( 'should not highlight invalid input', inject( [JsonHighlighterService], (service: JsonHighlighterService) => {
+    const output = jsonHighlighterService.syntaxHighlight( '{{invalid}' );
+    expect( output ).toBe('{{invalid}');
+  } ) );
 } );

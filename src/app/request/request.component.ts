@@ -128,7 +128,13 @@ export class RequestComponent implements OnInit {
       }
     } else if (this.halFormsProperties) {
       for (const item of this.halFormsProperties) {
-        const httpMethod = this.halFormsTemplate.value.method?.toLowerCase();
+        let httpMethod = 'get';
+        if (this.halFormsTemplate.value.method) {
+          httpMethod = this.halFormsTemplate.value.method.toLowerCase();
+        }
+        if (httpMethod !== 'get' && httpMethod !== 'post' && httpMethod !== 'put' && httpMethod !== 'patch' && httpMethod !== 'delete') {
+          httpMethod = 'get';
+        }
         const hasBody = (httpMethod === 'post' || httpMethod === 'put' || httpMethod === 'patch');
         if (item.name && item.value) {
           if (hasProperties) {

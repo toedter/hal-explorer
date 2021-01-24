@@ -156,5 +156,14 @@ describe( 'RequestValidatorDirective', () => {
     expect( validationResult.min.actual ).toBe( 9 );
   } );
 
-} )
-;
+  it( 'should not validate when halFormsProperty is not set', () => {
+    const directive = new RequestValidatorDirective();
+    directive.halFormsProperty = undefined
+
+    const control: AbstractControl = new FormControl( 9 );
+    const validationResult = directive.validate( control );
+
+    expect( validationResult ).toBe( null );
+  } );
+
+});

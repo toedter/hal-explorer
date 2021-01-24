@@ -79,7 +79,40 @@ const halFormsTemplates = {
       'method': 'delete',
       'contentType': '',
       'properties': []
+    },
+    'getDirectors': {
+      'title': 'Get Directors',
+      'method': 'GET',
+      'contentType': '',
+      'target': 'http://directors.com',
+      'properties': [
+        {
+          'name': 'first-name',
+          'prompt': 'First Name',
+        },
+        {
+          'name': 'last-name',
+          'prompt': 'Last Name',
+        }
+      ]
+    },
+    'getDirectorsWithInvalidMethod': {
+      'title': 'Get Directors',
+      'method': 'xxx',
+      'contentType': '',
+      'target': 'http://directors.com',
+      'properties': [
+        {
+          'name': 'first-name',
+          'prompt': 'First Name',
+        },
+        {
+          'name': 'last-name',
+          'prompt': 'Last Name',
+        }
+      ]
     }
+
   }
 };
 /* tslint:enable */
@@ -92,6 +125,7 @@ describe('RequestComponent', () => {
   let responseSubject;
   let uriSubject;
   let requestHeaderSubject;
+  let appServiceMock;
 
   beforeEach(waitForAsync(() => {
     requestServiceMock = jasmine.createSpyObj(
@@ -105,7 +139,7 @@ describe('RequestComponent', () => {
 
     uriSubject = new Subject<string>();
     requestHeaderSubject = new Subject<RequestHeader[]>();
-    const appServiceMock = jasmine.createSpyObj(
+    appServiceMock = jasmine.createSpyObj(
       ['getUri', 'getCustomRequestHeaders', 'setCustomRequestHeaders'],
       {uriObservable: uriSubject, requestHeadersObservable: requestHeaderSubject});
     appServiceMock.getUri.and.returnValue('http://localhost/api');
@@ -202,7 +236,7 @@ describe('RequestComponent', () => {
     expect(component.requestBody).toBe('{\n  "fullName": "Kai Toedter",\n  "email": "kai@toedter.com"\n}');
   });
 
-  it('should get change request body based on HAL-FORMS', () => {
+  it('should get change request body based on HAL-FORMS template property with POST method', () => {
     component.halFormsTemplate = {value: halFormsTemplates._templates.default};
     component.halFormsProperties = component.halFormsTemplate.value.properties;
     component.halFormsProperties[0].value = 'Movie Title';
@@ -211,6 +245,30 @@ describe('RequestComponent', () => {
     component.halFormsPropertyChanged();
 
     expect(component.requestBody).toBe('{\n  "title": "Movie Title",\n  "year": "2019"\n}');
+  });
+
+  it('should get change request URI based on HAL-FORMS template property with Get method', () => {
+    component.halFormsTemplate = {value: halFormsTemplates._templates.getDirectors};
+    component.halFormsProperties = component.halFormsTemplate.value.properties;
+    component.halFormsProperties[0].value = 'George';
+    component.halFormsProperties[1].value = 'Lucas';
+
+    component.originalRequestUri = 'http://directors.com';
+    component.halFormsPropertyChanged();
+
+    expect(component.newRequestUri).toBe('http://directors.com?first-name=George&last-name=Lucas');
+  });
+
+  it('should get change request URI based on HAL-FORMS template property with invalid method', () => {
+    component.halFormsTemplate = {value: halFormsTemplates._templates.getDirectorsWithInvalidMethod};
+    component.halFormsProperties = component.halFormsTemplate.value.properties;
+    component.halFormsProperties[0].value = 'George';
+    component.halFormsProperties[1].value = 'Lucas';
+
+    component.originalRequestUri = 'http://directors.com';
+    component.halFormsPropertyChanged();
+
+    expect(component.newRequestUri).toBe('http://directors.com?first-name=George&last-name=Lucas');
   });
 
   it('should get tooltip with no json schema', () => {
@@ -316,6 +374,17 @@ describe('RequestComponent', () => {
   it('should make HTTP request', () => {
     component.makeHttpRequest();
     expect(requestServiceMock.requestUri).toHaveBeenCalled();
+  });
+
+  it('should subscribe for uri changes', () => {
+    uriSubject.next('http:://new-url.com');
+    expect(requestServiceMock.getUri).toHaveBeenCalledWith('http:://new-url.com');
+  });
+
+  it('should subscribe for request header changes', () => {
+    const requestHeaders = [new RequestHeader('a', 'b')];
+    requestHeaderSubject.next(requestHeaders);
+    expect(appServiceMock.setCustomRequestHeaders).toHaveBeenCalledWith(requestHeaders);
   });
 
 });
