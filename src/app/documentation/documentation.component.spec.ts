@@ -86,8 +86,6 @@ describe('DocumentationComponent', () => {
   });
 
   it('should unset doc uri on response arrival', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
-
     documentationSubject.next('/doc');
     responseSubject.next('response');
 

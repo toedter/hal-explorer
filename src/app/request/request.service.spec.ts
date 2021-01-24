@@ -121,21 +121,33 @@ describe('RequestService', () => {
     httpMock.verify();
   });
 
-  it('should handle error', (done) => {
+  it('should handle HTTP request error', (done) => {
+    const body = 'Invalid request parameters';
     requestService.getResponseObservable().subscribe((response: HttpResponse<any>) => {
-      expect(response.body).toBe('Invalid request parameters');
+      expect(response.body).toBe(body);
       done();
     });
 
     requestService.processCommand(Command.Get, 'test-request');
 
     const mockErrorResponse = {
-      status: 404, statusText: 'Bad Request'
+      status: 404, statusText: 'Not Found'
     };
-    const data = 'Invalid request parameters';
-    httpMock.expectOne('test-request').flush(data, mockErrorResponse);
+    httpMock.expectOne('test-request').flush(body, mockErrorResponse);
 
     httpMock.verify();
+  });
+
+  it('should handle HTTP request error with ErrorEvent', () => {
+    spyOn(window.console, 'error');
+    const errorEvent: ErrorEvent = new ErrorEvent('MyError');
+    requestService.processCommand(Command.Get, 'test-request');
+
+    const mockErrorResponse = {
+      status: 404, statusText: 'Not Found'
+    };
+    httpMock.expectOne('test-request').flush(errorEvent, mockErrorResponse);
+    expect(window.console.error).toHaveBeenCalled();
   });
 
   it('should handle templated URIs', (done) => {
@@ -230,6 +242,12 @@ describe('RequestService', () => {
     expect(profileRequest.request.method).toBe('GET');
 
     httpMock.verify();
+  });
+
+  it('should not request undefined uri', () => {
+    spyOn(requestService, 'processCommand').and.callThrough();
+    requestService.getUri(undefined);
+    expect(requestService.processCommand).not.toHaveBeenCalled();
   });
 
 });

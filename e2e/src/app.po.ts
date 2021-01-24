@@ -13,38 +13,31 @@ export class AppPage {
   }
 
   getFirstPropertiesSection(): ElementFinder {
-    const elementFinder = element.all(by.cssContainingText('h5', 'JSON Properties')).first();
-    return elementFinder;
+    return element.all(by.cssContainingText('h5', 'JSON Properties')).first();
   }
 
   getFirstLinksSection(): ElementFinder {
-    const elementFinder = element.all(by.cssContainingText('h5', 'Links')).first();
-    return elementFinder;
+    return element.all(by.cssContainingText('h5', 'Links')).first();
   }
 
   getEmbeddedSection(): ElementFinder {
-    const elementFinder = element(by.cssContainingText('h5', 'Embedded Resources'));
-    return elementFinder;
+    return element(by.cssContainingText('h5', 'Embedded Resources'));
   }
 
   getResponseStatusSection(): ElementFinder {
-    const elementFinder = element(by.cssContainingText('h5', 'Response Status'));
-    return elementFinder;
+    return element(by.cssContainingText('h5', 'Response Status'));
   }
 
   getResponseHeadersSection(): ElementFinder {
-    const elementFinder = element(by.cssContainingText('h5', 'Response Headers'));
-    return elementFinder;
+    return element(by.cssContainingText('h5', 'Response Headers'));
   }
 
   getResponseBodySection(): ElementFinder {
-    const elementFinder = element(by.cssContainingText('h5', 'Response Body'));
-    return elementFinder;
+    return element(by.cssContainingText('h5', 'Response Body'));
   }
 
   getDocumentationSection(): ElementFinder {
-    const elementFinder = element(by.cssContainingText('h5', 'Documentation'));
-    return elementFinder;
+    return element(by.cssContainingText('h5', 'Documentation'));
   }
 
   getFirstPostButton(): ElementFinder {

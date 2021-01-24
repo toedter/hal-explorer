@@ -85,17 +85,8 @@ export class RequestService {
           console.error('An error event occurred:', error.error.message);
         } else {
           // console.error(`Backend returned code ${error.status}, body: ${error.error}`);
-          let errorBody = '';
-          if (error.status !== 0) {
-            if (error.error && error.error.text) {
-              errorBody = error.error.text;
-            } else {
-              errorBody = error.error;
-            }
-          }
-
           this.httpResponse = new HttpResponse({
-            body: errorBody, headers: error.headers,
+            body: error.error, headers: error.headers,
             status: error.status, statusText, url: error.url
           });
           this.responseSubject.next(this.httpResponse);

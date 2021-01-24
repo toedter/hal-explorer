@@ -32,7 +32,7 @@ describe( 'HAL-Explorer App', () => {
     expect(page.getEmbeddedSection().isPresent()).toBeFalsy();
     expect(page.getResponseStatusSection().isDisplayed()).toBeFalsy();
     expect(page.getResponseHeadersSection().isDisplayed()).toBeFalsy();
-    expect(page.getResponseBodySection().isDisplayed()).toBeFalsy();
+    expect(page.getResponseBodySection().isPresent()).toBeFalsy();
 
   });
 
