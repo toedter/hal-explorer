@@ -133,7 +133,7 @@ export class AppService {
         if (requestHeader) {
           requestHeader.key = headerKeyParam;
         } else {
-          tempCustomRequestHeaders[headerKeyIndex] = new RequestHeader(headerKeyParam, '');
+          tempCustomRequestHeaders[headerKeyIndex] = new RequestHeader(headerKeyParam, undefined);
         }
         m = regex.exec(fragment);
       } else if (key.startsWith('hval')) {
@@ -143,7 +143,7 @@ export class AppService {
         if (requestHeader) {
           requestHeader.value = headerValueParam;
         } else {
-          console.log('error in fragment parameters: found request header value' + headerValueParam + ' without corresponding key');
+          tempCustomRequestHeaders[headerValueIndex] = new RequestHeader(undefined, headerValueParam);
         }
         m = regex.exec(fragment);
       } else if (key === 'url') { // keep this for backward compatibility
@@ -172,7 +172,7 @@ export class AppService {
     this.customRequestHeaders = [];
     let publishRequestHeaders = false;
     for (let i = 0; i < 5; i++) {
-      if (tempCustomRequestHeaders[i] && tempCustomRequestHeaders[i].key && tempCustomRequestHeaders[i].value.length > 0) {
+      if (tempCustomRequestHeaders[i] && tempCustomRequestHeaders[i].key && tempCustomRequestHeaders[i].value) {
         this.customRequestHeaders.push(tempCustomRequestHeaders[i]);
         publishRequestHeaders = true;
       }

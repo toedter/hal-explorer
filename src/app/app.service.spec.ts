@@ -36,10 +36,22 @@ describe('AppService', () => {
     expect(window.location.hash).toBe('#layout=3');
   });
 
+  it('should not set invalid layout', () => {
+    spyOn(window.console, 'error');
+
+    service.setLayout('4');
+
+    expect(service.getLayout()).toBe('2');
+    expect(window.location.hash).toBe('');
+    expect(window.console.error).toHaveBeenCalled();
+  });
+
   it('should set request headers', () => {
     const requestHeader1 = new RequestHeader('accept', 'application/json');
     const requestHeader2 = new RequestHeader('authorization', 'bearer euztsfghfhgwztuzt');
 
+    service.setCustomRequestHeaders([requestHeader1, requestHeader2]);
+    // second invocation is to trigger backup
     service.setCustomRequestHeaders([requestHeader1, requestHeader2]);
 
     expect(service.getCustomRequestHeaders()[0].key).toBe('accept');
@@ -58,7 +70,39 @@ describe('AppService', () => {
     expect(service.getLayout()).toBe('3');
     expect(service.getTheme()).toBe('Cosmo');
     expect(service.getUri()).toBe('https://chatty42.herokuapp.com/api/users');
+  });
 
+  it('should parse window location hash with hval before hkey', () => {
+    window.location.hash = '#theme=Cosmo&layout=3&hval0=text/plain&hkey0=accept&uri=https://chatty42.herokuapp.com/api/users';
+    service = new AppService();
+
+    expect(service.getCustomRequestHeaders()[0].key).toBe('accept');
+    expect(service.getCustomRequestHeaders()[0].value).toBe('text/plain');
+    expect(service.getLayout()).toBe('3');
+    expect(service.getTheme()).toBe('Cosmo');
+    expect(service.getUri()).toBe('https://chatty42.herokuapp.com/api/users');
+  });
+
+  it('should parse window location hash with deprecated hkey "url"', () => {
+    window.location.hash = '#theme=Cosmo&layout=3&hval0=text/plain&hkey0=accept&url=https://chatty42.herokuapp.com/api/users';
+    service = new AppService();
+
+    expect(service.getCustomRequestHeaders()[0].key).toBe('accept');
+    expect(service.getCustomRequestHeaders()[0].value).toBe('text/plain');
+    expect(service.getLayout()).toBe('3');
+    expect(service.getTheme()).toBe('Cosmo');
+    expect(service.getUri()).toBe('https://chatty42.herokuapp.com/api/users');
+  });
+
+  it('should parse window location hash with unknown hkeys', () => {
+    window.location.hash = '#theme=Cosmo&xxx=7&layout=3&hval0=text/plain&hkey0=accept&yyy=xxx&url=https://chatty42.herokuapp.com/api/users';
+    service = new AppService();
+
+    expect(service.getCustomRequestHeaders()[0].key).toBe('accept');
+    expect(service.getCustomRequestHeaders()[0].value).toBe('text/plain');
+    expect(service.getLayout()).toBe('3');
+    expect(service.getTheme()).toBe('Cosmo');
+    expect(service.getUri()).toBe('https://chatty42.herokuapp.com/api/users');
   });
 
   it('should get observables', () => {
