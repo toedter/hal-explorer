@@ -1,8 +1,9 @@
-import { ComponentFixture, getTestBed, TestBed, waitForAsync } from '@angular/core/testing';
+import {ComponentFixture, getTestBed, TestBed, waitForAsync} from '@angular/core/testing';
 
-import { DocumentationComponent, getDocHeight } from './documentation.component';
-import { RequestService } from '../request/request.service';
-import { DomSanitizer } from '@angular/platform-browser';
+import {DocumentationComponent, getDocHeight} from './documentation.component';
+import {RequestService} from '../request/request.service';
+import {DomSanitizer} from '@angular/platform-browser';
+import {Observable, Subject} from 'rxjs';
 
 class ObservableMock {
   private callback: (value: any) => void;
@@ -14,7 +15,7 @@ class ObservableMock {
   }
 
   next(input: any) {
-    this.callback( input );
+    this.callback(input);
   }
 }
 
@@ -37,66 +38,84 @@ class DomSanitizerMock {
   }
 }
 
-describe( 'DocumentationComponent', () => {
+describe('DocumentationComponent', () => {
   let component: DocumentationComponent;
   let fixture: ComponentFixture<DocumentationComponent>;
+  let documentationSubject;
+  let responseSubject;
 
-  beforeEach( waitForAsync( () => {
-    TestBed.configureTestingModule( {
+  beforeEach(waitForAsync(() => {
+    const requestServiceMock = jasmine.createSpyObj(['getResponseObservable', 'getDocumentationObservable']);
+    documentationSubject = new Subject<string>();
+    responseSubject = new Subject<string>();
+    requestServiceMock.getDocumentationObservable.and.returnValue(documentationSubject);
+    requestServiceMock.getResponseObservable.and.returnValue(responseSubject);
+
+    TestBed.configureTestingModule({
       declarations: [DocumentationComponent],
       providers: [
-        { provide: RequestService, useClass: RequestServiceMock },
-        { provide: DomSanitizer, useClass: DomSanitizerMock }
+        {provide: RequestService, useValue: requestServiceMock},
+        {provide: DomSanitizer, useClass: DomSanitizerMock}
       ]
 
-    } )
+    })
       .compileComponents();
-  } ) );
+  }));
 
-  beforeEach( () => {
-    fixture = TestBed.createComponent( DocumentationComponent );
+  beforeEach(() => {
+    fixture = TestBed.createComponent(DocumentationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  } );
+  });
 
-  it( 'should create', () => {
-    expect( component ).toBeTruthy();
-  } );
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 
-  it( 'should set doc uri', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject( RequestService ) as any;
+  it('should set doc uri', () => {
+    documentationSubject.next('/doc');
 
-    requestServiceMock.documentationObservableMock.next( '/doc' );
+    expect(component.docUri).toEqual('/doc');
+  });
 
-    expect( component.docUri ).toEqual( '/doc' );
-  } );
+  it('should log error on document observable error', () => {
+    spyOn(window.console, 'error');
+    documentationSubject.error('my error');
 
-  it( 'should unset doc uri on response arrival', () => {
-    const requestServiceMock: RequestServiceMock = getTestBed().inject( RequestService ) as any;
+    expect(window.console.error).toHaveBeenCalled();
+  });
 
-    requestServiceMock.documentationObservableMock.next( '/doc' );
-    requestServiceMock.responseObservableMock.next( 'response' );
+  it('should unset doc uri on response arrival', () => {
+    const requestServiceMock: RequestServiceMock = getTestBed().inject(RequestService) as any;
 
-    expect( component.docUri ).toBeUndefined();
-  } );
+    documentationSubject.next('/doc');
+    responseSubject.next('response');
 
-  it( 'should set iFrame height', () => {
-    const iFrame = document.createElement( 'iframe' );
+    expect(component.docUri).toBeUndefined();
+  });
+
+  it('should set iFrame height', () => {
+    const iFrame = document.createElement('iframe');
     const html = '<body>Foo</body>';
-    iFrame.src = 'data:text/html;charset=utf-8,' + encodeURI( html );
+    iFrame.src = 'data:text/html;charset=utf-8,' + encodeURI(html);
     iFrame.id = 'doc-iframe';
-    document.body.appendChild( iFrame );
+    document.body.appendChild(iFrame);
 
-    (window as any).setIframeHeight( iFrame.id );
+    (window as any).setIframeHeight(iFrame.id);
 
-    expect( iFrame.style.height ).toBe( '12px' );
-  } );
+    expect(iFrame.style.height).toBe('12px');
+  });
 
-  it( 'should get height', () => {
-    const docHeight: number = getDocHeight( document );
-    expect( docHeight ).toBeGreaterThan( 0 );
-  } );
+  it('should get iframe doc height', () => {
+    const docHeight: number = getDocHeight(document);
+    expect(docHeight).toBeGreaterThan(0);
+  });
 
-} );
+  it('should get iframe doc height with parameter "undefined"', () => {
+    const docHeight: number = getDocHeight(undefined);
+    expect(docHeight).toBeGreaterThan(0);
+  });
+
+});
 
 
