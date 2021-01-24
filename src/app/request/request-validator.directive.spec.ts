@@ -158,7 +158,7 @@ describe( 'RequestValidatorDirective', () => {
 
   it( 'should not validate when halFormsProperty is not set', () => {
     const directive = new RequestValidatorDirective();
-    directive.halFormsProperty = undefined
+    directive.halFormsProperty = undefined;
 
     const control: AbstractControl = new FormControl( 9 );
     const validationResult = directive.validate( control );
