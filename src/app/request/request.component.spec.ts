@@ -313,7 +313,8 @@ describe('RequestComponent', () => {
         },
         min: {
           min: 1
-        }
+        },
+        email: true
       }
     };
     const errorMessage: string = component.getValidationErrors(errors);
@@ -322,7 +323,8 @@ describe('RequestComponent', () => {
       + 'Value does not have required max length: 3\n'
       + 'Value does not have required min length: 1\n'
       + 'Value is bigger than max: 100\n'
-      + 'Value is smaller than min: 1\n';
+      + 'Value is smaller than min: 1\n'
+      + 'Value is not a valid email\n';
     expect(errorMessage).toBe(expectedResult);
   });
 

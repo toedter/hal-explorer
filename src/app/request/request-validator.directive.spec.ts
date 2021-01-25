@@ -156,6 +156,18 @@ describe( 'RequestValidatorDirective', () => {
     expect( validationResult.min.actual ).toBe( 9 );
   } );
 
+  it( 'should validate invalid email input type', () => {
+    const directive = new RequestValidatorDirective();
+    directive.halFormsProperty = {
+      type: 'email'
+    };
+
+    const control: AbstractControl = new FormControl( 'bad@' );
+    const validationResult = directive.validate( control );
+
+    expect( validationResult.email ).toBe( true );
+  } );
+
   it( 'should not validate when halFormsProperty is not set', () => {
     const directive = new RequestValidatorDirective();
     directive.halFormsProperty = undefined;
