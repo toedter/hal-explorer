@@ -127,6 +127,7 @@
                        type="{{item.type}}"
                        placeholder="{{item.placeholder}}"
                        [appHalFormsProperty]="item" [title]="getValidationErrors(ngModel)"
+                       (change)="halFormsPropertyChanged()"
                        (keyup)="halFormsPropertyChanged()">
               </div>
             </div>

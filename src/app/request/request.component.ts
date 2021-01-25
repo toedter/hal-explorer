@@ -235,6 +235,10 @@ export class RequestComponent implements OnInit {
       errorMessage += 'Value is smaller than min: ' + ngModel.errors.min.min + '\n';
     }
 
+    if (ngModel.errors.email) {
+      errorMessage += 'Value is not a valid email\n';
+    }
+
     return errorMessage;
   }
 }

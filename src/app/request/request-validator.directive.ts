@@ -44,6 +44,11 @@ export class RequestValidatorDirective implements Validator {
       validationResult = Object.assign(validationResult, testControl.errors);
     }
 
+    if (this.halFormsProperty.type === 'email') {
+      const testControl = new FormControl(control.value, Validators.email);
+      validationResult = Object.assign(validationResult, testControl.errors);
+    }
+
     return validationResult;
   }
 }
