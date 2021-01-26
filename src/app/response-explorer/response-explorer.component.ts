@@ -38,6 +38,7 @@ export class ResponseExplorerComponent implements OnInit {
   hasHalFormsTemplates: boolean;
 
   command = Command;
+  responseUrl;
 
   constructor(private requestService: RequestService,
               private jsonHighlighterService: JsonHighlighterService) {
@@ -49,6 +50,7 @@ export class ResponseExplorerComponent implements OnInit {
     } else {
       this.requestService.getResponseObservable()
         .subscribe((response: HttpResponse<any>) => {
+            this.responseUrl = response.url;
             this.isHalFormsMediaType = false;
             const contentType = response.headers.get('content-type');
             if (contentType && contentType.startsWith('application/prs.hal-forms+json')) {
@@ -215,7 +217,11 @@ export class ResponseExplorerComponent implements OnInit {
   getUrlForTemplateTarget(target: string): string {
     if (target) {
       return target;
+    } else if (this.selfLink) {
+      return this.selfLink.href;
+    } else if (this.responseUrl) {
+      return this.responseUrl;
     }
-    return this.selfLink.href;
+    return undefined;
   }
 }

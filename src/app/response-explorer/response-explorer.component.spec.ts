@@ -312,4 +312,14 @@ describe('ResponseExplorerComponent', () => {
     expect(component.properties).toBeNull();
   });
 
+  it('should return response URL if no self link or target is available', () => {
+    component.responseUrl = 'http://test.com';
+
+    expect(component.getUrlForTemplateTarget(undefined)).toBe(component.responseUrl);
+  });
+
+  it('should return undefinedL if no self link or target or response URL is available', () => {
+    expect(component.getUrlForTemplateTarget(undefined)).toBe(undefined);
+  });
+
 });
