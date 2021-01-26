@@ -10,8 +10,19 @@ and https://rwcbook.github.io/hal-forms/[HAL-FORMS] based RESTful Hypermedia API
 HAL Explorer was inspired by Mike Kelly's https://github.com/mikekelly/hal-browser[HAL-Browser].
 HAL Explorer also supports Spring Profiles.
 
-== Screenshot
-image:hal-explorer.jpg[HAL Explorer screenshot]
+== Screenshots
+
+:imagesdir: screenshots/
+[.clearfix]
+:figure-caption!:
+--
+[.left]
+.HAL Response
+image::hal-explorer.jpg[HAL Explorer , 475]
+[.left]
+.HAL-FORMS Response with Templates
+image::hal-explorer-templates.jpg[HAL Explorer Templates, 475]
+--
 
 == Features
 
@@ -22,8 +33,9 @@ image:hal-explorer.jpg[HAL Explorer screenshot]
 * 2 layouts (2 columns or 3 columns for the documentation)
 * API URL, theme, layout and request headers stored in URL fragment
 * Support for Spring Data Rest profiles to populate properties in request editor
-* Support for HAL-FORMS (_templates) to populate properties in request editor
-  and to provide only supported HTTP methods for self/target link
+* Support for HAL-FORMS templates
+** template elements in response explorer (see screenshot)
+** template properties in request editor
 * HAL-FORMS property constraint validation in request editor
 
 == Demo
