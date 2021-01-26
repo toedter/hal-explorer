@@ -186,7 +186,7 @@ export class RequestService {
                 this.needInfoSubject.next(httpRequestEvent);
               },
               () => {
-                console.error('Cannot get JSON schema for:', profileUri);
+                console.warn('Cannot get JSON schema for: ', profileUri);
                 this.needInfoSubject.next(httpRequestEvent);
               }
             );
@@ -198,6 +198,7 @@ export class RequestService {
         }
       },
       () => {
+        console.warn('Cannot get JSON schema information for: ', uri);
         this.needInfoSubject.next(httpRequestEvent);
       }
     );

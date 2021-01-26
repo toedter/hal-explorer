@@ -4,6 +4,7 @@ import {Command, HttpRequestEvent, RequestService} from './request.service';
 import {AppService, RequestHeader} from '../app.service';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Type} from '@angular/core';
+import {Subject} from 'rxjs';
 
 describe('RequestService', () => {
   let requestService: RequestService;
@@ -156,6 +157,7 @@ describe('RequestService', () => {
       expect(httpRequestEvent.uri).toBe('http://localhost{?page}');
       done();
     });
+
     requestService.processCommand(Command.Get, 'http://localhost{?page}');
   });
 
@@ -194,6 +196,8 @@ describe('RequestService', () => {
     });
 
     const httpRequestEvent: HttpRequestEvent = new HttpRequestEvent(null, null, 'schema-request');
+    const requestHeader = new RequestHeader('a', 'b');
+    requestService.setCustomHeaders([requestHeader]);
     requestService.getJsonSchema(httpRequestEvent);
 
     const jsonSchemaRequest = httpMock.expectOne('schema-request');
@@ -203,6 +207,7 @@ describe('RequestService', () => {
       });
     jsonSchemaRequest.flush(null, {headers: responseHeaders});
     expect(jsonSchemaRequest.request.method).toBe('HEAD');
+    expect(jsonSchemaRequest.request.headers.get('a')).toBe('b');
 
     /* tslint:disable */
     const jsonSchema: any = {
@@ -244,9 +249,71 @@ describe('RequestService', () => {
     httpMock.verify();
   });
 
+  it('should react on json schema error "HTTP get profile url"', (done) => {
+    requestService.getNeedInfoObservable().subscribe((event: HttpRequestEvent) => {
+      expect(event.jsonSchema).toBeUndefined();
+      done();
+    });
+
+    const httpRequestEvent: HttpRequestEvent = new HttpRequestEvent(null, null, 'schema-request');
+    requestService.getJsonSchema(httpRequestEvent);
+
+    const jsonSchemaRequest = httpMock.expectOne('schema-request');
+    const responseHeaders: HttpHeaders = new HttpHeaders(
+      {
+        Link: '<https://chatty42.herokuapp.com/api/users>;rel="self",<https://chatty42.herokuapp.com/api/profile/users>;rel="profile"'
+      });
+    jsonSchemaRequest.flush(null, {headers: responseHeaders});
+    expect(jsonSchemaRequest.request.method).toBe('HEAD');
+
+    const profileRequest = httpMock.expectOne('https://chatty42.herokuapp.com/api/profile/users');
+    const mockErrorResponse = {
+      status: 404, statusText: 'Not Found'
+    };
+
+    spyOn(window.console, 'warn');
+
+    profileRequest.flush(null, mockErrorResponse);
+
+    expect(window.console.warn).toHaveBeenCalled();
+    expect(profileRequest.request.method).toBe('GET');
+
+    httpMock.verify();
+  });
+
+  it('should react on json schema error "HTTP HEAD"', () => {
+    const httpRequestEvent: HttpRequestEvent = new HttpRequestEvent(null, null, 'schema-request');
+    requestService.getJsonSchema(httpRequestEvent);
+
+    const jsonSchemaRequest = httpMock.expectOne('schema-request');
+    const mockErrorResponse = {
+      status: 404, statusText: 'Not Found'
+    };
+
+    spyOn(window.console, 'warn');
+
+    jsonSchemaRequest.flush(null, mockErrorResponse);
+
+    expect(jsonSchemaRequest.request.method).toBe('HEAD');
+    expect(window.console.warn).toHaveBeenCalled();
+
+    httpMock.verify();
+  });
+
+  it('should fill json schema templated uri with empty parameters', () => {
+    const httpRequestEvent: HttpRequestEvent =
+      new HttpRequestEvent(null, null, 'http://schema.org{?filter}');
+
+    requestService.getJsonSchema(httpRequestEvent);
+
+    const jsonSchemaRequest = httpMock.expectOne('http://schema.org');
+  });
+
   it('should not request undefined uri', () => {
     spyOn(requestService, 'processCommand').and.callThrough();
+
     requestService.getUri(undefined);
+
     expect(requestService.processCommand).not.toHaveBeenCalled();
   });
 
