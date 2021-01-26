@@ -55,6 +55,6 @@ export class ResponseDetailsComponent implements OnInit {
             }
           }
         },
-        error => console.error( 'ResponseBodyComponent: ' + error ) );
+        error => console.error( 'Error during HTTP request: ' + JSON.stringify(error) ) );
   }
 }
