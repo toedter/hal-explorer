@@ -283,4 +283,33 @@ describe('ResponseExplorerComponent', () => {
     expect(component.getUrlForTemplateTarget(undefined)).toBe(href);
   });
 
+  it('should initialize with jsonRoot set', () => {
+    fixture = TestBed.createComponent(ResponseExplorerComponent);
+    component = fixture.componentInstance;
+    component.jsonRoot = {
+      _links: {
+        self: {
+          href: 'http://localhost:4200/api/movies'
+        }
+      }
+    };
+
+    expect(component.selfLink).toBeUndefined();
+    fixture.detectChanges();
+    expect(component.selfLink).toBeDefined();
+  });
+
+  it('should log error during HTTP call', () => {
+    spyOn(window.console, 'error');
+
+    responseSubject.error(new HttpResponse({status: 404, statusText: 'Not Found'}));
+
+    expect(window.console.error).toHaveBeenCalled();
+  });
+
+  it('should ignore response bodies that are no strings', () => {
+    responseSubject.next(new HttpResponse<any>({body: 'this is a string'}));
+    expect(component.properties).toBeNull();
+  });
+
 });

@@ -54,14 +54,13 @@ export class ResponseExplorerComponent implements OnInit {
             if (contentType && contentType.startsWith('application/prs.hal-forms+json')) {
               this.isHalFormsMediaType = true;
             }
-
             if (!(typeof response.body === 'string' || response.body instanceof String)) {
               this.processJsonObject(response.body);
             } else {
               this.processJsonObject({});
             }
           },
-          error => console.error('ResponseBodyComponent: ' + error));
+          error => console.error('Error during HTTP request: ' + JSON.stringify(error)));
     }
   }
 
