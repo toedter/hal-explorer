@@ -18,10 +18,11 @@ HAL Explorer also supports Spring Profiles.
 --
 [.left]
 .HAL Response
-image::hal-explorer.jpg[HAL Explorer , 475]
+image::hal-explorer.jpg[HAL Explorer]
+
 [.left]
 .HAL-FORMS Response with Templates
-image::hal-explorer-templates.jpg[HAL Explorer Templates, 475]
+image::hal-explorer-templates.jpg[HAL Explorer Templates]
 --
 
 == Features
