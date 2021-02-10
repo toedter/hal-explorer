@@ -1,4 +1,4 @@
-import {ComponentFixture, getTestBed, TestBed, waitForAsync} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {ResponseExplorerComponent} from './response-explorer.component';
 import {Command, RequestService} from '../request/request.service';
@@ -322,4 +322,8 @@ describe('ResponseExplorerComponent', () => {
     expect(component.getUrlForTemplateTarget(undefined)).toBe(undefined);
   });
 
+  it('should construct absolute URL', () => {
+    responseSubject.next(new HttpResponse<any>({body: '{"_links": { "self": { "href": "/test" }', url: 'http://localhost/'}));
+    expect(component.getRelTargetUrl('/test', Command.Get)).toBe('http://localhost/test');
+  });
 });

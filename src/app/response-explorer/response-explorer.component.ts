@@ -2,6 +2,7 @@ import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {HttpResponse} from '@angular/common/http';
 import {Command, RequestService} from '../request/request.service';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
+import {decode} from 'querystring';
 
 class Link {
   constructor(public rel: string, public href: string,
@@ -189,6 +190,12 @@ export class ResponseExplorerComponent implements OnInit {
         );
       }
     }
+
+    if (this.responseUrl) { // fixes #19
+      const absoluteURL = new URL(target, this.responseUrl).href;
+      target = decodeURI(absoluteURL);
+    }
+
     return target;
   }
 
