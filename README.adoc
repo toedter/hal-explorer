@@ -49,6 +49,12 @@ I host this demos at Heroku, so please give them a bit time to warm up (This mig
 
 Run `yarn start` for a dev server. Navigate to http://localhost:4200/.
 The app will automatically reload if you change any of the source files.
+The development server has a build-in proxy configuration,
+so that a calls to `/api` are forwarded to calls to `localhost:8080/api`.
+This is convenient to test a local server without having to deal with CORS.
+If you run `yarn startl`, an addition file server is started on port 3000.
+In the test-data directory you find some JSON examples. Try it out with the URL
+http://localhost:4200/#uri=http://localhost:3000/movies.hal-forms.json.
 
 == Build
 
@@ -75,7 +81,7 @@ Maven:
 </dependency>
 
 Gradle:
-[source]
+[source, Groovy]
 compile 'org.webjars:hal-explorer:0.15.0'
 
 When you use the WebJar with Spring Boot, you can access the HAL Explorer at `/webjars/hal-explorer/0.15.0/index.html`.
