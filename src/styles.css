@@ -9,7 +9,7 @@ pre {padding: 5px; margin: 5px; color: inherit !important}
 .hal { color: var(--warning, #e4720f); }
 
 .ng-invalid:not(form)  {
-  border-left: 5px solid #a94442; /* red */
+  border-left: 5px solid #a94442 !important; /* red, overrides also default blue when editing */
 }
 
 .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
