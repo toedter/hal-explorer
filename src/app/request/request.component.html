@@ -139,8 +139,11 @@
                       || httpRequestEvent.command === commandPlaceholder.Patch" class="form-group row">
             <label class="col-sm-3 col-form-label" for="body">Body</label>
             <div class="col-sm-9">
-            <textarea [(ngModel)]="requestBody" class="form-control" id="body" rows="5"
+            <textarea *ngIf="myForm.valid" [(ngModel)]="requestBody" class="form-control" id="body" rows="5"
                       name="bodyArea">
+            </textarea>
+              <textarea *ngIf="myForm.invalid" class="form-control" id="invalidBody" rows="5"
+                        name="invalidBodyArea">
             </textarea>
             </div>
           </div>
