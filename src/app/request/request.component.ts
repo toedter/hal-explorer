@@ -39,6 +39,11 @@ export class RequestComponent implements OnInit {
 
     this.requestService.getNeedInfoObservable().subscribe((value: any) => {
       if (value.type === EventType.FillHttpRequest) {
+        this.jsonSchema = undefined;
+        this.halFormsProperties = undefined;
+        this.halFormsPropertyKey = undefined;
+        this.halFormsTemplate = undefined;
+
         const event: HttpRequestEvent = value as HttpRequestEvent;
         this.httpRequestEvent = event;
         if (event.jsonSchema) {
