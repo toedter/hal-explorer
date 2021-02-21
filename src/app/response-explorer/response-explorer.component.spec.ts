@@ -1,8 +1,8 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {ResponseExplorerComponent} from './response-explorer.component';
-import {Command, RequestService} from '../request/request.service';
-import {HttpHeaders, HttpResponse} from '@angular/common/http';
+import {Command, RequestService, Response} from '../request/request.service';
+import {HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
 import {Subject} from 'rxjs';
 
@@ -76,7 +76,7 @@ describe('ResponseExplorerComponent', () => {
       'getResponseObservable',
       'getDocumentationObservable',
       'processCommand']);
-    responseSubject = new Subject<string>();
+    responseSubject = new Subject<Response>();
     spyOn(responseSubject, 'subscribe').and.callThrough();
     requestServiceMock.getResponseObservable.and.returnValue(responseSubject);
 
@@ -107,7 +107,7 @@ describe('ResponseExplorerComponent', () => {
   });
 
   it('should syntax highlight json', () => {
-    responseSubject.next(new HttpResponse({body: {key: 'test'}}));
+    responseSubject.next(new Response(new HttpResponse({body: {key: 'test'}}), null));
 
     expect(jsonHighlighterServiceMock.syntaxHighlight).toHaveBeenCalled();
   });
@@ -154,7 +154,7 @@ describe('ResponseExplorerComponent', () => {
       }
     };
     /* tslint:enable */
-    responseSubject.next(new HttpResponse({body: halResponse}));
+    responseSubject.next(new Response(new HttpResponse({body: halResponse}), null));
 
     expect(component.showProperties).toBeTruthy();
     expect(component.showLinks).toBeTruthy();
@@ -169,7 +169,7 @@ describe('ResponseExplorerComponent', () => {
       {
         'content-type': 'application/prs.hal-forms+json'
       });
-    responseSubject.next(new HttpResponse({headers: responseHeaders, body: halFormsResponse}));
+    responseSubject.next(new Response(new HttpResponse({headers: responseHeaders, body: halFormsResponse}), null));
 
     expect(component.showProperties).toBeTruthy();
     expect(component.showLinks).toBeTruthy();
@@ -184,7 +184,7 @@ describe('ResponseExplorerComponent', () => {
       {
         'content-type': 'application/prs.hal-forms+json'
       });
-    responseSubject.next(new HttpResponse({headers: responseHeaders, body: halFormsResponse}));
+    responseSubject.next(new Response(new HttpResponse({headers: responseHeaders, body: halFormsResponse}), null));
 
     const selfRel = 'self';
     const selfHref = 'http://api.com';
@@ -209,7 +209,7 @@ describe('ResponseExplorerComponent', () => {
       {
         'content-type': 'application/prs.hal-forms+json'
       });
-    responseSubject.next(new HttpResponse({headers: responseHeaders, body: halFormsResponse}));
+    responseSubject.next(new Response(new HttpResponse({headers: responseHeaders, body: halFormsResponse}), null));
 
     expect(component.getRequestButtonClass(Command.Get)).toBe('ml-1 btn btn-sm nav-button btn-outline-success icon-left-open');
     expect(component.getRequestButtonClass(Command.Post)).toBe('ml-1 btn btn-sm nav-button btn-outline-info icon-plus');
@@ -224,7 +224,7 @@ describe('ResponseExplorerComponent', () => {
       {
         'content-type': 'application/prs.hal-forms+json'
       });
-    responseSubject.next(new HttpResponse({headers: responseHeaders, body: halFormsResponse}));
+    responseSubject.next(new Response(new HttpResponse({headers: responseHeaders, body: halFormsResponse}), null));
     const selfRel = 'self';
     const selfHref = 'http://api.com';
 
@@ -261,7 +261,8 @@ describe('ResponseExplorerComponent', () => {
       }
     };
 
-    responseSubject.next(new HttpResponse({headers: responseHeaders, body: halFormsResponseWithTarget}));
+    responseSubject.next(new Response(
+      new HttpResponse({headers: responseHeaders, body: halFormsResponseWithTarget}), null));
 
     expect(component.getRelTargetUrl('xxx', Command.Post)).toBe('http://create-movie.com');
   });
@@ -302,13 +303,13 @@ describe('ResponseExplorerComponent', () => {
   it('should log error during HTTP call', () => {
     spyOn(window.console, 'error');
 
-    responseSubject.error(new HttpResponse({status: 404, statusText: 'Not Found'}));
+    responseSubject.error(new Response(null, new HttpErrorResponse({status: 404, statusText: 'Not Found'})));
 
     expect(window.console.error).toHaveBeenCalled();
   });
 
   it('should ignore response bodies that are no strings', () => {
-    responseSubject.next(new HttpResponse<any>({body: 'this is a string'}));
+    responseSubject.next(new Response(new HttpResponse<any>({body: 'this is a string'}), null));
     expect(component.properties).toBeNull();
   });
 
@@ -323,7 +324,8 @@ describe('ResponseExplorerComponent', () => {
   });
 
   it('should construct absolute URL', () => {
-    responseSubject.next(new HttpResponse<any>({body: '{"_links": { "self": { "href": "/test" }', url: 'http://localhost/'}));
+    responseSubject.next(new Response(
+      new HttpResponse<any>({body: '{"_links": { "self": { "href": "/test" }', url: 'http://localhost/'}), null));
     expect(component.getRelTargetUrl('/test', Command.Get)).toBe('http://localhost/test');
   });
 });

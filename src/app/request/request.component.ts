@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import * as $ from 'jquery';
 import * as utpl from 'uri-templates';
+import {URITemplate} from 'uri-templates';
 import {AppService, RequestHeader} from '../app.service';
 import {Command, EventType, HttpRequestEvent, RequestService, UriTemplateParameter} from './request.service';
-import {URITemplate} from 'uri-templates';
 
 @Component({
   selector: 'app-uri-input',

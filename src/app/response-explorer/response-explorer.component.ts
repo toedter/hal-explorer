@@ -1,8 +1,7 @@
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
-import {HttpResponse} from '@angular/common/http';
-import {Command, RequestService} from '../request/request.service';
+import {Command, RequestService, Response} from '../request/request.service';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
-import {decode} from 'querystring';
+import {HttpErrorResponse} from '@angular/common/http';
 
 class Link {
   constructor(public rel: string, public href: string,
@@ -41,6 +40,8 @@ export class ResponseExplorerComponent implements OnInit {
   command = Command;
   responseUrl;
 
+  httpErrorResponse: HttpErrorResponse;
+
   constructor(private requestService: RequestService,
               private jsonHighlighterService: JsonHighlighterService) {
   }
@@ -50,17 +51,21 @@ export class ResponseExplorerComponent implements OnInit {
       this.processJsonObject(this.jsonRoot);
     } else {
       this.requestService.getResponseObservable()
-        .subscribe((response: HttpResponse<any>) => {
-            this.responseUrl = response.url;
-            this.isHalFormsMediaType = false;
-            const contentType = response.headers.get('content-type');
-            if (contentType && contentType.startsWith('application/prs.hal-forms+json')) {
-              this.isHalFormsMediaType = true;
-            }
-            if (!(typeof response.body === 'string' || response.body instanceof String)) {
-              this.processJsonObject(response.body);
-            } else {
-              this.processJsonObject({});
+        .subscribe((response: Response) => {
+            const httpResponse = response.httpResponse;
+            this.httpErrorResponse = response.httpErrorResponse;
+            if (httpResponse) {
+              this.responseUrl = httpResponse.url;
+              this.isHalFormsMediaType = false;
+              const contentType = httpResponse.headers.get('content-type');
+              if (contentType && contentType.startsWith('application/prs.hal-forms+json')) {
+                this.isHalFormsMediaType = true;
+              }
+              if (!(typeof httpResponse.body === 'string' || httpResponse.body instanceof String)) {
+                this.processJsonObject(httpResponse.body);
+              } else {
+                this.processJsonObject({});
+              }
             }
           },
           error => console.error('Error during HTTP request: ' + JSON.stringify(error)));

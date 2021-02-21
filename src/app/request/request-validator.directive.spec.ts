@@ -1,5 +1,5 @@
-import { AbstractControl, FormControl } from '@angular/forms';
-import { RequestValidatorDirective } from './request-validator.directive';
+import {AbstractControl, FormControl} from '@angular/forms';
+import {RequestValidatorDirective} from './request-validator.directive';
 
 describe( 'RequestValidatorDirective', () => {
   it( 'should create an instance', () => {

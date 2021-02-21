@@ -1,6 +1,6 @@
-import { inject, TestBed } from '@angular/core/testing';
+import {inject, TestBed} from '@angular/core/testing';
 
-import { JsonHighlighterService } from './json-highlighter.service';
+import {JsonHighlighterService} from './json-highlighter.service';
 
 describe( 'JsonHighlighterService', () => {
   let jsonHighlighterService: JsonHighlighterService;

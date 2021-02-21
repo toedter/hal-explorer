@@ -1,9 +1,9 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {ResponseDetailsComponent} from './response-details.component';
-import {Command, RequestService} from '../request/request.service';
+import {RequestService, Response} from '../request/request.service';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
-import {HttpHeaders, HttpResponse} from '@angular/common/http';
+import {HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Subject} from 'rxjs';
 
 describe('ResponseDetailsComponent', () => {
@@ -13,7 +13,7 @@ describe('ResponseDetailsComponent', () => {
 
   beforeEach(waitForAsync(() => {
     const requestServiceMock = jasmine.createSpyObj(['getResponseObservable']);
-    responseSubject = new Subject<string>();
+    responseSubject = new Subject<Response>();
     requestServiceMock.getResponseObservable.and.returnValue(responseSubject);
 
     const jsonHighlighterServiceMock = jasmine.createSpyObj(['syntaxHighlight']);
@@ -38,16 +38,16 @@ describe('ResponseDetailsComponent', () => {
   });
 
   it('should handle json HTTP response', () => {
-    responseSubject.next(new HttpResponse({body: {key: 'test'}}));
+    responseSubject.next(new Response(new HttpResponse({body: {key: 'test'}}), null));
 
-    expect(component.responseStatus).toBe(200);
+    expect(component.httpResponse.status).toBe(200);
     expect(component.isString).toBeFalsy();
   });
 
   it('should handle string HTTP response', () => {
-    responseSubject.next(new HttpResponse({body: 'string'}));
+    responseSubject.next((new Response(new HttpResponse({body: 'string'}), null)));
 
-    expect(component.responseStatus).toBe(200);
+    expect(component.httpResponse.status).toBe(200);
     expect(component.isString).toBeTruthy();
   });
 
@@ -56,23 +56,41 @@ describe('ResponseDetailsComponent', () => {
       {
         key: 'value'
       });
-    responseSubject.next(new HttpResponse({headers: responseHeaders}));
+    responseSubject.next(new Response(new HttpResponse({headers: responseHeaders}), null));
 
-    expect(component.responseStatus).toBe(200);
-    expect(component.responseHeaders.length).toBe(1);
+    expect(component.httpResponse.status).toBe(200);
+    expect(component.httpResponse.headers.keys().length).toBe(1);
   });
 
   it('should handle HTTP response status 0', () => {
-    responseSubject.next(new HttpResponse({status: 0}));
+    responseSubject.next(new Response(new HttpResponse({status: 0, statusText: 'unknown'}), null));
 
-    expect(component.responseStatus).toBe(0);
-    expect(component.responseStatusText).toBe('');
+    expect(component.httpResponse.status).toBe(0);
+    expect(component.httpResponse.statusText).toBe('unknown');
   });
 
-  it('should handle HTTP response error', () => {
+  it('should handle HTTP response error (as string)', () => {
     spyOn(window.console, 'error');
 
-    responseSubject.error(new HttpResponse({status: 404, statusText: 'Not Found'}));
+    responseSubject.next(new Response(null,
+      new HttpErrorResponse({status: 404, statusText: 'Not Found', error: 'error string'})));
+
+    expect(window.console.error).not.toHaveBeenCalled();
+  });
+
+  it('should handle HTTP response error (as object)', () => {
+    spyOn(window.console, 'error');
+
+    responseSubject.next(new Response(null,
+      new HttpErrorResponse({status: 404, statusText: 'Not Found', error: {error: 0}})));
+
+    expect(window.console.error).not.toHaveBeenCalled();
+  });
+
+  it('should handle HTTP response subject error', () => {
+    spyOn(window.console, 'error');
+
+    responseSubject.error(new Response(null, new HttpErrorResponse({status: 404, statusText: 'Not Found'})));
 
     expect(window.console.error).toHaveBeenCalled();
   });

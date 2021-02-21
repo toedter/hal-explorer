@@ -1,10 +1,9 @@
 import {TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {Command, HttpRequestEvent, RequestService} from './request.service';
+import {Command, HttpRequestEvent, RequestService, Response} from './request.service';
 import {AppService, RequestHeader} from '../app.service';
-import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Type} from '@angular/core';
-import {Subject} from 'rxjs';
 
 describe('RequestService', () => {
   let requestService: RequestService;
@@ -36,8 +35,8 @@ describe('RequestService', () => {
   });
 
   it('should set default accept request header', (done) => {
-    requestService.getResponseObservable().subscribe((response: HttpResponse<any>) => {
-      expect(response.body).toBe('body');
+    requestService.getResponseObservable().subscribe((response: Response) => {
+      expect(response.httpResponse.body).toBe('body');
       done();
     });
 
@@ -52,8 +51,8 @@ describe('RequestService', () => {
   });
 
   it('should not set default accept request header when custom accept header exists', (done) => {
-    requestService.getResponseObservable().subscribe((response: HttpResponse<any>) => {
-      expect(response.body).toBe('body');
+    requestService.getResponseObservable().subscribe((response: Response) => {
+      expect(response.httpResponse.body).toBe('body');
       done();
     });
 
@@ -72,8 +71,8 @@ describe('RequestService', () => {
   });
 
   it('should set Content-Type request header for POST request', (done) => {
-    requestService.getResponseObservable().subscribe((response: HttpResponse<any>) => {
-      expect(response.body).toBe('body');
+    requestService.getResponseObservable().subscribe((response: Response) => {
+      expect(response.httpResponse.body).toBe('body');
       done();
     });
 
@@ -89,8 +88,8 @@ describe('RequestService', () => {
   });
 
   it('should process Get command', (done) => {
-    requestService.getResponseObservable().subscribe((response: HttpResponse<any>) => {
-      expect(response.body).toBe('body');
+    requestService.getResponseObservable().subscribe((response: Response) => {
+      expect(response.httpResponse.body).toBe('body');
       done();
     });
 
@@ -124,8 +123,9 @@ describe('RequestService', () => {
 
   it('should handle HTTP request error', (done) => {
     const body = 'Invalid request parameters';
-    requestService.getResponseObservable().subscribe((response: HttpResponse<any>) => {
-      expect(response.body).toBe(body);
+    requestService.getResponseObservable().subscribe((response: Response) => {
+      expect(response.httpErrorResponse.status).toBe(404);
+      expect(response.httpErrorResponse.statusText).toBe('Not Found');
       done();
     });
 
@@ -148,7 +148,7 @@ describe('RequestService', () => {
       status: 404, statusText: 'Not Found'
     };
     httpMock.expectOne('test-request').flush(errorEvent, mockErrorResponse);
-    expect(window.console.error).toHaveBeenCalled();
+    expect(window.console.error).not.toHaveBeenCalled();
   });
 
   it('should handle templated URIs', (done) => {
@@ -170,8 +170,8 @@ describe('RequestService', () => {
   });
 
   it('should process delete command', (done) => {
-    requestService.getResponseObservable().subscribe((response: HttpResponse<any>) => {
-      expect(response.status).toBe(204);
+    requestService.getResponseObservable().subscribe((response: Response) => {
+      expect(response.httpResponse.status).toBe(204);
       done();
     });
 
@@ -306,7 +306,8 @@ describe('RequestService', () => {
 
     requestService.getJsonSchema(httpRequestEvent);
 
-    const jsonSchemaRequest = httpMock.expectOne('http://schema.org');
+    const profileRequest = httpMock.expectOne('http://schema.org');
+    expect(profileRequest.request.method).toBe('HEAD');
   });
 
   it('should not request undefined uri', () => {

@@ -4,7 +4,6 @@ import {Observable, Subject} from 'rxjs';
 import * as utpl from 'uri-templates';
 import {URITemplate} from 'uri-templates';
 import {AppService, RequestHeader} from '../app.service';
-import * as HttpStatus from 'http-status-codes';
 
 export enum EventType {FillHttpRequest}
 
@@ -21,12 +20,16 @@ export class UriTemplateParameter {
   }
 }
 
+export class Response {
+  constructor(public httpResponse: HttpResponse<any>, public httpErrorResponse: HttpErrorResponse) {
+  }
+}
+
 @Injectable()
 export class RequestService {
 
-  private httpResponse: HttpResponse<any>;
-  private responseSubject: Subject<HttpResponse<any>> = new Subject<HttpResponse<any>>();
-  private responseObservable: Observable<HttpResponse<any>> = this.responseSubject.asObservable();
+  private responseSubject: Subject<Response> = new Subject<Response>();
+  private responseObservable: Observable<Response> = this.responseSubject.asObservable();
 
   private needInfoSubject: Subject<any> = new Subject<any>();
   private needInfoObservable: Observable<any> = this.needInfoSubject.asObservable();
@@ -43,7 +46,7 @@ export class RequestService {
   constructor(private appService: AppService, private http: HttpClient) {
   }
 
-  getResponseObservable(): Observable<HttpResponse<any>> {
+  getResponseObservable(): Observable<Response> {
     return this.responseObservable;
   }
 
@@ -71,26 +74,10 @@ export class RequestService {
     this.appService.setUri(uri);
     this.http.request(httpMethod, uri, {headers, observe: 'response', body}).subscribe(
       (response: HttpResponse<any>) => {
-        (response as any).statusText = HttpStatus.getReasonPhrase(response.status);
-        this.httpResponse = response;
-        this.responseSubject.next(response);
+        this.responseSubject.next(new Response(response, null));
       },
       (error: HttpErrorResponse) => {
-        let statusText = '';
-        if (error.status !== 0) {
-          statusText = HttpStatus.getReasonPhrase(error.status);
-        }
-
-        if (error.error instanceof ErrorEvent) {
-          console.error('An error event occurred:', error.error.message);
-        } else {
-          // console.error(`Backend returned code ${error.status}, body: ${error.error}`);
-          this.httpResponse = new HttpResponse({
-            body: error.error, headers: error.headers,
-            status: error.status, statusText, url: error.url
-          });
-          this.responseSubject.next(this.httpResponse);
-        }
+        this.responseSubject.next(new Response(null, error));
       }
     );
   }

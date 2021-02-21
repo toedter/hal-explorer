@@ -1,4 +1,4 @@
-<div [hidden]="responseStatus === 0" class="container">
+<div *ngIf="httpResponse && !httpErrorResponse" class="container">
   <div class="row">
     <div class="col-lg-12">
       <br>
@@ -10,7 +10,7 @@
         <table class="table table-striped table-sm">
           <tbody>
           <tr>
-            <td>{{responseStatus}} ({{responseStatusText}})</td>
+            <td>{{httpResponse.status}} ({{httpResponse.statusText}})</td>
           </tr>
           </tbody>
         </table>
@@ -23,9 +23,9 @@
       <div class="bs-component">
         <table class="table table-striped table-sm">
           <tbody>
-          <tr *ngFor="let header of responseHeaders">
-            <td class="w-25">{{header.key}}</td>
-            <td class="w-75">{{header.value}}</td>
+          <tr *ngFor="let key of httpResponse.headers.keys()">
+            <td class="w-25">{{key}}</td>
+            <td class="w-75">{{httpResponse.headers.get(key)}}</td>
           </tr>
           </tbody>
         </table>
@@ -38,8 +38,8 @@
 
         <div class="card info">
           <div class="card-text">
-             <pre *ngIf="!isString" [innerHTML]="responseBody">></pre>
-             <pre *ngIf="isString">{{responseBody}}</pre>
+            <pre *ngIf="!isString" [innerHTML]="responseBody">></pre>
+            <pre *ngIf="isString">{{responseBody}}</pre>
           </div>
         </div>
       </div>
@@ -48,3 +48,66 @@
   </div>
 </div>
 
+<div *ngIf="httpErrorResponse" class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <br>
+      <div class="legend">
+        <h5>Error Response Status</h5>
+      </div>
+
+      <div class="bs-component">
+        <table class="table table-striped table-sm">
+          <tbody>
+          <tr>
+            <td>{{httpErrorResponse.status}} ({{httpErrorResponse.statusText}})</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="httpErrorResponse.headers.keys().length > 0">
+        <div class="legend">
+          <h5>Error Response Headers</h5>
+        </div>
+
+        <div class="bs-component">
+          <table class="table table-striped table-sm">
+            <tbody>
+            <tr *ngFor="let key of httpErrorResponse.headers.keys()">
+              <td class="w-25">{{key}}</td>
+              <td class="w-75">{{httpErrorResponse.headers.get(key)}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <div class="legend">
+          <h5>Error Message</h5>
+        </div>
+
+        <div class="card info">
+          <div class="card-text">
+            <pre>{{httpErrorResponse.message}}</pre>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div>
+        <div class="legend">
+          <h5>Additional Error Information</h5>
+        </div>
+
+        <div class="card info">
+          <div class="card-text">
+            <pre *ngIf="!isString" [innerHTML]="error">></pre>
+            <pre *ngIf="isString">{{error}}</pre>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
