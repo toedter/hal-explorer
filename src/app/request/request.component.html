@@ -126,9 +126,10 @@
                        name="{{item.name}}" id="request-input-{{item.name}}" #ngModel="ngModel"
                        type="{{item.type}}"
                        placeholder="{{item.placeholder}}"
-                       [appHalFormsProperty]="item" [title]="getValidationErrors(ngModel)"
+                       [appHalFormsProperty]="item"
                        (change)="halFormsPropertyChanged()"
                        (keyup)="halFormsPropertyChanged()">
+                <div class="error-text">{{getValidationErrors(ngModel)}}</div>
               </div>
             </div>
             <hr>
