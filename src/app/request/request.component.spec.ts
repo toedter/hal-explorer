@@ -134,6 +134,20 @@ const halFormsTemplates = {
         {
           name: 'title',
           prompt: 'Titel',
+          options: {
+            inline: ['Movie 1', 'Movie 2']
+          }
+        }
+      ]
+    },
+    withOptionsAndInlineAndRequired: {
+      title: 'Change Movie with Options and Inline and Required',
+      method: 'put',
+      contentType: '',
+      properties: [
+        {
+          name: 'title',
+          prompt: 'Titel',
           required: true,
           options: {
             inline: ['Movie 1', 'Movie 2']
@@ -504,6 +518,24 @@ describe('RequestComponent', () => {
     expect(component.halFormsPropertyKey).toEqual('Change Movie with Options and Inline');
     expect(component.halFormsProperties).toEqual(halFormsTemplate.value.properties);
     expect(component.halFormsProperties[0].value).toEqual('<No Value Selected>');
+  });
+
+  it('should populate HAL-FORMS options value and inline and required', () => {
+    const halFormsTemplate = {
+      key: 'withOptionsAndInline',
+      value: halFormsTemplates._templates.withOptionsAndInlineAndRequired
+    };
+
+    const event: HttpRequestEvent =
+      new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
+        undefined, halFormsTemplate);
+
+    needInfoSubject.next(event);
+
+    expect(component.halFormsTemplate).toEqual(halFormsTemplate);
+    expect(component.halFormsPropertyKey).toEqual('Change Movie with Options and Inline and Required');
+    expect(component.halFormsProperties).toEqual(halFormsTemplate.value.properties);
+    expect(component.halFormsProperties[0].value).toEqual('Movie 1');
   });
 
 });

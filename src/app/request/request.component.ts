@@ -62,8 +62,10 @@ export class RequestComponent implements OnInit {
           for (const property of this.halFormsProperties) {
             if (property.options && property.options.selectedValues) {
               property.value = property.options.selectedValues;
-            } else if (property.options && !property.options.selectedValues) {
+            } else if (property.options && !property.required && !property.options.selectedValues) {
               property.value = this.noValueSelected;
+            } else if (property.options && property.required && !property.options.selectedValues) {
+              property.value = this.getHalFormsOptions(property)[0].value;
             }
           }
           this.halFormsPropertyKey = this.halFormsTemplate.value.title;
@@ -168,6 +170,7 @@ export class RequestComponent implements OnInit {
               this.newRequestUri += '?';
             }
           }
+
           if (hasBody) {
             this.requestBody += '  "' + item.name + '": ' + '"' + item.value + '"';
           } else {
@@ -281,12 +284,15 @@ export class RequestComponent implements OnInit {
       dictionaryObjects.push(new DictionaryObject(this.noValueSelected, this.noValueSelected));
     }
 
+    const promptField = property?.options?.promptField || 'prompt';
+    const valueField = property?.options?.valueField || 'value';
+
     if (property.options.inline) {
       for (const entry of property.options.inline) {
         if (typeof entry === 'string' || entry instanceof String) {
           dictionaryObjects.push(new DictionaryObject(entry, entry));
         } else {
-          dictionaryObjects.push(new DictionaryObject(entry.prompt, entry.value));
+          dictionaryObjects.push(new DictionaryObject(entry[promptField], entry[valueField]));
         }
       }
     }
