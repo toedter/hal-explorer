@@ -1,0 +1,22 @@
+{
+  "_links": {
+    "self": {
+      "href": "http://localhost:3000/options-no-selected-values.hal-forms.json"
+    }
+  },
+  "_templates" : {
+    "default" : {
+      "title": "Shipping",
+      "method": "POST",
+      "properties" : [
+        {
+          "name" : "shipping",
+          "prompt" : "Select Shipping Method",
+          "options" : {
+            "inline" : ["FedEx","UPS","DHL"]
+          }
+        }
+      ]
+    }
+  }
+}

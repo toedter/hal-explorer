@@ -122,14 +122,25 @@
                 <span *ngIf="item.required">*</span>
               </label>
               <div class="col-sm-9">
-                <input class="form-control" [(ngModel)]="item.value"
-                       name="{{item.name}}" id="request-input-{{item.name}}" #ngModel="ngModel"
-                       type="{{item.type}}"
-                       placeholder="{{item.placeholder}}"
-                       [appHalFormsProperty]="item"
-                       (change)="halFormsPropertyChanged()"
-                       (keyup)="halFormsPropertyChanged()">
-                <div class="error-text">{{getValidationErrors(ngModel)}}</div>
+                <div *ngIf="getUiElementForHalFormsTemplateProperty(item) === 'input'">
+                  <input class="form-control" [(ngModel)]="item.value"
+                         name="{{item.name}}" id="request-input-{{item.name}}" #ngModel="ngModel"
+                         type="{{item.type}}"
+                         placeholder="{{item.placeholder}}"
+                         [appHalFormsProperty]="item"
+                         (change)="halFormsPropertyChanged()"
+                         (keyup)="halFormsPropertyChanged()">
+                  <div class="error-text">{{getValidationErrors(ngModel)}}</div>
+                </div>
+                <select *ngIf="getUiElementForHalFormsTemplateProperty(item) === 'select'"
+                        class="form-control" [(ngModel)]="item.value"
+                        name="{{item.name}}" id="request-option-{{item.name}}"
+                        (change)="halFormsPropertyChanged()">
+                  <option *ngFor="let option of getHalFormsOptions(item)"
+                          [value]="option.value" [selected]="isHalFormsOptionSelected(item, option.value)">
+                    {{option.prompt}}
+                  </option>
+                </select>
               </div>
             </div>
             <hr>

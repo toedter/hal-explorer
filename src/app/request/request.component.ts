@@ -5,6 +5,11 @@ import {URITemplate} from 'uri-templates';
 import {AppService, RequestHeader} from '../app.service';
 import {Command, EventType, HttpRequestEvent, RequestService, UriTemplateParameter} from './request.service';
 
+export class DictionaryObject {
+  constructor(public prompt, public value) {
+  }
+}
+
 @Component({
   selector: 'app-uri-input',
   templateUrl: './request.component.html',
@@ -27,6 +32,8 @@ export class RequestComponent implements OnInit {
   halFormsProperties: any;
   halFormsTemplate: any;
   halFormsPropertyKey: string;
+
+  private noValueSelected = '<No Value Selected>';
 
   constructor(private appService: AppService, private requestService: RequestService) {
   }
@@ -52,6 +59,13 @@ export class RequestComponent implements OnInit {
         if (event.halFormsTemplate) {
           this.halFormsTemplate = event.halFormsTemplate;
           this.halFormsProperties = this.halFormsTemplate.value.properties;
+          for (const property of this.halFormsProperties) {
+            if (property.options && property.options.selectedValues) {
+              property.value = property.options.selectedValues;
+            } else if (property.options && !property.options.selectedValues) {
+              property.value = this.noValueSelected;
+            }
+          }
           this.halFormsPropertyKey = this.halFormsTemplate.value.title;
         }
         this.requestBody = '';
@@ -70,6 +84,7 @@ export class RequestComponent implements OnInit {
           this.newRequestUri = event.uri;
         }
         $('#HttpRequestTrigger').trigger('click');
+        this.halFormsPropertyChanged();
       }
     });
 
@@ -141,7 +156,7 @@ export class RequestComponent implements OnInit {
           httpMethod = 'get';
         }
         const hasBody = (httpMethod === 'post' || httpMethod === 'put' || httpMethod === 'patch');
-        if (item.name && item.value) {
+        if (item.name && item.value && item.value !== '<No Value Selected>') {
           if (hasProperties) {
             if (hasBody) {
               this.requestBody += ',\n';
@@ -245,6 +260,44 @@ export class RequestComponent implements OnInit {
     }
 
     return errorMessage;
+  }
+
+  getUiElementForHalFormsTemplateProperty(property: any): string {
+    if (property.options) {
+      return 'select';
+    }
+    return 'input';
+  }
+
+
+  getHalFormsOptions(property: any): Array<DictionaryObject> {
+    if (!property.options) {
+      return [];
+    }
+
+    const dictionaryObjects: Array<DictionaryObject> = [];
+
+    if (!property.required && property.options && !property.options.selectedValues) {
+      dictionaryObjects.push(new DictionaryObject(this.noValueSelected, this.noValueSelected));
+    }
+
+    if (property.options.inline) {
+      for (const entry of property.options.inline) {
+        if (typeof entry === 'string' || entry instanceof String) {
+          dictionaryObjects.push(new DictionaryObject(entry, entry));
+        } else {
+          dictionaryObjects.push(new DictionaryObject(entry.prompt, entry.value));
+        }
+      }
+    }
+    return dictionaryObjects;
+  }
+
+  isHalFormsOptionSelected(property: any, value: string): boolean {
+    if (!property.value) {
+      return false;
+    }
+    return property.value.includes(value);
   }
 }
 
