@@ -3,6 +3,10 @@
     "chatty:users": {
       "href": "http://localhost:3000/users.hal.json"
     },
+    "chatty:messages": {
+      "href": "http://localhost:3000/messages.hal.json{?page,size}",
+      "templated": true
+    },
     "profile": {
       "href": "http://localhost:3000/api/profile"
     },

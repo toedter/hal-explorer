@@ -72,7 +72,8 @@
                        name="{{parameter.key}}">
               </div>
             </div>
-            <div class="form-group row">
+            <div *ngIf="httpRequestEvent.command !== commandPlaceholder.Get
+                      && httpRequestEvent.command !== commandPlaceholder.Delete" class="form-group row">
               <label class="col-sm-3 col-form-label" for="expandedURI">Expanded URI</label>
               <div class="col-sm-9">
                 <div class="form-control text-truncate"
@@ -100,7 +101,7 @@
               <div class="col-sm-9">
                 <input [type]="getInputType(item.key)" class="form-control"
                        [(ngModel)]="jsonSchema[item.key].value" [ngModelOptions]="{standalone: true}"
-                       (keyup)="halFormsPropertyChanged()">
+                       (keyup)="propertyChanged()">
               </div>
             </div>
             <hr>
@@ -128,14 +129,14 @@
                          type="{{item.type}}"
                          placeholder="{{item.placeholder}}"
                          [appHalFormsProperty]="item"
-                         (change)="halFormsPropertyChanged()"
-                         (keyup)="halFormsPropertyChanged()">
+                         (change)="propertyChanged()"
+                         (keyup)="propertyChanged()">
                   <div class="error-text">{{getValidationErrors(ngModel)}}</div>
                 </div>
                 <select *ngIf="getUiElementForHalFormsTemplateProperty(item) === 'select'"
                         class="form-control" [(ngModel)]="item.value"
                         name="{{item.name}}" id="request-option-{{item.name}}"
-                        (change)="halFormsPropertyChanged()">
+                        (change)="propertyChanged()">
                   <option *ngFor="let option of getHalFormsOptions(item)"
                           [value]="option.value" [selected]="isHalFormsOptionSelected(item, option.value)">
                     {{option.prompt}}

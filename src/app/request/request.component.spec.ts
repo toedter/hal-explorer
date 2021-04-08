@@ -273,7 +273,7 @@ describe('RequestComponent', () => {
     component.jsonSchema.email.value = 'kai@toedter.com';
     component.jsonSchema.fullName.value = 'Kai Toedter';
 
-    component.halFormsPropertyChanged();
+    component.propertyChanged();
     expect(component.requestBody).toBe('{\n  "fullName": "Kai Toedter",\n  "email": "kai@toedter.com"\n}');
   });
 
@@ -283,7 +283,7 @@ describe('RequestComponent', () => {
     component.halFormsProperties[0].value = 'Movie Title';
     component.halFormsProperties[1].value = '2019';
 
-    component.halFormsPropertyChanged();
+    component.propertyChanged();
 
     expect(component.requestBody).toBe('{\n  "title": "Movie Title",\n  "year": "2019"\n}');
   });
@@ -295,7 +295,7 @@ describe('RequestComponent', () => {
     component.halFormsProperties[1].value = 'Lucas';
 
     component.originalRequestUri = 'http://directors.com';
-    component.halFormsPropertyChanged();
+    component.propertyChanged();
 
     expect(component.newRequestUri).toBe('http://directors.com?first-name=George&last-name=Lucas');
   });
@@ -307,7 +307,7 @@ describe('RequestComponent', () => {
     component.halFormsProperties[1].value = 'Lucas';
 
     component.originalRequestUri = 'http://directors.com';
-    component.halFormsPropertyChanged();
+    component.propertyChanged();
 
     expect(component.newRequestUri).toBe('http://directors.com?first-name=George&last-name=Lucas');
   });
@@ -536,6 +536,15 @@ describe('RequestComponent', () => {
     expect(component.halFormsPropertyKey).toEqual('Change Movie with Options and Inline and Required');
     expect(component.halFormsProperties).toEqual(halFormsTemplate.value.properties);
     expect(component.halFormsProperties[0].value).toEqual('Movie 1');
+  });
+
+  it('should compute URI From Template when HAL-FORMS properties are available', () => {
+    component.templatedUri = 'http://localhost/api/users{?page,size}';
+    component.uriTemplateParameters = [];
+    component.halFormsProperties = [];
+    component.computeUriFromTemplate();
+
+    expect(component.newRequestUri).toEqual('http://localhost/api/users');
   });
 
 });

@@ -86,7 +86,7 @@ export class RequestComponent implements OnInit {
           this.newRequestUri = event.uri;
         }
         $('#HttpRequestTrigger').trigger('click');
-        this.halFormsPropertyChanged();
+        this.propertyChanged();
       }
     });
 
@@ -117,7 +117,7 @@ export class RequestComponent implements OnInit {
     this.requestService.getUri(this.uri);
   }
 
-  computeUriFromTemplate() {
+  computeUriFromTemplate(checkHalFormsProperties = true) {
     const uriTemplate = utpl(this.templatedUri);
     const templateParams = {};
     for (const parameter of this.uriTemplateParameters) {
@@ -126,6 +126,9 @@ export class RequestComponent implements OnInit {
       }
     }
     this.newRequestUri = uriTemplate.fill(templateParams);
+    if (this.halFormsProperties && checkHalFormsProperties) {
+      this.propertyChanged();
+    }
   }
 
   isUriTemplated(uri: string) {
@@ -133,10 +136,12 @@ export class RequestComponent implements OnInit {
     return uriTemplate.varNames.length > 0;
   }
 
-  halFormsPropertyChanged() {
-    let hasProperties = false;
+  propertyChanged() {
     this.requestBody = '{\n';
-    this.newRequestUri = this.originalRequestUri;
+    if (this.originalRequestUri) {
+      this.newRequestUri = this.originalRequestUri;
+    }
+    let hasProperties = false;
     if (this.jsonSchema) {
       for (const key of Object.keys(this.jsonSchema)) {
         if (this.jsonSchema[key].value && this.jsonSchema[key].value.length > 0) {
@@ -149,6 +154,10 @@ export class RequestComponent implements OnInit {
         }
       }
     } else if (this.halFormsProperties) {
+      if (this.templatedUri) {
+        this.computeUriFromTemplate(false);
+        hasProperties = this.newRequestUri.includes('?');
+      }
       for (const item of this.halFormsProperties) {
         let httpMethod = 'get';
         if (this.halFormsTemplate.value.method) {
