@@ -43,6 +43,8 @@ export class RequestService {
     });
   private customRequestHeaders: RequestHeader[];
 
+  private noValueSelected = '<No Value Selected>';
+
   constructor(private appService: AppService, private http: HttpClient) {
   }
 
@@ -236,4 +238,13 @@ export class RequestService {
     return uriTemplate.varNames.length > 0;
   }
 
+  computeHalFormsOptionsFromLink(property: any) {
+    if (!(property.options && property.options.link && property.options.link.href)) {
+      return;
+    }
+
+    this.http.get(property.options.link.href).subscribe(response => {
+      property.options.inline = response;
+    });
+  }
 }

@@ -137,7 +137,7 @@
                         class="form-control" [(ngModel)]="item.value"
                         name="{{item.name}}" id="request-option-{{item.name}}"
                         (change)="propertyChanged()">
-                  <option *ngFor="let option of item.computedOptions"
+                  <option *ngFor="let option of item.options.computedOptions"
                           [value]="option.value" [selected]="isHalFormsOptionSelected(item, option.value)">
                     {{option.prompt}}
                   </option>

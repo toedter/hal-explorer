@@ -154,6 +154,23 @@ const halFormsTemplates = {
           }
         }
       ]
+    },
+    withOptionsAndLink: {
+      title: 'Change Movie with Options and Link',
+      method: 'put',
+      contentType: '',
+      properties: [
+        {
+          name: 'title',
+          prompt: 'Titel',
+          required: true,
+          options: {
+            link: {
+              href: 'http://options.com'
+            }
+          }
+        }
+      ]
     }
   }
 };
@@ -170,13 +187,17 @@ describe('RequestComponent', () => {
 
   beforeEach(waitForAsync(() => {
     requestServiceMock = jasmine.createSpyObj(
-      ['getResponseObservable', 'getNeedInfoObservable', 'setCustomHeaders', 'getUri', 'getInputType', 'requestUri']);
+      ['getResponseObservable', 'getNeedInfoObservable', 'setCustomHeaders',
+        'getUri', 'getInputType', 'requestUri', 'computeHalFormsOptionsFromLink']);
     needInfoSubject = new Subject<string>();
     responseSubject = new Subject<string>();
     requestServiceMock.getResponseObservable.and.returnValue(responseSubject);
     requestServiceMock.getNeedInfoObservable.and.returnValue(needInfoSubject);
     requestServiceMock.getUri.and.returnValue('http://localhost/api');
     requestServiceMock.getInputType.and.returnValue('number');
+    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(property => {
+      property.options.inline = ['a', 'b'];
+    });
 
     uriSubject = new Subject<string>();
     requestHeaderSubject = new Subject<RequestHeader[]>();
@@ -185,6 +206,7 @@ describe('RequestComponent', () => {
       {uriObservable: uriSubject, requestHeadersObservable: requestHeaderSubject});
     appServiceMock.getUri.and.returnValue('http://localhost/api');
     appServiceMock.getCustomRequestHeaders.and.returnValue([]);
+
     const jsonHighlighterServiceMock = jasmine.createSpyObj(['syntaxHighlight']);
 
     TestBed.configureTestingModule({
@@ -522,7 +544,7 @@ describe('RequestComponent', () => {
 
   it('should populate HAL-FORMS options value and inline and required', () => {
     const halFormsTemplate = {
-      key: 'withOptionsAndInline',
+      key: 'withOptionsAndInlineAndRequired',
       value: halFormsTemplates._templates.withOptionsAndInlineAndRequired
     };
 
@@ -546,5 +568,39 @@ describe('RequestComponent', () => {
 
     expect(component.newRequestUri).toEqual('http://localhost/api/users');
   });
+
+  it('should compute HAL-FORMS options from options.link', () => {
+    const halFormsTemplate = {
+      key: 'withOptionsAndLink',
+      value: halFormsTemplates._templates.withOptionsAndLink
+    };
+
+    const event: HttpRequestEvent =
+      new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
+        undefined, halFormsTemplate);
+
+    needInfoSubject.next(event);
+
+    expect((halFormsTemplates._templates.withOptionsAndLink.properties[0].options as any).computedOptions[0].prompt).toEqual('a');
+  });
+
+  it('should not compute HAL-FORMS options from options.link', () => {
+    const halFormsTemplate = {
+      key: 'withOptionsAndLink',
+      value: halFormsTemplates._templates.withOptionsAndLink
+    };
+    (halFormsTemplates._templates.withOptionsAndLink.properties[0].options as any).inline = undefined;
+
+    const event: HttpRequestEvent =
+      new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
+        undefined, halFormsTemplate);
+
+    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(property => {
+    });
+    needInfoSubject.next(event);
+
+    expect((halFormsTemplates._templates.withOptionsAndLink.properties[0].options as any).inline).toBeUndefined();
+  });
+
 
 });

@@ -318,4 +318,29 @@ describe('RequestService', () => {
     expect(requestService.processCommand).not.toHaveBeenCalled();
   });
 
+  it('should not compute HAL-FORMS options from link', () => {
+    spyOn(httpClient, 'get').and.callThrough();
+
+    let property = {};
+    requestService.computeHalFormsOptionsFromLink(property);
+    property = {options: {}};
+    requestService.computeHalFormsOptionsFromLink(property);
+    property = {options: {link: {}}};
+    requestService.computeHalFormsOptionsFromLink(property);
+
+    expect(httpClient.get).not.toHaveBeenCalled();
+  });
+
+  it('should  compute HAL-FORMS options from link', () => {
+    spyOn(httpClient, 'get').and.callThrough();
+
+    const property = {options: {link: {href: 'http://localhost/options'}}};
+    requestService.computeHalFormsOptionsFromLink(property);
+    const optionsRequest = httpMock.expectOne('http://localhost/options');
+    optionsRequest.flush(['a', 'b']);
+
+    expect(httpClient.get).toHaveBeenCalled();
+    expect((property.options as any).inline).toEqual(['a', 'b']);
+  });
+
 });

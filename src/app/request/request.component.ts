@@ -45,7 +45,7 @@ export class RequestComponent implements OnInit {
     this.uri = this.appService.getUri();
     this.tempRequestHeaders = this.appService.getCustomRequestHeaders();
 
-    this.requestService.getNeedInfoObservable().subscribe((value: any) => {
+    this.requestService.getNeedInfoObservable().subscribe(async (value: any) => {
       if (value.type === EventType.FillHttpRequest) {
         this.jsonSchema = undefined;
         this.halFormsProperties = undefined;
@@ -62,14 +62,27 @@ export class RequestComponent implements OnInit {
           this.halFormsProperties = this.halFormsTemplate.value.properties;
           for (const property of this.halFormsProperties) {
             if (property.options) {
+              if (!property.options.inline && property.options.link) {
+                this.requestService.computeHalFormsOptionsFromLink(property);
+
+                // Hack to poll and wait for the asynchronous HTTP call
+                // that fills property.options.inline
+                for (let i = 0; i < 10; i++) {
+                  if (!property.options.inline) {
+                    await new Promise(resolve => setTimeout(resolve, 50));
+                  } else {
+                    break;
+                  }
+                }
+              }
+              property.options.computedOptions = this.getHalFormsOptions(property);
               if (property.options.selectedValues) {
                 property.value = property.options.selectedValues;
               } else if (!property.required && !property.options.selectedValues) {
                 property.value = this.noValueSelected;
-              } else if (property.required && !property.options.selectedValues) {
-                property.value = this.getHalFormsOptions(property)[0].value;
+              } else if (property.required && !property.options.selectedValues && property.options.computedOptions) {
+                property.value = property.options.computedOptions[0].value;
               }
-              property.computedOptions = this.getHalFormsOptions(property);
             }
           }
           this.halFormsPropertyKey = this.halFormsTemplate.value.title;
@@ -90,6 +103,7 @@ export class RequestComponent implements OnInit {
           this.originalRequestUri = event.uri;
           this.newRequestUri = event.uri;
         }
+
         $('#HttpRequestTrigger').trigger('click');
         this.propertyChanged();
       }
@@ -285,7 +299,6 @@ export class RequestComponent implements OnInit {
     }
     return 'input';
   }
-
 
   getHalFormsOptions(property: any): Array<DictionaryObject> {
     if (!property.options) {
