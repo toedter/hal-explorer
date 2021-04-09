@@ -17,6 +17,7 @@ export class DictionaryObject {
 })
 export class RequestComponent implements OnInit {
   uri: string;
+  isUriTemplate: boolean;
   templatedUri: string;
   uriTemplateParameters: UriTemplateParameter[];
   httpRequestEvent: HttpRequestEvent = new HttpRequestEvent(EventType.FillHttpRequest, Command.Post, '');
@@ -73,7 +74,8 @@ export class RequestComponent implements OnInit {
         this.requestBody = '';
         this.selectedHttpMethod = event.command;
         this.templatedUri = undefined;
-        if (this.isUriTemplated(event.uri)) {
+        this.isUriTemplate = this.isUriTemplated(event.uri);
+        if (this.isUriTemplate) {
           const uriTemplate: URITemplate = utpl(event.uri);
           this.uriTemplateParameters = [];
           for (const param of uriTemplate.varNames) {
@@ -131,7 +133,7 @@ export class RequestComponent implements OnInit {
     }
   }
 
-  isUriTemplated(uri: string) {
+  private isUriTemplated(uri: string) {
     const uriTemplate = utpl(uri);
     return uriTemplate.varNames.length > 0;
   }

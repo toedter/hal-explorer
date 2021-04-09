@@ -52,7 +52,7 @@
         <form #myForm="ngForm">
           <div class="form-group row">
             <label class="col-sm-3 col-form-label" for="uri">URI
-              <span *ngIf="isUriTemplated(httpRequestEvent.uri)">Template</span>
+              <span *ngIf="isUriTemplate">Template</span>
             </label>
             <div class="col-sm-9">
               <div class="form-control text-truncate"
@@ -61,7 +61,7 @@
             </div>
           </div>
 
-          <div *ngIf="isUriTemplated(httpRequestEvent.uri)" class="form-group">
+          <div *ngIf="isUriTemplate" class="form-group">
             <label>Parameters</label>
             <div id="uri-parameters" class="form-group row"
                  *ngFor="let parameter of uriTemplateParameters">
