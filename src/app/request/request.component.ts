@@ -69,7 +69,11 @@ export class RequestComponent implements OnInit {
                 // that fills property.options.inline
                 for (let i = 0; i < 10; i++) {
                   if (!property.options.inline) {
-                    await new Promise(resolve => setTimeout(resolve, 50));
+                    try {
+                      await new Promise((resolve) => setTimeout(resolve, 50));
+                    } catch (e) {
+                      // ignore
+                    }
                   } else {
                     break;
                   }
