@@ -61,12 +61,15 @@ export class RequestComponent implements OnInit {
           this.halFormsTemplate = event.halFormsTemplate;
           this.halFormsProperties = this.halFormsTemplate.value.properties;
           for (const property of this.halFormsProperties) {
-            if (property.options && property.options.selectedValues) {
-              property.value = property.options.selectedValues;
-            } else if (property.options && !property.required && !property.options.selectedValues) {
-              property.value = this.noValueSelected;
-            } else if (property.options && property.required && !property.options.selectedValues) {
-              property.value = this.getHalFormsOptions(property)[0].value;
+            if (property.options) {
+              if (property.options.selectedValues) {
+                property.value = property.options.selectedValues;
+              } else if (!property.required && !property.options.selectedValues) {
+                property.value = this.noValueSelected;
+              } else if (property.required && !property.options.selectedValues) {
+                property.value = this.getHalFormsOptions(property)[0].value;
+              }
+              property.computedOptions = this.getHalFormsOptions(property);
             }
           }
           this.halFormsPropertyKey = this.halFormsTemplate.value.title;
@@ -291,7 +294,7 @@ export class RequestComponent implements OnInit {
 
     const dictionaryObjects: Array<DictionaryObject> = [];
 
-    if (!property.required && property.options && !property.options.selectedValues) {
+    if (!property.required && property.options) {
       dictionaryObjects.push(new DictionaryObject(this.noValueSelected, this.noValueSelected));
     }
 
