@@ -34,7 +34,7 @@ export class RequestComponent implements OnInit {
   halFormsTemplate: any;
   halFormsPropertyKey: string;
 
-  private noValueSelected = '<No Value Selected>';
+  noValueSelected = '<No Value Selected>';
 
   constructor(private appService: AppService, private requestService: RequestService) {
   }
@@ -79,13 +79,20 @@ export class RequestComponent implements OnInit {
                   }
                 }
               }
-              property.options.computedOptions = this.getHalFormsOptions(property);
-              if (property.options.selectedValues) {
-                property.value = property.options.selectedValues;
-              } else if (!property.required && !property.options.selectedValues) {
-                property.value = this.noValueSelected;
-              } else if (property.required && !property.options.selectedValues && property.options.computedOptions) {
-                property.value = property.options.computedOptions[0].value;
+              if (!property.options.inline) {
+                console.warn('Cannot compute HAL-FORMS options for property "' + property.name + '".');
+                console.warn('Will ignore HAL-FORMS options for property "' + property.name + '".');
+                property.options = undefined;
+              } else {
+                property.options.computedOptions = this.getHalFormsOptions(property);
+
+                if (property.options.selectedValues) {
+                  property.value = property.options.selectedValues[0];
+                } else if (!property.required && !property.options.selectedValues) {
+                  property.value = this.noValueSelected;
+                } else if (property.required && !property.options.selectedValues && property.options.computedOptions) {
+                  property.value = property.options.computedOptions[0].value;
+                }
               }
             }
           }
