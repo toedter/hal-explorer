@@ -20,7 +20,8 @@
               "href": "http://localhost:3000/shipping.json",
               "templated": "false",
               "type": "application/json"
-            }
+            },
+            "maxItems": 1
           }
         }
       ]

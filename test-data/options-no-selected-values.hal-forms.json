@@ -13,7 +13,8 @@
           "name" : "shipping",
           "prompt" : "Select Shipping Method",
           "options" : {
-            "inline" : ["FedEx","UPS","DHL"]
+            "inline" : ["FedEx","UPS","DHL"],
+            "maxItems": 1
           }
         }
       ]

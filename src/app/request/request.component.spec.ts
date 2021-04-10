@@ -122,7 +122,8 @@ const halFormsTemplates = {
           required: true,
           options: {
             selectedValues: ['Movie 1', 'Movie 2']
-          }
+          },
+          maxItems: 1
         }
       ]
     },
@@ -136,7 +137,8 @@ const halFormsTemplates = {
           prompt: 'Titel',
           options: {
             selectedValues: ['Movie 1'],
-            inline: ['Movie 1', 'Movie 2']
+            inline: ['Movie 1', 'Movie 2'],
+            maxItems: 1
           }
         }
       ]
@@ -150,7 +152,8 @@ const halFormsTemplates = {
           name: 'title',
           prompt: 'Titel',
           options: {
-            inline: ['Movie 1', 'Movie 2']
+            inline: ['Movie 1', 'Movie 2'],
+            maxItems: 1
           }
         }
       ]
@@ -165,7 +168,8 @@ const halFormsTemplates = {
           prompt: 'Titel',
           required: true,
           options: {
-            inline: ['Movie 1', 'Movie 2']
+            inline: ['Movie 1', 'Movie 2'],
+            maxItems: 1
           }
         }
       ]
@@ -182,7 +186,41 @@ const halFormsTemplates = {
           options: {
             link: {
               href: 'http://options.com'
-            }
+            },
+            maxItems: 1
+          }
+        }
+      ]
+    },
+    withMultipleOptions: {
+      title: 'Change Movie with multiple Options',
+      method: 'put',
+      contentType: '',
+      properties: [
+        {
+          name: 'title',
+          prompt: 'Titel',
+          required: true,
+          options: {
+            selectedValues: ['Movie 1', 'Movie 2'],
+            inline: ['Movie 1', 'Movie 2'],
+            maxItems: 2
+          }
+        }
+      ]
+    },
+    withMultipleOptionsAndNoSelectedValues: {
+      title: 'Change Movie with multiple Options and no selected values',
+      method: 'put',
+      contentType: '',
+      properties: [
+        {
+          name: 'title',
+          prompt: 'Titel',
+          required: true,
+          options: {
+            inline: ['Movie 1', 'Movie 2'],
+            maxItems: 2
           }
         }
       ]
@@ -481,16 +519,26 @@ describe('RequestComponent', () => {
     expect(uiElement).toBe('select');
   });
 
-  it('should get HAL-FORMS options', () => {
+  it('should get HAL-FORMS options (single option)', () => {
     let options = component.getHalFormsOptions({});
     expect(options).toEqual([]);
 
     const noValueSelected = '<No Value Selected>';
-    options = component.getHalFormsOptions({options: {}, required: false});
+    options = component.getHalFormsOptions({
+      options: {
+        maxItems: 1
+      },
+      required: false
+    });
     expect(options[0].prompt).toBe(noValueSelected);
     expect(options[0].value).toBe(noValueSelected);
 
-    options = component.getHalFormsOptions({options: {inline: ['a', 'b']}});
+    options = component.getHalFormsOptions({
+      options: {
+        inline: ['a', 'b'],
+        maxItems: 1
+      }
+    });
     expect(options[0].prompt).toBe(noValueSelected);
     expect(options[0].value).toBe(noValueSelected);
     expect(options[1].prompt).toBe('a');
@@ -498,15 +546,85 @@ describe('RequestComponent', () => {
     expect(options[2].prompt).toBe('b');
     expect(options[2].value).toBe('b');
 
-    options = component.getHalFormsOptions({options: {inline: [{prompt: 'a', value: 'x'}, {prompt: 'b', value: 'y'}]}});
+    options = component.getHalFormsOptions({
+      options: {
+        inline: [
+          {
+            prompt: 'a',
+            value: 'x'
+          },
+          {
+            prompt: 'b',
+            value: 'y'
+          }
+        ],
+        maxItems: 1
+      }
+    });
     expect(options[0].prompt).toBe(noValueSelected);
     expect(options[0].value).toBe(noValueSelected);
     expect(options[1].prompt).toBe('a');
     expect(options[1].value).toBe('x');
     expect(options[2].prompt).toBe('b');
     expect(options[2].value).toBe('y');
+  });
 
-    options = component.getHalFormsOptions({required: true, options: {inline: [{prompt: 'a', value: 'x'}, {prompt: 'b', value: 'y'}]}});
+  it('should get HAL-FORMS options (multiple options)', () => {
+    let options = component.getHalFormsOptions({});
+    expect(options).toEqual([]);
+
+    const noValueSelected = '<No Value Selected>';
+    options = component.getHalFormsOptions({
+      options: {
+      },
+      required: false
+    });
+    expect(options).toEqual([]);
+
+    options = component.getHalFormsOptions({
+      options: {
+        inline: ['a', 'b']
+      }
+    });
+    expect(options[0].prompt).toBe('a');
+    expect(options[0].value).toBe('a');
+    expect(options[1].prompt).toBe('b');
+    expect(options[1].value).toBe('b');
+
+    options = component.getHalFormsOptions({
+      options: {
+        inline: [
+          {
+            prompt: 'a',
+            value: 'x'
+          },
+          {
+            prompt: 'b',
+            value: 'y'
+          }
+        ]
+      }
+    });
+    expect(options[0].prompt).toBe('a');
+    expect(options[0].value).toBe('x');
+    expect(options[1].prompt).toBe('b');
+    expect(options[1].value).toBe('y');
+
+    options = component.getHalFormsOptions({
+      required: true,
+      options: {
+        inline: [
+          {
+            prompt: 'a',
+            value: 'x'
+          },
+          {
+            prompt: 'b',
+            value: 'y'
+          }
+        ]
+      }
+    });
     expect(options[0].prompt).toBe('a');
     expect(options[0].value).toBe('x');
     expect(options[1].prompt).toBe('b');
@@ -633,5 +751,39 @@ describe('RequestComponent', () => {
     expect((halFormsTemplates._templates.withOptionsAndLink.properties[0].options as any).inline).toBeUndefined();
   });
 
+
+  it('should compute HAL-FORMS with multiple options', () => {
+    const halFormsTemplate = {
+      key: 'withMultipleOptions',
+      value: halFormsTemplates._templates.withMultipleOptions
+    };
+
+    const event: HttpRequestEvent =
+      new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
+        undefined, halFormsTemplate);
+
+    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(property => {
+    });
+    needInfoSubject.next(event);
+
+    expect((halFormsTemplates._templates.withMultipleOptions.properties[0] as any).value).toEqual([ 'Movie 1', 'Movie 2' ]);
+  });
+
+  it('should compute HAL-FORMS with multiple options and no selected values', () => {
+    const halFormsTemplate = {
+      key: 'withMultipleOptionsAndNoSelectedValues',
+      value: halFormsTemplates._templates.withMultipleOptionsAndNoSelectedValues
+    };
+
+    const event: HttpRequestEvent =
+      new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
+        undefined, halFormsTemplate);
+
+    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(property => {
+    });
+    needInfoSubject.next(event);
+
+    expect((halFormsTemplates._templates.withMultipleOptionsAndNoSelectedValues.properties[0] as any).value).toEqual([ 'Movie 1' ]);
+  });
 
 });

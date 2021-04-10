@@ -87,11 +87,19 @@ export class RequestComponent implements OnInit {
                 property.options.computedOptions = this.getHalFormsOptions(property);
 
                 if (property.options.selectedValues) {
-                  property.value = property.options.selectedValues[0];
+                  if (property?.options?.maxItems === 1) {
+                    property.value = property.options.selectedValues[0];
+                  } else {
+                    property.value = property.options.selectedValues;
+                  }
                 } else if (!property.required && !property.options.selectedValues) {
                   property.value = this.noValueSelected;
                 } else if (property.required && !property.options.selectedValues && property.options.computedOptions) {
-                  property.value = property.options.computedOptions[0].value;
+                  if (property?.options?.maxItems === 1) {
+                    property.value = property.options.computedOptions[0].value;
+                  } else {
+                    property.value = [property.options.computedOptions[0].value];
+                  }
                 }
               }
             }
@@ -197,6 +205,7 @@ export class RequestComponent implements OnInit {
           httpMethod = 'get';
         }
         const hasBody = (httpMethod === 'post' || httpMethod === 'put' || httpMethod === 'patch');
+        const optionsAsArray = item?.options?.maxItems !== 1;
         if (item.name && item.value && item.value !== '<No Value Selected>') {
           if (hasProperties) {
             if (hasBody) {
@@ -211,7 +220,11 @@ export class RequestComponent implements OnInit {
           }
 
           if (hasBody) {
-            this.requestBody += '  "' + item.name + '": ' + '"' + item.value + '"';
+            if (optionsAsArray) {
+              this.requestBody += '  "' + item.name + '": ' + JSON.stringify(item.value);
+            } else {
+              this.requestBody += '  "' + item.name + '": ' + '"' + item.value + '"';
+            }
           } else {
             this.newRequestUri += item.name + '=' + item.value;
           }
@@ -318,7 +331,7 @@ export class RequestComponent implements OnInit {
 
     const dictionaryObjects: Array<DictionaryObject> = [];
 
-    if (!property.required && property.options) {
+    if (!property.required && property.options && property.options.maxItems === 1) {
       dictionaryObjects.push(new DictionaryObject(this.noValueSelected, this.noValueSelected));
     }
 
@@ -344,4 +357,3 @@ export class RequestComponent implements OnInit {
     return property.value.includes(value);
   }
 }
-

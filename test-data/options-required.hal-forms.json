@@ -15,7 +15,8 @@
           "required": "true",
           "options" : {
             "selectedValues" : ["FedEx"],
-            "inline" : ["FedEx","UPS","DHL"]
+            "inline" : ["FedEx","UPS","DHL"],
+            "maxItems": 1
           }
         }
       ]
