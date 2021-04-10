@@ -322,8 +322,8 @@ export class RequestComponent implements OnInit {
       dictionaryObjects.push(new DictionaryObject(this.noValueSelected, this.noValueSelected));
     }
 
-    const promptField = property?.options?.promptField || 'prompt';
-    const valueField = property?.options?.valueField || 'value';
+    const promptField = property.options?.promptField || 'prompt';
+    const valueField = property.options?.valueField || 'value';
 
     if (property.options.inline) {
       for (const entry of property.options.inline) {

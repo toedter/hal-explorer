@@ -331,7 +331,7 @@ describe('RequestService', () => {
     expect(httpClient.get).not.toHaveBeenCalled();
   });
 
-  it('should  compute HAL-FORMS options from link', () => {
+  it('should compute HAL-FORMS options from link', () => {
     spyOn(httpClient, 'get').and.callThrough();
 
     const property = {options: {link: {href: 'http://localhost/options'}}};
@@ -341,6 +341,46 @@ describe('RequestService', () => {
 
     expect(httpClient.get).toHaveBeenCalled();
     expect((property.options as any).inline).toEqual(['a', 'b']);
+  });
+
+  it('should use accept header from HAL-FORMS options from link.type', () => {
+    spyOn(httpClient, 'get').and.callThrough();
+
+    const property = {
+      options: {
+        link: {
+          href: 'http://localhost/options',
+          type: 'application/hal+json'
+        }
+      }
+    };
+    requestService.computeHalFormsOptionsFromLink(property);
+    const optionsRequest = httpMock.expectOne('http://localhost/options');
+    optionsRequest.flush(['a', 'b']);
+
+    expect(httpClient.get).toHaveBeenCalled();
+    expect((property.options as any).inline).toEqual(['a', 'b']);
+    expect(optionsRequest.request.headers.get('Accept')).toBe('application/hal+json');
+  });
+
+  it('should fill HAL-FORMS options from link template with empty parameters', () => {
+    spyOn(httpClient, 'get').and.callThrough();
+
+    const property = {
+      options: {
+        link: {
+          href: 'http://localhost/options{?value}',
+          type: 'application/hal+json'
+        }
+      }
+    };
+    requestService.computeHalFormsOptionsFromLink(property);
+    const optionsRequest = httpMock.expectOne('http://localhost/options');
+    optionsRequest.flush(['a', 'b']);
+
+    expect(httpClient.get).toHaveBeenCalled();
+    expect((property.options as any).inline).toEqual(['a', 'b']);
+    expect(optionsRequest.request.headers.get('Accept')).toBe('application/hal+json');
   });
 
 });

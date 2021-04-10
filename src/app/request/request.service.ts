@@ -243,7 +243,18 @@ export class RequestService {
       return;
     }
 
-    this.http.get(property.options.link.href).subscribe(response => {
+    let headers = new HttpHeaders().set('Accept', 'application/json');
+
+    if (property.options.link.type) {
+      headers = headers.set('Accept', property.options.link.type);
+    }
+
+    if (this.isUriTemplated(property.options.link.href)) {
+      const uriTemplate: URITemplate = utpl(property.options.link.href);
+      property.options.link.href = uriTemplate.fill({});
+    }
+
+    this.http.get(property.options.link.href, {headers}).subscribe(response => {
       property.options.inline = response;
     });
   }
