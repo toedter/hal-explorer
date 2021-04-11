@@ -14,7 +14,9 @@
           "prompt" : "Select Shipping Method",
           "options" : {
             "selectedValues" : ["FedEx","DHL"],
-            "inline" : ["FedEx","UPS","DHL"]
+            "inline" : ["FedEx","UPS","DHL"],
+            "minItems": 1,
+            "maxItems": 2
           }
         }
       ]

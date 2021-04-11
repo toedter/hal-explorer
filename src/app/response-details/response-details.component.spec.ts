@@ -94,4 +94,14 @@ describe('ResponseDetailsComponent', () => {
 
     expect(window.console.error).toHaveBeenCalled();
   });
+
+  it('should handle HTTP response subject error with status 0', () => {
+    spyOn(window.console, 'error');
+
+    responseSubject.next(new Response(null, new HttpErrorResponse({status: 0, statusText: 'Unknown status'})));
+
+    expect(window.console.error).not.toHaveBeenCalled();
+    expect(component.httpErrorResponse.status).toBe(0);
+    expect(component.httpErrorResponse.statusText).toBe('Unknown status');
+  });
 });

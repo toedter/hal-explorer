@@ -178,4 +178,34 @@ describe( 'RequestValidatorDirective', () => {
     expect( validationResult ).toBe( null );
   } );
 
+  it( 'should validate value array length < "options.minItems"', () => {
+    const directive = new RequestValidatorDirective();
+    directive.halFormsProperty = {
+      options: {
+        minItems: 1
+      }
+    };
+
+    const control: AbstractControl = new FormControl( [] );
+    const validationResult = directive.validate( control );
+
+    expect( validationResult.minItems.minItems ).toBe( 1 );
+    expect( validationResult.minItems.actual ).toBe( 0 );
+  } );
+
+  it( 'should validate value array length > "options.maxItems"', () => {
+    const directive = new RequestValidatorDirective();
+    directive.halFormsProperty = {
+      options: {
+        maxItems: 1
+      }
+    };
+
+    const control: AbstractControl = new FormControl( ['a', 'b'] );
+    const validationResult = directive.validate( control );
+
+    expect( validationResult.maxItems.maxItems ).toBe( 1 );
+    expect( validationResult.maxItems.actual ).toBe( 2 );
+  } );
+
 });

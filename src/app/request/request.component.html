@@ -133,25 +133,30 @@
                          (keyup)="propertyChanged()">
                   <div class="error-text">{{getValidationErrors(ngModel)}}</div>
                 </div>
-                <select *ngIf="getUiElementForHalFormsTemplateProperty(item) === 'select' && item.options?.maxItems === 1"
-                        class="form-control" [(ngModel)]="item.value"
-                        name="{{item.name}}" id="request-option-{{item.name}}"
-                        (change)="propertyChanged()">
+                <select
+                  *ngIf="getUiElementForHalFormsTemplateProperty(item) === 'select' && item.options?.maxItems === 1"
+                  class="form-control" [(ngModel)]="item.value"
+                  name="{{item.name}}" id="request-option-{{item.name}}"
+                  [appHalFormsProperty]="item"
+                  (change)="propertyChanged()">
                   <option *ngFor="let option of item.options.computedOptions"
                           [value]="option.value" [selected]="isHalFormsOptionSelected(item, option.value)">
                     {{option.prompt}}
                   </option>
                 </select>
-                <select *ngIf="getUiElementForHalFormsTemplateProperty(item) === 'select' && item.options?.maxItems !== 1"
-                        class="form-control" [(ngModel)]="item.value"
-                        name="{{item.name}}" id="request-option-multiple-{{item.name}}"
-                        (change)="propertyChanged()"
-                        multiple>
+                <select
+                  *ngIf="getUiElementForHalFormsTemplateProperty(item) === 'select' && item.options?.maxItems !== 1"
+                  class="form-control" [(ngModel)]="item.value"
+                  name="{{item.name}}" id="request-option-multiple-{{item.name}}"
+                  [appHalFormsProperty]="item"
+                  (change)="propertyChanged()"
+                  multiple>
                   <option *ngFor="let option of item.options.computedOptions"
                           [value]="option.value" [selected]="isHalFormsOptionSelected(item, option.value)">
                     {{option.prompt}}
                   </option>
                 </select>
+                <div class="error-text">{{getValidationErrors(item)}}</div>
               </div>
             </div>
             <hr>

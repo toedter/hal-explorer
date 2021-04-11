@@ -430,7 +430,13 @@ describe('RequestComponent', () => {
         min: {
           min: 1
         },
-        email: true
+        email: true,
+        maxItems: {
+          maxItems: 2
+        },
+        minItems: {
+          minItems: 1
+        }
       }
     };
     const errorMessage: string = component.getValidationErrors(errors);
@@ -440,7 +446,9 @@ describe('RequestComponent', () => {
       + 'Value does not have required min length: 1\n'
       + 'Value is bigger than max: 100\n'
       + 'Value is smaller than min: 1\n'
-      + 'Value is not a valid email\n';
+      + 'Value is not a valid email\n'
+      + 'Selection exceeds the maximum number of items: 2\n'
+      + 'Selection falls below the minimum number of items: 1\n';
     expect(errorMessage).toBe(expectedResult);
   });
 
@@ -575,8 +583,7 @@ describe('RequestComponent', () => {
 
     const noValueSelected = '<No Value Selected>';
     options = component.getHalFormsOptions({
-      options: {
-      },
+      options: {},
       required: false
     });
     expect(options).toEqual([]);
@@ -766,7 +773,7 @@ describe('RequestComponent', () => {
     });
     needInfoSubject.next(event);
 
-    expect((halFormsTemplates._templates.withMultipleOptions.properties[0] as any).value).toEqual([ 'Movie 1', 'Movie 2' ]);
+    expect((halFormsTemplates._templates.withMultipleOptions.properties[0] as any).value).toEqual(['Movie 1', 'Movie 2']);
   });
 
   it('should compute HAL-FORMS with multiple options and no selected values', () => {
@@ -783,7 +790,7 @@ describe('RequestComponent', () => {
     });
     needInfoSubject.next(event);
 
-    expect((halFormsTemplates._templates.withMultipleOptionsAndNoSelectedValues.properties[0] as any).value).toEqual([ 'Movie 1' ]);
+    expect((halFormsTemplates._templates.withMultipleOptionsAndNoSelectedValues.properties[0] as any).value).toEqual(['Movie 1']);
   });
 
 });

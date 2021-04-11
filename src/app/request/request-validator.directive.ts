@@ -49,6 +49,25 @@ export class RequestValidatorDirective implements Validator {
       validationResult = Object.assign(validationResult, testControl.errors);
     }
 
+    if (this.halFormsProperty.options) {
+      if (this.halFormsProperty.options.maxItems && (control.value.length > this.halFormsProperty.options.maxItems)) {
+        validationResult = Object.assign(validationResult, {
+          maxItems: {
+            maxItems: this.halFormsProperty.options.maxItems,
+            actual: control.value.length
+          }
+        });
+      }
+      if (this.halFormsProperty.options.minItems && (control.value.length < this.halFormsProperty.options.minItems)) {
+        validationResult = Object.assign(validationResult, {
+          minItems: {
+            minItems: this.halFormsProperty.options.minItems,
+            actual: control.value.length
+          }
+        });
+      }
+    }
+    this.halFormsProperty.errors = validationResult;
     return validationResult;
   }
 }

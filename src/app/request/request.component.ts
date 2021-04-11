@@ -180,22 +180,22 @@ export class RequestComponent implements OnInit {
     if (this.originalRequestUri) {
       this.newRequestUri = this.originalRequestUri;
     }
-    let hasProperties = false;
+    let hasQueryParams = false;
     if (this.jsonSchema) {
       for (const key of Object.keys(this.jsonSchema)) {
         if (this.jsonSchema[key].value && this.jsonSchema[key].value.length > 0) {
-          if (hasProperties) {
+          if (hasQueryParams) {
             this.requestBody += ',\n';
           }
           this.requestBody += '  "' + key + '": ' + (this.jsonSchema[key].type !== 'integer' ? '"' : '')
             + this.jsonSchema[key].value + (this.jsonSchema[key].type !== 'integer' ? '"' : '');
-          hasProperties = true;
+          hasQueryParams = true;
         }
       }
     } else if (this.halFormsProperties) {
       if (this.templatedUri) {
         this.computeUriFromTemplate(false);
-        hasProperties = this.newRequestUri.includes('?');
+        hasQueryParams = this.newRequestUri.includes('?');
       }
       for (const item of this.halFormsProperties) {
         let httpMethod = 'get';
@@ -208,7 +208,7 @@ export class RequestComponent implements OnInit {
         const hasBody = (httpMethod === 'post' || httpMethod === 'put' || httpMethod === 'patch');
         const optionsAsArray = item?.options?.maxItems !== 1;
         if (item.name && item.value && item.value !== '<No Value Selected>') {
-          if (hasProperties) {
+          if (hasQueryParams) {
             if (hasBody) {
               this.requestBody += ',\n';
             } else {
@@ -229,7 +229,7 @@ export class RequestComponent implements OnInit {
           } else {
             this.newRequestUri += item.name + '=' + item.value;
           }
-          hasProperties = true;
+          hasQueryParams = true;
         }
       }
     }
@@ -313,6 +313,14 @@ export class RequestComponent implements OnInit {
 
     if (ngModel.errors.email) {
       errorMessage += 'Value is not a valid email\n';
+    }
+
+    if (ngModel.errors.maxItems) {
+      errorMessage += 'Selection exceeds the maximum number of items: ' + ngModel.errors.maxItems.maxItems + '\n';
+    }
+
+    if (ngModel.errors.minItems) {
+      errorMessage += 'Selection falls below the minimum number of items: ' + ngModel.errors.minItems.minItems + '\n';
     }
 
     return errorMessage;
