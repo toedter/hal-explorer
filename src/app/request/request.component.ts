@@ -92,7 +92,7 @@ export class RequestComponent implements OnInit {
                   } else {
                     property.value = property.options.selectedValues;
                   }
-                } else if (!property.required && !property.options.selectedValues) {
+                } else if (!property.required && !property.options.selectedValues && !(property.options?.minItems >= 1)) {
                   property.value = this.noValueSelected;
                 } else if (property.required && !property.options.selectedValues && property.options.computedOptions) {
                   if (property?.options?.maxItems === 1) {
@@ -331,7 +331,10 @@ export class RequestComponent implements OnInit {
 
     const dictionaryObjects: Array<DictionaryObject> = [];
 
-    if (!property.required && property.options && property.options.maxItems === 1) {
+    if (!property.required && property.options
+      && property.options.maxItems === 1
+      && !(property.options.minItems >= 1)
+    ) {
       dictionaryObjects.push(new DictionaryObject(this.noValueSelected, this.noValueSelected));
     }
 
