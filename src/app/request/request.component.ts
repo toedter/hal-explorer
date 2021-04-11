@@ -62,13 +62,14 @@ export class RequestComponent implements OnInit {
           this.halFormsProperties = this.halFormsTemplate.value.properties;
           for (const property of this.halFormsProperties) {
             if (property.options) {
-              if (!property.options.inline && property.options.link) {
+              const options = property.options;
+              if (!options.inline && options.link) {
                 this.requestService.computeHalFormsOptionsFromLink(property);
 
                 // Hack to poll and wait for the asynchronous HTTP call
                 // that fills property.options.inline
                 for (let i = 0; i < 10; i++) {
-                  if (!property.options.inline) {
+                  if (!options.inline) {
                     try {
                       await new Promise((resolve) => setTimeout(resolve, 50));
                     } catch (e) {
@@ -79,23 +80,23 @@ export class RequestComponent implements OnInit {
                   }
                 }
               }
-              if (!property.options.inline) {
+              if (!options.inline) {
                 console.warn('Cannot compute HAL-FORMS options for property "' + property.name + '".');
                 console.warn('Will ignore HAL-FORMS options for property "' + property.name + '".');
                 property.options = undefined;
               } else {
                 property.options.computedOptions = this.getHalFormsOptions(property);
 
-                if (property.options.selectedValues) {
-                  if (property?.options?.maxItems === 1) {
-                    property.value = property.options.selectedValues[0];
+                if (options.selectedValues) {
+                  if (options?.maxItems === 1) {
+                    property.value = options.selectedValues[0];
                   } else {
-                    property.value = property.options.selectedValues;
+                    property.value = options.selectedValues;
                   }
-                } else if (!property.required && !property.options.selectedValues && !(property.options?.minItems >= 1)) {
+                } else if (!property.required && !options.selectedValues && !(options?.minItems >= 1)) {
                   property.value = this.noValueSelected;
-                } else if (property.required && !property.options.selectedValues && property.options.computedOptions) {
-                  if (property?.options?.maxItems === 1) {
+                } else if (property.required && !options.selectedValues && options.computedOptions) {
+                  if (options?.maxItems === 1) {
                     property.value = property.options.computedOptions[0].value;
                   } else {
                     property.value = [property.options.computedOptions[0].value];
@@ -329,20 +330,18 @@ export class RequestComponent implements OnInit {
       return [];
     }
 
+    const options = property.options;
     const dictionaryObjects: Array<DictionaryObject> = [];
 
-    if (!property.required && property.options
-      && property.options.maxItems === 1
-      && !(property.options.minItems >= 1)
-    ) {
+    if (!property.required && options.maxItems === 1 && !(options.minItems >= 1)) {
       dictionaryObjects.push(new DictionaryObject(this.noValueSelected, this.noValueSelected));
     }
 
-    const promptField = property.options?.promptField || 'prompt';
-    const valueField = property.options?.valueField || 'value';
+    const promptField = options?.promptField || 'prompt';
+    const valueField = options?.valueField || 'value';
 
-    if (property.options.inline) {
-      for (const entry of property.options.inline) {
+    if (options.inline) {
+      for (const entry of options.inline) {
         if (typeof entry === 'string' || entry instanceof String) {
           dictionaryObjects.push(new DictionaryObject(entry, entry));
         } else {

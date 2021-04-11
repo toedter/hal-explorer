@@ -84,6 +84,15 @@ describe('DocumentationComponent', () => {
     expect(docHeight).toBeGreaterThan(0);
   });
 
+  it('should get iframe doc height', () => {
+    const iFrame = {style: {}, contentWindow: {document}};
+    spyOn(document, 'getElementById').and.returnValue(iFrame as any);
+
+    (window as any).setIframeHeight(1);
+
+    const docHeight: number = getDocHeight(document);
+    expect(docHeight).toBeGreaterThan(0);
+  });
 });
 
 
