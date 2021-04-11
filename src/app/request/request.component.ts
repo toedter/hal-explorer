@@ -111,6 +111,7 @@ export class RequestComponent implements OnInit {
         this.selectedHttpMethod = event.command;
         this.templatedUri = undefined;
         this.isUriTemplate = this.isUriTemplated(event.uri);
+        this.originalRequestUri = event.uri;
         if (this.isUriTemplate) {
           const uriTemplate: URITemplate = utpl(event.uri);
           this.uriTemplateParameters = [];
@@ -120,7 +121,6 @@ export class RequestComponent implements OnInit {
           this.templatedUri = event.uri;
           this.computeUriFromTemplate();
         } else {
-          this.originalRequestUri = event.uri;
           this.newRequestUri = event.uri;
         }
 
@@ -177,7 +177,10 @@ export class RequestComponent implements OnInit {
 
   propertyChanged() {
     this.requestBody = '{\n';
-    if (this.originalRequestUri) {
+
+    if (this.templatedUri) {
+      this.computeUriFromTemplate(false);
+    } else if (this.originalRequestUri) {
       this.newRequestUri = this.originalRequestUri;
     }
     let hasQueryParams = false;
@@ -194,7 +197,6 @@ export class RequestComponent implements OnInit {
       }
     } else if (this.halFormsProperties) {
       if (this.templatedUri) {
-        this.computeUriFromTemplate(false);
         hasQueryParams = this.newRequestUri.includes('?');
       }
       for (const item of this.halFormsProperties) {
