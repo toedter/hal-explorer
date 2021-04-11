@@ -255,8 +255,15 @@ export class RequestService {
       property.options.link.href = uriTemplate.fill({});
     }
 
-    this.http.get(property.options.link.href, {headers}).subscribe(response => {
-      property.options.inline = response;
+    this.http.get(property.options.link.href, {headers, observe: 'response'}).subscribe((response: HttpResponse<any>) => {
+      property.options.inline = response.body;
+      const contentType = response.headers.get('content-type');
+      if (contentType
+        && (contentType.startsWith('application/prs.hal-forms+json') || contentType.startsWith('application/hal+json'))
+        && response.body._embedded) {
+        const content = response.body._embedded[Object.keys(response.body._embedded)[0]];
+        property.options.inline = content;
+      }
     });
   }
 }

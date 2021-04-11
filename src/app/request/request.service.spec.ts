@@ -383,4 +383,83 @@ describe('RequestService', () => {
     expect(optionsRequest.request.headers.get('Accept')).toBe('application/hal+json');
   });
 
+
+  it('should fill HAL-FORMS options from link with HAL content', () => {
+    spyOn(httpClient, 'get').and.callThrough();
+
+    const property = {
+      options: {
+        link: {
+          href: 'http://localhost/options',
+          type: 'application/hal+json'
+        }
+      }
+    };
+    requestService.computeHalFormsOptionsFromLink(property);
+    const optionsRequest = httpMock.expectOne('http://localhost/options');
+
+    const responseHeaders: HttpHeaders = new HttpHeaders(
+      {
+        'content-type': 'application/hal+json'
+      });
+
+    optionsRequest.flush({_embedded: {xxx: ['a', 'b']}}, { headers: responseHeaders});
+
+    expect(httpClient.get).toHaveBeenCalled();
+    expect((property.options as any).inline).toEqual(['a', 'b']);
+    expect(optionsRequest.request.headers.get('Accept')).toBe('application/hal+json');
+  });
+
+  it('should fill HAL-FORMS options from link with HAL content', () => {
+    spyOn(httpClient, 'get').and.callThrough();
+
+    const property = {
+      options: {
+        link: {
+          href: 'http://localhost/options',
+          type: 'application/hal+json'
+        }
+      }
+    };
+    requestService.computeHalFormsOptionsFromLink(property);
+    const optionsRequest = httpMock.expectOne('http://localhost/options');
+
+    const responseHeaders: HttpHeaders = new HttpHeaders(
+      {
+        'content-type': 'application/hal+json'
+      });
+
+    optionsRequest.flush({_embedded: {xxx: ['a', 'b']}}, { headers: responseHeaders});
+
+    expect(httpClient.get).toHaveBeenCalled();
+    expect((property.options as any).inline).toEqual(['a', 'b']);
+    expect(optionsRequest.request.headers.get('Accept')).toBe('application/hal+json');
+  });
+
+  it('should fill HAL-FORMS options from link with HAL-FORMS content', () => {
+    spyOn(httpClient, 'get').and.callThrough();
+
+    const property = {
+      options: {
+        link: {
+          href: 'http://localhost/options',
+          type: 'application/prs.hal-forms+json'
+        }
+      }
+    };
+    requestService.computeHalFormsOptionsFromLink(property);
+    const optionsRequest = httpMock.expectOne('http://localhost/options');
+
+    const responseHeaders: HttpHeaders = new HttpHeaders(
+      {
+        'content-type': 'application/prs.hal-forms+json'
+      });
+
+    optionsRequest.flush({_embedded: {xxx: ['a', 'b']}}, { headers: responseHeaders});
+
+    expect(httpClient.get).toHaveBeenCalled();
+    expect((property.options as any).inline).toEqual(['a', 'b']);
+    expect(optionsRequest.request.headers.get('Accept')).toBe('application/prs.hal-forms+json');
+  });
+
 });

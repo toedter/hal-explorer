@@ -1,7 +1,7 @@
 {
   "_links": {
     "self": {
-      "href": "http://localhost:3000/options-invalid-link.hal-forms.json"
+      "href": "http://localhost:3000/options-link-hal-content.hal-forms.json"
     }
   },
   "_templates": {
@@ -17,10 +17,11 @@
               "FedEx"
             ],
             "link": {
-              "href": "http://localhost:3000/invalid-link",
+              "href": "http://localhost:3000/shipping.hal.json",
               "templated": "false",
-              "type": "application/json"
-            }
+              "type": "application/hal+json"
+            },
+            "maxItems": 1
           }
         }
       ]

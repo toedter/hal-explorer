@@ -50,7 +50,11 @@ export class RequestValidatorDirective implements Validator {
     }
 
     if (this.halFormsProperty.options) {
-      if (this.halFormsProperty.options.maxItems && (control.value.length > this.halFormsProperty.options.maxItems)) {
+      let noSelectedItems = 1;
+      if (control.value instanceof Array) {
+        noSelectedItems = control.value.length;
+      }
+      if (this.halFormsProperty.options.maxItems && (noSelectedItems > this.halFormsProperty.options.maxItems)) {
         validationResult = Object.assign(validationResult, {
           maxItems: {
             maxItems: this.halFormsProperty.options.maxItems,
@@ -58,7 +62,7 @@ export class RequestValidatorDirective implements Validator {
           }
         });
       }
-      if (this.halFormsProperty.options.minItems && (control.value.length < this.halFormsProperty.options.minItems)) {
+      if (this.halFormsProperty.options.minItems && (noSelectedItems < this.halFormsProperty.options.minItems)) {
         validationResult = Object.assign(validationResult, {
           minItems: {
             minItems: this.halFormsProperty.options.minItems,

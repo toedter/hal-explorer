@@ -1,7 +1,7 @@
 {
   "_links": {
     "self": {
-      "href": "http://localhost:3000/options-required.hal-forms.json"
+      "href": "http://localhost:3000/options-minItems-0.hal-forms.json"
     }
   },
   "_templates" : {
