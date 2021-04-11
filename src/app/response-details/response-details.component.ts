@@ -30,7 +30,11 @@ export class ResponseDetailsComponent implements OnInit {
           this.httpErrorResponse = response.httpErrorResponse;
           this.httpResponseReasonPhrase = 'Unknown';
           if (this.httpResponse) {
-            this.httpResponseReasonPhrase = getReasonPhrase(this.httpResponse.status);
+            if (this.httpResponse.status > 199) {
+              this.httpResponseReasonPhrase = getReasonPhrase(this.httpResponse.status);
+            } else if (this.httpResponse.statusText) {
+              this.httpResponseReasonPhrase = this.httpResponse.statusText;
+            }
             this.responseBody = undefined;
             if (this.httpResponse.body) {
               if (typeof this.httpResponse.body === 'string' || this.httpResponse.body instanceof String) {
@@ -44,8 +48,10 @@ export class ResponseDetailsComponent implements OnInit {
             }
           } else if (this.httpErrorResponse) {
             this.error = undefined;
-            if (this.httpErrorResponse.status > 200) {
+            if (this.httpErrorResponse.status > 199) {
               this.httpResponseReasonPhrase = getReasonPhrase(this.httpErrorResponse.status);
+            } else if (this.httpErrorResponse.statusText) {
+              this.httpResponseReasonPhrase = this.httpErrorResponse.statusText;
             }
 
             if (this.httpErrorResponse.error) {
