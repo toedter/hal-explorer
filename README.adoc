@@ -32,8 +32,9 @@ image::hal-explorer-templates.jpg[HAL Explorer Templates]
 * API URL, theme, layout and request headers stored in URL fragment
 * Support for Spring Data Rest profiles to populate properties in request editor
 * Support for HAL-FORMS templates
-** template elements in response explorer (see screenshot)
-** template properties in request editor
+** Template elements in response explorer (see screenshot)
+** Template properties in request editor
+** Options support in request editor
 * HAL-FORMS property constraint validation in request editor
 
 == Demo
@@ -50,15 +51,16 @@ I host this demos at Heroku, so please give them a bit time to warm up (This mig
 Run `yarn start` for a dev server. Navigate to http://localhost:4200/.
 The app will automatically reload if you change any of the source files.
 The development server has a build-in proxy configuration,
-so that a calls to `/api` are forwarded to calls to `localhost:8080/api`.
-This is convenient to test a local server without having to deal with CORS.
-If you run `yarn startl`, an addition file server is started on port 3000.
+so that all calls to `/api` are forwarded to `localhost:8080/api`.
+This is convenient when you want to test a local server without having to deal with CORS.
+If you run `yarn startl`, an additional file server is started with port 3000.
 In the test-data directory you find some JSON examples. Try it out with the URL
 http://localhost:4200/#uri=http://localhost:3000/movies.hal-forms.json.
 
 == Build
 
-Run `yarn build` to build the project in production mode. The build artifacts will be stored in the `dist/` directory.
+Run `yarn build` to build the project in production mode.
+The build artifacts will be stored in the `dist/` directory.
 
 == Gradle/Java Build Support
 
