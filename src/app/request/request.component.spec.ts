@@ -224,6 +224,21 @@ const halFormsTemplates = {
           }
         }
       ]
+    },
+    withOptionsAndMalformedInline: {
+      title: 'Change Movie with Options and Inline and no selected values',
+      method: 'put',
+      contentType: '',
+      properties: [
+        {
+          name: 'title',
+          prompt: 'Titel',
+          options: {
+            inline: {_embedded: ['Movie 1', 'Movie 2']},
+            maxItems: 1
+          }
+        }
+      ]
     }
   }
 };
@@ -791,6 +806,23 @@ describe('RequestComponent', () => {
     needInfoSubject.next(event);
 
     expect((halFormsTemplates._templates.withMultipleOptionsAndNoSelectedValues.properties[0] as any).value).toEqual(['Movie 1']);
+  });
+
+  it('should ignore HAL-FORMS options with malformed inline', () => {
+    const halFormsTemplate = {
+      key: 'withOptionsAndMalformedInline',
+      value: halFormsTemplates._templates.withOptionsAndMalformedInline
+    };
+
+    const event: HttpRequestEvent =
+      new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
+        undefined, halFormsTemplate);
+
+    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(property => {
+    });
+    needInfoSubject.next(event);
+
+    expect((halFormsTemplates._templates.withOptionsAndMalformedInline.properties[0] as any).options).toBeUndefined();
   });
 
 });

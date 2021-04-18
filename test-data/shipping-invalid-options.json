@@ -1,0 +1,10 @@
+{
+  "_embedded": {
+    "shipping": [
+      "FedEx",
+      "UPS",
+      "DHL"
+    ]
+  }
+}
+
