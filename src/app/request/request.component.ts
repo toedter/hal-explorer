@@ -361,7 +361,14 @@ export class RequestComponent implements OnInit {
         if (typeof entry === 'string' || entry instanceof String) {
           dictionaryObjects.push(new DictionaryObject(entry, entry));
         } else {
-          dictionaryObjects.push(new DictionaryObject(entry[promptField], entry[valueField]));
+          if (entry[promptField] && entry[valueField]) {
+            dictionaryObjects.push(new DictionaryObject(entry[promptField], entry[valueField]));
+          } else {
+            console.warn('HAL-FORMS: Selectable options for property "' + property.name + '" are not parsable');
+            console.warn('=> Property "' + property.name + '" input will be rendered as HTML "input"');
+            property.options = undefined; // this leads to updating the HTML to 'input' instead of 'select'
+            return dictionaryObjects;
+          }
         }
       }
     }
