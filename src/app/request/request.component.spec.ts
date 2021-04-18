@@ -855,7 +855,7 @@ describe('RequestComponent', () => {
     });
     needInfoSubject.next(event);
 
-    expect((halFormsTemplates._templates.withOptionsAndMalformedInline.properties[0] as any).options).toBeUndefined();
+    expect((halFormsTemplates._templates.withOptionsAndMalformedInline2.properties[0] as any).options).toBeUndefined();
   });
 
 });
