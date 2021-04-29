@@ -1,9 +1,18 @@
 plugins {
-  id "com.github.node-gradle.node" version "2.2.2"
+  id "com.github.node-gradle.node" version "3.0.1"
+  id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 
+repositories {
+  mavenCentral()
+  maven { url 'https://repo.spring.io/release' }
+  maven { url 'https://repo.spring.io/milestone' }
+}
+
+apply plugin: 'java'
+
 node {
-  version = '12.16.3'
+  version = '14.16.1'
   download = true
   workDir = file("${rootProject.buildDir}/node")
   nodeModulesDir = file("${project.projectDir}")
@@ -18,13 +27,46 @@ yarn_build.outputs.dir new File(projectDir, "dist")
 
 yarn_build.dependsOn yarn_install, yarn_lint //, yarn_test
 
-task clean() {
-  doFirst {
-    delete "dist"
-    delete "build"
+//task clean() {
+//  doFirst {
+//    delete "dist"
+//    delete "build"
+//  }
+//}
+
+// task build
+
+build.dependsOn yarn_build
+
+version = '0.17.0-SNAPSHOT'
+
+configurations {
+  docs
+}
+
+dependencies {
+  docs "io.spring.asciidoctor.backends:spring-asciidoctor-backends:0.0.1-M1"
+}
+
+asciidoctor {
+  configurations "docs"
+  sourceDir "doc"
+  attributes 'version': "${project.version}"
+  baseDirFollowsSourceFile()
+  outputOptions {
+    backends "spring-html"
   }
 }
 
-task build
+task doc {
+  dependsOn asciidoctor
+  dependsOn javadoc
 
-build.dependsOn yarn_build
+  doLast {
+    copy {
+      from "$projectDir/doc/img/"
+      into "$buildDir/docs/asciidoc/img/"
+    }
+  }
+}
+

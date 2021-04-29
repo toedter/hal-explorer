@@ -1,0 +1,6 @@
+[[theming]]
+= Theming
+
+HAL Explorer supports all the https://bootswatch.com/[Bootswatch] themes, an example of the theme "Darkly" looks like
+
+image::img/dark-theme.png[]

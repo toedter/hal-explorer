@@ -1,0 +1,4 @@
+[[license]]
+= License
+
+HAL Explorer is licended under MIT, see http://toedter.mit-license.org

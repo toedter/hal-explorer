@@ -1,3 +1,5 @@
+:doctype: book
+
 image:https://travis-ci.com/toedter/hal-explorer.svg?branch=master[Build Status, link="https://travis-ci.com/toedter/hal-explorer"]
 image:https://codecov.io/gh/toedter/hal-explorer/branch/master/graph/badge.svg["coverage", link="https://codecov.io/gh/toedter/hal-explorer"]
 image:https://img.shields.io/maven-central/v/org.webjars/hal-explorer?color=green["maven-central", link="https://search.maven.org/artifact/org.webjars/hal-explorer"]
@@ -10,25 +12,19 @@ and https://rwcbook.github.io/hal-forms/[HAL-FORMS] based RESTful Hypermedia API
 HAL Explorer was inspired by Mike Kelly's https://github.com/mikekelly/hal-browser[HAL-Browser].
 HAL Explorer also supports Spring Profiles.
 
-== Screenshots
+== Screenshot
 
-:imagesdir: screenshots/
-[.clearfix]
-:figure-caption!:
---
-image::hal-explorer.jpg[HAL Explorer]
-{nbsp}
-
-image::hal-explorer-templates.jpg[HAL Explorer Templates]
---
+image::./doc/img/hal-explorer.jpg[HAL Explorer]
 
 == Features
 
 * Responsive design
 * Syntax highlighted response body
 * Custom request headers
-* Bootswatch themes
-* 2 layouts (2 columns or 3 columns for the documentation)
+* https://bootswatch.com/[Bootswatch themes]
+* 2 layouts
+** 2 columns layout with optional documentation
+** 3 columns layout with documentation always visible if available
 * API URL, theme, layout and request headers stored in URL fragment
 * Support for Spring Data Rest profiles to populate properties in request editor
 * Support for HAL-FORMS templates

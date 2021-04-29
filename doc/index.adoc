@@ -1,0 +1,32 @@
+= HAL Explorer
+Kai Tödter
+:revnumber: {version}
+:revdate: {localdate}
+:doctype: book
+:docinfo: shared
+:sectnums:
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 5
+:fold: all
+
+With HAL Explorer you can explore HAL and HAL-FORMS based RESTful Hypermedia APIs.
+
+(C) 2021 The original authors.
+
+NOTE: Copies of this document may be made for your own use and for distribution to others, provided that you do not
+charge any fee for such copies and further provided that each copy contains this Copyright Notice,
+whether distributed in print or electronically.
+
+[project-meta]
+== Project Metadata
+
+* Version control: https://github.com/toedter/hal-explorer
+* Bugtracker: https://github.com/toedter/hal-explorer/issues
+
+include::introduction.adoc[leveloffset=+1]
+include::setup.adoc[leveloffset=+1]
+include::usage.adoc[leveloffset=+1]
+include::theming.adoc[leveloffset=+1]
+include::license.adoc[leveloffset=+1]
+
