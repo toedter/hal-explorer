@@ -8,17 +8,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.x]
-
     steps:
       - uses: actions/checkout@v2
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '14'
 
       # See: https://github.com/actions/cache/blob/main/examples.md#node---yarn
       - name: Get Yarn cache directory
@@ -76,9 +72,10 @@ jobs:
         run: ./gradlew doc
 
       - name: Deploy documentation to Github pages
-        uses: peaceiris/actions-gh-pages@v3.7.0-8
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./lib/build/docs/gh-pages/snapshot
           destination_dir: snapshot
           publish_branch: gh-pages
+          force_orphan: false
