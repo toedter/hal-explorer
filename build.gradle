@@ -60,12 +60,21 @@ asciidoctor {
 
 task doc {
   dependsOn asciidoctor
-  dependsOn javadoc
 
   doLast {
     copy {
+      from "$projectDir/dist/hal-explorer"
+      into "$buildDir/docs/gh-pages/snapshot/hal-explorer"
+    }
+
+    copy {
       from "$projectDir/doc/img/"
       into "$buildDir/docs/asciidoc/img/"
+    }
+
+    copy {
+      from "$buildDir/docs/asciidoc"
+      into "$buildDir/docs/gh-pages/snapshot/reference-doc"
     }
   }
 }

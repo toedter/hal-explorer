@@ -53,3 +53,32 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/ng-test/lcov.info
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Cache gradle modules
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build documentation with Gradle
+        run: ./gradlew doc
+
+      - name: Deploy documentation to Github pages
+        uses: peaceiris/actions-gh-pages@v3.7.0-8
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./lib/build/docs/gh-pages/snapshot
+          destination_dir: snapshot
+          publish_branch: gh-pages
