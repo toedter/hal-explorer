@@ -44,6 +44,9 @@ export class AppComponent implements OnInit {
   showDocumentation = false;
   isTwoColumnLayout = true;
 
+  version = '0.17.0-SNAPSHOT';
+  isSnapshotVersion = this.version.endsWith('SNAPSHOT');
+
   constructor(
     private appService: AppService,
     private requestService: RequestService,

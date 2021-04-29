@@ -57,11 +57,19 @@
             </tr>
             <tr>
               <td>Version:</td>
-              <td>0.17.0-SNAPSHOT</td>
+              <td>{{version}}</td>
             </tr>
             <tr>
               <td>GitHub:</td>
               <td><a href="https://github.com/toedter/hal-explorer">https://github.com/toedter/hal-explorer</a>
+              </td>
+            </tr>
+            <tr>
+              <td>Docs:</td>
+              <td *ngIf="isSnapshotVersion"><a href="https://toedter.github.io/hal-explorer/snapshot/reference-doc/">Snapshot Reference
+                Documentation</a>
+              <td *ngIf="!isSnapshotVersion"><a href="https://toedter.github.io/hal-explorer/release/reference-doc/">Release Reference
+                Documentation</a>
               </td>
             </tr>
           </table>
