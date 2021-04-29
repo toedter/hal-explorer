@@ -47,3 +47,9 @@ jobs:
 
       - name: E2E tests
         run: yarn e2e-headless
+
+      - name: Upload coverage to codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/ng-test/lcov.info
