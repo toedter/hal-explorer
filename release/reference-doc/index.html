@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<meta name="author" content="Kai Tödter">
+<title>HAL Explorer</title>
+<link rel="stylesheet" href="css/site.css">
+<script src="js/setup.js"></script>
+    <script defer src="js/site.js"></script>
+</head>
+<body class="book toc2 toc-left"><div id="banner-container" class="container" role="banner">
+  <div id="banner" class="contained" role="banner">
+    <div id="switch-theme">
+      <input type="checkbox" id="switch-theme-checkbox" />
+      <label for="switch-theme-checkbox">Dark Theme</label>
+    </div>
+  </div>
+</div>
+<div id="tocbar-container" class="container" role="navigation">
+  <div id="tocbar" class="contained" role="navigation">
+    <button id="toggle-toc"></button>
+  </div>
+</div>
+<div id="main-container" class="container">
+  <div id="main" class="contained">
+    <div id="doc" class="doc">
+<div id="header">
+<h1>HAL Explorer</h1>
+<div class="details">
+<span id="author" class="author">Kai Tödter</span><br>
+<span id="revnumber">version 0.16.0,</span>
+<span id="revdate">2021-04-12</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_project_metadata">Project Metadata</a></li>
+<li><a href="#introduction">1. Introduction</a>
+<ul class="sectlevel2">
+<li><a href="#fundamentals">1.1. Fundamentals</a></li>
+<li><a href="#features">1.2. Features</a></li>
+</ul>
+</li>
+<li><a href="#setup">2. Setup</a>
+<ul class="sectlevel2">
+<li><a href="#_releases_and_demos">2.1. Releases and Demos</a></li>
+<li><a href="#_integration_in_your_backends">2.2. Integration in your Backends</a></li>
+<li><a href="#_build">2.3. Build</a>
+<ul class="sectlevel3">
+<li><a href="#_node_js">2.3.1. node.js</a></li>
+<li><a href="#_development_server">2.3.2. Development Server</a></li>
+<li><a href="#_gradlejava_build_support">2.3.3. Gradle/Java Build Support</a></li>
+<li><a href="#_building_the_docs">2.3.4. Building the docs</a></li>
+<li><a href="#_running_tests">2.3.5. Running Tests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#usage">3. Using HAL Explorer</a>
+<ul class="sectlevel2">
+<li><a href="#_json_properties">3.1. JSON Properties</a></li>
+<li><a href="#_links">3.2. Links</a></li>
+<li><a href="#_embedded_resources">3.3. Embedded Resources</a></li>
+<li><a href="#_response_details">3.4. Response Details</a></li>
+<li><a href="#_curie_based_documentation">3.5. Curie-based Documentation</a></li>
+<li><a href="#_hal_forms">3.6. HAL-FORMS</a></li>
+<li><a href="#_updating_rest_resources">3.7. Updating REST Resources</a></li>
+<li><a href="#_adding_request_headers">3.8. Adding Request Headers</a></li>
+<li><a href="#_bookmarking">3.9. Bookmarking</a></li>
+<li><a href="#_hal_forms_options">3.10. HAL-FORMS Options</a></li>
+</ul>
+</li>
+<li><a href="#theming">4. Theming</a></li>
+<li><a href="#license">5. License</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>With HAL Explorer you can explore HAL and HAL-FORMS based RESTful Hypermedia APIs.</p>
+</div>
+<div class="paragraph">
+<p>&#169; 2021 The original authors.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Copies of this document may be made for your own use and for distribution to others, provided that you do not
+charge any fee for such copies and further provided that each copy contains this Copyright Notice,
+whether distributed in print or electronically.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_project_metadata"><a class="anchor" href="#_project_metadata"></a>Project Metadata</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Version control: <a href="https://github.com/toedter/hal-explorer" class="bare">https://github.com/toedter/hal-explorer</a></p>
+</li>
+<li>
+<p>Bugtracker: <a href="https://github.com/toedter/hal-explorer/issues" class="bare">https://github.com/toedter/hal-explorer/issues</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="introduction"><a class="anchor" href="#introduction"></a>1. Introduction</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="fundamentals"><a class="anchor" href="#fundamentals"></a>1.1. Fundamentals</h3>
+<div class="paragraph">
+<p>With HAL Explorer you can browse and explore HAL
+and HAL-FORMS based RESTful Hypermedia APIs.
+HAL Explorer was inspired by Mike Kelly&#8217;s <a href="https://github.com/mikekelly/hal-browser">HAL-Browser</a>.
+HAL Explorer also supports Spring Profiles.
+For further understanding of this document, please be aware of both</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the <a href="http://stateless.co/hal_specification.html">HAL</a> Specification</p>
+</li>
+<li>
+<p>the <a href="https://rwcbook.github.io/hal-forms/">HAL-FORMS</a> Specification</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features"><a class="anchor" href="#features"></a>1.2. Features</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Responsive design</p>
+</li>
+<li>
+<p>Syntax highlighted response body</p>
+</li>
+<li>
+<p>Custom request headers</p>
+</li>
+<li>
+<p><a href="https://bootswatch.com/">Bootswatch</a> themes</p>
+</li>
+<li>
+<p>2 layouts</p>
+<div class="ulist">
+<ul>
+<li>
+<p>2 columns layout with optional documentation</p>
+</li>
+<li>
+<p>3 columns layout with documentation always visible if available</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>API URL, theme, layout and request headers stored in URL fragment</p>
+</li>
+<li>
+<p>Support for Spring Data Rest profiles to populate properties in request editor</p>
+</li>
+<li>
+<p>Support for HAL-FORMS templates</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Template elements in response explorer (see screenshot)</p>
+</li>
+<li>
+<p>Template properties in request editor</p>
+</li>
+<li>
+<p>Options support in request editor</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>HAL-FORMS property constraint validation in request editor</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="setup"><a class="anchor" href="#setup"></a>2. Setup</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_releases_and_demos"><a class="anchor" href="#_releases_and_demos"></a>2.1. Releases and Demos</h3>
+<div class="paragraph">
+<p>The latest released version of HAL Explorer you can find <a href="https://toedter.github.io/hal-explorer/release/hal-explorer/">here</a>.
+To explore your own services with this HAL Exlorer, they have to enable CORS. When you want to explore a Spring based service, you could add a simple <a href="https://gist.github.com/toedter/72d62b4bb4a25d229dc1f1342ae429ad">CORS Filter</a> to your service.</p>
+</div>
+<div class="paragraph">
+<p>You can also play around with the latest snapshot version of HAL Explorer in running demos:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For HAL: <a href="https://chatty42.herokuapp.com/hal-explorer/index.html#theme=Cosmo&amp;url=https://chatty42.herokuapp.com/api">Chatty API</a>.</p>
+</li>
+<li>
+<p>For HAL-FORMS: <a href="http://hypermedia-movies-demo.herokuapp.com/hal-explorer/index.html#theme=Cosmo&amp;uri=http://hypermedia-movies-demo.herokuapp.com/api/movies/1">Movies API</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>I host this demos at Heroku, so please give them a bit time to warm up (this might take up to 1 minute).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_integration_in_your_backends"><a class="anchor" href="#_integration_in_your_backends"></a>2.2. Integration in your Backends</h3>
+<div class="paragraph">
+<p>If you want to use a released version of HAL Explorer in a Java based project,
+you could define a dependency to the HAL Explorer WebJar.</p>
+</div>
+<div class="listingblock primary">
+<div class="title">Maven</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.webjars&lt;/groupId&gt;
+    &lt;artifactId&gt;hal-explorer&lt;/artifactId&gt;
+    &lt;version&gt;0.16.0&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock secondary">
+<div class="title">Gradle</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">implementation 'org.webjars:hal-explorer:0.16.0'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you are using Spring Data REST, you could instead add a dependency like</p>
+</div>
+<div class="listingblock primary">
+<div class="title">Maven</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.data&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-data-rest-hal-explorer&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock secondary">
+<div class="title">Gradle</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">implementation 'org.springframework.data:spring-data-rest-hal-explorer'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Off course, you could always download a zip-based <a href="https://github.com/toedter/hal-explorer/releases/tag/v0.16.0">distribution</a> and put it on any Web server.</p>
+</div>
+<div class="paragraph">
+<p>The easiest way to integrate the upstream version of HAL Explorer into your backend would be to clone this Git repo,
+do a production build (see below) and then copy the content of the dist folder to a location accessible by your backend server.
+When you use Spring Boot, a good location in your projects source tree would be
+src/main/java/resources/static/hal-explorer.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_build"><a class="anchor" href="#_build"></a>2.3. Build</h3>
+<div class="sect3">
+<h4 id="_node_js"><a class="anchor" href="#_node_js"></a>2.3.1. node.js</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Install the latest version of <a href="https://nodejs.og">node.js</a> and yarn (<code>npm i -g yarn</code>).</p>
+</li>
+<li>
+<p>Run <code>yarn build</code> to build the project in production mode.</p>
+</li>
+<li>
+<p>The build artifacts will be stored in the <code>dist/</code> directory.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_development_server"><a class="anchor" href="#_development_server"></a>2.3.2. Development Server</h4>
+<div class="paragraph">
+<p>Run <code>yarn start</code> for a dev server. Navigate to <a href="http://localhost:4200/" class="bare">http://localhost:4200/</a>.
+The app will automatically reload if you change any of the source files.
+The development server has a build-in proxy configuration,
+so that all calls to <code>/api</code> are forwarded to <code>localhost:8080/api</code>.
+This is convenient when you want to test a local server without having to deal with CORS.
+If you run <code>yarn startl</code>, an additional file server is started with port 3000.
+In the test-data directory you find some JSON examples. Try it out with the URL
+<a href="http://localhost:4200/#uri=http://localhost:3000/movies.hal-forms.json" class="bare">http://localhost:4200/#uri=http://localhost:3000/movies.hal-forms.json</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_gradlejava_build_support"><a class="anchor" href="#_gradlejava_build_support"></a>2.3.3. Gradle/Java Build Support</h4>
+<div class="paragraph">
+<p>If you have Java installed, you can also build the project with Gradle.
+The Gradle build will install Node.js locally in the project directory.
+Run <code>./gradlew build</code> (or just <code>gradlew build</code> under Windows) to build the project in production mode.
+The build artifacts will be stored in the <code>dist/</code> directory.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_building_the_docs"><a class="anchor" href="#_building_the_docs"></a>2.3.4. Building the docs</h4>
+<div class="paragraph">
+<p>You can build this documentation</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Windows: <code>gradlew doc -Dfile.encoding=UTF-8</code></p>
+</li>
+<li>
+<p>Linux: <code>./gradlew doc</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_running_tests"><a class="anchor" href="#_running_tests"></a>2.3.5. Running Tests</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><code>yarn test</code> to run the unit test suite against your default browser.</p>
+</li>
+<li>
+<p><code>yarn test-headless</code> to run the unit test suite against headless Chrome.</p>
+</li>
+<li>
+<p><code>yarn e2e</code> to run the e2e test suite against your default browser.</p>
+</li>
+<li>
+<p><code>yarn e2e-headless</code> to run the e2e test suite against headless Chrome.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Take a look at <code>package.json</code> for more test options.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="usage"><a class="anchor" href="#usage"></a>3. Using HAL Explorer</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_json_properties"><a class="anchor" href="#_json_properties"></a>3.1. JSON Properties</h3>
+<div class="paragraph">
+<p>When you start HAL Explorer, you see an input field in the top left area, where you can input the URI of a REST service, that returns HAL or HAL-FORMS documents. Once you click <code>Go!</code> or hit enter, the response is displayed. A typical response would look like</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/hal-explorer.jpg" alt="hal explorer">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_links"><a class="anchor" href="#_links"></a>3.2. Links</h3>
+<div class="paragraph">
+<p>Just below the URI you find the top-level JSON properties. If the resonse contains links, you find them below.
+Since HAL does not provide any affordances what HTTP method you should use to follow the link, you find colored buttons for each HTTP method:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>&lt;</code> : HTTP GET</p>
+</li>
+<li>
+<p><code>+</code> : HTTP POST</p>
+</li>
+<li>
+<p><code>&gt;</code> : HTTP PUT</p>
+</li>
+<li>
+<p><code>&gt;</code> : HTTP PATCH</p>
+</li>
+<li>
+<p><code>x</code> : HTTP DELETE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If a link relation provides <a href="#_curie_based_documentation">Curie-based Documentation</a>,
+you can click on the book icon to display it.</p>
+</div>
+<div class="paragraph">
+<p>If a link relation provides a name, or a title, they are displayed in the links table.</p>
+</div>
+<div class="paragraph">
+<p>You can click on a link button to follow the link. If a link is templated, a modal dialog will pop up, where you can fill the template parameters, like</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/templated-request.png" alt="templated request">
+</div>
+</div>
+<div class="paragraph">
+<p>When you click on <code>Go!</code>, a HTTP call to the <code>Expanded URI</code> will be made.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_embedded_resources"><a class="anchor" href="#_embedded_resources"></a>3.3. Embedded Resources</h3>
+<div class="paragraph">
+<p>If the response contains embedded resources, you find the in a section below the links.
+You can click on an embedded resource to expand it, like</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/expanded-embedded-resource.png" alt="expanded embedded resource">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_response_details"><a class="anchor" href="#_response_details"></a>3.4. Response Details</h3>
+<div class="paragraph">
+<p>On the right-hand side of the page you find details about the response:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The Response Status code and text</p>
+</li>
+<li>
+<p>All Response Headers</p>
+</li>
+<li>
+<p>The response body in highlighted JSON</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_curie_based_documentation"><a class="anchor" href="#_curie_based_documentation"></a>3.5. Curie-based Documentation</h3>
+<div class="paragraph">
+<p>Whenever you see a book icon, you can click on it, and the documentation is shown.
+Depending on the chosen Layout, the doc will be displayed as a third column on the right (3 column layout)
+or will replace the response details (2 column layout). You can change the layout using the <code>Layout</code> menu at the main toolbar.</p>
+</div>
+<div class="paragraph">
+<p>A page with 3 column layout might look like</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/3-column-layout.png" alt="3 column layout">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_hal_forms"><a class="anchor" href="#_hal_forms"></a>3.6. HAL-FORMS</h3>
+<div class="paragraph">
+<p>HAL Explorer supports the latest HAL-FORMS specification. Whenever a HAL-FORMS based response contains
+templates (<code>_templates</code>), all template elements will be displayed under the Links section, like</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/hal-explorer-templates.jpg" alt="hal explorer templates">
+</div>
+</div>
+<div class="paragraph">
+<p>Since HAL-FORMS uses affordances to describe which HTTP method should be used for each template element, you can
+only follow links using HTTP GET, but use exactly the HTTP method specified in a template element.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updating_rest_resources"><a class="anchor" href="#_updating_rest_resources"></a>3.7. Updating REST Resources</h3>
+<div class="paragraph">
+<p>Whenever you click on a HTTP POST button, a modal dialog pops up, where you can enter body of the post, and the query parameters (only if the URI is templated). In raw HAL based documents, it looks like</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/hal-post-dialog.png" alt="hal post dialog">
+</div>
+</div>
+<div class="paragraph">
+<p>When your server is implemented using <a href="https://spring.io/projects/spring-data-rest">Spring Data REST</a>, a JSON Schema based Spring profile is automatically created. HAL Explorer automatically detects Spring Profiles, and instead of just presenting an empty body, form elements for all attributes are displayed, like</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/request-input.png" alt="request input">
+</div>
+</div>
+<div class="paragraph">
+<p>When your response is based on HAL-FORMS, all the properties of the corresponding template element are shown, like</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/hal-forms-post-dialog.png" alt="hal forms post dialog">
+</div>
+</div>
+<div class="paragraph">
+<p>When HAL-FORMS is used, the field are also validated and validation errors are displayed below the input area.
+Only for valid forms the body is displayed, and the HTTP request can mit made.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_adding_request_headers"><a class="anchor" href="#_adding_request_headers"></a>3.8. Adding Request Headers</h3>
+<div class="paragraph">
+<p>When want to add certain request headers to all calls, click on <code>Edit Headers</code> in the top-left corner.
+THen, a modal dialog pops up where you can add headers. This is handy when you want to add things like
+bearer tokens for authorization, like</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/request-headers.png" alt="request headers">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_bookmarking"><a class="anchor" href="#_bookmarking"></a>3.9. Bookmarking</h3>
+<div class="paragraph">
+<p>The following configuration is transported in HTTP parameters, so HAL Explorer URL can easily be bookmarked:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>URI</p>
+</li>
+<li>
+<p>Request Headers</p>
+</li>
+<li>
+<p>Layout</p>
+</li>
+<li>
+<p>Theme</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_hal_forms_options"><a class="anchor" href="#_hal_forms_options"></a>3.10. HAL-FORMS Options</h3>
+<div class="paragraph">
+<p>HAL Explorer supports HAL-FORMS <a href="https://rwcbook.github.io/hal-forms/#options-element">Options</a>.
+An simple example JSON looks like</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">{
+  "_links": {
+    "self": {
+      "href": "http://localhost:3000/options.hal-forms.json"
+    }
+  },
+  "_templates" : {
+    "default" : {
+      "title": "Shipping",
+      "method": "POST",
+      "properties" : [
+        {
+          "name" : "shipping",
+          "prompt" : "Select Shipping Method",
+          "options" : {
+            "selectedValues" : ["FedEx"],
+            "inline" : ["FedEx","UPS","DHL"],
+            "maxItems": 1
+          }
+        }
+      ]
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When clicking on the POST request button, the dialog looks like</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/hal-forms-options.png" alt="hal forms options">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="theming"><a class="anchor" href="#theming"></a>4. Theming</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>HAL Explorer supports all the <a href="https://bootswatch.com/">Bootswatch</a> themes, an example of the theme "Darkly" looks like</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/dark-theme.png" alt="dark theme">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="license"><a class="anchor" href="#license"></a>5. License</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>HAL Explorer is licended under MIT, see <a href="http://toedter.mit-license.org" class="bare">http://toedter.mit-license.org</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 0.16.0<br>
+Last updated 2021-04-12 18:26:43 UTC
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
+</div>
+  </div>
+</div>
+</body>
+</html>
