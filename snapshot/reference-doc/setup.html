@@ -37,29 +37,54 @@
 <h2 id="_releases_and_demos"><a class="anchor" href="#_releases_and_demos"></a>Releases and Demos</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The latest released version of HAL Explorer you can find <a href="https://toedter.github.io/hal-explorer/release/hal-explorer/">here</a>.
-To explore your own services with this HAL Exlorer, they have to enable CORS. When you want to explore a Spring based service, you could add a simple <a href="https://gist.github.com/toedter/72d62b4bb4a25d229dc1f1342ae429ad">CORS Filter</a> to your service.</p>
+<p>Here you find the documentation for the latest release and the current snapshot,
+as well as the latest release and the current snapshot of HAL Explorer:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Latest Release</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.16.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://toedter.github.io/hal-explorer/release/hal-explorer">HAL Explorer Demo</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Current Snapshot</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.17.0-SNAPSHOT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://toedter.github.io/hal-explorer/snapshot/hal-explorer">HAL Explorer Demo</a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>To explore your own services with these HAL Explorer demos, they have to enable CORS.
+When you want to explore a Spring based service (e.g. running on localhost), you could (temporarily) add a simple
+<a href="https://gist.github.com/toedter/72d62b4bb4a25d229dc1f1342ae429ad">CORS Filter</a> to your service. For more options, see
+section <a href="#_development_server">Development Server</a>.</p>
 </div>
 <div class="paragraph">
-<p>You can also play around with the latest snapshot version of HAL Explorer in running demos:</p>
+<p>You can also play with the latest snapshot version of HAL Explorer in running demos. The backends
+are implemented with Spring. I host this demos at Heroku,
+so please give them a bit time to warm up (this might take up to 1 minute).</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>For HAL: <a href="https://chatty42.herokuapp.com/hal-explorer/index.html#theme=Cosmo&amp;url=https://chatty42.herokuapp.com/api">Chatty API</a>.</p>
+<p>For HAL: <a href="https://chatty42.herokuapp.com/hal-explorer/index.html#theme=Cosmo&amp;url=https://chatty42.herokuapp.com/api">Chatty API</a> (Spring Data REST Backend)</p>
 </li>
 <li>
-<p>For HAL-FORMS: <a href="http://hypermedia-movies-demo.herokuapp.com/hal-explorer/index.html#theme=Cosmo&amp;uri=http://hypermedia-movies-demo.herokuapp.com/api/movies/1">Movies API</a></p>
+<p>For HAL-FORMS: <a href="http://hypermedia-movies-demo.herokuapp.com/hal-explorer/index.html#theme=Cosmo&amp;uri=http://hypermedia-movies-demo.herokuapp.com/api/movies/1">Movies API</a>
+(Spring HATEOAS Backend)</p>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p>I host this demos at Heroku, so please give them a bit time to warm up (this might take up to 1 minute).</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_integration_in_your_backends"><a class="anchor" href="#_integration_in_your_backends"></a>Integration in your Backends</h2>
+<h2 id="_integration_with_your_backends"><a class="anchor" href="#_integration_with_your_backends"></a>Integration with your Backends</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>If you want to use a released version of HAL Explorer in a Java based project,
@@ -195,7 +220,7 @@ The build artifacts will be stored in the <code>dist/</code> directory.</p>
 <div id="footer">
 <div id="footer-text">
 Version 0.17.0-SNAPSHOT<br>
-Last updated 2021-04-30 05:13:53 UTC
+Last updated 2021-04-30 05:51:56 UTC
 </div>
 </div>
 </div>
