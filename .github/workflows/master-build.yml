@@ -79,3 +79,9 @@ jobs:
           destination_dir: snapshot
           publish_branch: gh-pages
           force_orphan: false
+
+      - name: Triggeer downstream builds on Travis-CI
+        run: |
+          curl -LO --retry 3 https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
+          sh trigger-travis.sh --pro toedter chatty ${{ secrets.TRAVIS_ACCESS_TOKEN }}
+          sh trigger-travis.sh --pro toedter movies-demo ${{ secrets.TRAVIS_ACCESS_TOKEN }}
