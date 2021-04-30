@@ -10,7 +10,7 @@ image::img/hal-explorer.jpg[]
 
 == Links
 
-Just below the URI you find the top-level JSON properties. If the resonse contains links, you find them below.
+Just below the URI you find the top-level JSON properties. If the response contains links, you find them below.
 Since HAL does not provide any affordances what HTTP method you should use to follow the link, you find colored buttons for each HTTP method:
 
 * `<` : HTTP GET
@@ -22,13 +22,13 @@ Since HAL does not provide any affordances what HTTP method you should use to fo
 If a link relation provides <<Curie-based Documentation>>,
 you can click on the book icon to display it.
 
-If a link relation provides a name, or a title, they are displayed in the links table.
+If a link relation provides a name or a title, they are displayed in the links table.
 
 You can click on a link button to follow the link. If a link is templated, a modal dialog will pop up, where you can fill the template parameters, like
 
 image::img/templated-request.png[]
 
-When you click on `Go!`, a HTTP call to the `Expanded URI` will be made.
+When you click on `Go!`, an HTTP call to the `Expanded URI` will be made.
 
 == Embedded Resources
 
@@ -67,11 +67,11 @@ only follow links using HTTP GET, but use exactly the HTTP method specified in a
 
 == Updating REST Resources
 
-Whenever you click on a HTTP POST button, a modal dialog pops up, where you can enter body of the post, and the query parameters (only if the URI is templated). In raw HAL based documents, it looks like
+Whenever you click on an HTTP POST button, a modal dialog pops up, where you can enter the body of the post, and the query parameters (only if the URI is templated). In raw HAL based documents, it looks like
 
 image::img/hal-post-dialog.png[]
 
-When your server is implemented using https://spring.io/projects/spring-data-rest[Spring Data REST], a JSON Schema based Spring profile is automatically created. HAL Explorer automatically detects Spring Profiles, and instead of just presenting an empty body, form elements for all attributes are displayed, like
+When your server is implemented using https://spring.io/projects/spring-data-rest[Spring Data REST], a JSON Schema-based Spring profile is automatically created. HAL Explorer automatically detects Spring Profiles, and instead of just presenting an empty body, form elements for all attributes are displayed, like
 
 image::img/request-input.png[]
 
@@ -79,8 +79,8 @@ When your response is based on HAL-FORMS, all the properties of the correspondin
 
 image::img/hal-forms-post-dialog.png[]
 
-When HAL-FORMS is used, the field are also validated and validation errors are displayed below the input area.
-Only for valid forms the body is displayed, and the HTTP request can mit made.
+When HAL-FORMS is used, the fields are also validated and validation errors are displayed below the input area.
+Only for valid forms, the body is displayed, and the HTTP request can be made.
 
 == Adding Request Headers
 
