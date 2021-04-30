@@ -34,7 +34,7 @@ image::./doc/img/hal-explorer.jpg[HAL Explorer]
 * 2 layouts
 ** 2 columns layout with optional documentation
 ** 3 columns layout with documentation always visible if available
-* API URL, theme, layout and request headers stored in URL fragment
+* API URL, theme, layout, and request headers stored as URL fragment
 * Support for Spring Data Rest profiles to populate properties in request editor
 * Support for HAL-FORMS templates
 ** Template elements in response explorer (see screenshot)
@@ -46,7 +46,7 @@ image::./doc/img/hal-explorer.jpg[HAL Explorer]
 
 You can also play with the latest snapshot version of HAL Explorer in demos that provide backends
 implemented with Spring. I host these demos at Heroku,
-so please give them a bit time to warm up (this might take up to 1 minute).
+so please give them a bit of time to warm up (this might take up to 1 minute).
 
 * For HAL: https://chatty42.herokuapp.com/hal-explorer/index.html#theme=Cosmo&url=https://chatty42.herokuapp.com/api[Chatty API] (Spring Data REST Backend)
 * For HAL-FORMS: http://hypermedia-movies-demo.herokuapp.com/hal-explorer/index.html#theme=Cosmo&uri=http://hypermedia-movies-demo.herokuapp.com/api/movies/1[Movies API]
@@ -56,11 +56,11 @@ so please give them a bit time to warm up (this might take up to 1 minute).
 
 Run `yarn start` for a dev server. Navigate to http://localhost:4200/.
 The app will automatically reload if you change any of the source files.
-The development server has a build-in proxy configuration,
+The development server has a build-in proxy configuration
 so that all calls to `/api` are forwarded to `localhost:8080/api`.
 This is convenient when you want to test a local server without having to deal with CORS.
 If you run `yarn startl`, an additional file server is started with port 3000.
-In the test-data directory you find some JSON examples. Try it out with the URL
+In the test-data directory, you find some JSON examples. Try it out with the URL
 http://localhost:4200/#uri=http://localhost:3000/movies.hal-forms.json.
 
 == Build
@@ -77,7 +77,7 @@ The build artifacts will be stored in the `dist/` directory.
 
 == Integration in your Backends
 
-If you want to use a released version of HAL Explorer in a Java based project,
+If you want to use a released version of HAL Explorer in a Java-based project,
 you could define a dependency to the HAL Explorer WebJar.
 
 Maven:
@@ -95,7 +95,7 @@ compile 'org.webjars:hal-explorer:0.16.0'
 When you use the WebJar with Spring Boot, you can access the HAL Explorer at `/webjars/hal-explorer/0.16.0/index.html`.
 The easiest way to integrate the upstream version of HAL Explorer into your backend would be to clone this Git repo,
 do a production build and then copy the content of the dist folder to a location accessible by your backend server.
-When you use Spring Boot, a good location in your projects source tree would be
+When you use Spring Boot, a good location in your project's source tree would be
 src/main/java/resources/static/hal-explorer.
 
 == Running Tests
