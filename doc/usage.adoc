@@ -32,7 +32,7 @@ When you click on `Go!`, a HTTP call to the `Expanded URI` will be made.
 
 == Embedded Resources
 
-If the response contains embedded resources, you find the in a section below the links.
+If the response contains embedded resources, you find them in the section "Embedded Resources".
 You can click on an embedded resource to expand it, like
 
 image::img/expanded-embedded-resource.png[]
@@ -102,7 +102,7 @@ The following configuration is transported in HTTP parameters, so HAL Explorer U
 == HAL-FORMS Options
 
 HAL Explorer supports HAL-FORMS https://rwcbook.github.io/hal-forms/#options-element[Options].
-An simple example JSON looks like
+A simple example JSON looks like
 
 [source, json]
 ----
