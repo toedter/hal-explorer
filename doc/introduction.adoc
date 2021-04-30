@@ -7,7 +7,7 @@
 == Fundamentals
 
 With HAL Explorer you can browse and explore HAL
-and HAL-FORMS based RESTful Hypermedia APIs.
+and HAL-FORMS-based RESTful Hypermedia APIs.
 HAL Explorer was inspired by Mike Kelly's https://github.com/mikekelly/hal-browser[HAL-Browser].
 HAL Explorer also supports Spring Profiles.
 For further understanding of this document, please be aware of both
@@ -26,7 +26,7 @@ For further understanding of this document, please be aware of both
 * 2 layouts
 ** 2 columns layout with optional documentation
 ** 3 columns layout with documentation always visible if available
-* API URL, theme, layout and request headers stored in URL fragment
+* API URL, theme, layout, and request headers stored as URL fragment
 * Support for Spring Data Rest profiles to populate properties in request editor
 * Support for HAL-FORMS templates
 ** Template elements in response explorer (see screenshot)

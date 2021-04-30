@@ -12,14 +12,14 @@ as well as the latest release and the current snapshot of HAL Explorer:
 | Current Snapshot | 0.17.0-SNAPSHOT | https://toedter.github.io/hal-explorer/snapshot/hal-explorer[HAL Explorer Demo]
 |===
 
-To explore your own services with these HAL Explorer demos, they have to enable CORS.
-When you want to explore a Spring based service (e.g. running on localhost), you could (temporarily) add a simple
+To explore your services with these HAL Explorer demos, they have to enable CORS.
+When you want to explore a Spring-based service (e.g. running on localhost), you could (temporarily) add a simple
 https://gist.github.com/toedter/72d62b4bb4a25d229dc1f1342ae429ad[CORS Filter] to your service. For more options, see
 section <<Development Server>>.
 
 You can also play with the latest snapshot version of HAL Explorer in running demos. The backends
-are implemented with Spring. I host this demos at Heroku,
-so please give them a bit time to warm up (this might take up to 1 minute).
+are implemented with Spring. I host these demos at Heroku,
+so please give them a bit of time to warm up (this might take up to 1 minute).
 
 [cols='1,1,2',stripes=even]
 |===
@@ -29,7 +29,7 @@ so please give them a bit time to warm up (this might take up to 1 minute).
 
 == Integration with your Backends
 
-If you want to use a released version of HAL Explorer in a Java based project,
+If you want to use a released version of HAL Explorer in a Java-based project,
 you could define a dependency to the HAL Explorer WebJar.
 
 [source,xml,indent=0,role="primary"]
@@ -84,11 +84,11 @@ src/main/java/resources/static/hal-explorer.
 
 Run `yarn start` for a dev server. Navigate to http://localhost:4200/.
 The app will automatically reload if you change any of the source files.
-The development server has a build-in proxy configuration,
+The development server has a build-in proxy configuration
 so that all calls to `/api` are forwarded to `localhost:8080/api`.
 This is convenient when you want to test a local server without having to deal with CORS.
 If you run `yarn startl`, an additional file server is started with port 3000.
-In the test-data directory you find some JSON examples. Try it out with the URL
+In the test-data directory, you find some JSON examples. Try it out with the URL
 http://localhost:4200/#uri=http://localhost:3000/movies.hal-forms.json.
 
 === Gradle/Java Build Support
@@ -113,4 +113,3 @@ You can build this documentation
 * `yarn e2e-headless` to run the e2e test suite against headless Chrome.
 
 Take a look at `package.json` for more test options.
-
