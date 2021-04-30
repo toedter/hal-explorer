@@ -125,7 +125,7 @@ whether distributed in print or electronically.
 <h3 id="fundamentals"><a class="anchor" href="#fundamentals"></a>1.1. Fundamentals</h3>
 <div class="paragraph">
 <p>With HAL Explorer you can browse and explore HAL
-and HAL-FORMS based RESTful Hypermedia APIs.
+and HAL-FORMS-based RESTful Hypermedia APIs.
 HAL Explorer was inspired by Mike Kelly&#8217;s <a href="https://github.com/mikekelly/hal-browser">HAL-Browser</a>.
 HAL Explorer also supports Spring Profiles.
 For further understanding of this document, please be aware of both</p>
@@ -171,7 +171,7 @@ For further understanding of this document, please be aware of both</p>
 </div>
 </li>
 <li>
-<p>API URL, theme, layout and request headers stored in URL fragment</p>
+<p>API URL, theme, layout, and request headers stored as URL fragment</p>
 </li>
 <li>
 <p>Support for Spring Data Rest profiles to populate properties in request editor</p>
@@ -229,15 +229,15 @@ as well as the latest release and the current snapshot of HAL Explorer:</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p>To explore your own services with these HAL Explorer demos, they have to enable CORS.
-When you want to explore a Spring based service (e.g. running on localhost), you could (temporarily) add a simple
+<p>To explore your services with these HAL Explorer demos, they have to enable CORS.
+When you want to explore a Spring-based service (e.g. running on localhost), you could (temporarily) add a simple
 <a href="https://gist.github.com/toedter/72d62b4bb4a25d229dc1f1342ae429ad">CORS Filter</a> to your service. For more options, see
 section <a href="#_development_server">Development Server</a>.</p>
 </div>
 <div class="paragraph">
 <p>You can also play with the latest snapshot version of HAL Explorer in running demos. The backends
-are implemented with Spring. I host this demos at Heroku,
-so please give them a bit time to warm up (this might take up to 1 minute).</p>
+are implemented with Spring. I host these demos at Heroku,
+so please give them a bit of time to warm up (this might take up to 1 minute).</p>
 </div>
 <table class="tableblock frame-all grid-all stripes-even stretch">
 <colgroup>
@@ -262,7 +262,7 @@ so please give them a bit time to warm up (this might take up to 1 minute).</p>
 <div class="sect2">
 <h3 id="_integration_with_your_backends"><a class="anchor" href="#_integration_with_your_backends"></a>2.2. Integration with your Backends</h3>
 <div class="paragraph">
-<p>If you want to use a released version of HAL Explorer in a Java based project,
+<p>If you want to use a released version of HAL Explorer in a Java-based project,
 you could define a dependency to the HAL Explorer WebJar.</p>
 </div>
 <div class="listingblock primary">
@@ -305,7 +305,7 @@ you could define a dependency to the HAL Explorer WebJar.</p>
 <div class="paragraph">
 <p>The easiest way to integrate the upstream version of HAL Explorer into your backend would be to clone this Git repo,
 do a production build (see below) and then copy the content of the dist folder to a location accessible by your backend server.
-When you use Spring Boot, a good location in your projects source tree would be
+When you use Spring Boot, a good location in your project&#8217;s source tree would be
 src/main/java/resources/static/hal-explorer.</p>
 </div>
 </div>
@@ -332,11 +332,11 @@ src/main/java/resources/static/hal-explorer.</p>
 <div class="paragraph">
 <p>Run <code>yarn start</code> for a dev server. Navigate to <a href="http://localhost:4200/" class="bare">http://localhost:4200/</a>.
 The app will automatically reload if you change any of the source files.
-The development server has a build-in proxy configuration,
+The development server has a build-in proxy configuration
 so that all calls to <code>/api</code> are forwarded to <code>localhost:8080/api</code>.
 This is convenient when you want to test a local server without having to deal with CORS.
 If you run <code>yarn startl</code>, an additional file server is started with port 3000.
-In the test-data directory you find some JSON examples. Try it out with the URL
+In the test-data directory, you find some JSON examples. Try it out with the URL
 <a href="http://localhost:4200/#uri=http://localhost:3000/movies.hal-forms.json" class="bare">http://localhost:4200/#uri=http://localhost:3000/movies.hal-forms.json</a>.</p>
 </div>
 </div>
@@ -407,7 +407,7 @@ The build artifacts will be stored in the <code>dist/</code> directory.</p>
 <div class="sect2">
 <h3 id="_links"><a class="anchor" href="#_links"></a>3.2. Links</h3>
 <div class="paragraph">
-<p>Just below the URI you find the top-level JSON properties. If the resonse contains links, you find them below.
+<p>Just below the URI you find the top-level JSON properties. If the response contains links, you find them below.
 Since HAL does not provide any affordances what HTTP method you should use to follow the link, you find colored buttons for each HTTP method:</p>
 </div>
 <div class="ulist">
@@ -434,7 +434,7 @@ Since HAL does not provide any affordances what HTTP method you should use to fo
 you can click on the book icon to display it.</p>
 </div>
 <div class="paragraph">
-<p>If a link relation provides a name, or a title, they are displayed in the links table.</p>
+<p>If a link relation provides a name or a title, they are displayed in the links table.</p>
 </div>
 <div class="paragraph">
 <p>You can click on a link button to follow the link. If a link is templated, a modal dialog will pop up, where you can fill the template parameters, like</p>
@@ -445,7 +445,7 @@ you can click on the book icon to display it.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>When you click on <code>Go!</code>, a HTTP call to the <code>Expanded URI</code> will be made.</p>
+<p>When you click on <code>Go!</code>, an HTTP call to the <code>Expanded URI</code> will be made.</p>
 </div>
 </div>
 <div class="sect2">
@@ -514,7 +514,7 @@ only follow links using HTTP GET, but use exactly the HTTP method specified in a
 <div class="sect2">
 <h3 id="_updating_rest_resources"><a class="anchor" href="#_updating_rest_resources"></a>3.7. Updating REST Resources</h3>
 <div class="paragraph">
-<p>Whenever you click on a HTTP POST button, a modal dialog pops up, where you can enter body of the post, and the query parameters (only if the URI is templated). In raw HAL based documents, it looks like</p>
+<p>Whenever you click on an HTTP POST button, a modal dialog pops up, where you can enter the body of the post, and the query parameters (only if the URI is templated). In raw HAL based documents, it looks like</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -522,7 +522,7 @@ only follow links using HTTP GET, but use exactly the HTTP method specified in a
 </div>
 </div>
 <div class="paragraph">
-<p>When your server is implemented using <a href="https://spring.io/projects/spring-data-rest">Spring Data REST</a>, a JSON Schema based Spring profile is automatically created. HAL Explorer automatically detects Spring Profiles, and instead of just presenting an empty body, form elements for all attributes are displayed, like</p>
+<p>When your server is implemented using <a href="https://spring.io/projects/spring-data-rest">Spring Data REST</a>, a JSON Schema-based Spring profile is automatically created. HAL Explorer automatically detects Spring Profiles, and instead of just presenting an empty body, form elements for all attributes are displayed, like</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -538,8 +538,8 @@ only follow links using HTTP GET, but use exactly the HTTP method specified in a
 </div>
 </div>
 <div class="paragraph">
-<p>When HAL-FORMS is used, the field are also validated and validation errors are displayed below the input area.
-Only for valid forms the body is displayed, and the HTTP request can mit made.</p>
+<p>When HAL-FORMS is used, the fields are also validated and validation errors are displayed below the input area.
+Only for valid forms, the body is displayed, and the HTTP request can be made.</p>
 </div>
 </div>
 <div class="sect2">
@@ -647,7 +647,7 @@ A simple example JSON looks like</p>
 <div id="footer">
 <div id="footer-text">
 Version 0.17.0-SNAPSHOT<br>
-Last updated 2021-04-30 16:29:38 UTC
+Last updated 2021-04-30 16:40:31 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
