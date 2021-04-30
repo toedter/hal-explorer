@@ -3,17 +3,28 @@
 
 == Releases and Demos
 
-The latest released version of HAL Explorer you can find https://toedter.github.io/hal-explorer/release/hal-explorer/[here].
-To explore your own services with this HAL Exlorer, they have to enable CORS. When you want to explore a Spring based service, you could add a simple https://gist.github.com/toedter/72d62b4bb4a25d229dc1f1342ae429ad[CORS Filter] to your service.
+Here you find the documentation for the latest release and the current snapshot,
+as well as the latest release and the current snapshot of HAL Explorer:
+|===
+| Latest Release | 0.16.0 | https://toedter.github.io/hal-explorer/release/hal-explorer[HAL Explorer Demo]
+| Current Snapshot | 0.17.0-SNAPSHOT | https://toedter.github.io/hal-explorer/snapshot/hal-explorer[HAL Explorer Demo]
+|===
 
-You can also play around with the latest snapshot version of HAL Explorer in running demos:
 
-* For HAL: https://chatty42.herokuapp.com/hal-explorer/index.html#theme=Cosmo&url=https://chatty42.herokuapp.com/api[Chatty API].
+To explore your own services with these HAL Explorer demos, they have to enable CORS.
+When you want to explore a Spring based service (e.g. running on localhost), you could (temporarily) add a simple
+https://gist.github.com/toedter/72d62b4bb4a25d229dc1f1342ae429ad[CORS Filter] to your service. For more options, see
+section <<Development Server>>.
+
+You can also play with the latest snapshot version of HAL Explorer in running demos. The backends
+are implemented with Spring. I host this demos at Heroku,
+so please give them a bit time to warm up (this might take up to 1 minute).
+
+* For HAL: https://chatty42.herokuapp.com/hal-explorer/index.html#theme=Cosmo&url=https://chatty42.herokuapp.com/api[Chatty API] (Spring Data REST Backend)
 * For HAL-FORMS: http://hypermedia-movies-demo.herokuapp.com/hal-explorer/index.html#theme=Cosmo&uri=http://hypermedia-movies-demo.herokuapp.com/api/movies/1[Movies API]
+(Spring HATEOAS Backend)
 
-I host this demos at Heroku, so please give them a bit time to warm up (this might take up to 1 minute).
-
-== Integration in your Backends
+== Integration with your Backends
 
 If you want to use a released version of HAL Explorer in a Java based project,
 you could define a dependency to the HAL Explorer WebJar.
