@@ -17,7 +17,7 @@
               "FedEx"
             ],
             "link": {
-              "href": "shipping.json",
+              "href": "https://raw.githubusercontent.com/toedter/hal-explorer/master/test-data/shipping.json",
               "templated": "false",
               "type": "application/json"
             },

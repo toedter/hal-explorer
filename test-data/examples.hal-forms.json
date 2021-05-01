@@ -39,7 +39,7 @@
       "name": "HAL-FORMS options (inline)"
     },
     "hal-forms-with-options-link": {
-      "href": "options-relative-link.hal-forms.json",
+      "href": "options-github-link.hal-forms.json",
       "name": "HAL-FORMS options (link to json)"
     },
     "hal-forms-with-regex": {
