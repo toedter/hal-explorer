@@ -3,6 +3,8 @@ name: Build
 on:
   push:
     branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   build:
@@ -72,6 +74,7 @@ jobs:
         run: ./gradlew doc
 
       - name: Deploy documentation to Github pages
+        if: ${{ github.event_name == 'push' }}
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -81,6 +84,7 @@ jobs:
           force_orphan: false
 
       - name: Triggeer downstream builds on Travis-CI
+        if: ${{ github.event_name == 'push' }}
         run: |
           curl -LO --retry 3 https://raw.github.com/mernst/plume-lib/master/bin/trigger-travis.sh
           sh trigger-travis.sh --pro toedter chatty ${{ secrets.TRAVIS_ACCESS_TOKEN }}
