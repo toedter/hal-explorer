@@ -1,6 +1,6 @@
 {
-  "description": "Her you find links to HAL Explorer example responses.",
-  "important": "Those JSON responses are served by a file server, so only HTTP GET request will work.",
+  "description": "Here you find links to HAL Explorer example responses.",
+  "important": "Those JSON responses are served by a file server, so only HTTP GET requests will work.",
   "_links": {
     "hal-index": {
       "href": "index.hal.json",
