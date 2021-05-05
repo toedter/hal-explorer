@@ -4,7 +4,7 @@
   "_links": {
     "hal-index": {
       "href": "index.hal.json",
-      "name": "HAL Index example"
+      "name": "HAL index example"
     },
     "hal-movies": {
       "href": "movies.hal.json",
@@ -12,7 +12,7 @@
     },
     "hal-forms-index": {
       "href": "index.hal-forms.json",
-      "name": "HAL-FORMS Index example"
+      "name": "HAL-FORMS index example"
     },
     "hal-forms-movies": {
       "href": "movies.hal-forms.json",
