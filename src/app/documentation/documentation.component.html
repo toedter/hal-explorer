@@ -6,7 +6,7 @@
         <h5>Documentation</h5>
       </div>
       <div>
-        <iframe id="doc-iframe" frameBorder="0" [src]="docUri" onload="setIframeHeight('doc-iframe')">...</iframe>
+        <iframe id="doc-iframe" [height]="getDocHeight()" frameBorder="0" [src]="docUri" onload="setIframeHeight('doc-iframe')">...</iframe>
       </div>
     </div>
   </div>
