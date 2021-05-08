@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import * as $ from 'jquery';
 import * as utpl from 'uri-templates';
 import {URITemplate} from 'uri-templates';
 import {AppService, RequestHeader} from '../app.service';
 import {Command, EventType, HttpRequestEvent, RequestService, UriTemplateParameter} from './request.service';
+import {Modal} from 'bootstrap/dist/js/bootstrap.bundle';
 
 export class DictionaryObject {
   constructor(public prompt, public value) {
@@ -124,7 +124,9 @@ export class RequestComponent implements OnInit {
           this.newRequestUri = event.uri;
         }
 
-        $('#HttpRequestTrigger').trigger('click');
+        const requestModal = new Modal(document.getElementById('httpRequestModal'));
+        requestModal.show();
+
         this.propertyChanged();
       }
     });
@@ -249,7 +251,8 @@ export class RequestComponent implements OnInit {
       }
     }
 
-    $('#requestHeadersModalTrigger').trigger('click');
+    const requestHeaderModal = new Modal(document.getElementById('requestHeadersModal'));
+    requestHeaderModal.show();
   }
 
   updateRequestHeaders() {
