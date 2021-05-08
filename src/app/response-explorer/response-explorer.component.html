@@ -29,7 +29,7 @@
                 <th scope="col">Title</th>
                 <th scope="col">HTTP Request</th>
                 <th scope="col">
-                  <div class='text-right'>Doc</div>
+                  <span style="float: right;">Doc &nbsp;</span>
                 </th>
               </tr>
               </thead>
@@ -70,12 +70,14 @@
                     title="DELETE Request">
                   </button>
                 </td>
-                <td align="right">
+                <td>
+                  <span style="float: right;">
                   <button *ngIf="link.docUri"
                           class="icon-book ml-auto btn btn-outline-info btn-sm nav-button"
                           (click)="processCommand(command.Document, link.docUri)"
                           title="Show Documentation">
                   </button>
+                  </span>
                 </td>
               </tr>
               </tbody>
@@ -130,34 +132,36 @@
           <div class="card" *ngFor="let embeddedResource of embedded; let i1 = index"
                [attr.id]="prefix + 'item_' + i1">
             <div class="card-header d-flex">
-              <a data-toggle="collapse" [attr.data-parent]="'#' + prefix + 'item_' + i1"
+              <a class="text-decoration-none" data-bs-toggle="collapse" [attr.data-parent]="'#' + prefix + 'item_' + i1"
                  [attr.href]="'#' + prefix + 'embedded_' + i1">
                 <h5>{{embeddedResource.name}}</h5></a>
             </div>
 
-            <div *ngIf="embeddedResource.isArray" [attr.id]="prefix + 'embedded_' + i1"
-                 class="collapse show">
-              <div class="card collapse show"
-                   *ngFor="let subEmbeddedResource of embeddedResource.content; let i2 = index"
-                   [attr.id]="prefix + 'item_' + i1 + '_' + i2">
-                <div class="card-header d-flex">
-                  <a data-toggle="collapse"
-                     [attr.data-parent]="'#' + prefix + 'item_' + i1 + '_' + i2"
-                     [attr.href]="'#' + prefix + 'embedded_object_' + i2">{{embeddedResource.name}}
-                    [{{i2}}]</a>
-                  <button *ngIf="embeddedResource.docUri"
-                          class="icon-book ml-auto btn btn-outline-info btn-sm nav-button"
-                          (click)="processCommand(command.Document, embeddedResource.docUri)"
-                          title="Show Documentation">
-                  </button>
-                </div>
-                <div [attr.id]="prefix + 'embedded_object_' + i2" class="collapse">
-                  <div class="card-body">
-                    <app-response-explorer [jsonRoot]="subEmbeddedResource"
-                                           [prefix]="prefix + 'x_'"
-                                           [curieLinks]="curieLinks"
-                                           [isHalFormsMediaType]="isHalFormsMediaType">
-                    </app-response-explorer>
+            <div class="card-body p-1">
+              <div *ngIf="embeddedResource.isArray" [attr.id]="prefix + 'embedded_' + i1"
+                   class="collapse show">
+                <div class="card m-1"
+                     *ngFor="let subEmbeddedResource of embeddedResource.content; let i2 = index"
+                     [attr.id]="prefix + 'item_' + i1 + '_' + i2">
+                  <div class="card-header d-flex">
+                    <a class="text-decoration-none" data-bs-toggle="collapse"
+                       [attr.data-parent]="'#' + prefix + 'item_' + i1 + '_' + i2"
+                       [attr.href]="'#' + prefix + 'embedded_object_' + i2">{{embeddedResource.name}}
+                      [{{i2}}]</a>
+                    <button *ngIf="embeddedResource.docUri"
+                            class="icon-book ml-auto btn btn-outline-info btn-sm nav-button"
+                            (click)="processCommand(command.Document, embeddedResource.docUri)"
+                            title="Show Documentation">
+                    </button>
+                  </div>
+                  <div [attr.id]="prefix + 'embedded_object_' + i2" class="collapse">
+                    <div class="card-body">
+                      <app-response-explorer [jsonRoot]="subEmbeddedResource"
+                                             [prefix]="prefix + 'x_'"
+                                             [curieLinks]="curieLinks"
+                                             [isHalFormsMediaType]="isHalFormsMediaType">
+                      </app-response-explorer>
+                    </div>
                   </div>
                 </div>
               </div>

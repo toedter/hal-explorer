@@ -3,37 +3,40 @@
 </div>
 
 <nav class="navbar navbar-expand-lg navbar-toggleable-md navbar-dark bg-dark">
-  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-          data-target="#navbarsExampleDefault" aria-controls="navbar1" aria-expanded="false"
-          aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="navbar-brand">
-    <img src="favicon.ico" width="30" height="30" class="d-inline-block align-top" alt="">
-    HAL Explorer
-  </div>
-  <div class="collapse navbar-collapse" id="navbar1">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownTheme" role="button" data-toggle="dropdown"
-           aria-haspopup="true" aria-expanded="false">
-          Theme
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownTheme">
-          <a class="dropdown-item" href="#" *ngFor="let theme of themes" (click)="changeTheme(theme)">{{theme}}</a>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLayout" role="button" data-toggle="dropdown"
-           aria-haspopup="true" aria-expanded="false">
-          Layout
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownLayout">
-          <a class="dropdown-item" href="#" *ngFor="let layout of layouts" (click)="changeLayout(layout)">{{layout}}</a>
-        </div>
-      </li>
-      <a class="nav-link" href="#" data-toggle="modal" data-target="#aboutModal">About</a>
-    </ul>
+  <div class="container-fluid">
+    <div class="navbar-brand">
+      <img src="favicon.ico" width="30" height="30" class="d-inline-block align-top" alt="">
+      HAL Explorer
+    </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbar1" aria-controls="navbar1" aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar1">
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownTheme" role="button" data-bs-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            Theme
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownTheme">
+            <a class="dropdown-item" href="#" *ngFor="let theme of themes" (click)="changeTheme(theme)">{{theme}}</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLayout" role="button" data-bs-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            Layout
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownLayout">
+            <a class="dropdown-item" href="#" *ngFor="let layout of layouts"
+               (click)="changeLayout(layout)">{{layout}}</a>
+          </div>
+        </li>
+        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#aboutModal">About</a>
+      </ul>
+    </div>
   </div>
 </nav>
 
@@ -44,13 +47,12 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="aboutModalLabel">About HAL Explorer</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="bs-component">
+        <div class="container-fluid">
           <table class="table table-striped table-sm">
+            <tbody>
             <tr>
               <td>Author:</td>
               <td>Kai Tödter</td>
@@ -61,23 +63,28 @@
             </tr>
             <tr>
               <td>GitHub:</td>
-              <td><a href="https://github.com/toedter/hal-explorer">https://github.com/toedter/hal-explorer</a>
+              <td><a class="p-0 text-decoration-none" href="https://github.com/toedter/hal-explorer">https://github.com/toedter/hal-explorer</a>
               </td>
             </tr>
             <tr>
               <td>Docs:</td>
-              <td *ngIf="isSnapshotVersion"><a href="https://toedter.github.io/hal-explorer/snapshot/reference-doc/">Snapshot Reference
+              <td *ngIf="isSnapshotVersion"><a class="p-0 text-decoration-none"
+                                               href="https://toedter.github.io/hal-explorer/snapshot/reference-doc/">Snapshot
+                Reference
                 Documentation</a>
-              <td *ngIf="!isSnapshotVersion"><a href="https://toedter.github.io/hal-explorer/release/reference-doc/">Release Reference
+              <td *ngIf="!isSnapshotVersion"><a class="p-0 text-decoration-none"
+                                                href="https://toedter.github.io/hal-explorer/release/reference-doc/">Release
+                Reference
                 Documentation</a>
               </td>
             </tr>
+            </tbody>
           </table>
         </div>
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

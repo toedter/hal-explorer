@@ -71,7 +71,7 @@ describe('DocumentationComponent', () => {
 
     (window as any).setIframeHeight(iFrame.id);
 
-    expect(iFrame.style.height).toBe('12px');
+    expect(iFrame.style.height).toBe('14px');
   });
 
   it('should get iframe doc height', () => {

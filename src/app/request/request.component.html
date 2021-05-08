@@ -37,24 +37,22 @@
   </div>
 </div>
 
-<div id="HttpRequestTrigger" data-toggle="modal" data-target="#httpRequestModal"></div>
+<div id="HttpRequestTrigger" data-bs-toggle="modal" data-bs-target="#httpRequestModal"></div>
 
 <div class="modal fade" id="httpRequestModal" role="dialog" aria-hidden="false">
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">HTTP Request Input</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body me-2">
         <form #myForm="ngForm">
           <div class="form-group row">
             <label class="col-sm-3 col-form-label" for="uri">URI
               <span *ngIf="isUriTemplate">Template</span>
             </label>
-            <div class="col-sm-9">
+            <div class="p-1 col-sm-9">
               <div class="form-control text-truncate"
                    title="{{httpRequestEvent.uri}}"
                    id="uri">{{httpRequestEvent.uri}}</div>
@@ -66,7 +64,7 @@
             <div id="uri-parameters" class="form-group row"
                  *ngFor="let parameter of uriTemplateParameters">
               <label class="col-sm-3 col-form-label">{{parameter.key}}</label>
-              <div class="col-sm-9">
+              <div class="p-1 col-sm-9">
                 <input class="form-control" [(ngModel)]="parameter.value"
                        (keyup)="computeUriFromTemplate()"
                        name="{{parameter.key}}">
@@ -75,7 +73,7 @@
             <div *ngIf="httpRequestEvent.command !== commandPlaceholder.Get
                       && httpRequestEvent.command !== commandPlaceholder.Delete" class="form-group row">
               <label class="col-sm-3 col-form-label" for="expandedURI">Expanded URI</label>
-              <div class="col-sm-9">
+              <div class="p-1 col-sm-9">
                 <div class="form-control text-truncate"
                      title="{{newRequestUri}}" id="expandedURI">{{newRequestUri}}</div>
               </div>
@@ -84,7 +82,7 @@
 
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">HTTP Method</label>
-            <div class="col-sm-9">
+            <div class="p-1 col-sm-9">
               <div class="form-control text-truncate">
                 {{commandPlaceholder[httpRequestEvent.command]}}
               </div>
@@ -98,7 +96,7 @@
               <label [title]="getTooltip(item.key)"
                      class="text-info col-sm-3 col-form-label">{{jsonSchema[item.key].title}}
               </label>
-              <div class="col-sm-9">
+              <div class="p-1 col-sm-9">
                 <input [type]="getInputType(item.key)" class="form-control"
                        [(ngModel)]="jsonSchema[item.key].value" [ngModelOptions]="{standalone: true}"
                        (keyup)="propertyChanged()">
@@ -109,11 +107,10 @@
 
           <div *ngIf="halFormsProperties">
             <hr>
-            <label class="text-info">HAL-FORMS Properties
+            <label class="mb-2">HAL-FORMS Properties
               <span *ngIf="halFormsPropertyKey"> [{{halFormsPropertyKey}}]</span>
             </label>
             <div class="form-group row" *ngFor="let item of halFormsProperties">
-
               <label *ngIf="item.prompt" [title]="item.name" class="text-info col-sm-3 col-form-label">
                 {{item.prompt}}
                 <span *ngIf="item.required">*</span>
@@ -122,7 +119,7 @@
                 {{item.name}}
                 <span *ngIf="item.required">*</span>
               </label>
-              <div class="col-sm-9">
+              <div class="p-1 col-sm-9">
                 <div *ngIf="getUiElementForHalFormsTemplateProperty(item) === 'input'">
                   <input class="form-control" [(ngModel)]="item.value"
                          name="{{item.name}}" id="request-input-{{item.name}}" #ngModel="ngModel"
@@ -136,7 +133,7 @@
                 <div *ngIf="getUiElementForHalFormsTemplateProperty(item) === 'select'">
                   <select
                     *ngIf="getUiElementForHalFormsTemplateProperty(item) === 'select' && item.options?.maxItems === 1"
-                    class="form-control" [(ngModel)]="item.value"
+                    class="form-select" [(ngModel)]="item.value"
                     name="{{item.name}}" id="request-option-{{item.name}}"
                     [appHalFormsProperty]="item"
                     (change)="propertyChanged()">
@@ -168,7 +165,7 @@
                       || httpRequestEvent.command === commandPlaceholder.Put
                       || httpRequestEvent.command === commandPlaceholder.Patch" class="form-group row">
             <label class="col-sm-3 col-form-label" for="body">Body</label>
-            <div class="col-sm-9">
+            <div class="p-1 col-sm-9">
             <textarea *ngIf="myForm.valid" [(ngModel)]="requestBody" class="form-control" id="body" rows="5"
                       name="bodyArea">
             </textarea>
@@ -180,7 +177,7 @@
           <div *ngIf="httpRequestEvent.command === commandPlaceholder.Get
                       || httpRequestEvent.command === commandPlaceholder.Delete" class="form-group row">
             <label class="col-sm-3 col-form-label" for="body">Expanded URI</label>
-            <div class="col-sm-9">
+            <div class="p-1 col-sm-9">
               <div id="request-input-expanded-uri" class="form-control text-truncate">
                 {{newRequestUri}}
               </div>
@@ -190,7 +187,7 @@
       </div>
 
       <div class="modal-footer">
-        <button id="requestDialogGoButton" type="button" class="btn btn-secondary" data-dismiss="modal"
+        <button id="requestDialogGoButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                 (click)="makeHttpRequest()" [disabled]="myForm.invalid">Go!
         </button>
       </div>
@@ -198,7 +195,7 @@
   </div>
 </div>
 
-<div id="requestHeadersModalTrigger" data-toggle="modal" data-target="#requestHeadersModal"></div>
+<div id="requestHeadersModalTrigger" data-bs-toggle="modal" data-bs-target="#requestHeadersModal"></div>
 
 <div class="modal fade" id="requestHeadersModal" role="dialog" aria-labelledby="requestHeadersModalLabel"
      aria-hidden="false">
@@ -206,28 +203,26 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="requestHeadersModalLabel">Request Headers</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form>
           <div class="form-group">
             <div id="titles" class="form-group row">
-              <div class="col-sm-3">
+              <div class="p-2 col-sm-3">
                 Key
               </div>
-              <div class="col-sm-9">
+              <div class="p-2 col-sm-9">
                 Value
               </div>
             </div>
 
             <div id="headers" class="form-group row" *ngFor="let header of tempRequestHeaders">
-              <div class="col-sm-3">
+              <div class="p-2 col-sm-3">
                 <input class="form-control" [(ngModel)]="header.key"
                        [ngModelOptions]="{standalone: true}">
               </div>
-              <div class="col-sm-9">
+              <div class="p-2 col-sm-9">
                 <input class="form-control" [(ngModel)]="header.value"
                        [ngModelOptions]="{standalone: true}">
               </div>
@@ -236,7 +231,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="updateRequestHeaders()">OK
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="updateRequestHeaders()">OK
         </button>
       </div>
     </div>

@@ -206,7 +206,7 @@ export class ResponseExplorerComponent implements OnInit {
   }
 
   getRequestButtonClass(command: Command) {
-    const base = 'ml-1 btn btn-sm nav-button ';
+    const base = 'ms-1 btn btn-sm nav-button ';
     if (command === Command.Post) {
       return base + 'btn-outline-info icon-plus';
     } else if (command === Command.Put) {

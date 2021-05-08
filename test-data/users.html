@@ -1,0 +1,388 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Users Documentation</title>
+</head>
+
+<body>
+<h1>Users Documentation</h1>
+
+<body class="article">
+<div id="header">
+</div>
+<div id="content">
+  <div class="sect2">
+    <h3 id="resources-users">Users</h3>
+    <div class="paragraph">
+      <p>The Users resource is used to create and list users.</p>
+    </div>
+    <div class="sect3">
+      <h4 id="resources-users-list">Listing users</h4>
+      <div class="paragraph">
+        <p>A <code>GET</code> request will list all of the service&#8217;s users.</p>
+      </div>
+      <div class="sect4">
+        <h5 id="_response_structure">Response structure</h5>
+        <table class="tableblock frame-all grid-all stretch">
+          <colgroup>
+            <col style="width: 33.3333%;">
+            <col style="width: 33.3333%;">
+            <col style="width: 33.3334%;">
+          </colgroup>
+          <thead>
+          <tr>
+            <th class="tableblock halign-left valign-top">Path</th>
+            <th class="tableblock halign-left valign-top">Type</th>
+            <th class="tableblock halign-left valign-top">Description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.chatty:users</code></p>
+            </td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">An array of <a href="#resources-user">User
+              resources</a></p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>_links</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><a
+              href="#resources-index-links">Links</a> to other resources</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">The pagination information</p></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="sect4">
+        <h5 id="_example_request">Example request</h5>
+        <div class="listingblock">
+          <div class="content">
+            <pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/users' -i -X GET</code></pre>
+          </div>
+        </div>
+      </div>
+      <div class="sect4">
+        <h5 id="_example_response">Example response</h5>
+        <div class="listingblock">
+          <div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+Content-Length: 1477
+
+  {
+  "_embedded" : {
+    "chatty:users" : [ {
+  "id" : "user_1",
+  "fullName" : "Kai Toedter",
+  "email" : "kai@toedter.com",
+  "_links" : {
+        "self" : {
+  "href" : "http://localhost:8080/api/users/user_1"
+        },
+        "chatty:user" : {
+  "href" : "http://localhost:8080/api/users/user_1{?projection}",
+          "templated" : true
+        },
+        "chatty:messages" : {
+  "href" : "http://localhost:8080/api/users/user_1/messages{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+  "id" : "user_2",
+  "fullName" : "John Doe",
+  "email" : "john@doe.com",
+  "_links" : {
+        "self" : {
+  "href" : "http://localhost:8080/api/users/user_2"
+        },
+        "chatty:user" : {
+  "href" : "http://localhost:8080/api/users/user_2{?projection}",
+          "templated" : true
+        },
+        "chatty:messages" : {
+  "href" : "http://localhost:8080/api/users/user_2/messages{?projection}",
+          "templated" : true
+        }
+      }
+    } ]
+  },
+  "_links" : {
+    "self" : {
+  "href" : "http://localhost:8080/api/users"
+    },
+    "profile" : {
+  "href" : "http://localhost:8080/api/profile/users"
+    },
+    "curies" : [ {
+  "href" : "http://localhost:8080/../docs/html5/{rel}.html",
+      "name" : "chatty",
+      "templated" : true
+    } ]
+  },
+  "page" : {
+    "size" : 20,
+    "totalElements" : 2,
+    "totalPages" : 1,
+    "number" : 0
+  }
+}</code></pre>
+          </div>
+        </div>
+      </div>
+      <div class="sect4">
+        <h5 id="_links">Links</h5>
+        <table class="tableblock frame-all grid-all stretch">
+          <colgroup>
+            <col style="width: 50%;">
+            <col style="width: 50%;">
+          </colgroup>
+          <thead>
+          <tr>
+            <th class="tableblock halign-left valign-top">Relation</th>
+            <th class="tableblock halign-left valign-top">Description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>self</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">The <a href="#resources-users">Users
+              resource</a></p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>profile</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">The profile describes the data structure
+              of this resource</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>curies</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Curies are used for online
+              documentation</p></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="sect3">
+      <h4 id="resources-users-create">Creating a user</h4>
+      <div class="paragraph">
+        <p>A <code>POST</code> request is used to create a user</p>
+      </div>
+      <div class="sect4">
+        <h5 id="_request_structure">Request structure</h5>
+        <table class="tableblock frame-all grid-all stretch">
+          <colgroup>
+            <col style="width: 33.3333%;">
+            <col style="width: 33.3333%;">
+            <col style="width: 33.3334%;">
+          </colgroup>
+          <thead>
+          <tr>
+            <th class="tableblock halign-left valign-top">Path</th>
+            <th class="tableblock halign-left valign-top">Type</th>
+            <th class="tableblock halign-left valign-top">Description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">The id of the user. Must be unique.</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>fullName</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">The full name of the user</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">The e-mail of the user</p></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="sect4">
+        <h5 id="_example_request_2">Example request</h5>
+        <div class="listingblock">
+          <div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/users' -i -X POST \
+    -H 'Content-Type: application/hal+json' \
+    -d '{
+  "fullName" : "toedter_k",
+  "id" : "toedter_k",
+  "email" : "kai@toedter.com"
+}'</code></pre>
+          </div>
+        </div>
+      </div>
+      <div class="sect4">
+        <h5 id="_example_response_2">Example response</h5>
+        <div class="listingblock">
+          <div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Location: http://localhost:8080/api/users/toedter_k</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sect2">
+    <h3 id="resources-user">User</h3>
+    <div class="paragraph">
+      <p>The User resource is used to get and change a single user.</p>
+    </div>
+    <div class="sect3">
+      <h4 id="resources-user-get">Getting a user</h4>
+      <div class="sect4">
+        <h5 id="_response_structure_2">Response structure</h5>
+        <table class="tableblock frame-all grid-all stretch">
+          <colgroup>
+            <col style="width: 33.3333%;">
+            <col style="width: 33.3333%;">
+            <col style="width: 33.3334%;">
+          </colgroup>
+          <thead>
+          <tr>
+            <th class="tableblock halign-left valign-top">Path</th>
+            <th class="tableblock halign-left valign-top">Type</th>
+            <th class="tableblock halign-left valign-top">Description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">The id of the user. Must be unique.</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>fullName</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">The full name of the user</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">The e-mail of the user</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>_links</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><a
+              href="#resources-index-links">Links</a> to other resources</p></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="sect4">
+        <h5 id="_example_request_3">Example request</h5>
+        <div class="listingblock">
+          <div class="content">
+            <pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/users/user_1' -i -X GET</code></pre>
+          </div>
+        </div>
+      </div>
+      <div class="sect4">
+        <h5 id="_example_response_3">Example response</h5>
+        <div class="listingblock">
+          <div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">
+HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+Content-Length: 577
+
+  {
+  "id" : "user_1",
+  "fullName" : "John Doe",
+  "email" : "john@doe.com",
+  "_links" : {
+    "self" : {
+  "href" : "http://localhost:8080/api/users/user_1"
+    },
+    "chatty:user" : {
+  "href" : "http://localhost:8080/api/users/user_1{?projection}",
+      "templated" : true
+    },
+    "chatty:messages" : {
+  "href" : "http://localhost:8080/api/users/user_1/messages{?projection}",
+      "templated" : true
+    },
+    "curies" : [ {
+  "href" : "http://localhost:8080/../docs/html5/{rel}.html",
+      "name" : "chatty",
+      "templated" : true
+    } ]
+  }
+}
+</code>
+</pre>
+          </div>
+        </div>
+      </div>
+      <div class="sect4">
+        <h5 id="_links_2">Links</h5>
+        <table class="tableblock frame-all grid-all stretch">
+          <colgroup>
+            <col style="width: 50%;">
+            <col style="width: 50%;">
+          </colgroup>
+          <thead>
+          <tr>
+            <th class="tableblock halign-left valign-top">Relation</th>
+            <th class="tableblock halign-left valign-top">Description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>self</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">the self link to this user</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>chatty:user</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">the (possibly templated) link to this
+              user</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>chatty:messages</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">The <a href="#resources-messages">Messages</a>
+              of this user</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><code>curies</code></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Curies are used for online
+              documentation</p></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="footer">
+  <div id="footer-text">
+    Version 1.0.347<br>
+    Last updated 2021-05-05 14:24:36 UTC
+  </div>
+</div>
+</body>
+
+</body>
+</html>

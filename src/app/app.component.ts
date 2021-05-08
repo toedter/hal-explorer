@@ -22,7 +22,9 @@ export class AppComponent implements OnInit {
     'Lux',
     'Materia',
     'Minty',
+    'Morph',
     'Pulse',
+    'Quartz',
     'Sandstone',
     'Simplex',
     'Sketchy',
@@ -31,7 +33,9 @@ export class AppComponent implements OnInit {
     'Spacelab',
     'Superhero',
     'United',
-    'Yeti'
+    'Vapor',
+    'Yeti',
+    'Zephyr'
   ];
 
   layouts: string[] = [
@@ -75,7 +79,7 @@ export class AppComponent implements OnInit {
     this.isCustomTheme = theme !== this.themes[0];
     if (this.isCustomTheme) {
       this.selectedThemeUrl =
-        this.sanitizer.bypassSecurityTrustResourceUrl('https://bootswatch.com/4/' + theme.toLowerCase() + '/bootstrap.min.css');
+        this.sanitizer.bypassSecurityTrustResourceUrl('https://bootswatch.com/5/' + theme.toLowerCase() + '/bootstrap.min.css');
     }
     this.appService.setTheme(theme);
   }

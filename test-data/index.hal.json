@@ -12,7 +12,7 @@
     },
     "curies": [
       {
-        "href": "http://localhost:3000/../docs/html5/{rel}.html",
+        "href": "http://localhost:3000/{rel}.html",
         "name": "chatty",
         "templated": true
       }

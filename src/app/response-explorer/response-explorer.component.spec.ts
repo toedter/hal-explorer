@@ -186,8 +186,6 @@ describe('ResponseExplorerComponent', () => {
       });
     responseSubject.next(new Response(new HttpResponse({headers: responseHeaders, body: halFormsResponse}), null));
 
-    const selfRel = 'self';
-    const selfHref = 'http://api.com';
     expect(component.getLinkButtonClass(Command.Get)).toBe('');
     expect(component.isButtonDisabled(Command.Get)).toBeFalse();
 
@@ -211,12 +209,12 @@ describe('ResponseExplorerComponent', () => {
       });
     responseSubject.next(new Response(new HttpResponse({headers: responseHeaders, body: halFormsResponse}), null));
 
-    expect(component.getRequestButtonClass(Command.Get)).toBe('ml-1 btn btn-sm nav-button btn-outline-success icon-left-open');
-    expect(component.getRequestButtonClass(Command.Post)).toBe('ml-1 btn btn-sm nav-button btn-outline-info icon-plus');
-    expect(component.getRequestButtonClass(Command.Put)).toBe('ml-1 btn btn-sm nav-button btn-outline-warning icon-right-open');
-    expect(component.getRequestButtonClass(Command.Patch)).toBe('ml-1 btn btn-sm nav-button btn-outline-warning icon-right-open');
-    expect(component.getRequestButtonClass(Command.Delete)).toBe('ml-1 btn btn-sm nav-button btn-outline-danger icon-cancel');
-    expect(component.getRequestButtonClass(undefined)).toBe('ml-1 btn btn-sm nav-button btn-outline-success icon-left-open');
+    expect(component.getRequestButtonClass(Command.Get)).toBe('ms-1 btn btn-sm nav-button btn-outline-success icon-left-open');
+    expect(component.getRequestButtonClass(Command.Post)).toBe('ms-1 btn btn-sm nav-button btn-outline-info icon-plus');
+    expect(component.getRequestButtonClass(Command.Put)).toBe('ms-1 btn btn-sm nav-button btn-outline-warning icon-right-open');
+    expect(component.getRequestButtonClass(Command.Patch)).toBe('ms-1 btn btn-sm nav-button btn-outline-warning icon-right-open');
+    expect(component.getRequestButtonClass(Command.Delete)).toBe('ms-1 btn btn-sm nav-button btn-outline-danger icon-cancel');
+    expect(component.getRequestButtonClass(undefined)).toBe('ms-1 btn btn-sm nav-button btn-outline-success icon-left-open');
   });
 
   it('should populate HAL-FORMS request button class and state', () => {
@@ -225,10 +223,8 @@ describe('ResponseExplorerComponent', () => {
         'content-type': 'application/prs.hal-forms+json'
       });
     responseSubject.next(new Response(new HttpResponse({headers: responseHeaders, body: halFormsResponse}), null));
-    const selfRel = 'self';
-    const selfHref = 'http://api.com';
 
-    expect(component.getRequestButtonClass(Command.Post)).toBe('ml-1 btn btn-sm nav-button btn-outline-info icon-plus');
+    expect(component.getRequestButtonClass(Command.Post)).toBe('ms-1 btn btn-sm nav-button btn-outline-info icon-plus');
   });
 
   it('should invoke request service when processing command', () => {
@@ -242,7 +238,6 @@ describe('ResponseExplorerComponent', () => {
       {
         'content-type': 'application/prs.hal-forms+json'
       });
-
 
     const halFormsResponseWithTarget = {
       _links: {

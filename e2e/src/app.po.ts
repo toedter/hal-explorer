@@ -41,7 +41,9 @@ export class AppPage {
   }
 
   getFirstPostButton(): ElementFinder {
-    return element.all(by.css('.icon-plus')).first();
+    return element.all(by.css('.icon-plus')).filter((elem) => {
+      return elem.isEnabled();
+    }).first();
   }
 
   getLastPostButton(): ElementFinder {
