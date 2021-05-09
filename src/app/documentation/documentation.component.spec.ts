@@ -95,18 +95,12 @@ describe('DocumentationComponent', () => {
   });
 
   it('should not get iframe doc height from cross origin', () => {
-    spyOn(window.console, 'warn');
-    spyOn(document, 'getElementById').and.returnValue(null);
+    const iFrame = {style: {}, contentDocument: {}};
+    spyOn(document, 'getElementById').and.returnValue(iFrame as any);
 
     (window as any).setIframeHeight(1);
 
-    expect(window.console.warn).toHaveBeenCalled();
-  });
-
-  it('should return doc height', () => {
-    const docHeight = component.getDocHeight();
-
-    expect(docHeight).toBeGreaterThan(0);
+    expect((iFrame.style as any).height).not.toBe('10px');
   });
 });
 

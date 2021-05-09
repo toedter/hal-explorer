@@ -25,10 +25,6 @@ export class DocumentationComponent implements OnInit {
         this.docUri = undefined;
       });
   }
-
-  getDocHeight() {
-    return getDocHeight(document) - 150;
-  }
 }
 
 // The following functions ported to Typescript from from https://www.dyn-web.com/tutorials/iframes/height/
@@ -43,15 +39,17 @@ export function getDocHeight(doc): number {
 }
 
 (window as any).setIframeHeight = (id) => {
+  const iFrame: any = document.getElementById(id);
+  iFrame.style.visibility = 'hidden';
+  iFrame.style.height = '10px'; // reset to minimal height ...
+  iFrame.style.visibility = 'visible';
   try {
-    const iFrame: any = document.getElementById(id);
     const doc = iFrame.contentDocument ? iFrame.contentDocument :
       iFrame.contentWindow.document;
-    iFrame.style.visibility = 'hidden';
-    iFrame.style.height = '10px'; // reset to minimal height ...
     iFrame.style.height = getDocHeight(doc) + 4 + 'px';
-    iFrame.style.visibility = 'visible';
   } catch (e) {
-    console.warn('Cannot set size for embedded documentation iFrame, will set it to default...');
+    // this exception most likely occurs when the iFrame's URL has a CORS issue
+    // then just take the original document as base
+    iFrame.style.height = (getDocHeight(document) - 130) + 'px';
   }
 };
