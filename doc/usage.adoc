@@ -6,7 +6,7 @@
 When you start HAL Explorer, you see an input field in the top left area, where you can input the URI of a REST service, that returns HAL or HAL-FORMS documents. Once you click `Go!` or hit enter, the response is displayed. A typical response would look like
 
 
-image::img/hal-explorer.jpg[]
+image::img/hal-explorer.png[]
 
 == Links
 
@@ -60,7 +60,7 @@ image::img/3-column-layout.png[]
 HAL Explorer supports the latest HAL-FORMS specification. Whenever a HAL-FORMS based response contains
 templates (`_templates`), all template elements will be displayed under the Links section, like
 
-image::img/hal-explorer-templates.jpg[]
+image::img/hal-explorer-templates.png[]
 
 Since HAL-FORMS uses affordances to describe which HTTP method should be used for each template element, you can
 only follow links using HTTP GET, but use exactly the HTTP method specified in a template element.

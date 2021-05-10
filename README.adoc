@@ -23,7 +23,7 @@ as well as the latest release and the current snapshot of HAL Explorer:
 
 == TL;DR
 
-image::./doc/img/hal-explorer.jpg[HAL Explorer]
+image::./doc/img/hal-explorer.png[HAL Explorer]
 
 == Features
 
