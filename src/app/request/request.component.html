@@ -91,7 +91,7 @@
 
           <div *ngIf="jsonSchema">
             <hr>
-            <label class="text-info">Spring Profile (JSON Schema)</label>
+            <label class="mb-2">Spring Profile (JSON Schema)</label>
             <div class="form-group row" *ngFor="let item of jsonSchema | keyvalue">
               <label [title]="getTooltip(item.key)"
                      class="text-info col-sm-3 col-form-label">{{jsonSchema[item.key].title}}
