@@ -1,0 +1,24 @@
+{
+  "_links": {
+    "self": {
+      "href": "examples/options.hal-forms.json"
+    }
+  },
+  "_templates" : {
+    "default" : {
+      "title": "Shipping",
+      "method": "POST",
+      "properties" : [
+        {
+          "name" : "shipping",
+          "prompt" : "Select Shipping Method",
+          "options" : {
+            "selectedValues" : ["FedEx"],
+            "inline" : ["FedEx","UPS","DHL"],
+            "maxItems": 1
+          }
+        }
+      ]
+    }
+  }
+}

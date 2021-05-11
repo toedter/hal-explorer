@@ -1,0 +1,30 @@
+{
+  "_links": {
+    "self": {
+      "href": "examples/options-link-hal-content.hal-forms.json"
+    }
+  },
+  "_templates": {
+    "default": {
+      "title": "Shipping",
+      "method": "POST",
+      "properties": [
+        {
+          "name": "shipping",
+          "prompt": "Select Shipping Method",
+          "options": {
+            "selectedValues": [
+              "FedEx"
+            ],
+            "link": {
+              "href": "examples/shipping.hal.json",
+              "templated": "false",
+              "type": "application/hal+json"
+            },
+            "maxItems": 1
+          }
+        }
+      ]
+    }
+  }
+}

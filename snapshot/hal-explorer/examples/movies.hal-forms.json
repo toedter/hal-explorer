@@ -1,0 +1,78 @@
+{
+  "_embedded": {
+    "movies": [
+      {
+        "title": "The Shawshank Redemption",
+        "year": 1994,
+        "imdbId": "tt0111161",
+        "rating": 9.3,
+        "rank": 1,
+        "thumb": "/movie-data/thumbs/tt0111161.jpg",
+        "_links": {
+          "self": {
+            "href": "examples/api/movies/1"
+          },
+          "directors": {
+            "href": "examples/api/directors/2",
+            "name": "Frank Darabont"
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "examples/api/movies?page=0&size=1"
+    },
+    "next": {
+      "href": "examples/api/movies?page=1&size=1"
+    },
+    "last": {
+      "href": "examples/api/movies?page=249&size=1"
+    }
+  },
+  "_templates": {
+    "default": {
+      "title": "Create Movie",
+      "method": "post",
+      "properties": [
+        {
+          "name": "imdbId",
+          "prompt": "IMDB Id",
+          "placeholder": "e.g. 1765356764"
+        },
+        {
+          "name": "rank",
+          "prompt": "Rank",
+          "type": "email"
+        },
+        {
+          "name": "rating",
+          "prompt": "IMDB Rating"
+        },
+        {
+          "name": "thumb",
+          "prompt": "Poster"
+        },
+        {
+          "name": "title",
+          "prompt": "Title",
+          "required": true
+        },
+        {
+          "name": "year",
+          "prompt": "Release Year",
+          "regex": "\\d{4}$",
+          "placeholder": "e.g. 1984"
+        }
+      ]
+    }
+  },
+  "page": {
+    "size": 1,
+    "totalElements": 250,
+    "totalPages": 250,
+    "number": 0
+  }
+}
+

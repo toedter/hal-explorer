@@ -1,0 +1,21 @@
+{
+  "_links": {
+    "chatty:users": {
+      "href": "examples/users.hal.json"
+    },
+    "chatty:messages": {
+      "href": "examples/messages.hal.json{?page,size}",
+      "templated": true
+    },
+    "profile": {
+      "href": "examples/api/profile"
+    },
+    "curies": [
+      {
+        "href": "examples/{rel}.html",
+        "name": "chatty",
+        "templated": true
+      }
+    ]
+  }
+}

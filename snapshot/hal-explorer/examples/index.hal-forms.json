@@ -1,0 +1,15 @@
+{
+  "_links": {
+    "self": {
+      "href": "examples/api"
+    },
+    "movies": {
+      "href": "examples/api/movies{?size,page}",
+      "templated": true
+    },
+    "directors": {
+      "href": "examples/api/directors{?size,page}",
+      "templated": true
+    }
+  }
+}

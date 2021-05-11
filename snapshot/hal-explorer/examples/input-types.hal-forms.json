@@ -1,0 +1,81 @@
+{
+   "_links": {
+    "self": {
+      "href": "examples/api/movies?page=0&size=1"
+    }
+  },
+  "_templates": {
+    "default": {
+      "title": "Test Input Types",
+      "method": "post",
+      "properties": [
+        {
+          "name": "hidden",
+          "type": "hidden"
+        },
+        {
+          "name": "text",
+          "type": "text"
+        },
+        {
+          "name": "textarea",
+          "type": "textarea"
+        },
+        {
+          "name": "search",
+          "type": "search"
+        },
+        {
+          "name": "tel",
+          "type": "tel"
+        },
+        {
+          "name": "url",
+          "type": "url"
+        },
+        {
+          "name": "email",
+          "type": "email",
+          "required": "true"
+        },
+        {
+          "name": "password",
+          "type": "password"
+        },
+        {
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "name": "month",
+          "type": "month"
+        },
+        {
+          "name": "week",
+          "type": "week"
+        },
+        {
+          "name": "time",
+          "type": "time"
+        },
+        {
+          "name": "datetime-local",
+          "type": "datetime-local"
+        },
+        {
+          "name": "number",
+          "type": "number"
+        },
+        {
+          "name": "range",
+          "type": "range"
+        },
+        {
+          "name": "color",
+          "type": "color"
+        }
+      ]
+    }
+  }
+}
+
