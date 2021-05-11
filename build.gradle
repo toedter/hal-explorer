@@ -68,6 +68,12 @@ task doc {
     }
 
     copy {
+      from "$projectDir/test-data"
+      into "$buildDir/docs/gh-pages/snapshot/hal-explorer/examples"
+      filter { line -> line.replaceAll('http://localhost:3000', 'examples') }
+    }
+
+    copy {
       from "$projectDir/doc/img/"
       into "$buildDir/docs/asciidoc/img/"
     }

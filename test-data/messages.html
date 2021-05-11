@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<!-- saved from url=(0052)https://chatty42.herokuapp.com/docs/html5/users.html -->
+<!-- saved from url=(0055)https://chatty42.herokuapp.com/docs/html5/messages.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.8">
-<title>Users</title>
-<link rel="stylesheet" href="./users_files/css">
+<title>Messages</title>
+<link rel="stylesheet" href="./messages_files/css">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
 /* Uncomment @import statement below to use as custom stylesheet */
@@ -435,14 +435,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect2">
-<h3 id="resources-users">Users</h3>
+<h3 id="resources-messages">Messages</h3>
 <div class="paragraph">
-<p>The Users resource is used to create and list users.</p>
+<p>The Messages resource is used to create and list chat messages.</p>
 </div>
 <div class="sect3">
-<h4 id="resources-users-list">Listing users</h4>
+<h4 id="resources-messages-list">Listing chat messages</h4>
 <div class="paragraph">
-<p>A <code>GET</code> request will list all of the service’s users.</p>
+<p>A <code>GET</code> request will list all of the service’s chat messages.</p>
 </div>
 <div class="sect4">
 <h5 id="_response_structure">Response structure</h5>
@@ -461,14 +461,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.chatty:users</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.chatty:messages</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An array of <a href="https://chatty42.herokuapp.com/docs/html5/users.html#resources-user">User resources</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An array of <a href="https://chatty42.herokuapp.com/docs/html5/messages.html#resources-message">Message resources</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>_links</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://chatty42.herokuapp.com/docs/html5/users.html#resources-index-links">Links</a> to other resources</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://chatty42.herokuapp.com/docs/html5/messages.html#resources-index-links">Links</a> to other resources</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
@@ -482,7 +482,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h5 id="_example_request">Example request</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/users' -i -X GET</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/messages' -i -X GET</code></pre>
 </div>
 </div>
 </div>
@@ -495,41 +495,39 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/hal+json
-Content-Length: 1477
+Content-Length: 1452
 
 {
   "_embedded" : {
-    "chatty:users" : [ {
-      "id" : "user_1",
-      "fullName" : "Kai Toedter",
-      "email" : "kai@toedter.com",
+    "chatty:messages" : [ {
+      "text" : "Hello!",
+      "timeStamp" : "2021-05-10T09:35:51.039649Z",
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/api/users/user_1"
+          "href" : "http://localhost:8080/api/messages/7"
         },
-        "chatty:user" : {
-          "href" : "http://localhost:8080/api/users/user_1{?projection}",
+        "chatty:chatMessage" : {
+          "href" : "http://localhost:8080/api/messages/7{?projection}",
           "templated" : true
         },
-        "chatty:messages" : {
-          "href" : "http://localhost:8080/api/users/user_1/messages{?projection}",
+        "author" : {
+          "href" : "http://localhost:8080/api/messages/7/author{?projection}",
           "templated" : true
         }
       }
     }, {
-      "id" : "user_2",
-      "fullName" : "John Doe",
-      "email" : "john@doe.com",
+      "text" : "How are you today?",
+      "timeStamp" : "2021-05-10T09:35:51.046624Z",
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/api/users/user_2"
+          "href" : "http://localhost:8080/api/messages/8"
         },
-        "chatty:user" : {
-          "href" : "http://localhost:8080/api/users/user_2{?projection}",
+        "chatty:chatMessage" : {
+          "href" : "http://localhost:8080/api/messages/8{?projection}",
           "templated" : true
         },
-        "chatty:messages" : {
-          "href" : "http://localhost:8080/api/users/user_2/messages{?projection}",
+        "author" : {
+          "href" : "http://localhost:8080/api/messages/8/author{?projection}",
           "templated" : true
         }
       }
@@ -537,10 +535,10 @@ Content-Length: 1477
   },
   "_links" : {
     "self" : {
-      "href" : "http://localhost:8080/api/users"
+      "href" : "http://localhost:8080/api/messages"
     },
     "profile" : {
-      "href" : "http://localhost:8080/api/profile/users"
+      "href" : "http://localhost:8080/api/profile/messages"
     },
     "curies" : [ {
       "href" : "http://localhost:8080/../docs/html5/{rel}.html",
@@ -574,7 +572,7 @@ Content-Length: 1477
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>self</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The <a href="https://chatty42.herokuapp.com/docs/html5/users.html#resources-users">Users resource</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <a href="https://chatty42.herokuapp.com/docs/html5/messages.html#resources-messages">Messages resource</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>profile</code></p></td>
@@ -589,9 +587,9 @@ Content-Length: 1477
 </div>
 </div>
 <div class="sect3">
-<h4 id="resources-users-create">Creating a user</h4>
+<h4 id="resources-messages-create">Creating a chat message</h4>
 <div class="paragraph">
-<p>A <code>POST</code> request is used to create a user</p>
+<p>A <code>POST</code> request is used to create a chat message</p>
 </div>
 <div class="sect4">
 <h5 id="_request_structure">Request structure</h5>
@@ -610,33 +608,41 @@ Content-Length: 1477
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>text</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The id of the user. Must be unique.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The text of the chat message</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fullName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>author</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The full name of the user</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The e-mail of the user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The author of the chat message. This must be the URL to an existing user resource</p></td>
 </tr>
 </tbody>
 </table>
+<div class="admonitionblock important">
+<table>
+<tbody><tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+Whenever you want to link REST resources,
+you have to provide the URL to the REST resource you want to link to.
+In the example below, a chat message needs an author, which is provided by the URL of the corresponding user resource.
+</td>
+</tr>
+</tbody></table>
+</div>
 </div>
 <div class="sect4">
 <h5 id="_example_request_2">Example request</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/users' -i -X POST \
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/messages' -i -X POST \
     -H 'Content-Type: application/hal+json' \
     -d '{
-  "fullName" : "toedter_k",
-  "id" : "toedter_k",
-  "email" : "kai@toedter.com"
+  "author" : "http://localhost:8080/api/users/toedter_k",
+  "text" : "Hello!"
 }'</code></pre>
 </div>
 </div>
@@ -649,19 +655,19 @@ Content-Length: 1477
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Location: http://localhost:8080/api/users/toedter_k</code></pre>
+Location: http://localhost:8080/api/messages/6</code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="resources-user">User</h3>
+<h3 id="resources-message">Chat Message</h3>
 <div class="paragraph">
-<p>The User resource is used to get and change a single user.</p>
+<p>The chat message resource is used to get and change a single message.</p>
 </div>
 <div class="sect3">
-<h4 id="resources-user-get">Getting a user</h4>
+<h4 id="resources-message-get">Getting a chat message</h4>
 <div class="sect4">
 <h5 id="_response_structure_2">Response structure</h5>
 <table class="tableblock frame-all grid-all stretch">
@@ -679,24 +685,19 @@ Location: http://localhost:8080/api/users/toedter_k</code></pre>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>text</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The id of the user. Must be unique.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The text of the chat message</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fullName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>timeStamp</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The full name of the user</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The e-mail of the user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The timestamp of the chat message</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>_links</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://chatty42.herokuapp.com/docs/html5/users.html#resources-index-links">Links</a> to other resources</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://chatty42.herokuapp.com/docs/html5/messages.html#resources-index-links">Links</a> to other resources</p></td>
 </tr>
 </tbody>
 </table>
@@ -705,7 +706,7 @@ Location: http://localhost:8080/api/users/toedter_k</code></pre>
 <h5 id="_example_request_3">Example request</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/users/user_1' -i -X GET</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/messages/5' -i -X GET</code></pre>
 </div>
 </div>
 </div>
@@ -718,22 +719,21 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/hal+json
-Content-Length: 577
+Content-Length: 561
 
 {
-  "id" : "user_1",
-  "fullName" : "John Doe",
-  "email" : "john@doe.com",
+  "text" : "Hello!",
+  "timeStamp" : "2021-05-10T09:35:50.586199Z",
   "_links" : {
     "self" : {
-      "href" : "http://localhost:8080/api/users/user_1"
+      "href" : "http://localhost:8080/api/messages/5"
     },
-    "chatty:user" : {
-      "href" : "http://localhost:8080/api/users/user_1{?projection}",
+    "chatty:chatMessage" : {
+      "href" : "http://localhost:8080/api/messages/5{?projection}",
       "templated" : true
     },
-    "chatty:messages" : {
-      "href" : "http://localhost:8080/api/users/user_1/messages{?projection}",
+    "author" : {
+      "href" : "http://localhost:8080/api/messages/5/author{?projection}",
       "templated" : true
     },
     "curies" : [ {
@@ -765,12 +765,12 @@ Content-Length: 577
 <td class="tableblock halign-left valign-top"><p class="tableblock">the self link to this user</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>chatty:user</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">the (possibly templated) link to this user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>chatty:chatMessage</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the (possibly templated) link to this message</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>chatty:messages</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The <a href="https://chatty42.herokuapp.com/docs/html5/users.html#resources-messages">Messages</a> of this user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>author</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the author of this message</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>curies</code></p></td>
