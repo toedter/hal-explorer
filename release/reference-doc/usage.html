@@ -29,7 +29,7 @@
 <div id="header">
 <h1>Using HAL Explorer</h1>
 <div class="details">
-<span id="revnumber">version 0.16.0</span>
+<span id="revnumber">version 0.17.0</span>
 </div>
 </div>
 <div id="content">
@@ -41,7 +41,7 @@
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="img/hal-explorer.jpg" alt="hal explorer">
+<img src="img/hal-explorer.png" alt="hal explorer">
 </div>
 </div>
 </div>
@@ -50,7 +50,7 @@
 <h2 id="_links"><a class="anchor" href="#_links"></a>Links</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Just below the URI you find the top-level JSON properties. If the resonse contains links, you find them below.
+<p>Just below the URI you find the top-level JSON properties. If the response contains links, you find them below.
 Since HAL does not provide any affordances what HTTP method you should use to follow the link, you find colored buttons for each HTTP method:</p>
 </div>
 <div class="ulist">
@@ -77,7 +77,7 @@ Since HAL does not provide any affordances what HTTP method you should use to fo
 you can click on the book icon to display it.</p>
 </div>
 <div class="paragraph">
-<p>If a link relation provides a name, or a title, they are displayed in the links table.</p>
+<p>If a link relation provides a name or a title, they are displayed in the links table.</p>
 </div>
 <div class="paragraph">
 <p>You can click on a link button to follow the link. If a link is templated, a modal dialog will pop up, where you can fill the template parameters, like</p>
@@ -88,7 +88,7 @@ you can click on the book icon to display it.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>When you click on <code>Go!</code>, a HTTP call to the <code>Expanded URI</code> will be made.</p>
+<p>When you click on <code>Go!</code>, an HTTP call to the <code>Expanded URI</code> will be made.</p>
 </div>
 </div>
 </div>
@@ -96,7 +96,7 @@ you can click on the book icon to display it.</p>
 <h2 id="_embedded_resources"><a class="anchor" href="#_embedded_resources"></a>Embedded Resources</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If the response contains embedded resources, you find the in a section below the links.
+<p>If the response contains embedded resources, you find them in the section "Embedded Resources".
 You can click on an embedded resource to expand it, like</p>
 </div>
 <div class="imageblock">
@@ -154,7 +154,7 @@ templates (<code>_templates</code>), all template elements will be displayed und
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="img/hal-explorer-templates.jpg" alt="hal explorer templates">
+<img src="img/hal-explorer-templates.png" alt="hal explorer templates">
 </div>
 </div>
 <div class="paragraph">
@@ -167,7 +167,7 @@ only follow links using HTTP GET, but use exactly the HTTP method specified in a
 <h2 id="_updating_rest_resources"><a class="anchor" href="#_updating_rest_resources"></a>Updating REST Resources</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Whenever you click on a HTTP POST button, a modal dialog pops up, where you can enter body of the post, and the query parameters (only if the URI is templated). In raw HAL based documents, it looks like</p>
+<p>Whenever you click on an HTTP POST button, a modal dialog pops up, where you can enter the body of the post, and the query parameters (only if the URI is templated). In raw HAL based documents, it looks like</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -175,7 +175,7 @@ only follow links using HTTP GET, but use exactly the HTTP method specified in a
 </div>
 </div>
 <div class="paragraph">
-<p>When your server is implemented using <a href="https://spring.io/projects/spring-data-rest">Spring Data REST</a>, a JSON Schema based Spring profile is automatically created. HAL Explorer automatically detects Spring Profiles, and instead of just presenting an empty body, form elements for all attributes are displayed, like</p>
+<p>When your server is implemented using <a href="https://spring.io/projects/spring-data-rest">Spring Data REST</a>, a JSON Schema-based Spring profile is automatically created. HAL Explorer automatically detects Spring Profiles, and instead of just presenting an empty body, form elements for all attributes are displayed, like</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -191,8 +191,8 @@ only follow links using HTTP GET, but use exactly the HTTP method specified in a
 </div>
 </div>
 <div class="paragraph">
-<p>When HAL-FORMS is used, the field are also validated and validation errors are displayed below the input area.
-Only for valid forms the body is displayed, and the HTTP request can mit made.</p>
+<p>When HAL-FORMS is used, the fields are also validated and validation errors are displayed below the input area.
+Only for valid forms, the body is displayed, and the HTTP request can be made.</p>
 </div>
 </div>
 </div>
@@ -240,7 +240,7 @@ bearer tokens for authorization, like</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p>HAL Explorer supports HAL-FORMS <a href="https://rwcbook.github.io/hal-forms/#options-element">Options</a>.
-An simple example JSON looks like</p>
+A simple example JSON looks like</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -283,8 +283,8 @@ An simple example JSON looks like</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.16.0<br>
-Last updated 2021-04-12 18:26:43 UTC
+Version 0.17.0<br>
+Last updated 2021-05-13 13:13:03 UTC
 </div>
 </div>
 </div>
