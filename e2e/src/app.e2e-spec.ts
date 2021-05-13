@@ -82,7 +82,7 @@ describe( 'HAL-Explorer App', () => {
     completedInput.sendKeys('true');
 
     const expandedUri = page.getExpandedUri();
-    expect(expandedUri.getText()).toEqual('http://api.example.org/rels/filter?title=myTitle&completed=true');
+    expect(expandedUri.getText()).toEqual('http://localhost:3000/filter.hal-forms.json?title=myTitle&completed=true');
 
     browser.wait(protractor.ExpectedConditions.presenceOf(titleInput),
       5000, 'Input for Title taking too long to appear in the DOM');
