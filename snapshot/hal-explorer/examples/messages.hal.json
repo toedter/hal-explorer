@@ -1,0 +1,95 @@
+{
+  "_embedded": {
+    "chatty:messages": [
+      {
+        "text": "hello all!",
+        "timeStamp": "2021-05-13T11:51:24.010284Z",
+        "_links": {
+          "self": {
+            "href": "https://chatty42.herokuapp.com/api/messages/1"
+          },
+          "chatty:chatMessage": {
+            "href": "https://chatty42.herokuapp.com/api/messages/1{?projection}",
+            "templated": true
+          },
+          "author": {
+            "href": "https://chatty42.herokuapp.com/api/messages/1/author{?projection}",
+            "templated": true
+          }
+        }
+      },
+      {
+        "text": "Hi Kai",
+        "timeStamp": "2021-05-13T11:51:24.025892Z",
+        "_links": {
+          "self": {
+            "href": "https://chatty42.herokuapp.com/api/messages/2"
+          },
+          "chatty:chatMessage": {
+            "href": "https://chatty42.herokuapp.com/api/messages/2{?projection}",
+            "templated": true
+          },
+          "author": {
+            "href": "https://chatty42.herokuapp.com/api/messages/2/author{?projection}",
+            "templated": true
+          }
+        }
+      },
+      {
+        "text": "Hi Kai!",
+        "timeStamp": "2021-05-13T11:51:24.029775Z",
+        "_links": {
+          "self": {
+            "href": "https://chatty42.herokuapp.com/api/messages/3"
+          },
+          "chatty:chatMessage": {
+            "href": "https://chatty42.herokuapp.com/api/messages/3{?projection}",
+            "templated": true
+          },
+          "author": {
+            "href": "https://chatty42.herokuapp.com/api/messages/3/author{?projection}",
+            "templated": true
+          }
+        }
+      },
+      {
+        "text": "How are you today?",
+        "timeStamp": "2021-05-13T11:51:24.032238Z",
+        "_links": {
+          "self": {
+            "href": "https://chatty42.herokuapp.com/api/messages/4"
+          },
+          "chatty:chatMessage": {
+            "href": "https://chatty42.herokuapp.com/api/messages/4{?projection}",
+            "templated": true
+          },
+          "author": {
+            "href": "https://chatty42.herokuapp.com/api/messages/4/author{?projection}",
+            "templated": true
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "https://chatty42.herokuapp.com/api/messages"
+    },
+    "profile": {
+      "href": "https://chatty42.herokuapp.com/api/profile/messages"
+    },
+    "curies": [
+      {
+        "href": "https://chatty42.herokuapp.com/../docs/html5/{rel}.html",
+        "name": "chatty",
+        "templated": true
+      }
+    ]
+  },
+  "page": {
+    "size": 20,
+    "totalElements": 4,
+    "totalPages": 1,
+    "number": 0
+  }
+}
