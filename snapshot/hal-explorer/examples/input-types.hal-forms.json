@@ -1,7 +1,7 @@
 {
    "_links": {
     "self": {
-      "href": "examples/api/movies?page=0&size=1"
+      "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/input-types.hal-forms.json"
     }
   },
   "_templates": {

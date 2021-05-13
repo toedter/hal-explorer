@@ -1,7 +1,7 @@
 {
   "_links": {
     "self": {
-      "href": "examples/options-link.hal-forms.json"
+      "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/options-link-invalid-format.hal-forms.json"
     }
   },
   "_templates": {
@@ -17,7 +17,7 @@
               "FedEx"
             ],
             "link": {
-              "href": "examples/shipping-invalid-options.json",
+              "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/shipping-invalid-options.json",
               "templated": "false",
               "type": "application/json"
             },

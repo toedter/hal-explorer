@@ -1,18 +1,18 @@
 {
   "_links": {
     "chatty:users": {
-      "href": "examples/users.hal.json"
+      "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/users.hal.json"
     },
     "chatty:messages": {
-      "href": "examples/messages.hal.json{?page,size}",
+      "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/messages.hal.json{?page,size}",
       "templated": true
     },
     "profile": {
-      "href": "examples/api/profile"
+      "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/api/profile"
     },
     "curies": [
       {
-        "href": "examples/{rel}.html",
+        "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/{rel}.html",
         "name": "chatty",
         "templated": true
       }

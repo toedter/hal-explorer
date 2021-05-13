@@ -1,14 +1,14 @@
 {
   "_links": {
     "self": {
-      "href": "examples/api"
+      "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/index.hal-forms.json"
     },
     "movies": {
-      "href": "examples/api/movies{?size,page}",
+      "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/movies.hal-forms.json{?size,page}",
       "templated": true
     },
     "directors": {
-      "href": "examples/api/directors{?size,page}",
+      "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/directors.hal-forms.json{?size,page}",
       "templated": true
     }
   }

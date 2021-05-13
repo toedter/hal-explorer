@@ -1,7 +1,7 @@
 {
   "_links": {
     "self": {
-      "href": "examples/options-multiple.hal-forms.json"
+      "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/options-multiple.hal-forms.json"
     }
   },
   "_templates" : {

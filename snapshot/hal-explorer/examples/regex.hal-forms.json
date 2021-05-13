@@ -1,7 +1,7 @@
 {
   "_links": {
     "self": {
-      "href": "http://api.example.org/rels/filter"
+      "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/regex.hal-forms.json"
     }
   },
   "_templates": {
