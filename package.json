@@ -1,12 +1,12 @@
 {
   "name": "hal-explorer",
-  "version": "0.17.0",
+  "version": "0.18.0.snapshot",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
     "startl": "concurrently \"lite-server\" \"ng serve --proxy-config proxy.conf.json\" --kill-others --success first",
-    "build": "ng build --prod",
+    "build": "ng build --configuration production",
     "test": "ng test",
     "test-headless": "ng test --browsers ChromeHeadless --code-coverage --watch=false",
     "test-headless-watch": "ng test --browsers ChromeHeadless --watch=true --code-coverage",

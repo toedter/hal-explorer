@@ -38,7 +38,7 @@ yarn_build.dependsOn yarn_install, yarn_lint //, yarn_test
 
 build.dependsOn yarn_build
 
-version = '0.17.0'
+version = '0.18.0-SNAPSHOT'
 
 configurations {
   docs
@@ -70,7 +70,7 @@ task doc {
     copy {
       from "$projectDir/test-data"
       into "$buildDir/docs/gh-pages/snapshot/hal-explorer/examples"
-      filter { line -> line.replaceAll('http://localhost:3000', 'https://toedter.github.io/hal-explorer/release/hal-explorer/examples') }
+      filter { line -> line.replaceAll('http://localhost:3000', 'https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples') }
     }
 
     copy {
