@@ -1,3 +1,81 @@
 {
-  "content": "not used"
+  "_embedded": {
+    "chatty:users": [
+      {
+        "id": "doe_ja",
+        "fullName": "Jane Doe",
+        "email": "jane@doe.com",
+        "_links": {
+          "self": {
+            "href": "https://chatty42.herokuapp.com/api/users/doe_ja"
+          },
+          "chatty:user": {
+            "href": "https://chatty42.herokuapp.com/api/users/doe_ja{?projection}",
+            "templated": true
+          },
+          "chatty:messages": {
+            "href": "https://chatty42.herokuapp.com/api/users/doe_ja/messages{?projection}",
+            "templated": true
+          }
+        }
+      },
+      {
+        "id": "doe_jo",
+        "fullName": "John Doe",
+        "email": "john@doe.com",
+        "_links": {
+          "self": {
+            "href": "https://chatty42.herokuapp.com/api/users/doe_jo"
+          },
+          "chatty:user": {
+            "href": "https://chatty42.herokuapp.com/api/users/doe_jo{?projection}",
+            "templated": true
+          },
+          "chatty:messages": {
+            "href": "https://chatty42.herokuapp.com/api/users/doe_jo/messages{?projection}",
+            "templated": true
+          }
+        }
+      },
+      {
+        "id": "toedter_k",
+        "fullName": "Kai Toedter",
+        "email": "kai@toedter.com",
+        "_links": {
+          "self": {
+            "href": "https://chatty42.herokuapp.com/api/users/toedter_k"
+          },
+          "chatty:user": {
+            "href": "https://chatty42.herokuapp.com/api/users/toedter_k{?projection}",
+            "templated": true
+          },
+          "chatty:messages": {
+            "href": "https://chatty42.herokuapp.com/api/users/toedter_k/messages{?projection}",
+            "templated": true
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "https://chatty42.herokuapp.com/api/users"
+    },
+    "profile": {
+      "href": "https://chatty42.herokuapp.com/api/profile/users"
+    },
+    "curies": [
+      {
+        "href": "https://chatty42.herokuapp.com/../docs/html5/{rel}.html",
+        "name": "chatty",
+        "templated": true
+      }
+    ]
+  },
+  "page": {
+    "size": 20,
+    "totalElements": 3,
+    "totalPages": 1,
+    "number": 0
+  }
 }

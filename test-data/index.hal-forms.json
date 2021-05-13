@@ -1,14 +1,14 @@
 {
   "_links": {
     "self": {
-      "href": "http://localhost:3000/api"
+      "href": "http://localhost:3000/index.hal-forms.json"
     },
     "movies": {
-      "href": "http://localhost:3000/api/movies{?size,page}",
+      "href": "http://localhost:3000/movies.hal-forms.json{?size,page}",
       "templated": true
     },
     "directors": {
-      "href": "http://localhost:3000/api/directors{?size,page}",
+      "href": "http://localhost:3000/directors.hal-forms.json{?size,page}",
       "templated": true
     }
   }

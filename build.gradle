@@ -70,7 +70,7 @@ task doc {
     copy {
       from "$projectDir/test-data"
       into "$buildDir/docs/gh-pages/snapshot/hal-explorer/examples"
-      filter { line -> line.replaceAll('http://localhost:3000', 'examples') }
+      filter { line -> line.replaceAll('http://localhost:3000', 'https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples') }
     }
 
     copy {

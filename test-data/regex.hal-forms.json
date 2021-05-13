@@ -1,7 +1,7 @@
 {
   "_links": {
     "self": {
-      "href": "http://api.example.org/rels/filter"
+      "href": "http://localhost:3000/regex.hal-forms.json"
     }
   },
   "_templates": {

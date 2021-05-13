@@ -1,7 +1,7 @@
 {
   "_links": {
     "self": {
-      "href": "http://api.example.org/"
+      "href": "http://localhost:3000/2posts1get.hal-forms.json"
     }
   },
   "_templates": {
