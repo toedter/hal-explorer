@@ -15,10 +15,10 @@ HAL Explorer also supports Spring Profiles.
 == Documentation & Demos
 
 Here you find the documentation for the latest release and the current snapshot,
-as well as the latest release and the current snapshot of HAL Explorer:
+as well as a demo (with examples) of the latest release and the current snapshot:
 |===
-| Release | 0.17.0 | https://toedter.github.io/hal-explorer/release/reference-doc/[Reference Documentation] | https://toedter.github.io/hal-explorer/release/hal-explorer/#theme=Cosmo[HAL Explorer Demo] (with Examples)
-| Snapshot | 0.18.0-SNAPSHOT | https://toedter.github.io/hal-explorer/snapshot/reference-doc/[Reference Documentation] | https://toedter.github.io/hal-explorer/snapshot/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo] (with Examples)
+| Release | 0.17.0 | https://toedter.github.io/hal-explorer/release/reference-doc/[Reference Documentation] | https://toedter.github.io/hal-explorer/release/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
+| Snapshot | 0.18.0-SNAPSHOT | https://toedter.github.io/hal-explorer/snapshot/reference-doc/[Reference Documentation] | https://toedter.github.io/hal-explorer/snapshot/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
 |===
 
 == TL;DR
