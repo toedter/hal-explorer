@@ -4,12 +4,12 @@
 == Releases and Demos
 
 Here you find the documentation for the latest release and the current snapshot,
-as well as the latest release and the current snapshot of HAL Explorer:
+as well as the latest release and the current snapshot of HAL Explorer (both with examples):
 
 [cols='1,1,2',stripes=even]
 |===
-| Latest Release | 0.17.0 | https://toedter.github.io/hal-explorer/release/hal-explorer/#theme=Cosmo[HAL Explorer Demo]
-| Current Snapshot | 0.18.0-SNAPSHOT | https://toedter.github.io/hal-explorer/snapshot/hal-explorer/#theme=Cosmo&uri=https://raw.githubusercontent.com/toedter/hal-explorer/master/test-data/examples.hal-forms.json[HAL Explorer Demo] (with Examples)
+| Latest Release | 0.17.0 | https://toedter.github.io/hal-explorer/release/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
+| Current Snapshot | 0.18.0-SNAPSHOT | https://toedter.github.io/hal-explorer/snapshot/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
 |===
 
 To explore your services with these HAL Explorer demos, they have to enable CORS.
