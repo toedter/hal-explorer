@@ -45,7 +45,7 @@ configurations {
 }
 
 dependencies {
-  docs "io.spring.asciidoctor.backends:spring-asciidoctor-backends:0.0.1-M1"
+  docs "io.spring.asciidoctor.backends:spring-asciidoctor-backends:0.0.1"
 }
 
 asciidoctor {
