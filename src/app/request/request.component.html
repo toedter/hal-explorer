@@ -53,7 +53,7 @@
               <span *ngIf="isUriTemplate">Template</span>
             </label>
             <div class="p-1 col-sm-9">
-              <div class="form-control text-truncate"
+              <div class="form-control text-truncate" readonly="true"
                    title="{{httpRequestEvent.uri}}"
                    id="uri">{{httpRequestEvent.uri}}</div>
             </div>
@@ -83,7 +83,7 @@
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">HTTP Method</label>
             <div class="p-1 col-sm-9">
-              <div class="form-control text-truncate">
+              <div class="form-control text-truncate" readonly="true">
                 {{commandPlaceholder[httpRequestEvent.command]}}
               </div>
             </div>
@@ -178,7 +178,7 @@
                       || httpRequestEvent.command === commandPlaceholder.Delete" class="form-group row">
             <label class="col-sm-3 col-form-label" for="body">Expanded URI</label>
             <div class="p-1 col-sm-9">
-              <div id="request-input-expanded-uri" class="form-control text-truncate">
+              <div id="request-input-expanded-uri" class="form-control text-truncate" readonly="true">
                 {{newRequestUri}}
               </div>
             </div>
