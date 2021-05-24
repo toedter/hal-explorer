@@ -11,6 +11,7 @@ import {AppService} from './app.service';
 export class AppComponent implements OnInit {
   themes: string[] = [
     'Default',
+    'Dark',
     'Cerulean',
     'Cosmo',
     'Cyborg',
@@ -78,8 +79,14 @@ export class AppComponent implements OnInit {
   changeTheme(theme: string) {
     this.isCustomTheme = theme !== this.themes[0];
     if (this.isCustomTheme) {
-      this.selectedThemeUrl =
-        this.sanitizer.bypassSecurityTrustResourceUrl('https://bootswatch.com/5/' + theme.toLowerCase() + '/bootstrap.min.css');
+      if (theme.toLowerCase() === 'dark') {
+        this.selectedThemeUrl =
+          this.sanitizer.bypassSecurityTrustResourceUrl(
+            'https://cdn.jsdelivr.net/npm/bootstrap-dark-5@1.0.1/dist/css/bootstrap-unlit.min.css');
+      } else {
+        this.selectedThemeUrl =
+          this.sanitizer.bypassSecurityTrustResourceUrl('https://bootswatch.com/5/' + theme.toLowerCase() + '/bootstrap.min.css');
+      }
     }
     this.appService.setTheme(theme);
   }

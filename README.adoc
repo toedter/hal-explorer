@@ -30,7 +30,10 @@ image::./doc/img/hal-explorer.png[HAL Explorer]
 * Responsive design
 * Syntax highlighted response body
 * Custom request headers
-* https://bootswatch.com/[Bootswatch themes]
+* Available Themes
+** Bootstrap 5 default theme
+** https://bootswatch.com/[Bootswatch themes]
+** https://github.com/vinorodrigues/bootstrap-dark-5[Dark theme]
 * 2 layouts
 ** 2 columns layout with optional documentation
 ** 3 columns layout with documentation always visible if available
