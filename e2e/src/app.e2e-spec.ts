@@ -88,19 +88,22 @@ describe( 'HAL-Explorer App', () => {
       5000, 'Input for Title taking too long to appear in the DOM');
   });
 
-  it( 'should display correct properties HAL-FORMS POST request dialog', () => {
-    page.navigateTo( '/#uri=' + AppConfig.getTestServerUrl() + '2posts1get.hal-forms.json' );
-    page.getLastPostButton().click();
+  // There is a Chrome driver issue with v91 that getAttribute('value') returns null
+  // This test is commented ozt until the issue is fixed,
 
-    browser.sleep(1000);
-    const post2Input = page.getPost2Input();
-    post2Input.sendKeys('xxx');
-
-    expect(page.getPostBody().getAttribute('value')).toEqual('{\n  "post2": "xxx"\n}');
-
-    browser.wait( protractor.ExpectedConditions.presenceOf( post2Input ),
-      5000, 'Input for Title taking too long to appear in the DOM' );
-  } );
+  // it( 'should display correct properties HAL-FORMS POST request dialog', () => {
+  //   page.navigateTo( '/#uri=' + AppConfig.getTestServerUrl() + '2posts1get.hal-forms.json' );
+  //   page.getLastPostButton().click();
+  //
+  //   browser.sleep(1000);
+  //   const post2Input = page.getPost2Input();
+  //   post2Input.sendKeys('xxx');
+  //
+  //   expect(page.getPostBody().getAttribute('value')).toEqual('{\n  "post2": "xxx"\n}');
+  //
+  //   browser.wait( protractor.ExpectedConditions.presenceOf( post2Input ),
+  //     5000, 'Input for Title taking too long to appear in the DOM' );
+  // } );
 
 } );
 
