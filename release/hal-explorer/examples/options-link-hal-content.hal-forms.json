@@ -1,7 +1,7 @@
 {
   "_links": {
     "self": {
-      "href": "https://toedter.github.io/hal-explorer/release/hal-explorer/examples/options-link-hal-content.hal-forms.json"
+      "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/options-link-hal-content.hal-forms.json"
     }
   },
   "_templates": {
@@ -17,7 +17,7 @@
               "FedEx"
             ],
             "link": {
-              "href": "https://toedter.github.io/hal-explorer/release/hal-explorer/examples/shipping.hal.json",
+              "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/shipping.hal.json",
               "templated": "false",
               "type": "application/hal+json"
             },

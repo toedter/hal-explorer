@@ -10,10 +10,10 @@
         "thumb": "/movie-data/thumbs/tt0111161.jpg",
         "_links": {
           "self": {
-            "href": "https://toedter.github.io/hal-explorer/release/hal-explorer/examples/api/movies/1"
+            "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/api/movies/1"
           },
           "directors": {
-            "href": "https://toedter.github.io/hal-explorer/release/hal-explorer/examples/api/directors/2",
+            "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/api/directors/2",
             "name": "Frank Darabont"
           }
         }
@@ -22,13 +22,13 @@
   },
   "_links": {
     "self": {
-      "href": "https://toedter.github.io/hal-explorer/release/hal-explorer/examples/api/movies?page=0&size=1"
+      "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/api/movies?page=0&size=1"
     },
     "next": {
-      "href": "https://toedter.github.io/hal-explorer/release/hal-explorer/examples/api/movies?page=1&size=1"
+      "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/api/movies?page=1&size=1"
     },
     "last": {
-      "href": "https://toedter.github.io/hal-explorer/release/hal-explorer/examples/api/movies?page=249&size=1"
+      "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/api/movies?page=249&size=1"
     }
   },
   "page": {
