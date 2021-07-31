@@ -858,4 +858,58 @@ describe('RequestComponent', () => {
     expect((halFormsTemplates._templates.withOptionsAndMalformedInline2.properties[0] as any).options).toBeUndefined();
   });
 
+  it('should clear custom request headers', () => {
+    component.tempRequestHeaders = [];
+    component.tempRequestHeaders.push(new RequestHeader('', ''));
+
+    component.clearRequestHeaders();
+
+    expect(component.tempRequestHeaders.length).toBe(5);
+    for (let i = 0; i < 5; i++) {
+      expect(component.tempRequestHeaders[i].key).toBe('');
+      expect(component.tempRequestHeaders[i].value).toBe('');
+    }
+  });
+
+  it('should set custom accept request headers on empty request headers', () => {
+    component.tempRequestHeaders = [];
+    for (let i = 0; i < 5; i++) {
+      component.tempRequestHeaders.push(new RequestHeader('', ''));
+    }
+
+    component.setAcceptRequestHeader('x');
+
+    expect(component.tempRequestHeaders[0].key).toBe('Accept');
+    expect(component.tempRequestHeaders[0].value).toBe('x');
+  });
+
+  it('should set custom accept request headers on non empty request headers', () => {
+    component.tempRequestHeaders = [];
+    for (let i = 0; i < 5; i++) {
+      if (i < 2) {
+        component.tempRequestHeaders.push(new RequestHeader('key' + i, 'y'));
+      } else {
+        component.tempRequestHeaders.push(new RequestHeader('', ''));
+      }
+    }
+
+    component.setAcceptRequestHeader('x');
+
+    expect(component.tempRequestHeaders[2].key).toBe('Accept');
+    expect(component.tempRequestHeaders[2].value).toBe('x');
+  });
+
+  it('should set custom accept request headers on existing accept request header', () => {
+    component.tempRequestHeaders = [];
+    for (let i = 0; i < 5; i++) {
+      component.tempRequestHeaders.push(new RequestHeader('', ''));
+    }
+    component.tempRequestHeaders[0].key = 'accept';
+
+    component.setAcceptRequestHeader('x');
+
+    expect(component.tempRequestHeaders[0].key).toBe('accept');
+    expect(component.tempRequestHeaders[0].value).toBe('x');
+  });
+
 });

@@ -262,9 +262,42 @@ export class RequestComponent implements OnInit {
         this.requestHeaders.push(new RequestHeader(key, value));
       }
     }
+    this.processRequestHeaders();
+  }
+
+  clearRequestHeaders() {
+    this.tempRequestHeaders = [];
+    for (let i = 0; i < 5; i++) {
+      this.tempRequestHeaders.push(new RequestHeader('', ''));
+    }
+
+    this.processRequestHeaders();
+  }
+
+  private processRequestHeaders() {
     this.requestService.setCustomHeaders(this.requestHeaders);
     this.hasCustomRequestHeaders = this.requestHeaders.length > 0;
     this.appService.setCustomRequestHeaders(this.requestHeaders);
+  }
+
+  setAcceptRequestHeader(value: string) {
+    let acceptHeaderSet = false;
+    for (let i = 0; i < 5; i++) {
+      if (this.tempRequestHeaders[i].key.toLowerCase() === 'accept') {
+        this.tempRequestHeaders[i].value = value;
+        acceptHeaderSet = true;
+        break;
+      }
+    }
+    if (!acceptHeaderSet) {
+      for (let i = 0; i < 5; i++) {
+        if (this.tempRequestHeaders[i].key === '') {
+          this.tempRequestHeaders[i].key = 'Accept';
+          this.tempRequestHeaders[i].value = value;
+          break;
+        }
+      }
+    }
   }
 
   getTooltip(key: string): string {

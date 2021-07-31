@@ -202,7 +202,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="requestHeadersModalLabel">Request Headers</h5>
+        <h5 class="modal-title" id="requestHeadersModalLabel">Custom Request Headers</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -231,6 +231,15 @@
         </form>
       </div>
       <div class="modal-footer">
+        <div class="me-auto">
+          <button type="button" class="btn btn-outline-primary me-2" (click)="clearRequestHeaders()">Clear</button>
+          <button type="button" class="btn btn-outline-primary me-2"
+                  (click)="setAcceptRequestHeader('application/hal+json')">Accept HAL
+          </button>
+          <button type="button" class="btn btn-outline-primary"
+                  (click)="setAcceptRequestHeader('application/prs.hal-forms+json')">Accept HAL-FORMS
+          </button>
+        </div>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="updateRequestHeaders()">OK
         </button>
       </div>

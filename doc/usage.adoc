@@ -90,6 +90,10 @@ bearer tokens for authorization, like
 
 image::img/request-headers.png[]
 
+The modal dialog also provides buttons to clear all request headers or to add/modify an `Accept`
+request header for `HAL` or `HAL-FORMS` documents.
+
+
 == Bookmarking
 
 The following configuration is transported in HTTP parameters, so HAL Explorer URL can easily be bookmarked:
