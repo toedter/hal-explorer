@@ -79,6 +79,12 @@ describe('AppComponent', () => {
     expect(component.isCustomTheme).toBeTruthy();
   });
 
+  it('should react on dark theme change', () => {
+    themeSubject.next('Dark');
+
+    expect(component.isCustomTheme).toBeTruthy();
+  });
+
   it('should react on layout change', () => {
     layoutSubject.next('2');
 
