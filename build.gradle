@@ -38,7 +38,7 @@ yarn_build.dependsOn yarn_install, yarn_lint //, yarn_test
 
 build.dependsOn yarn_build
 
-version = '1.0.0'
+version = '1.0.1-SNAPSHOT'
 
 configurations {
   docs

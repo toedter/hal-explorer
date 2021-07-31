@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
   showDocumentation = false;
   isTwoColumnLayout = true;
 
-  version = '1.0.0';
+  version = '1.0.1-SNAPSHOT';
   isSnapshotVersion = this.version.endsWith('SNAPSHOT');
 
   constructor(
