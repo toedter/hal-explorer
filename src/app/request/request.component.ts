@@ -59,46 +59,48 @@ export class RequestComponent implements OnInit {
         if (event.halFormsTemplate) {
           this.halFormsTemplate = event.halFormsTemplate;
           this.halFormsProperties = this.halFormsTemplate.value.properties;
-          for (const property of this.halFormsProperties) {
-            if (property.options) {
-              const options = property.options;
-              if (!options.inline && options.link) {
-                this.requestService.computeHalFormsOptionsFromLink(property);
+          if (Array.isArray(this.halFormsProperties)) {
+            for (const property of this.halFormsProperties) {
+              if (property.options) {
+                const options = property.options;
+                if (!options.inline && options.link) {
+                  this.requestService.computeHalFormsOptionsFromLink(property);
 
-                // Hack to poll and wait for the asynchronous HTTP call
-                // that fills property.options.inline
-                for (let i = 0; i < 10; i++) {
-                  if (!options.inline) {
-                    try {
-                      await new Promise((resolve) => setTimeout(resolve, 50));
-                    } catch (e) {
-                      // ignore
+                  // Hack to poll and wait for the asynchronous HTTP call
+                  // that fills property.options.inline
+                  for (let i = 0; i < 10; i++) {
+                    if (!options.inline) {
+                      try {
+                        await new Promise((resolve) => setTimeout(resolve, 50));
+                      } catch (e) {
+                        // ignore
+                      }
+                    } else {
+                      break;
                     }
-                  } else {
-                    break;
                   }
                 }
-              }
-              if (!options.inline) {
-                console.warn('Cannot compute HAL-FORMS options for property "' + property.name + '".');
-                console.warn('Will ignore HAL-FORMS options for property "' + property.name + '".');
-                property.options = undefined;
-              } else {
-                property.options.computedOptions = this.getHalFormsOptions(property);
+                if (!options.inline) {
+                  console.warn('Cannot compute HAL-FORMS options for property "' + property.name + '".');
+                  console.warn('Will ignore HAL-FORMS options for property "' + property.name + '".');
+                  property.options = undefined;
+                } else {
+                  property.options.computedOptions = this.getHalFormsOptions(property);
 
-                if (options.selectedValues) {
-                  if (options?.maxItems === 1) {
-                    property.value = options.selectedValues[0];
-                  } else {
-                    property.value = options.selectedValues;
-                  }
-                } else if (!property.required && !options.selectedValues && !(options?.minItems >= 1)) {
-                  property.value = this.noValueSelected;
-                } else if (property.required && !options.selectedValues && options.computedOptions) {
-                  if (options?.maxItems === 1) {
-                    property.value = property.options.computedOptions[0].value;
-                  } else {
-                    property.value = [property.options.computedOptions[0].value];
+                  if (options.selectedValues) {
+                    if (options?.maxItems === 1) {
+                      property.value = options.selectedValues[0];
+                    } else {
+                      property.value = options.selectedValues;
+                    }
+                  } else if (!property.required && !options.selectedValues && !(options?.minItems >= 1)) {
+                    property.value = this.noValueSelected;
+                  } else if (property.required && !options.selectedValues && options.computedOptions) {
+                    if (options?.maxItems === 1) {
+                      property.value = property.options.computedOptions[0].value;
+                    } else {
+                      property.value = [property.options.computedOptions[0].value];
+                    }
                   }
                 }
               }

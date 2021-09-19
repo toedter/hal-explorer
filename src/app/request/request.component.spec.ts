@@ -38,226 +38,231 @@ const jsonSchema: any = {
 };
 
 const halFormsTemplates = {
-    _templates: {
-      default: {
-        title: 'Change Movie',
-        method: 'put',
-        contentType: '',
-        properties: [
-          {
-            name: 'title',
-            prompt: 'Titel',
-            required: true
+  _templates: {
+    default: {
+      title: 'Change Movie',
+      method: 'put',
+      contentType: '',
+      properties: [
+        {
+          name: 'title',
+          prompt: 'Titel',
+          required: true
+        },
+        {
+          name: 'year',
+          prompt: 'Jahr',
+          required: true
+        }
+      ]
+    },
+    updateMoviePartially: {
+      title: 'Change Movie (partially)',
+      method: 'patch',
+      contentType: '',
+      properties: [
+        {
+          name: 'title',
+          prompt: 'Titel',
+          required: false
+        },
+        {
+          name: 'year',
+          prompt: 'Jahr',
+          required: false
+        }
+      ]
+    },
+    deleteMovie: {
+      title: 'Delete Movie',
+      method: 'delete',
+      contentType: '',
+      properties: []
+    },
+    getDirectors: {
+      title: 'Get Directors',
+      method: 'GET',
+      contentType: '',
+      target: 'http://directors.com',
+      properties: [
+        {
+          name: 'first-name',
+          prompt: 'First Name',
+        },
+        {
+          name: 'last-name',
+          prompt: 'Last Name',
+        }
+      ]
+    },
+    getDirectorsWithInvalidMethod: {
+      title: 'Get Directors',
+      method: 'xxx',
+      contentType: '',
+      target: 'http://directors.com',
+      properties: [
+        {
+          name: 'first-name',
+          prompt: 'First Name',
+        },
+        {
+          name: 'last-name',
+          prompt: 'Last Name',
+        }
+      ]
+    },
+    withOptionsAndNoInline: {
+      title: 'Change Movie with Options',
+      method: 'put',
+      contentType: '',
+      properties: [
+        {
+          name: 'title',
+          prompt: 'Titel',
+          required: true,
+          options: {
+            selectedValues: ['Movie 1', 'Movie 2']
           },
-          {
-            name: 'year',
-            prompt: 'Jahr',
-            required: true
+          maxItems: 1
+        }
+      ]
+    },
+    withOptionsAndInline: {
+      title: 'Change Movie with Options and Inline',
+      method: 'put',
+      contentType: '',
+      properties: [
+        {
+          name: 'title',
+          prompt: 'Titel',
+          options: {
+            selectedValues: ['Movie 1'],
+            inline: ['Movie 1', 'Movie 2'],
+            maxItems: 1
           }
-        ]
-      },
-      updateMoviePartially: {
-        title: 'Change Movie (partially)',
-        method: 'patch',
-        contentType: '',
-        properties: [
-          {
-            name: 'title',
-            prompt: 'Titel',
-            required: false
-          },
-          {
-            name: 'year',
-            prompt: 'Jahr',
-            required: false
+        }
+      ]
+    },
+    withOptionsAndInlineAndNoSelectedValues: {
+      title: 'Change Movie with Options and Inline and no selected values',
+      method: 'put',
+      contentType: '',
+      properties: [
+        {
+          name: 'title',
+          prompt: 'Titel',
+          options: {
+            inline: ['Movie 1', 'Movie 2'],
+            maxItems: 1
           }
-        ]
-      },
-      deleteMovie: {
-        title: 'Delete Movie',
-        method: 'delete',
-        contentType: '',
-        properties: []
-      },
-      getDirectors: {
-        title: 'Get Directors',
-        method: 'GET',
-        contentType: '',
-        target: 'http://directors.com',
-        properties: [
-          {
-            name: 'first-name',
-            prompt: 'First Name',
-          },
-          {
-            name: 'last-name',
-            prompt: 'Last Name',
+        }
+      ]
+    },
+    withOptionsAndInlineAndRequired: {
+      title: 'Change Movie with Options and Inline and Required',
+      method: 'put',
+      contentType: '',
+      properties: [
+        {
+          name: 'title',
+          prompt: 'Titel',
+          required: true,
+          options: {
+            inline: ['Movie 1', 'Movie 2'],
+            maxItems: 1
           }
-        ]
-      },
-      getDirectorsWithInvalidMethod: {
-        title: 'Get Directors',
-        method: 'xxx',
-        contentType: '',
-        target: 'http://directors.com',
-        properties: [
-          {
-            name: 'first-name',
-            prompt: 'First Name',
-          },
-          {
-            name: 'last-name',
-            prompt: 'Last Name',
-          }
-        ]
-      },
-      withOptionsAndNoInline: {
-        title: 'Change Movie with Options',
-        method: 'put',
-        contentType: '',
-        properties: [
-          {
-            name: 'title',
-            prompt: 'Titel',
-            required: true,
-            options: {
-              selectedValues: ['Movie 1', 'Movie 2']
+        }
+      ]
+    },
+    withOptionsAndLink: {
+      title: 'Change Movie with Options and Link',
+      method: 'put',
+      contentType: '',
+      properties: [
+        {
+          name: 'title',
+          prompt: 'Titel',
+          required: true,
+          options: {
+            link: {
+              href: 'http://options.com'
             },
             maxItems: 1
           }
-        ]
-      },
-      withOptionsAndInline: {
-        title: 'Change Movie with Options and Inline',
-        method: 'put',
-        contentType: '',
-        properties: [
-          {
-            name: 'title',
-            prompt: 'Titel',
-            options: {
-              selectedValues: ['Movie 1'],
-              inline: ['Movie 1', 'Movie 2'],
-              maxItems: 1
-            }
+        }
+      ]
+    },
+    withMultipleOptions: {
+      title: 'Change Movie with multiple Options',
+      method: 'put',
+      contentType: '',
+      properties: [
+        {
+          name: 'title',
+          prompt: 'Titel',
+          required: true,
+          options: {
+            selectedValues: ['Movie 1', 'Movie 2'],
+            inline: ['Movie 1', 'Movie 2'],
+            maxItems: 2
           }
-        ]
-      },
-      withOptionsAndInlineAndNoSelectedValues: {
-        title: 'Change Movie with Options and Inline and no selected values',
-        method: 'put',
-        contentType: '',
-        properties: [
-          {
-            name: 'title',
-            prompt: 'Titel',
-            options: {
-              inline: ['Movie 1', 'Movie 2'],
-              maxItems: 1
-            }
+        }
+      ]
+    },
+    withMultipleOptionsAndNoSelectedValues: {
+      title: 'Change Movie with multiple Options and no selected values',
+      method: 'put',
+      contentType: '',
+      properties: [
+        {
+          name: 'title',
+          prompt: 'Titel',
+          required: true,
+          options: {
+            inline: ['Movie 1', 'Movie 2'],
+            maxItems: 2
           }
-        ]
-      },
-      withOptionsAndInlineAndRequired: {
-        title: 'Change Movie with Options and Inline and Required',
-        method: 'put',
-        contentType: '',
-        properties: [
-          {
-            name: 'title',
-            prompt: 'Titel',
-            required: true,
-            options: {
-              inline: ['Movie 1', 'Movie 2'],
-              maxItems: 1
-            }
-          }
-        ]
-      },
-      withOptionsAndLink: {
-        title: 'Change Movie with Options and Link',
-        method: 'put',
-        contentType: '',
-        properties: [
-          {
-            name: 'title',
-            prompt: 'Titel',
-            required: true,
-            options: {
-              link: {
-                href: 'http://options.com'
-              },
-              maxItems: 1
-            }
-          }
-        ]
-      },
-      withMultipleOptions: {
-        title: 'Change Movie with multiple Options',
-        method: 'put',
-        contentType: '',
-        properties: [
-          {
-            name: 'title',
-            prompt: 'Titel',
-            required: true,
-            options: {
-              selectedValues: ['Movie 1', 'Movie 2'],
-              inline: ['Movie 1', 'Movie 2'],
-              maxItems: 2
-            }
-          }
-        ]
-      },
-      withMultipleOptionsAndNoSelectedValues: {
-        title: 'Change Movie with multiple Options and no selected values',
-        method: 'put',
-        contentType: '',
-        properties: [
-          {
-            name: 'title',
-            prompt: 'Titel',
-            required: true,
-            options: {
-              inline: ['Movie 1', 'Movie 2'],
-              maxItems: 2
-            }
-          }
-        ]
-      },
-      withOptionsAndMalformedInline: {
-        title: 'Change Movie with Options and malformed Inline',
-        method: 'put',
-        contentType: '',
-        properties: [
-          {
-            name: 'title',
-            prompt: 'Titel',
-            options: {
-              inline: {_embedded: ['Movie 1', 'Movie 2']},
-              maxItems: 1
-            }
-          }
-        ]
-      },
-      withOptionsAndMalformedInline2: {
-        title: 'Change Movie with Options and malformed Inline (',
-        method: 'put',
-        contentType: '',
-        properties: [
-          {
-            name: 'title',
-            prompt: 'Titel',
-            options: {
-              inline: [{key: 'malformed'}]
-            },
+        }
+      ]
+    },
+    withOptionsAndMalformedInline: {
+      title: 'Change Movie with Options and malformed Inline',
+      method: 'put',
+      contentType: '',
+      properties: [
+        {
+          name: 'title',
+          prompt: 'Titel',
+          options: {
+            inline: {_embedded: ['Movie 1', 'Movie 2']},
             maxItems: 1
           }
-        ]
-      }
+        }
+      ]
+    },
+    withOptionsAndMalformedInline2: {
+      title: 'Change Movie with Options and malformed Inline (',
+      method: 'put',
+      contentType: '',
+      properties: [
+        {
+          name: 'title',
+          prompt: 'Titel',
+          options: {
+            inline: [{key: 'malformed'}]
+          },
+          maxItems: 1
+        }
+      ]
+    },
+    withNoProperties: {
+      title: 'Clear all items',
+      method: 'POST',
+      contentType: 'application/json',
+      target: '/api/carts/2e769b7c-2fff-4830-9beb-737c3a4a65e9/clear'
     }
   }
-;
+};
 
 describe('RequestComponent', () => {
   let component: RequestComponent;
@@ -912,4 +917,18 @@ describe('RequestComponent', () => {
     expect(component.tempRequestHeaders[0].value).toBe('x');
   });
 
+  it('should handle template with no properties', () => {
+    const halFormsTemplate = {
+      key: 'withNoProperties',
+      value: halFormsTemplates._templates.withNoProperties
+    };
+    component.halFormsProperties = undefined;
+    const event: HttpRequestEvent =
+      new HttpRequestEvent(EventType.FillHttpRequest, Command.Post, 'http://localhost/api/movies',
+        undefined, halFormsTemplate);
+
+    needInfoSubject.next(event);
+
+    expect(component.halFormsProperties).toBeUndefined();
+  });
 });
