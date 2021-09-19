@@ -1,0 +1,10 @@
+{
+  "_templates": {
+    "clear": {
+      "title": "Clear all items",
+      "method": "POST",
+      "contentType": "application/json",
+      "target": "/api/carts/2e769b7c-2fff-4830-9beb-737c3a4a65e9/clear"
+    }
+  }
+}
