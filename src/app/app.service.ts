@@ -17,7 +17,6 @@ export class AppService {
   private uriParamBackup: string;
   private themeParamBackup: string;
   private layoutParamBackup: string;
-  private customRequestHeadersBackup: RequestHeader[];
 
   private uriSubject: Subject<string> = new Subject<string>();
   // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
@@ -95,7 +94,6 @@ export class AppService {
   }
 
   setCustomRequestHeaders(requestHeaders: RequestHeader[]) {
-    this.customRequestHeadersBackup = this.customRequestHeaders.map(requestHeader => Object.assign({}, requestHeader));
     this.customRequestHeaders = requestHeaders;
     this.setLocationHash();
   }

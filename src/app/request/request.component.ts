@@ -111,7 +111,7 @@ export class RequestComponent implements OnInit {
         this.requestBody = '';
         this.selectedHttpMethod = event.command;
         this.templatedUri = undefined;
-        this.isUriTemplate = this.isUriTemplated(event.uri);
+        this.isUriTemplate = RequestComponent.isUriTemplated(event.uri);
         this.originalRequestUri = event.uri;
         if (this.isUriTemplate) {
           const uriTemplate: URITemplate = utpl(event.uri);
@@ -172,7 +172,7 @@ export class RequestComponent implements OnInit {
     }
   }
 
-  private isUriTemplated(uri: string) {
+  private static isUriTemplated(uri: string) {
     const uriTemplate = utpl(uri);
     return uriTemplate.varNames.length > 0;
   }

@@ -43,8 +43,6 @@ export class RequestService {
     });
   private customRequestHeaders: RequestHeader[];
 
-  private noValueSelected = '<No Value Selected>';
-
   constructor(private appService: AppService, private http: HttpClient) {
   }
 
@@ -261,8 +259,7 @@ export class RequestService {
       if (contentType
         && (contentType.startsWith('application/prs.hal-forms+json') || contentType.startsWith('application/hal+json'))
         && response.body._embedded) {
-        const content = response.body._embedded[Object.keys(response.body._embedded)[0]];
-        property.options.inline = content;
+        property.options.inline = response.body._embedded[Object.keys(response.body._embedded)[0]];
       }
     });
   }

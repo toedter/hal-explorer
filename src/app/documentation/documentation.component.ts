@@ -33,9 +33,8 @@ export function getDocHeight(doc): number {
   // stackoverflow.com/questions/1145850/
   const body = doc.body;
   const html = doc.documentElement;
-  const height = Math.max(body.scrollHeight, body.offsetHeight,
+  return Math.max(body.scrollHeight, body.offsetHeight,
     html.clientHeight, html.scrollHeight, html.offsetHeight);
-  return height;
 }
 
 (window as any).setIframeHeight = (id) => {
