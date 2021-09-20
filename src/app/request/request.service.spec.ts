@@ -209,7 +209,7 @@ describe('RequestService', () => {
     expect(jsonSchemaRequest.request.method).toBe('HEAD');
     expect(jsonSchemaRequest.request.headers.get('a')).toBe('b');
 
-    /* tslint:disable */
+    /* eslint-disable */
     const jsonSchema: any = {
       'title': 'User',
       'properties': {
@@ -239,7 +239,7 @@ describe('RequestService', () => {
       'type': 'object',
       '$schema': 'http://json-schema.org/draft-04/schema#'
     };
-    /* tslint:enable */
+    /* eslint-enable */
 
     const profileRequest = httpMock.expectOne('https://chatty42.herokuapp.com/api/profile/users');
     profileRequest.flush(jsonSchema);

@@ -6,7 +6,7 @@ import {HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
 import {Subject} from 'rxjs';
 
-/* tslint:disable */
+/* eslint-disable */
 const halFormsResponse = {
   'title': 'The Shawshank Redemption',
   'year': 1994,
@@ -62,7 +62,7 @@ const halFormsResponse = {
     }
   }
 };
-/* tslint:enable */
+/* eslint-enable */
 
 describe('ResponseExplorerComponent', () => {
   let component: ResponseExplorerComponent;
@@ -127,7 +127,7 @@ describe('ResponseExplorerComponent', () => {
   });
 
   it('should parse HAL response body', () => {
-    /* tslint:disable */
+    /* eslint-disable */
     const halResponse = {
       'text': 'hello all!',
       'timeStamp': '2018-06-02T17:12:07.335Z',
@@ -153,7 +153,7 @@ describe('ResponseExplorerComponent', () => {
         },
       }
     };
-    /* tslint:enable */
+    /* eslint-enable */
     responseSubject.next(new Response(new HttpResponse({body: halResponse}), null));
 
     expect(component.showProperties).toBeTruthy();

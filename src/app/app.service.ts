@@ -20,19 +20,19 @@ export class AppService {
   private customRequestHeadersBackup: RequestHeader[];
 
   private uriSubject: Subject<string> = new Subject<string>();
-  // tslint:disable-next-line:variable-name
+  // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private _uriObservable: Observable<string> = this.uriSubject.asObservable();
 
   private themeSubject: Subject<string> = new Subject<string>();
-  // tslint:disable-next-line:variable-name
+  // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private _themeObservable: Observable<string> = this.themeSubject.asObservable();
 
   private layoutSubject: Subject<string> = new Subject<string>();
-  // tslint:disable-next-line:variable-name
+  // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private _layoutObservable: Observable<string> = this.layoutSubject.asObservable();
 
   private requestHeadersSubject: Subject<RequestHeader[]> = new Subject<RequestHeader[]>();
-  // tslint:disable-next-line:variable-name
+  // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match
   private _requestHeadersObservable: Observable<RequestHeader[]> = this.requestHeadersSubject.asObservable();
 
   constructor() {
