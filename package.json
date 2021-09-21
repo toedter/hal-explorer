@@ -1,6 +1,6 @@
 {
   "name": "hal-explorer",
-  "version": "1.0.1.snapshot",
+  "version": "1.0.1",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
