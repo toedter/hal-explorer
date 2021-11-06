@@ -65,11 +65,14 @@ export class RequestService {
     this.processCommand(Command.Get, uri);
   }
 
-  requestUri(uri: string, httpMethod: string, body?: string) {
-
+  requestUri(uri: string, httpMethod: string, body?: string, contentType?: string) {
     let headers = this.requestHeaders;
-    if (httpMethod.toLowerCase() === 'post' || httpMethod.toLowerCase() === 'put' || httpMethod.toLowerCase() === 'patch') {
-      headers = headers.set('Content-Type', 'application/json; charset=utf-8');
+    if (contentType || httpMethod.toLowerCase() === 'post' || httpMethod.toLowerCase() === 'put' || httpMethod.toLowerCase() === 'patch') {
+      if (contentType) {
+        headers = headers.set('Content-Type', contentType);
+      } else {
+        headers = headers.set('Content-Type', 'application/json; charset=utf-8');
+      }
     } else {
       this.appService.setUri(uri);
     }

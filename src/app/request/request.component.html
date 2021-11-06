@@ -89,6 +89,15 @@
             </div>
           </div>
 
+          <div *ngIf="halFormsContentType" class="form-group row">
+            <label class="col-sm-3 col-form-label">HAL-FORMS Content Type</label>
+            <div class="p-1 col-sm-9">
+              <div class="form-control text-truncate" readonly="true">
+                {{halFormsContentType}}
+              </div>
+            </div>
+          </div>
+
           <div *ngIf="jsonSchema">
             <hr>
             <label class="mb-2">Spring Profile (JSON Schema)</label>

@@ -1,0 +1,14 @@
+{
+  "_links": {
+    "self": {
+      "href": "http://localhost:3000/content-type.hal-forms.json"
+    }
+  },
+  "_templates": {
+    "default": {
+      "contentType": "application/vnd.kai+json",
+      "title": "Shipping",
+      "method": "GET"
+    }
+  }
+}

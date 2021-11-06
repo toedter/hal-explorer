@@ -70,7 +70,7 @@ describe('RequestService', () => {
     httpMock.verify();
   });
 
-  it('should set Content-Type request header for POST request', (done) => {
+  it('should set Content-Type request header for POST request with default content type', (done) => {
     requestService.getResponseObservable().subscribe((response: Response) => {
       expect(response.httpResponse.body).toBe('body');
       done();
@@ -83,6 +83,23 @@ describe('RequestService', () => {
 
     expect(testRequest.request.headers.keys()).toContain('Content-Type');
     expect(testRequest.request.headers.get('Content-Type')).toBe('application/json; charset=utf-8');
+
+    httpMock.verify();
+  });
+
+  it('should set Content-Type request header for POST request with specified content type', (done) => {
+    requestService.getResponseObservable().subscribe((response: Response) => {
+      expect(response.httpResponse.body).toBe('body');
+      done();
+    });
+
+    requestService.requestUri('test-request', 'POST', 'body', 'myContentType');
+
+    const testRequest = httpMock.expectOne('test-request');
+    testRequest.flush('body');
+
+    expect(testRequest.request.headers.keys()).toContain('Content-Type');
+    expect(testRequest.request.headers.get('Content-Type')).toBe('myContentType');
 
     httpMock.verify();
   });

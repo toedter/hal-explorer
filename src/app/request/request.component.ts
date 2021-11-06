@@ -32,6 +32,7 @@ export class RequestComponent implements OnInit {
   halFormsProperties: any;
   halFormsTemplate: any;
   halFormsPropertyKey: string;
+  halFormsContentType: string;
 
   noValueSelected = '<No Value Selected>';
 
@@ -41,6 +42,7 @@ export class RequestComponent implements OnInit {
   ngOnInit() {
     this.jsonSchema = undefined;
     this.halFormsProperties = undefined;
+    this.halFormsContentType = undefined;
     this.uri = this.appService.getUri();
     this.tempRequestHeaders = this.appService.getCustomRequestHeaders();
 
@@ -59,6 +61,9 @@ export class RequestComponent implements OnInit {
         if (event.halFormsTemplate) {
           this.halFormsTemplate = event.halFormsTemplate;
           this.halFormsProperties = this.halFormsTemplate.value.properties;
+          if(this.halFormsTemplate.value.contentType) {
+            this.halFormsContentType = this.halFormsTemplate.value.contentType;
+          }
           if (Array.isArray(this.halFormsProperties)) {
             for (const property of this.halFormsProperties) {
               if (property.options) {
@@ -150,7 +155,7 @@ export class RequestComponent implements OnInit {
   }
 
   makeHttpRequest() {
-    this.requestService.requestUri(this.newRequestUri, Command[this.selectedHttpMethod], this.requestBody);
+    this.requestService.requestUri(this.newRequestUri, Command[this.selectedHttpMethod], this.requestBody, this.halFormsContentType);
   }
 
   goFromHashChange(uri: string) {
