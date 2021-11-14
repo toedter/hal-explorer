@@ -40,32 +40,32 @@
                 <td>{{link.title}}</td>
                 <td>
                   <button
-                    [class]="getRequestButtonClass(command.Get) + ' ' + getLinkButtonClass(command.Get)"
-                    [disabled]="isButtonDisabled(command.Get)"
+                    [class]="getRequestButtonClass(command.Get) + ' ' + getLinkButtonClass(command.Get, link)"
+                    [disabled]="isButtonDisabled(command.Get, link)"
                     (click)="processCommand(command.Get, getRelTargetUrl(link.href, command.Get))"
                     title="GET Request">
                   </button>
                   <button
-                    [class]="getRequestButtonClass(command.Post)  + ' ' + getLinkButtonClass(command.Post)"
-                    [disabled]="isButtonDisabled(command.Post)"
+                    [class]="getRequestButtonClass(command.Post)  + ' ' + getLinkButtonClass(command.Post, link)"
+                    [disabled]="isButtonDisabled(command.Post, link)"
                     (click)="processCommand(command.Post, getRelTargetUrl(link.href, command.Post))"
                     title="POST Request">
                   </button>
                   <button
-                    [class]="getRequestButtonClass(command.Put) + ' ' + getLinkButtonClass(command.Put)"
-                    [disabled]="isButtonDisabled(command.Put)"
+                    [class]="getRequestButtonClass(command.Put) + ' ' + getLinkButtonClass(command.Put, link)"
+                    [disabled]="isButtonDisabled(command.Put, link)"
                     (click)="processCommand(command.Put, getRelTargetUrl(link.href, command.Put))"
                     title="PUT Request">
                   </button>
                   <button
-                    [class]="getRequestButtonClass(command.Patch) + ' ' + getLinkButtonClass(command.Patch)"
-                    [disabled]="isButtonDisabled(command.Patch)"
+                    [class]="getRequestButtonClass(command.Patch) + ' ' + getLinkButtonClass(command.Patch, link)"
+                    [disabled]="isButtonDisabled(command.Patch, link)"
                     (click)="processCommand(command.Patch, getRelTargetUrl(link.href, command.Patch))"
                     title="PATCH Request">
                   </button>
                   <button
-                    [class]="getRequestButtonClass(command.Delete) + ' ' + getLinkButtonClass(command.Delete)"
-                    [disabled]="isButtonDisabled(command.Delete)"
+                    [class]="getRequestButtonClass(command.Delete) + ' ' + getLinkButtonClass(command.Delete, link)"
+                    [disabled]="isButtonDisabled(command.Delete, link)"
                     (click)="processCommand(command.Delete, getRelTargetUrl(link.href, command.Delete))"
                     title="DELETE Request">
                   </button>

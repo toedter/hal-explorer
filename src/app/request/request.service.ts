@@ -4,6 +4,7 @@ import {Observable, Subject} from 'rxjs';
 import * as utpl from 'uri-templates';
 import {URITemplate} from 'uri-templates';
 import {AppService, RequestHeader} from '../app.service';
+import {Link} from '../response-explorer/response-explorer.component';
 
 export enum EventType {FillHttpRequest}
 
@@ -25,7 +26,9 @@ export class Response {
   }
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class RequestService {
 
   private responseSubject: Subject<Response> = new Subject<Response>();
@@ -265,5 +268,21 @@ export class RequestService {
         property.options.inline = response.body._embedded[Object.keys(response.body._embedded)[0]];
       }
     });
+  }
+
+  getHttpOptions(link: Link): void {
+    if(this.isUriTemplated(link.href)) {
+      return;
+    }
+    let headers = new HttpHeaders().set('Accept', '*/*');
+    this.http.options(link.href, {headers, observe: 'response'}).subscribe(
+      (httpResponse: HttpResponse<any>) => {
+        link.options = httpResponse.headers.get('Allow');
+      },
+      () => {
+        console.warn('Cannot get OPTIONS for: ', link);
+        link.options = 'http-options-error';
+      }
+    )
   }
 }

@@ -13,6 +13,7 @@ describe('AppComponent', () => {
   let responseSubject;
   let themeSubject;
   let layoutSubject;
+  let httpOptionsSubject;
 
   beforeEach(waitForAsync(() => {
     const requestServiceMock = jasmine.createSpyObj(['getResponseObservable', 'getDocumentationObservable']);
@@ -23,10 +24,13 @@ describe('AppComponent', () => {
 
     themeSubject = new Subject<string>();
     layoutSubject = new Subject<string>();
-    const appServiceMock = jasmine.createSpyObj(['getTheme', 'setTheme', 'getLayout', 'setLayout'],
-      {themeObservable: themeSubject, layoutObservable: layoutSubject});
+    httpOptionsSubject = new Subject<boolean>();
+
+    const appServiceMock = jasmine.createSpyObj(['getTheme', 'setTheme', 'getLayout', 'setLayout', 'getHttpOptions', 'setHttpOptions'],
+      {themeObservable: themeSubject, layoutObservable: layoutSubject, httpOptionsObservable: httpOptionsSubject});
     appServiceMock.getTheme.and.returnValue('Default');
     appServiceMock.getLayout.and.returnValue('2');
+    appServiceMock.getHttpOptions.and.returnValue(false);
     const domSanitizerMock = jasmine.createSpyObj(['bypassSecurityTrustResourceUrl']);
 
     TestBed.configureTestingModule({
@@ -87,6 +91,24 @@ describe('AppComponent', () => {
 
   it('should react on layout change', () => {
     layoutSubject.next('2');
+
+    expect(component.isTwoColumnLayout).toBeTrue();
+  });
+
+  it('should react on HTTP OPTIONS change', () => {
+    httpOptionsSubject.next(true);
+
+    expect(component.useHttpOptions).toBeTrue();
+  });
+
+  it('should select settings (HTTP OPTIONS)', () => {
+    component.selectSetting('Use HTTP OPTIONS')
+
+    expect(component.useHttpOptions).toBeTrue();
+  });
+
+  it('should select settings (Layout)', () => {
+    component.selectSetting('2 Column Layout')
 
     expect(component.isTwoColumnLayout).toBeTrue();
   });

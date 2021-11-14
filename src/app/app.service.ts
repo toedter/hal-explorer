@@ -7,16 +7,21 @@ export class RequestHeader {
   }
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AppService {
   private uriParam: string;
   private themeParam: string;
   private layoutParam: string;
+  private httpOptionsParam: boolean;
+
   private customRequestHeaders: RequestHeader[];
 
   private uriParamBackup: string;
   private themeParamBackup: string;
   private layoutParamBackup: string;
+  private httpOptionsParamBackup: boolean;
 
   private uriSubject: Subject<string> = new Subject<string>();
   // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
@@ -29,6 +34,10 @@ export class AppService {
   private layoutSubject: Subject<string> = new Subject<string>();
   // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private _layoutObservable: Observable<string> = this.layoutSubject.asObservable();
+
+  private httpOptionsSubject: Subject<boolean> = new Subject<boolean>();
+  // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  private _httpOptionsObservable: Observable<boolean> = this.httpOptionsSubject.asObservable();
 
   private requestHeadersSubject: Subject<RequestHeader[]> = new Subject<RequestHeader[]>();
   // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match
@@ -49,6 +58,10 @@ export class AppService {
 
   get layoutObservable(): Observable<string> {
     return this._layoutObservable;
+  }
+
+  get httpOptionsObservable(): Observable<boolean> {
+    return this._httpOptionsObservable;
   }
 
   get requestHeadersObservable(): Observable<RequestHeader[]> {
@@ -89,6 +102,16 @@ export class AppService {
     }
   }
 
+  getHttpOptions(): boolean {
+    return this.httpOptionsParam;
+  }
+
+  setHttpOptions(options: boolean) {
+    this.httpOptionsParamBackup = this.httpOptionsParam;
+    this.httpOptionsParam = options;
+    this.setLocationHash();
+  }
+
   getCustomRequestHeaders(): RequestHeader[] {
     return this.customRequestHeaders;
   }
@@ -102,11 +125,17 @@ export class AppService {
     if (!this.uriParam) {
       this.uriParam = '';
     }
+
     if (!this.themeParam) {
       this.themeParam = 'Default';
     }
+
     if (!this.layoutParam) {
       this.layoutParam = '2';
+    }
+
+    if (!this.httpOptionsParam) {
+      this.httpOptionsParam = false;
     }
 
     const tempCustomRequestHeaders: RequestHeader[] = new Array(5);
@@ -122,6 +151,10 @@ export class AppService {
         m = regex.exec(fragment);
       } else if (key === 'layout') {
         this.layoutParam = decodeURIComponent(m[2]);
+        m = regex.exec(fragment);
+      } else if (key === 'httpOptions') {
+        const httpOptionsValue = decodeURIComponent(m[2]);
+        this.httpOptionsParam =  (httpOptionsValue === 'true');
         m = regex.exec(fragment);
       } else if (key.startsWith('hkey')) {
         const headerKeyParam = decodeURIComponent(m[2]);
@@ -166,6 +199,11 @@ export class AppService {
       this.layoutSubject.next(this.layoutParam);
     }
 
+    if (this.httpOptionsParamBackup !== this.httpOptionsParam) {
+      this.httpOptionsSubject.next(this.httpOptionsParam);
+      this.uriSubject.next(this.uriParam);
+    }
+
     this.customRequestHeaders = [];
     let publishRequestHeaders = false;
     for (let i = 0; i < 5; i++) {
@@ -191,6 +229,11 @@ export class AppService {
 
     if (this.layoutParam !== '2') {
       newLocationHash += andPrefix + 'layout=' + this.layoutParam;
+      andPrefix = '&';
+    }
+
+    if (this.httpOptionsParam != false) {
+      newLocationHash += andPrefix + 'httpOptions=' + this.httpOptionsParam;
       andPrefix = '&';
     }
 

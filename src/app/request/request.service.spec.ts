@@ -4,6 +4,7 @@ import {Command, HttpRequestEvent, RequestService, Response} from './request.ser
 import {AppService, RequestHeader} from '../app.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Type} from '@angular/core';
+import {Link} from '../response-explorer/response-explorer.component';
 
 describe('RequestService', () => {
   let requestService: RequestService;
@@ -420,7 +421,7 @@ describe('RequestService', () => {
         'content-type': 'application/hal+json'
       });
 
-    optionsRequest.flush({_embedded: {xxx: ['a', 'b']}}, { headers: responseHeaders});
+    optionsRequest.flush({_embedded: {xxx: ['a', 'b']}}, {headers: responseHeaders});
 
     expect(httpClient.get).toHaveBeenCalled();
     expect((property.options as any).inline).toEqual(['a', 'b']);
@@ -446,7 +447,7 @@ describe('RequestService', () => {
         'content-type': 'application/hal+json'
       });
 
-    optionsRequest.flush({_embedded: {xxx: ['a', 'b']}}, { headers: responseHeaders});
+    optionsRequest.flush({_embedded: {xxx: ['a', 'b']}}, {headers: responseHeaders});
 
     expect(httpClient.get).toHaveBeenCalled();
     expect((property.options as any).inline).toEqual(['a', 'b']);
@@ -472,11 +473,52 @@ describe('RequestService', () => {
         'content-type': 'application/prs.hal-forms+json'
       });
 
-    optionsRequest.flush({_embedded: {xxx: ['a', 'b']}}, { headers: responseHeaders});
+    optionsRequest.flush({_embedded: {xxx: ['a', 'b']}}, {headers: responseHeaders});
 
     expect(httpClient.get).toHaveBeenCalled();
     expect((property.options as any).inline).toEqual(['a', 'b']);
     expect(optionsRequest.request.headers.get('Accept')).toBe('application/prs.hal-forms+json');
+  });
+
+  it('should use HTTP OPTIONS request to discover link HTTP request options', () => {
+    spyOn(httpClient, 'options').and.callThrough();
+
+    const link: Link = new Link('self', 'http://localhost/options', 'title', 'name');
+    requestService.getHttpOptions(link);
+    const optionsRequest = httpMock.expectOne('http://localhost/options');
+
+    const responseHeaders: HttpHeaders = new HttpHeaders(
+      {
+        'Allow': 'GET,HEAD,POST,OPTIONS'
+      });
+
+    optionsRequest.flush({}, {headers: responseHeaders});
+
+    expect(httpClient.options).toHaveBeenCalled();
+    expect(link.options).toBe('GET,HEAD,POST,OPTIONS');
+  });
+
+  it('should not use HTTP OPTIONS for URI template', () => {
+    spyOn(httpClient, 'options').and.callThrough();
+
+    const link: Link = new Link('self', 'http://localhost/options?{page}', 'title', 'name');
+    requestService.getHttpOptions(link);
+
+    expect(link.options).toBeUndefined();
+  });
+
+  it('should handle HTTP OPTIONS request error', () => {
+    spyOn(window.console, 'warn');
+
+    const link: Link = new Link('self', 'http://localhost/options', 'title', 'name');
+    requestService.getHttpOptions(link);
+
+    const mockErrorResponse = {
+      status: 404, statusText: 'Not Found'
+    };
+    httpMock.expectOne('http://localhost/options').flush('', mockErrorResponse);
+    httpMock.verify();
+    expect(window.console.warn).toHaveBeenCalled();
   });
 
 });

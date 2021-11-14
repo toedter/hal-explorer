@@ -1,10 +1,11 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import {ResponseExplorerComponent} from './response-explorer.component';
+import {Link, ResponseExplorerComponent} from './response-explorer.component';
 import {Command, RequestService, Response} from '../request/request.service';
 import {HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
 import {Subject} from 'rxjs';
+import {AppService} from '../app.service';
 
 /* eslint-disable */
 const halFormsResponse = {
@@ -70,23 +71,29 @@ describe('ResponseExplorerComponent', () => {
   let responseSubject;
   let requestServiceMock;
   let jsonHighlighterServiceMock;
+  let appServiceMock;
 
   beforeEach(waitForAsync(() => {
     requestServiceMock = jasmine.createSpyObj([
       'getResponseObservable',
       'getDocumentationObservable',
-      'processCommand']);
+      'processCommand',
+      'getHttpOptions'
+    ]);
     responseSubject = new Subject<Response>();
     spyOn(responseSubject, 'subscribe').and.callThrough();
     requestServiceMock.getResponseObservable.and.returnValue(responseSubject);
 
+    appServiceMock = jasmine.createSpyObj(['getHttpOptions']);
+    appServiceMock.getHttpOptions.and.returnValue(true);
     jsonHighlighterServiceMock = jasmine.createSpyObj(['syntaxHighlight']);
 
     TestBed.configureTestingModule({
       declarations: [ResponseExplorerComponent],
       providers: [
         {provide: RequestService, useValue: requestServiceMock},
-        {provide: JsonHighlighterService, useValue: jsonHighlighterServiceMock}
+        {provide: JsonHighlighterService, useValue: jsonHighlighterServiceMock},
+        {provide: AppService, useValue: appServiceMock}
       ]
     })
       .compileComponents();
@@ -200,6 +207,14 @@ describe('ResponseExplorerComponent', () => {
 
     expect(component.getLinkButtonClass(Command.Delete)).toBe('btn-outline-light');
     expect(component.isButtonDisabled(Command.Delete)).toBeTrue();
+
+    let link = new Link('rel', 'href', 'title', 'name', 'docUri', 'http-options-error');
+    expect(component.getLinkButtonClass(Command.Get, link)).toBe('btn-outline-dark');
+    expect(component.isButtonDisabled(Command.Get, link)).toBeFalse();
+
+    link = new Link('rel', 'href', 'title', 'name', 'docUri', 'POST');
+    expect(component.getLinkButtonClass(Command.Get, link)).toBe('btn-outline-light');
+    expect(component.isButtonDisabled(Command.Get, link)).toBeTrue();
   });
 
   it('should get HAL-FORMS request button class and state', () => {

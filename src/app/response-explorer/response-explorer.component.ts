@@ -2,10 +2,12 @@ import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {Command, RequestService, Response} from '../request/request.service';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {AppService} from '../app.service';
 
-class Link {
+export class Link {
   constructor(public rel: string, public href: string,
-              public title: string, public name: string, public docUri?: string) {
+              public title: string, public name: string,
+              public docUri?: string, public options?: string) {
   }
 }
 
@@ -43,7 +45,8 @@ export class ResponseExplorerComponent implements OnInit {
   httpErrorResponse: HttpErrorResponse;
 
   constructor(private requestService: RequestService,
-              private jsonHighlighterService: JsonHighlighterService) {
+              private jsonHighlighterService: JsonHighlighterService,
+              private appService: AppService) {
   }
 
   ngOnInit() {
@@ -126,6 +129,12 @@ export class ResponseExplorerComponent implements OnInit {
         }
       );
 
+      if(this.appService.getHttpOptions()) {
+        this.links.forEach((link: Link) => {
+          this.requestService.getHttpOptions(link);
+        });
+      }
+
       this.curieLinks.forEach((curie: Link) => {
         this.links.forEach((link: Link) => {
           const curiePrefix = curie.name + ':';
@@ -165,14 +174,35 @@ export class ResponseExplorerComponent implements OnInit {
     this.requestService.processCommand(command, link, template);
   }
 
-  getLinkButtonClass(command: Command): string {
+  getLinkButtonClass(command: Command, link?: Link): string {
+    if (link) {
+      if (link.options && link.options === 'http-options-error') {
+        return 'btn-outline-dark';
+      }
+
+      if (link.options && !link.options.toLowerCase().includes(Command[command].toLowerCase())) {
+        return 'btn-outline-light';
+      }
+    }
+
     if (!this.isHalFormsMediaType || Command[command].toLowerCase() === 'get') {
       return '';
     }
+
     return 'btn-outline-light';
   }
 
-  isButtonDisabled(command: Command): boolean {
+  isButtonDisabled(command: Command, link?: Link): boolean {
+    if (link) {
+      if (link.options && link.options === 'http-options-error') {
+        return false;
+      }
+
+      if (link.options && !link.options.toLowerCase().includes(Command[command].toLowerCase())) {
+        return true;
+      }
+    }
+
     if (Command[command].toLowerCase() === 'get') {
       return false;
     }
