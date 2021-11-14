@@ -122,7 +122,7 @@ export class RequestService {
       {headers: this.requestHeaders, observe: 'response'}).subscribe(
       (response: HttpResponse<any>) => {
         let hasProfile = false;
-        const linkHeader = response.headers.get('Link');
+        const linkHeader = response.headers.get('link');
         if (linkHeader) {
           const w3cLinks = linkHeader.split(',');
           let profileUri;
@@ -277,7 +277,7 @@ export class RequestService {
     let headers = new HttpHeaders().set('Accept', '*/*');
     this.http.options(link.href, {headers, observe: 'response'}).subscribe(
       (httpResponse: HttpResponse<any>) => {
-        link.options = httpResponse.headers.get('Allow');
+        link.options = httpResponse.headers.get('allow');
       },
       () => {
         console.warn('Cannot get OPTIONS for: ', link);
