@@ -89,3 +89,10 @@ jobs:
           workflow: Build
           repo: toedter/chatty
           token: ${{ secrets.WORKFLOW_TOKEN }}
+
+      - name: Trigger Movies Demo build
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: Build
+          repo: toedter/movies-demo
+          token: ${{ secrets.WORKFLOW_TOKEN }}
