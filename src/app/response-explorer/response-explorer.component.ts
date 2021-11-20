@@ -129,7 +129,7 @@ export class ResponseExplorerComponent implements OnInit {
         }
       );
 
-      if(this.appService.getHttpOptions()) {
+      if (this.appService.getHttpOptions()) {
         this.links.forEach((link: Link) => {
           this.requestService.getHttpOptions(link);
         });
@@ -175,14 +175,16 @@ export class ResponseExplorerComponent implements OnInit {
   }
 
   getLinkButtonClass(command: Command, link?: Link): string {
-    if (link) {
-      if (link.options && link.options === 'http-options-error') {
+    if (link && link.options) {
+      if (link.options === 'http-options-error') {
         return 'btn-outline-dark';
       }
 
-      if (link.options && !link.options.toLowerCase().includes(Command[command].toLowerCase())) {
+      const commandString = Command[command].toLowerCase();
+      if (!link.options.toLowerCase().includes(commandString)) {
         return 'btn-outline-light';
       }
+      return '';
     }
 
     if (!this.isHalFormsMediaType || Command[command].toLowerCase() === 'get') {
@@ -193,14 +195,11 @@ export class ResponseExplorerComponent implements OnInit {
   }
 
   isButtonDisabled(command: Command, link?: Link): boolean {
-    if (link) {
-      if (link.options && link.options === 'http-options-error') {
+    if (link && link.options) {
+      if (link.options === 'http-options-error') {
         return false;
       }
-
-      if (link.options && !link.options.toLowerCase().includes(Command[command].toLowerCase())) {
-        return true;
-      }
+      return !link.options.toLowerCase().includes(Command[command].toLowerCase());
     }
 
     if (Command[command].toLowerCase() === 'get') {

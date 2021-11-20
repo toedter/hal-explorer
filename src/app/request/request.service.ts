@@ -271,11 +271,13 @@ export class RequestService {
   }
 
   getHttpOptions(link: Link): void {
-    if(this.isUriTemplated(link.href)) {
-      return;
+    let href = link.href;
+    if(this.isUriTemplated(href)) {
+      const uriTemplate: URITemplate = utpl(href);
+      href = uriTemplate.fill({});
     }
     let headers = new HttpHeaders().set('Accept', '*/*');
-    this.http.options(link.href, {headers, observe: 'response'}).subscribe(
+    this.http.options(href, {headers, observe: 'response'}).subscribe(
       (httpResponse: HttpResponse<any>) => {
         link.options = httpResponse.headers.get('allow');
       },
