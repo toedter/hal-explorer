@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
   isTwoColumnLayout = true;
   useHttpOptions = false;
 
-  version = '1.1.0';
+  version = '1.1.1-SNAPSHOT';
   isSnapshotVersion = this.version.endsWith('SNAPSHOT');
 
   constructor(
