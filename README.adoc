@@ -17,8 +17,8 @@ HAL Explorer also supports Spring Profiles.
 Here you find the documentation for the latest release and the current snapshot,
 as well as a demo (with examples) of the latest release and the current snapshot:
 |===
-| Release | 1.0.1 | https://toedter.github.io/hal-explorer/release/reference-doc/[Reference Documentation] | https://toedter.github.io/hal-explorer/release/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
-| Snapshot | 1.0.2-SNAPSHOT | https://toedter.github.io/hal-explorer/snapshot/reference-doc/[Reference Documentation] | https://toedter.github.io/hal-explorer/snapshot/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
+| Release | 1.1.0 | https://toedter.github.io/hal-explorer/release/reference-doc/[Reference Documentation] | https://toedter.github.io/hal-explorer/release/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
+| Snapshot | 1.1.1-SNAPSHOT | https://toedter.github.io/hal-explorer/snapshot/reference-doc/[Reference Documentation] | https://toedter.github.io/hal-explorer/snapshot/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
 |===
 
 == TL;DR
@@ -88,12 +88,12 @@ Maven:
 <dependency>
     <groupId>org.webjars</groupId>
     <artifactId>hal-explorer</artifactId>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
 </dependency>
 
 Gradle:
 [source, Groovy]
-compile 'org.webjars:hal-explorer:1.0.1'
+compile 'org.webjars:hal-explorer:1.1.0'
 
 When you use the WebJar with Spring Boot, you can access the HAL Explorer at `/webjars/hal-explorer/1.0.0/index.html`.
 The easiest way to integrate the upstream version of HAL Explorer into your backend would be to clone this Git repo,
