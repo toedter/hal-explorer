@@ -38,14 +38,14 @@ yarn_build.dependsOn yarn_install, yarn_lint //, yarn_test
 
 build.dependsOn yarn_build
 
-version = '1.0.2-SNAPSHOT'
+version = '1.1.1-SNAPSHOT'
 
 configurations {
   docs
 }
 
 dependencies {
-  docs "io.spring.asciidoctor.backends:spring-asciidoctor-backends:0.0.2"
+  docs "io.spring.asciidoctor.backends:spring-asciidoctor-backends:0.0.3"
 }
 
 asciidoctor {
