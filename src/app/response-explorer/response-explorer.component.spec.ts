@@ -215,6 +215,9 @@ describe('ResponseExplorerComponent', () => {
     link = new Link('rel', 'href', 'title', 'name', 'docUri', 'POST');
     expect(component.getLinkButtonClass(Command.Get, link)).toBe('btn-outline-light');
     expect(component.isButtonDisabled(Command.Get, link)).toBeTrue();
+
+    link.options = 'get';
+    expect(component.getLinkButtonClass(Command.Get, link)).toBe('');
   });
 
   it('should get HAL-FORMS request button class and state', () => {
