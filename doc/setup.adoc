@@ -48,6 +48,9 @@ you could define a dependency to the HAL Explorer WebJar.
 implementation 'org.webjars:hal-explorer:1.1.0'
 ----
 
+When you use the WebJar with Spring Boot, you can access the HAL Explorer
+in a Web browser at `/webjars/hal-explorer/1.1.0/index.html`.
+
 If you are using Spring Data REST, you could instead add a dependency like
 
 [source,xml,indent=0,role="primary"]
@@ -65,7 +68,9 @@ If you are using Spring Data REST, you could instead add a dependency like
 implementation 'org.springframework.data:spring-data-rest-hal-explorer'
 ----
 
-Of course, you could always download a zip-based https://github.com/toedter/hal-explorer/releases/tag/v1.1.0[distribution] and put it on any Web server.
+When you use `spring-data-rest-hal-explorer`, you can access the HAL Explorer in a Web browser at `/`.
+
+Of course, you could always download a zip-based https://github.com/toedter/hal-explorer/releases/download/v1.1.0/hal-explorer-1.1.0.zip[distribution] and put it on any Web server.
 
 The easiest way to integrate the upstream version of HAL Explorer into your backend would be to clone this Git repo,
 do a production build (see below) and then copy the content of the dist folder to a location accessible by your backend server.
@@ -102,8 +107,9 @@ The build artifacts will be stored in the `dist/` directory.
 
 You can build this documentation
 
-** Windows: `gradlew doc -Dfile.encoding=UTF-8`
-** Linux: `./gradlew doc`
+* Windows: `gradlew doc`
+** If you see errors regarding file encoding, try `gradlew doc -Dfile.encoding=UTF-8`
+* Linux: `./gradlew doc`
 
 === Running Tests
 
