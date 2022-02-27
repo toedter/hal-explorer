@@ -130,7 +130,10 @@ export class RequestComponent implements OnInit {
           this.newRequestUri = event.uri;
         }
 
-        document.getElementById('HttpRequestTrigger').click();
+        const element = document.getElementById('HttpRequestTrigger');
+        if(element) {
+          element.click();
+        }
 
         this.propertyChanged();
       }
