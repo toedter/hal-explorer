@@ -61,7 +61,7 @@ export class RequestComponent implements OnInit {
         if (event.halFormsTemplate) {
           this.halFormsTemplate = event.halFormsTemplate;
           this.halFormsProperties = this.halFormsTemplate.value.properties;
-          if(this.halFormsTemplate.value.contentType) {
+          if (this.halFormsTemplate.value.contentType) {
             this.halFormsContentType = this.halFormsTemplate.value.contentType;
           }
           if (Array.isArray(this.halFormsProperties)) {
@@ -131,7 +131,7 @@ export class RequestComponent implements OnInit {
         }
 
         const element = document.getElementById('HttpRequestTrigger');
-        if(element) {
+        if (element) {
           element.click();
         }
 
