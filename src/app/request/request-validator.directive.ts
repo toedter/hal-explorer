@@ -1,5 +1,5 @@
 import {Directive, Input} from '@angular/core';
-import {AbstractControl, FormControl, NG_VALIDATORS, Validator, Validators} from '@angular/forms';
+import {AbstractControl, UntypedFormControl, NG_VALIDATORS, Validator, Validators} from '@angular/forms';
 
 @Directive({
   selector: '[appHalFormsProperty]',
@@ -25,27 +25,27 @@ export class RequestValidatorDirective implements Validator {
     }
 
     if (this.halFormsProperty.maxLength) {
-      const testControl = new FormControl(control.value, Validators.maxLength(this.halFormsProperty.maxLength));
+      const testControl = new UntypedFormControl(control.value, Validators.maxLength(this.halFormsProperty.maxLength));
       validationResult = Object.assign(validationResult, testControl.errors);
     }
 
     if (this.halFormsProperty.minLength) {
-      const testControl = new FormControl(control.value, Validators.minLength(this.halFormsProperty.minLength));
+      const testControl = new UntypedFormControl(control.value, Validators.minLength(this.halFormsProperty.minLength));
       validationResult = Object.assign(validationResult, testControl.errors);
     }
 
     if (this.halFormsProperty.max) {
-      const testControl = new FormControl(control.value, Validators.max(this.halFormsProperty.max));
+      const testControl = new UntypedFormControl(control.value, Validators.max(this.halFormsProperty.max));
       validationResult = Object.assign(validationResult, testControl.errors);
     }
 
     if (this.halFormsProperty.min) {
-      const testControl = new FormControl(control.value, Validators.min(this.halFormsProperty.min));
+      const testControl = new UntypedFormControl(control.value, Validators.min(this.halFormsProperty.min));
       validationResult = Object.assign(validationResult, testControl.errors);
     }
 
     if (this.halFormsProperty.type === 'email') {
-      const testControl = new FormControl(control.value, Validators.email);
+      const testControl = new UntypedFormControl(control.value, Validators.email);
       validationResult = Object.assign(validationResult, testControl.errors);
     }
 

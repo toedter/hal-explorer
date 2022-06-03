@@ -1,4 +1,4 @@
-import {AbstractControl, FormControl} from '@angular/forms';
+import {AbstractControl, UntypedFormControl} from '@angular/forms';
 import {RequestValidatorDirective} from './request-validator.directive';
 
 describe( 'RequestValidatorDirective', () => {
@@ -13,7 +13,7 @@ describe( 'RequestValidatorDirective', () => {
       required: true
     };
 
-    const control: AbstractControl = new FormControl();
+    const control: AbstractControl = new UntypedFormControl();
     const validationResult = directive.validate( control );
 
     expect( validationResult.required ).toBeTrue();
@@ -25,7 +25,7 @@ describe( 'RequestValidatorDirective', () => {
       required: true
     };
 
-    const control: AbstractControl = new FormControl( 'x' );
+    const control: AbstractControl = new UntypedFormControl( 'x' );
     const validationResult = directive.validate( control );
     expect( validationResult ).toEqual( {} );
   } );
@@ -36,7 +36,7 @@ describe( 'RequestValidatorDirective', () => {
       regex: '^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$'
     };
 
-    const control: AbstractControl = new FormControl( 'invalid@email' );
+    const control: AbstractControl = new UntypedFormControl( 'invalid@email' );
     const validationResult = directive.validate( control );
 
     expect( validationResult.pattern.requiredPattern )
@@ -51,7 +51,7 @@ describe( 'RequestValidatorDirective', () => {
       regex: '^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$'
     };
 
-    const control: AbstractControl = new FormControl( 'valid@email.com' );
+    const control: AbstractControl = new UntypedFormControl( 'valid@email.com' );
     const validationResult = directive.validate( control );
 
     expect( validationResult ).toEqual( {} );
@@ -63,7 +63,7 @@ describe( 'RequestValidatorDirective', () => {
       maxLength: 3
     };
 
-    const control: AbstractControl = new FormControl( 'xxx' );
+    const control: AbstractControl = new UntypedFormControl( 'xxx' );
     const validationResult = directive.validate( control );
 
     expect( validationResult ).toEqual( {} );
@@ -75,7 +75,7 @@ describe( 'RequestValidatorDirective', () => {
       maxLength: 3
     };
 
-    const control: AbstractControl = new FormControl( 'xxxx' );
+    const control: AbstractControl = new UntypedFormControl( 'xxxx' );
     const validationResult = directive.validate( control );
 
     expect( validationResult.maxlength.requiredLength ).toBe( 3 );
@@ -88,7 +88,7 @@ describe( 'RequestValidatorDirective', () => {
       minLength: 3
     };
 
-    const control: AbstractControl = new FormControl( 'xxx' );
+    const control: AbstractControl = new UntypedFormControl( 'xxx' );
     const validationResult = directive.validate( control );
 
     expect( validationResult ).toEqual( {} );
@@ -100,7 +100,7 @@ describe( 'RequestValidatorDirective', () => {
       minLength: 3
     };
 
-    const control: AbstractControl = new FormControl( 'xx' );
+    const control: AbstractControl = new UntypedFormControl( 'xx' );
     const validationResult = directive.validate( control );
 
     expect( validationResult.minlength.requiredLength ).toBe( 3 );
@@ -113,7 +113,7 @@ describe( 'RequestValidatorDirective', () => {
       max: 10
     };
 
-    const control: AbstractControl = new FormControl( '10' );
+    const control: AbstractControl = new UntypedFormControl( '10' );
     const validationResult = directive.validate( control );
 
     expect( validationResult ).toEqual( {} );
@@ -125,7 +125,7 @@ describe( 'RequestValidatorDirective', () => {
       max: 10
     };
 
-    const control: AbstractControl = new FormControl( 11 );
+    const control: AbstractControl = new UntypedFormControl( 11 );
     const validationResult = directive.validate( control );
 
     expect( validationResult.max.max ).toBe( 10 );
@@ -138,7 +138,7 @@ describe( 'RequestValidatorDirective', () => {
       min: 10
     };
 
-    const control: AbstractControl = new FormControl( '10' );
+    const control: AbstractControl = new UntypedFormControl( '10' );
     const validationResult = directive.validate( control );
     expect( validationResult ).toEqual( {} );
   } );
@@ -149,7 +149,7 @@ describe( 'RequestValidatorDirective', () => {
       min: 10
     };
 
-    const control: AbstractControl = new FormControl( 9 );
+    const control: AbstractControl = new UntypedFormControl( 9 );
     const validationResult = directive.validate( control );
 
     expect( validationResult.min.min ).toBe( 10 );
@@ -162,7 +162,7 @@ describe( 'RequestValidatorDirective', () => {
       type: 'email'
     };
 
-    const control: AbstractControl = new FormControl( 'bad@' );
+    const control: AbstractControl = new UntypedFormControl( 'bad@' );
     const validationResult = directive.validate( control );
 
     expect( validationResult.email ).toBe( true );
@@ -172,7 +172,7 @@ describe( 'RequestValidatorDirective', () => {
     const directive = new RequestValidatorDirective();
     directive.halFormsProperty = undefined;
 
-    const control: AbstractControl = new FormControl( 9 );
+    const control: AbstractControl = new UntypedFormControl( 9 );
     const validationResult = directive.validate( control );
 
     expect( validationResult ).toBe( null );
@@ -186,7 +186,7 @@ describe( 'RequestValidatorDirective', () => {
       }
     };
 
-    const control: AbstractControl = new FormControl( [] );
+    const control: AbstractControl = new UntypedFormControl( [] );
     const validationResult = directive.validate( control );
 
     expect( validationResult.minItems.minItems ).toBe( 1 );
@@ -201,7 +201,7 @@ describe( 'RequestValidatorDirective', () => {
       }
     };
 
-    const control: AbstractControl = new FormControl( ['a', 'b'] );
+    const control: AbstractControl = new UntypedFormControl( ['a', 'b'] );
     const validationResult = directive.validate( control );
 
     expect( validationResult.maxItems.maxItems ).toBe( 1 );
