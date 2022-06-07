@@ -2,9 +2,9 @@ name: Build
 
 on:
   push:
-    branches: [ master ]
+    branches: [ '**' ]
   pull_request:
-    branches: [ master ]
+    branches: [ '**' ]
 
 jobs:
   build:
@@ -74,7 +74,7 @@ jobs:
         run: ./gradlew doc
 
       - name: Deploy documentation to Github pages
-        if: ${{ github.event_name == 'push' }}
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -83,18 +83,18 @@ jobs:
           publish_branch: gh-pages
           force_orphan: false
 
-      - name: Trigger Chatty build
-        if: ${{ github.event_name == 'push' }}
-        uses: benc-uk/workflow-dispatch@v1
-        with:
-          workflow: Build
-          repo: toedter/chatty
-          token: ${{ secrets.WORKFLOW_TOKEN }}
-
-      - name: Trigger Movies Demo build
-        if: ${{ github.event_name == 'push' }}
-        uses: benc-uk/workflow-dispatch@v1
-        with:
-          workflow: Build
-          repo: toedter/movies-demo
-          token: ${{ secrets.WORKFLOW_TOKEN }}
+#      - name: Trigger Chatty build
+#        if: ${{ github.event_name == 'push' }}
+#        uses: benc-uk/workflow-dispatch@v1
+#        with:
+#          workflow: Build
+#          repo: toedter/chatty
+#          token: ${{ secrets.WORKFLOW_TOKEN }}
+#
+#      - name: Trigger Movies Demo build
+#        if: ${{ github.event_name == 'push' }}
+#        uses: benc-uk/workflow-dispatch@v1
+#        with:
+#          workflow: Build
+#          repo: toedter/movies-demo
+#          token: ${{ secrets.WORKFLOW_TOKEN }}
