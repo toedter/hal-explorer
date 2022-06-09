@@ -12,7 +12,7 @@ and https://rwcbook.github.io/hal-forms/[HAL-FORMS] based RESTful Hypermedia API
 HAL Explorer was inspired by Mike Kelly's https://github.com/mikekelly/hal-browser[HAL-Browser].
 HAL Explorer also supports Spring Profiles.
 
-== Documentation & Demos
+== Documentation, Demos & Cloud Deployment
 
 Here you find the documentation for the latest release and the current snapshot,
 as well as a demo (with examples) of the latest release and the current snapshot:
@@ -20,6 +20,8 @@ as well as a demo (with examples) of the latest release and the current snapshot
 | Release | 1.1.0 | https://toedter.github.io/hal-explorer/release/reference-doc/[Reference Documentation] | https://toedter.github.io/hal-explorer/release/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
 | Snapshot | 1.1.1-SNAPSHOT | https://toedter.github.io/hal-explorer/snapshot/reference-doc/[Reference Documentation] | https://toedter.github.io/hal-explorer/snapshot/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
 |===
+
+You also find current release at https://hal-explorer.com.
 
 == TL;DR
 
