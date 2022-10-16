@@ -1,0 +1,36 @@
+{
+  "_links": {
+    "self": {
+      "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/regex.hal-forms.json"
+    }
+  },
+  "_templates": {
+    "default": {
+      "title": "Filter",
+      "method": "GET",
+      "properties": [
+        {
+          "name": "title",
+          "value": "",
+          "prompt": "Title"
+        },
+        {
+          "name": "completed",
+          "value": "",
+          "prompt": "Completed",
+          "regex": "^(true|false)$"
+        }
+      ]
+    },
+    "submitPayment": {
+      "method": "put",
+      "properties": [
+        {
+          "name": "number",
+          "regex": "[0-9]{16}",
+          "readOnly": "true"
+        }
+      ]
+    }
+  }
+}

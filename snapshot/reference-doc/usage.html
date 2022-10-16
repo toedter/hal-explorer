@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<title>Using HAL Explorer</title>
+<link rel="stylesheet" href="css/site.css">
+<script src="js/setup.js"></script><script defer src="js/site.js"></script>
+
+</head>
+<body id="usage" class="article"><div id="banner-container" class="container" role="banner">
+  <div id="banner" class="contained" role="banner">
+    <div id="switch-theme">
+      <input type="checkbox" id="switch-theme-checkbox" />
+      <label for="switch-theme-checkbox">Dark Theme</label>
+    </div>
+  </div>
+</div>
+<div id="tocbar-container" class="container" role="navigation">
+  <div id="tocbar" class="contained" role="navigation">
+    <button id="toggle-toc"></button>
+  </div>
+</div>
+<div id="main-container" class="container">
+  <div id="main" class="contained">
+    <div id="doc" class="doc">
+<div id="header">
+<h1>Using HAL Explorer</h1>
+<div class="details">
+<span id="revnumber">version 1.1.2-SNAPSHOT</span>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_json_properties"><a class="anchor" href="#_json_properties"></a>JSON Properties</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When you start HAL Explorer, you see an input field in the top left area, where you can input the URI of a REST service, that returns HAL or HAL-FORMS documents. Once you click <code>Go!</code> or hit enter, the response is displayed. A typical response would look like</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/hal-explorer.png" alt="hal explorer">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_links"><a class="anchor" href="#_links"></a>Links</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Just below the URI you find the top-level JSON properties. If the response contains links, you find them below.
+Since HAL does not provide any affordances what HTTP method you should use to follow the link, you find colored buttons for each HTTP method:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>&lt;</code> : HTTP GET</p>
+</li>
+<li>
+<p><code>+</code> : HTTP POST</p>
+</li>
+<li>
+<p><code>&gt;</code> : HTTP PUT</p>
+</li>
+<li>
+<p><code>&gt;</code> : HTTP PATCH</p>
+</li>
+<li>
+<p><code>x</code> : HTTP DELETE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If a link relation provides <a href="#_curie_based_documentation">Curie-based Documentation</a>,
+you can click on the book icon to display it.</p>
+</div>
+<div class="paragraph">
+<p>If a link relation provides a name or a title, they are displayed in the links table.</p>
+</div>
+<div class="paragraph">
+<p>You can click on a link button to follow the link. If a link is templated, a modal dialog will pop up, where you can fill the template parameters, like</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/templated-request.png" alt="templated request">
+</div>
+</div>
+<div class="paragraph">
+<p>When you click on <code>Go!</code>, an HTTP call to the <code>Expanded URI</code> will be made.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_embedded_resources"><a class="anchor" href="#_embedded_resources"></a>Embedded Resources</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If the response contains embedded resources, you find them in the section "Embedded Resources".
+You can click on an embedded resource to expand it, like</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/expanded-embedded-resource.png" alt="expanded embedded resource">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_response_details"><a class="anchor" href="#_response_details"></a>Response Details</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>On the right-hand side of the page you find details about the response:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The Response Status code and text</p>
+</li>
+<li>
+<p>All Response Headers</p>
+</li>
+<li>
+<p>The response body in highlighted JSON</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_curie_based_documentation"><a class="anchor" href="#_curie_based_documentation"></a>Curie-based Documentation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Whenever you see a book icon, you can click on it, and the documentation is shown.
+Depending on the chosen Layout, the doc will be displayed as a third column on the right (3 column layout)
+or will replace the response details (2 column layout). You can change the layout using the <code>Layout</code> menu at the main toolbar.</p>
+</div>
+<div class="paragraph">
+<p>A page with 3 column layout might look like</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/3-column-layout.png" alt="3 column layout">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_hal_forms"><a class="anchor" href="#_hal_forms"></a>HAL-FORMS</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>HAL Explorer supports the latest HAL-FORMS specification. Whenever a HAL-FORMS based response contains
+templates (<code>_templates</code>), all template elements will be displayed under the Links section, like</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/hal-explorer-templates.png" alt="hal explorer templates">
+</div>
+</div>
+<div class="paragraph">
+<p>Since HAL-FORMS uses affordances to describe which HTTP method should be used for each template element, you can
+only follow links using HTTP GET, but use exactly the HTTP method specified in a template element.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_updating_rest_resources"><a class="anchor" href="#_updating_rest_resources"></a>Updating REST Resources</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Whenever you click on an HTTP POST button, a modal dialog pops up, where you can enter the body of the post, and the query parameters (only if the URI is templated). In raw HAL based documents, it looks like</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/hal-post-dialog.png" alt="hal post dialog">
+</div>
+</div>
+<div class="paragraph">
+<p>When your server is implemented using <a href="https://spring.io/projects/spring-data-rest">Spring Data REST</a>, a JSON Schema-based Spring profile is automatically created. HAL Explorer automatically detects Spring Profiles, and instead of just presenting an empty body, form elements for all attributes are displayed, like</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/request-input.png" alt="request input">
+</div>
+</div>
+<div class="paragraph">
+<p>When your response is based on HAL-FORMS, all the properties of the corresponding template element are shown, like</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/hal-forms-post-dialog.png" alt="hal forms post dialog">
+</div>
+</div>
+<div class="paragraph">
+<p>When HAL-FORMS is used, the fields are also validated and validation errors are displayed below the input area.
+Only for valid forms, the body is displayed, and the HTTP request can be made.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_adding_request_headers"><a class="anchor" href="#_adding_request_headers"></a>Adding Request Headers</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When want to add certain request headers to all calls, click on <code>Edit Headers</code> in the top-left corner.
+THen, a modal dialog pops up where you can add headers. This is handy when you want to add things like
+bearer tokens for authorization, like</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/request-headers.png" alt="request headers">
+</div>
+</div>
+<div class="paragraph">
+<p>The modal dialog also provides buttons to clear all request headers or to add/modify an <code>Accept</code>
+request header for <code>HAL</code> or <code>HAL-FORMS</code> documents.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_bookmarking"><a class="anchor" href="#_bookmarking"></a>Bookmarking</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following configuration is transported in HTTP parameters, so HAL Explorer URL can easily be bookmarked:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>URI</p>
+</li>
+<li>
+<p>Request Headers</p>
+</li>
+<li>
+<p>Layout</p>
+</li>
+<li>
+<p>Theme</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_hal_forms_options"><a class="anchor" href="#_hal_forms_options"></a>HAL-FORMS Options</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>HAL Explorer supports HAL-FORMS <a href="https://rwcbook.github.io/hal-forms/#options-element">Options</a>.
+A simple example JSON looks like</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">{
+  "_links": {
+    "self": {
+      "href": "http://localhost:3000/options.hal-forms.json"
+    }
+  },
+  "_templates" : {
+    "default" : {
+      "title": "Shipping",
+      "method": "POST",
+      "properties" : [
+        {
+          "name" : "shipping",
+          "prompt" : "Select Shipping Method",
+          "options" : {
+            "selectedValues" : ["FedEx"],
+            "inline" : ["FedEx","UPS","DHL"],
+            "maxItems": 1
+          }
+        }
+      ]
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When clicking on the POST request button, the dialog looks like</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/hal-forms-options.png" alt="hal forms options">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 1.1.2-SNAPSHOT<br>
+Last updated 2022-10-16 14:50:35 UTC
+</div>
+</div>
+</div>
+  </div>
+</div>
+</body>
+</html>

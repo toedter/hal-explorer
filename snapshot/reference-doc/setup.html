@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<title>Setup</title>
+<link rel="stylesheet" href="css/site.css">
+<script src="js/setup.js"></script><script defer src="js/site.js"></script>
+
+</head>
+<body id="setup" class="article"><div id="banner-container" class="container" role="banner">
+  <div id="banner" class="contained" role="banner">
+    <div id="switch-theme">
+      <input type="checkbox" id="switch-theme-checkbox" />
+      <label for="switch-theme-checkbox">Dark Theme</label>
+    </div>
+  </div>
+</div>
+<div id="tocbar-container" class="container" role="navigation">
+  <div id="tocbar" class="contained" role="navigation">
+    <button id="toggle-toc"></button>
+  </div>
+</div>
+<div id="main-container" class="container">
+  <div id="main" class="contained">
+    <div id="doc" class="doc">
+<div id="header">
+<h1>Setup</h1>
+<div class="details">
+<span id="revnumber">version 1.1.2-SNAPSHOT</span>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_releases_and_demos"><a class="anchor" href="#_releases_and_demos"></a>Releases and Demos</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Here you find the documentation for the latest release and the current snapshot,
+as well as the latest release and the current snapshot of HAL Explorer (both with examples):</p>
+</div>
+<table class="tableblock frame-all grid-all stripes-even stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Latest Release</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.1.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://toedter.github.io/hal-explorer/release/hal-explorer/#theme=Cosmo&amp;uri=examples/examples.hal-forms.json">HAL Explorer Demo</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Current Snapshot</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.1.2-SNAPSHOT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://toedter.github.io/hal-explorer/snapshot/hal-explorer/#theme=Cosmo&amp;uri=examples/examples.hal-forms.json">HAL Explorer Demo</a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>To explore your services with these HAL Explorer demos, they have to enable CORS.
+When you want to explore a Spring-based service (e.g. running on localhost), you could (temporarily) add a simple
+<a href="https://gist.github.com/toedter/72d62b4bb4a25d229dc1f1342ae429ad">CORS Filter</a> to your service. For more options, see
+section <a href="#_development_server">Development Server</a>.</p>
+</div>
+<div class="paragraph">
+<p>You can also play with the latest snapshot version of HAL Explorer in running demos. The backends
+are implemented with Spring. I host these demos at Heroku,
+so please give them a bit of time to warm up (this might take up to 1 minute).</p>
+</div>
+<table class="tableblock frame-all grid-all stripes-even stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For HAL:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://chatty42.herokuapp.com/hal-explorer/index.html#theme=Cosmo&amp;url=https://chatty42.herokuapp.com/api">Chatty API</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Spring Data REST Backend</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For HAL-FORMS:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://hypermedia-movies-demo.herokuapp.com/hal-explorer/index.html#theme=Cosmo&amp;uri=http://hypermedia-movies-demo.herokuapp.com/api/movies/1">Movies API</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Spring HATEOAS Backend</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_integration_with_your_backends"><a class="anchor" href="#_integration_with_your_backends"></a>Integration with your Backends</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you want to use a released version of HAL Explorer in a Java-based project,
+you could define a dependency to the HAL Explorer WebJar.</p>
+</div>
+<div class="listingblock primary">
+<div class="title">Maven</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.webjars&lt;/groupId&gt;
+    &lt;artifactId&gt;hal-explorer&lt;/artifactId&gt;
+    &lt;version&gt;1.1.1&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock secondary">
+<div class="title">Gradle</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">implementation 'org.webjars:hal-explorer:1.1.1'
+</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When you use the WebJar with Spring Boot, you can access the HAL Explorer
+in a Web browser at <code>/webjars/hal-explorer/1.1.1/index.html</code>.</p>
+</div>
+<div class="paragraph">
+<p>If you are using Spring Data REST, you could instead add a dependency like</p>
+</div>
+<div class="listingblock primary">
+<div class="title">Maven</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.data&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-data-rest-hal-explorer&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock secondary">
+<div class="title">Gradle</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">implementation 'org.springframework.data:spring-data-rest-hal-explorer'
+</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When you use <code>spring-data-rest-hal-explorer</code>, you can access the HAL Explorer in a Web browser at <code>/</code>.</p>
+</div>
+<div class="paragraph">
+<p>Of course, you could always download a zip-based <a href="https://github.com/toedter/hal-explorer/releases/download/v1.1.1/hal-explorer-1.1.1.zip">distribution</a> and put it on any Web server.</p>
+</div>
+<div class="paragraph">
+<p>The easiest way to integrate the upstream version of HAL Explorer into your backend would be to clone this Git repo,
+do a production build (see below) and then copy the content of the dist folder to a location accessible by your backend server.
+When you use Spring Boot, a good location in your project&#8217;s source tree would be
+src/main/java/resources/static/hal-explorer.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_build"><a class="anchor" href="#_build"></a>Build</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_node_js"><a class="anchor" href="#_node_js"></a>node.js</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Install the latest version of <a href="https://nodejs.og">node.js</a> and yarn (<code>npm i -g yarn</code>).</p>
+</li>
+<li>
+<p>Run <code>yarn build</code> to build the project in production mode.</p>
+</li>
+<li>
+<p>The build artifacts will be stored in the <code>dist/</code> directory.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_server"><a class="anchor" href="#_development_server"></a>Development Server</h3>
+<div class="paragraph">
+<p>Run <code>yarn start</code> for a dev server. Navigate to <a href="http://localhost:4200/" class="bare">http://localhost:4200/</a>.
+The app will automatically reload if you change any of the source files.
+The development server has a build-in proxy configuration
+so that all calls to <code>/api</code> are forwarded to <code>localhost:8080/api</code>.
+This is convenient when you want to test a local server without having to deal with CORS.
+If you run <code>yarn startl</code>, an additional file server is started with port 3000.
+In the test-data directory, you find some JSON examples. Try it out with the URL
+<a href="http://localhost:4200/#uri=http://localhost:3000/movies.hal-forms.json" class="bare">http://localhost:4200/#uri=http://localhost:3000/movies.hal-forms.json</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_gradlejava_build_support"><a class="anchor" href="#_gradlejava_build_support"></a>Gradle/Java Build Support</h3>
+<div class="paragraph">
+<p>If you have Java installed, you can also build the project with Gradle.
+The Gradle build will install Node.js locally in the project directory.
+Run <code>./gradlew build</code> (or just <code>gradlew build</code> under Windows) to build the project in production mode.
+The build artifacts will be stored in the <code>dist/</code> directory.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_building_the_docs"><a class="anchor" href="#_building_the_docs"></a>Building the docs</h3>
+<div class="paragraph">
+<p>You can build this documentation</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Windows: <code>gradlew doc</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>If you see errors regarding file encoding, try <code>gradlew doc -Dfile.encoding=UTF-8</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Linux: <code>./gradlew doc</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_running_tests"><a class="anchor" href="#_running_tests"></a>Running Tests</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><code>yarn test</code> to run the unit test suite against your default browser.</p>
+</li>
+<li>
+<p><code>yarn test-headless</code> to run the unit test suite against headless Chrome.</p>
+</li>
+<li>
+<p><code>yarn e2e</code> to run the e2e test suite against your default browser.</p>
+</li>
+<li>
+<p><code>yarn e2e-headless</code> to run the e2e test suite against headless Chrome.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Take a look at <code>package.json</code> for more test options.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 1.1.2-SNAPSHOT<br>
+Last updated 2022-10-16 14:50:35 UTC
+</div>
+</div>
+</div>
+  </div>
+</div>
+</body>
+</html>
