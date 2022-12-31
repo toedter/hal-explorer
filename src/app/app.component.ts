@@ -48,7 +48,9 @@ export class AppComponent implements OnInit {
     '2 Columns Layout',
     '3 Columns Layout',
     '---',
-    'Use HTTP OPTIONS'
+    'Use HTTP OPTIONS',
+    '---',
+    'Enable all HTTP Methods for Links'
   ];
 
   isCustomTheme = false;
@@ -56,6 +58,7 @@ export class AppComponent implements OnInit {
   showDocumentation = false;
   isTwoColumnLayout = true;
   useHttpOptions = false;
+  enableAllHttpMethodsForLinks = false;
 
   version = '1.1.2-SNAPSHOT';
   isSnapshotVersion = this.version.endsWith('SNAPSHOT');
@@ -85,6 +88,10 @@ export class AppComponent implements OnInit {
 
     this.appService.httpOptionsObservable.subscribe(useHttpOptions => this.changeHttpOptions(useHttpOptions));
     this.changeHttpOptions(this.appService.getHttpOptions());
+
+    this.appService.allHttpMethodsForLinksObservable.subscribe(
+      allHttpMethodsForLinks => this.changeAllHttpMethodsForLinks(allHttpMethodsForLinks));
+    this.changeAllHttpMethodsForLinks(this.appService.getAllHttpMethodsForLinks());
   }
 
   changeTheme(theme: string) {
@@ -112,10 +119,18 @@ export class AppComponent implements OnInit {
     this.useHttpOptions = httpOptions;
   }
 
+  changeAllHttpMethodsForLinks(allHttpMethodsForLinks: boolean) {
+    this.appService.setAllHttpMethodsForLinks(allHttpMethodsForLinks);
+    this.enableAllHttpMethodsForLinks = allHttpMethodsForLinks;
+  }
+
   selectSetting(setting: string) {
     if (setting.includes('OPTIONS')) {
       this.useHttpOptions = !this.useHttpOptions;
       this.appService.setHttpOptions(this.useHttpOptions);
+    } else if (setting.includes('Links')) {
+      this.enableAllHttpMethodsForLinks = !this.enableAllHttpMethodsForLinks;
+      this.appService.setAllHttpMethodsForLinks(this.enableAllHttpMethodsForLinks);
     } else {
       this.changeLayout(setting)
     }
@@ -131,7 +146,8 @@ export class AppComponent implements OnInit {
 
   getSettingsIconCheckStyle(setting: string): string {
     if ((setting.includes('OPTIONS') && this.useHttpOptions)
-      || setting.includes(this.appService.getLayout())) {
+      || setting.includes(this.appService.getLayout())
+      || (setting.includes('Links') && this.enableAllHttpMethodsForLinks)) {
       return '';
     }
 

@@ -48,6 +48,18 @@ describe('AppService', () => {
     expect(window.location.hash).toBe('');
   });
 
+  it('should set all HTTP methods for links', () => {
+    service.setAllHttpMethodsForLinks(true);
+    expect(service.getAllHttpMethodsForLinks()).toBe(true);
+    expect(window.location.hash).toBe('#allHttpMethodsForLinks=true');
+  });
+
+  it('should unset all HTTP methods for links', () => {
+    service.setAllHttpMethodsForLinks(false);
+    expect(service.getAllHttpMethodsForLinks()).toBe(false);
+    expect(window.location.hash).toBe('');
+  });
+
   it('should not set invalid layout', () => {
     spyOn(window.console, 'error');
 
@@ -74,7 +86,7 @@ describe('AppService', () => {
   });
 
   it('should parse window location hash', () => {
-    window.location.hash = '#theme=Cosmo&layout=3&httpOptions=true&hkey0=accept&hval0=text/plain&uri=https://chatty42.herokuapp.com/api/users';
+    window.location.hash = '#theme=Cosmo&layout=3&httpOptions=true&allHttpMethodsForLinks=true&hkey0=accept&hval0=text/plain&uri=https://chatty42.herokuapp.com/api/users';
     service = new AppService();
 
     expect(service.getCustomRequestHeaders()[0].key).toBe('accept');
@@ -82,6 +94,7 @@ describe('AppService', () => {
     expect(service.getLayout()).toBe('3');
     expect(service.getTheme()).toBe('Cosmo');
     expect(service.getHttpOptions()).toBeTrue();
+    expect(service.getAllHttpMethodsForLinks()).toBeTrue();
     expect(service.getUri()).toBe('https://chatty42.herokuapp.com/api/users');
   });
 
@@ -123,6 +136,7 @@ describe('AppService', () => {
 
     expect(service.layoutObservable).toBeDefined();
     expect(service.httpOptionsObservable).toBeDefined();
+    expect(service.allHttpMethodsForLinksObservable).toBeDefined();
     expect(service.requestHeadersObservable).toBeDefined();
     expect(service.themeObservable).toBeDefined();
     expect(service.uriObservable).toBeDefined();

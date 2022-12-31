@@ -189,7 +189,9 @@ export class ResponseExplorerComponent implements OnInit {
       return '';
     }
 
-    if (!this.isHalFormsMediaType || Command[command].toLowerCase() === 'get') {
+    if (!this.isHalFormsMediaType
+      || Command[command].toLowerCase() === 'get'
+      || this.appService.getAllHttpMethodsForLinks()) {
       return '';
     }
 
@@ -208,7 +210,7 @@ export class ResponseExplorerComponent implements OnInit {
       return false;
     }
 
-    return this.isHalFormsMediaType;
+    return !this.appService.getAllHttpMethodsForLinks() && this.isHalFormsMediaType;
   }
 
   getRelTargetUrl(href: string, command: Command): string {

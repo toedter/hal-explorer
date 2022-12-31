@@ -15,6 +15,7 @@ export class AppService {
   private themeParam: string;
   private layoutParam: string;
   private httpOptionsParam: boolean;
+  private allHttpMethodsForLinksParam: boolean;
 
   private customRequestHeaders: RequestHeader[];
 
@@ -22,6 +23,7 @@ export class AppService {
   private themeParamBackup: string;
   private layoutParamBackup: string;
   private httpOptionsParamBackup: boolean;
+  private allHttpMethodsForLinksParamBackup: boolean;
 
   private uriSubject: Subject<string> = new Subject<string>();
   // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
@@ -38,6 +40,10 @@ export class AppService {
   private httpOptionsSubject: Subject<boolean> = new Subject<boolean>();
   // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private _httpOptionsObservable: Observable<boolean> = this.httpOptionsSubject.asObservable();
+
+  private allHttpMethodsForLinksSubject: Subject<boolean> = new Subject<boolean>();
+  // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  private _allHttpMethodsForLinksObservable: Observable<boolean> = this.allHttpMethodsForLinksSubject.asObservable();
 
   private requestHeadersSubject: Subject<RequestHeader[]> = new Subject<RequestHeader[]>();
   // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match
@@ -64,6 +70,9 @@ export class AppService {
 
   get httpOptionsObservable(): Observable<boolean> {
     return this._httpOptionsObservable;
+  }
+  get allHttpMethodsForLinksObservable(): Observable<boolean> {
+    return this._allHttpMethodsForLinksObservable;
   }
 
   get requestHeadersObservable(): Observable<RequestHeader[]> {
@@ -115,6 +124,16 @@ export class AppService {
     this.setLocationHash();
   }
 
+  getAllHttpMethodsForLinks(): boolean {
+    return this.allHttpMethodsForLinksParam;
+  }
+
+  setAllHttpMethodsForLinks(options: boolean) {
+    this.allHttpMethodsForLinksParamBackup = this.allHttpMethodsForLinksParam;
+    this.allHttpMethodsForLinksParam = options;
+    this.setLocationHash();
+  }
+
   getCustomRequestHeaders(): RequestHeader[] {
     return this.customRequestHeaders;
   }
@@ -146,6 +165,10 @@ export class AppService {
       this.httpOptionsParam = false;
     }
 
+    if (!this.allHttpMethodsForLinksParam) {
+      this.allHttpMethodsForLinksParam = false;
+    }
+
     const tempCustomRequestHeaders: RequestHeader[] = new Array(5);
 
     const fragment = location.hash.substring(1);
@@ -163,6 +186,10 @@ export class AppService {
       } else if (key === 'httpOptions') {
         const httpOptionsValue = decodeURIComponent(m[2]);
         this.httpOptionsParam =  (httpOptionsValue === 'true');
+        m = regex.exec(fragment);
+      } else if (key === 'allHttpMethodsForLinks') {
+        const allHttpMethodsForLinksValue = decodeURIComponent(m[2]);
+        this.allHttpMethodsForLinksParam =  (allHttpMethodsForLinksValue === 'true');
         m = regex.exec(fragment);
       } else if (key.startsWith('hkey')) {
         const headerKeyParam = decodeURIComponent(m[2]);
@@ -212,6 +239,10 @@ export class AppService {
       this.uriSubject.next(this.uriParam);
     }
 
+    if (this.allHttpMethodsForLinksParamBackup !== this.allHttpMethodsForLinksParam) {
+      this.allHttpMethodsForLinksSubject.next(this.allHttpMethodsForLinksParam);
+    }
+
     this.customRequestHeaders = [];
     let publishRequestHeaders = false;
     for (let i = 0; i < 5; i++) {
@@ -242,6 +273,11 @@ export class AppService {
 
     if (this.httpOptionsParam != false) {
       newLocationHash += andPrefix + 'httpOptions=' + this.httpOptionsParam;
+      andPrefix = '&';
+    }
+
+    if (this.allHttpMethodsForLinksParam != false) {
+      newLocationHash += andPrefix + 'allHttpMethodsForLinks=' + this.allHttpMethodsForLinksParam;
       andPrefix = '&';
     }
 

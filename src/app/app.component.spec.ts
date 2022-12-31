@@ -14,6 +14,7 @@ describe('AppComponent', () => {
   let themeSubject;
   let layoutSubject;
   let httpOptionsSubject;
+  let allHttpMethodsForLinksSubject;
 
   beforeEach(waitForAsync(() => {
     const requestServiceMock = jasmine.createSpyObj(['getResponseObservable', 'getDocumentationObservable']);
@@ -25,12 +26,16 @@ describe('AppComponent', () => {
     themeSubject = new Subject<string>();
     layoutSubject = new Subject<string>();
     httpOptionsSubject = new Subject<boolean>();
+    allHttpMethodsForLinksSubject = new Subject<boolean>();
 
-    const appServiceMock = jasmine.createSpyObj(['getTheme', 'setTheme', 'getLayout', 'setLayout', 'getHttpOptions', 'setHttpOptions'],
-      {themeObservable: themeSubject, layoutObservable: layoutSubject, httpOptionsObservable: httpOptionsSubject});
+    const appServiceMock = jasmine.createSpyObj(['getTheme', 'setTheme', 'getLayout', 'setLayout',
+        'getHttpOptions', 'setHttpOptions', 'getAllHttpMethodsForLinks', 'setAllHttpMethodsForLinks'],
+      {themeObservable: themeSubject, layoutObservable: layoutSubject,
+        httpOptionsObservable: httpOptionsSubject, allHttpMethodsForLinksObservable: allHttpMethodsForLinksSubject});
     appServiceMock.getTheme.and.returnValue('Default');
     appServiceMock.getLayout.and.returnValue('2');
     appServiceMock.getHttpOptions.and.returnValue(false);
+    appServiceMock.getAllHttpMethodsForLinks.and.returnValue(false);
     const domSanitizerMock = jasmine.createSpyObj(['bypassSecurityTrustResourceUrl']);
 
     TestBed.configureTestingModule({
@@ -105,6 +110,18 @@ describe('AppComponent', () => {
     component.selectSetting('Use HTTP OPTIONS')
 
     expect(component.useHttpOptions).toBeTrue();
+  });
+
+  it('should react on Link methods change', () => {
+    allHttpMethodsForLinksSubject.next(true);
+
+    expect(component.enableAllHttpMethodsForLinks).toBeTrue();
+  });
+
+  it('should select settings (Link methods)', () => {
+    component.selectSetting('Enable all HTTP Methods for Links')
+
+    expect(component.enableAllHttpMethodsForLinks).toBeTrue();
   });
 
   it('should select settings (Layout)', () => {

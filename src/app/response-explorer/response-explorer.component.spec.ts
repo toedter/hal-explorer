@@ -84,7 +84,7 @@ describe('ResponseExplorerComponent', () => {
     spyOn(responseSubject, 'subscribe').and.callThrough();
     requestServiceMock.getResponseObservable.and.returnValue(responseSubject);
 
-    appServiceMock = jasmine.createSpyObj(['getHttpOptions']);
+    appServiceMock = jasmine.createSpyObj(['getHttpOptions', 'getAllHttpMethodsForLinks']);
     appServiceMock.getHttpOptions.and.returnValue(true);
     jsonHighlighterServiceMock = jasmine.createSpyObj(['syntaxHighlight']);
 
