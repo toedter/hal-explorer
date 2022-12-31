@@ -54,7 +54,8 @@ export class ResponseExplorerComponent implements OnInit {
       this.processJsonObject(this.jsonRoot);
     } else {
       this.requestService.getResponseObservable()
-        .subscribe((response: Response) => {
+        .subscribe({
+          next: (response: Response) => {
             const httpResponse = response.httpResponse;
             this.httpErrorResponse = response.httpErrorResponse;
             if (httpResponse) {
@@ -72,7 +73,8 @@ export class ResponseExplorerComponent implements OnInit {
               }
             }
           },
-          error => console.error('Error during HTTP request: ' + JSON.stringify(error)));
+          error: error => console.error('Error during HTTP request: ' + JSON.stringify(error))
+        });
     }
   }
 

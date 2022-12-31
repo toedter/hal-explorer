@@ -16,10 +16,12 @@ export class DocumentationComponent implements OnInit {
 
   ngOnInit() {
     this.requestService.getDocumentationObservable()
-      .subscribe((docUri: string) => {
+      .subscribe({
+        next: (docUri: string) => {
           this.docUri = this.sanitizer.bypassSecurityTrustResourceUrl(docUri);
         },
-        error => console.error('DocumentationComponent: ' + error));
+        error: error => console.error('DocumentationComponent: ' + error)
+      });
     this.requestService.getResponseObservable()
       .subscribe(() => {
         this.docUri = undefined;

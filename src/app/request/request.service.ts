@@ -79,12 +79,13 @@ export class RequestService {
     } else {
       this.appService.setUri(uri, false);
     }
-    this.http.request(httpMethod, uri, {headers, observe: 'response', body}).subscribe(
-      (response: HttpResponse<any>) => {
-        this.responseSubject.next(new Response(response, null));
-      },
-      (error: HttpErrorResponse) => {
-        this.responseSubject.next(new Response(null, error));
+    this.http.request(httpMethod, uri, {headers, observe: 'response', body}).subscribe({
+        next: (response: HttpResponse<any>) => {
+          this.responseSubject.next(new Response(response, null));
+        },
+        error: (error: HttpErrorResponse) => {
+          this.responseSubject.next(new Response(null, error));
+        }
       }
     );
   }
@@ -119,8 +120,8 @@ export class RequestService {
       uri = uriTemplate.fill({});
     }
     this.http.request('HEAD', uri,
-      {headers: this.requestHeaders, observe: 'response'}).subscribe(
-      (response: HttpResponse<any>) => {
+      {headers: this.requestHeaders, observe: 'response'}).subscribe({
+      next: (response: HttpResponse<any>) => {
         let hasProfile = false;
         const linkHeader = response.headers.get('link');
         if (linkHeader) {
@@ -154,8 +155,8 @@ export class RequestService {
               }
             }
 
-            this.http.get(profileUri, {headers, observe: 'response'}).subscribe(
-              (httpResponse: HttpResponse<any>) => {
+            this.http.get(profileUri, {headers, observe: 'response'}).subscribe({
+              next: (httpResponse: HttpResponse<any>) => {
                 const jsonSchema = httpResponse.body;
 
                 // this would be for removing link relations from the POST, PUT and PATCH editor
@@ -179,11 +180,11 @@ export class RequestService {
                 httpRequestEvent.jsonSchema = jsonSchema;
                 this.needInfoSubject.next(httpRequestEvent);
               },
-              () => {
+              error: () => {
                 console.warn('Cannot get JSON schema for: ', profileUri);
                 this.needInfoSubject.next(httpRequestEvent);
               }
-            );
+            });
           }
         }
 
@@ -191,11 +192,11 @@ export class RequestService {
           this.needInfoSubject.next(httpRequestEvent);
         }
       },
-      () => {
+      error: () => {
         console.warn('Cannot get JSON schema information for: ', uri);
         this.needInfoSubject.next(httpRequestEvent);
       }
-    );
+    });
   }
 
   setCustomHeaders(requestHeaders: RequestHeader[]) {
@@ -259,7 +260,10 @@ export class RequestService {
       property.options.link.href = uriTemplate.fill({});
     }
 
-    this.http.get(property.options.link.href, {headers, observe: 'response'}).subscribe((response: HttpResponse<any>) => {
+    this.http.get(property.options.link.href, {
+      headers,
+      observe: 'response'
+    }).subscribe((response: HttpResponse<any>) => {
       property.options.inline = response.body;
       const contentType = response.headers.get('content-type');
       if (contentType
@@ -272,19 +276,19 @@ export class RequestService {
 
   getHttpOptions(link: Link): void {
     let href = link.href;
-    if(this.isUriTemplated(href)) {
+    if (this.isUriTemplated(href)) {
       const uriTemplate: URITemplate = utpl(href);
       href = uriTemplate.fill({});
     }
     let headers = new HttpHeaders().set('Accept', '*/*');
-    this.http.options(href, {headers, observe: 'response'}).subscribe(
-      (httpResponse: HttpResponse<any>) => {
+    this.http.options(href, {headers, observe: 'response'}).subscribe({
+      next: (httpResponse: HttpResponse<any>) => {
         link.options = httpResponse.headers.get('allow');
       },
-      () => {
+      error: () => {
         console.warn('Cannot get OPTIONS for: ', link);
         link.options = 'http-options-error';
       }
-    )
+    })
   }
 }

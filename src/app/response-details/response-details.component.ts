@@ -25,7 +25,8 @@ export class ResponseDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.requestService.getResponseObservable()
-      .subscribe((response: Response) => {
+      .subscribe({
+        next: (response: Response) => {
           this.httpResponse = response.httpResponse;
           this.httpErrorResponse = response.httpErrorResponse;
           this.httpResponseReasonPhrase = 'Unknown';
@@ -67,6 +68,7 @@ export class ResponseDetailsComponent implements OnInit {
           }
 
         },
-        error => console.error('Error during HTTP request: ' + JSON.stringify(error)));
+        error: error => console.error('Error during HTTP request: ' + JSON.stringify(error))
+      });
   }
 }
