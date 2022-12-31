@@ -71,6 +71,7 @@ export class AppService {
   get httpOptionsObservable(): Observable<boolean> {
     return this._httpOptionsObservable;
   }
+
   get allHttpMethodsForLinksObservable(): Observable<boolean> {
     return this._allHttpMethodsForLinksObservable;
   }

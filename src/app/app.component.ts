@@ -45,12 +45,12 @@ export class AppComponent implements OnInit {
   ];
 
   settings: string[] = [
-    '2 Columns Layout',
-    '3 Columns Layout',
+    '2 Column Layout',
+    '3 Column Layout',
     '---',
     'Use HTTP OPTIONS',
     '---',
-    'Enable all HTTP Methods for Links'
+    'Enable all HTTP Methods for HAL-FORMS Links'
   ];
 
   isCustomTheme = false;

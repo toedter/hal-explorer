@@ -119,7 +119,7 @@ describe('AppComponent', () => {
   });
 
   it('should select settings (Link methods)', () => {
-    component.selectSetting('Enable all HTTP Methods for Links')
+    component.selectSetting('Enable all HTTP Methods for HAL-FORMS Links')
 
     expect(component.enableAllHttpMethodsForLinks).toBeTrue();
   });
