@@ -43,6 +43,8 @@ export class AppService {
   // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match
   private _requestHeadersObservable: Observable<RequestHeader[]> = this.requestHeadersSubject.asObservable();
 
+  private reactOnLocationHashChange = true;
+
   constructor() {
     this.handleLocationHash();
     window.addEventListener('hashchange', () => this.handleLocationHash(), false);
@@ -72,7 +74,8 @@ export class AppService {
     return this.uriParam;
   }
 
-  setUri(uri: string) {
+  setUri(uri: string, reactOnLocationHashChange: boolean = true) {
+    this.reactOnLocationHashChange = reactOnLocationHashChange;
     this.uriParamBackup = this.uriParam;
     this.uriParam = uri;
     this.setLocationHash();
@@ -122,6 +125,11 @@ export class AppService {
   }
 
   private handleLocationHash() {
+    if(!this.reactOnLocationHashChange) {
+      this.reactOnLocationHashChange = true;
+      return;
+    }
+
     if (!this.uriParam) {
       this.uriParam = '';
     }

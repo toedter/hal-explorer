@@ -77,7 +77,7 @@ export class RequestService {
         headers = headers.set('Content-Type', 'application/json; charset=utf-8');
       }
     } else {
-      this.appService.setUri(uri);
+      this.appService.setUri(uri, false);
     }
     this.http.request(httpMethod, uri, {headers, observe: 'response', body}).subscribe(
       (response: HttpResponse<any>) => {
