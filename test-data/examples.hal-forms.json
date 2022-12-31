@@ -1,7 +1,6 @@
 {
   "description": "Here you find links to HAL Explorer example responses.",
   "important": "Most JSON responses (requests ending with .json) are served by a file server, so only HTTP GET requests will work.",
-  "notice": "The 'Chatty HAL Demo' and the 'Movies HAL-FORMS Demo' are Spring based servers hosted at Heroku, so please give them time to warm up.",
   "_links": {
     "hal-index": {
       "href": "index.hal.json",
@@ -46,14 +45,6 @@
     "hal-forms-with-regex": {
       "href": "regex.hal-forms.json",
       "name": "HAL-FORMS template property with regex"
-    },
-    "hal-chatty-demo": {
-      "href": "https://chatty42.herokuapp.com/api/messages",
-      "name": "Spring application using HAL"
-    },
-    "hal-forms-movies-demo": {
-      "href": "https://hypermedia-movies-demo.herokuapp.com/api/movies",
-      "name": "Spring application using HAL-FORMS"
     }
   }
 }
