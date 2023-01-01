@@ -31,8 +31,8 @@
 <h1>HAL Explorer</h1>
 <div class="details">
 <span id="author" class="author">Kai Tödter</span><br>
-<span id="revnumber">version 1.1.1,</span>
-<span id="revdate">2022-10-16</span>
+<span id="revnumber">version 1.2.0,</span>
+<span id="revdate">2023-01-01</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -73,7 +73,12 @@
 <li><a href="#_hal_forms_options">3.10. HAL-FORMS Options</a></li>
 </ul>
 </li>
-<li><a href="#theming">4. Theming</a></li>
+<li><a href="#menu">4. Menu</a>
+<ul class="sectlevel2">
+<li><a href="#theming">4.1. Theming</a></li>
+<li><a href="#settings">4.2. Settings</a></li>
+</ul>
+</li>
 <li><a href="#license">5. License</a></li>
 </ul>
 </div>
@@ -85,7 +90,7 @@
 <p>With HAL Explorer you can explore HAL and HAL-FORMS based RESTful Hypermedia APIs.</p>
 </div>
 <div class="paragraph">
-<p>&#169; 2022 The original authors.</p>
+<p>&#169; 2023 The original authors.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -175,10 +180,10 @@ For further understanding of this document, please be aware of both</p>
 <div class="ulist">
 <ul>
 <li>
-<p>2 columns layout with optional documentation</p>
+<p><em>2 column layout</em> with optional documentation</p>
 </li>
 <li>
-<p>3 columns layout with documentation always visible if available</p>
+<p><em>3 column layout</em> with documentation always visible if available</p>
 </li>
 </ul>
 </div>
@@ -231,12 +236,12 @@ as well as the latest release and the current snapshot of HAL Explorer (both wit
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Latest Release</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1.1.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.2.0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://toedter.github.io/hal-explorer/release/hal-explorer/#theme=Cosmo&amp;uri=examples/examples.hal-forms.json">HAL Explorer Demo</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Current Snapshot</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1.1.2-SNAPSHOT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.2.1-SNAPSHOT</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://toedter.github.io/hal-explorer/snapshot/hal-explorer/#theme=Cosmo&amp;uri=examples/examples.hal-forms.json">HAL Explorer Demo</a></p></td>
 </tr>
 </tbody>
@@ -248,29 +253,8 @@ When you want to explore a Spring-based service (e.g. running on localhost), you
 section <a href="#_development_server">Development Server</a>.</p>
 </div>
 <div class="paragraph">
-<p>You can also play with the latest snapshot version of HAL Explorer in running demos. The backends
-are implemented with Spring. I host these demos at Heroku,
-so please give them a bit of time to warm up (this might take up to 1 minute).</p>
+<p>You can also play with the latest snapshot version of HAL Explorer.</p>
 </div>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">For HAL:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://chatty42.herokuapp.com/hal-explorer/index.html#theme=Cosmo&amp;url=https://chatty42.herokuapp.com/api">Chatty API</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Spring Data REST Backend</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">For HAL-FORMS:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://hypermedia-movies-demo.herokuapp.com/hal-explorer/index.html#theme=Cosmo&amp;uri=http://hypermedia-movies-demo.herokuapp.com/api/movies/1">Movies API</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Spring HATEOAS Backend</p></td>
-</tr>
-</tbody>
-</table>
 </div>
 <div class="sect2">
 <h3 id="_integration_with_your_backends"><a class="anchor" href="#_integration_with_your_backends"></a>2.2. Integration with your Backends</h3>
@@ -284,20 +268,20 @@ you could define a dependency to the HAL Explorer WebJar.</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;dependency&gt;
     &lt;groupId&gt;org.webjars&lt;/groupId&gt;
     &lt;artifactId&gt;hal-explorer&lt;/artifactId&gt;
-    &lt;version&gt;1.1.1&lt;/version&gt;
+    &lt;version&gt;1.2.0&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>
 <div class="listingblock secondary">
 <div class="title">Gradle</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">implementation 'org.webjars:hal-explorer:1.1.1'
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">implementation 'org.webjars:hal-explorer:1.2.0'
 </code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>When you use the WebJar with Spring Boot, you can access the HAL Explorer
-in a Web browser at <code>/webjars/hal-explorer/1.1.1/index.html</code>.</p>
+in a Web browser at <code>/webjars/hal-explorer/1.2.0/index.html</code>.</p>
 </div>
 <div class="paragraph">
 <p>If you are using Spring Data REST, you could instead add a dependency like</p>
@@ -322,7 +306,7 @@ in a Web browser at <code>/webjars/hal-explorer/1.1.1/index.html</code>.</p>
 <p>When you use <code>spring-data-rest-hal-explorer</code>, you can access the HAL Explorer in a Web browser at <code>/</code>.</p>
 </div>
 <div class="paragraph">
-<p>Of course, you could always download a zip-based <a href="https://github.com/toedter/hal-explorer/releases/download/v1.1.1/hal-explorer-1.1.1.zip">distribution</a> and put it on any Web server.</p>
+<p>Of course, you could always download a zip-based <a href="https://github.com/toedter/hal-explorer/releases/download/v1.2.0/hal-explorer-1.2.0.zip">distribution</a> and put it on any Web server.</p>
 </div>
 <div class="paragraph">
 <p>The easiest way to integrate the upstream version of HAL Explorer into your backend would be to clone this Git repo,
@@ -512,8 +496,8 @@ You can click on an embedded resource to expand it, like</p>
 <h3 id="_curie_based_documentation"><a class="anchor" href="#_curie_based_documentation"></a>3.5. Curie-based Documentation</h3>
 <div class="paragraph">
 <p>Whenever you see a book icon, you can click on it, and the documentation is shown.
-Depending on the chosen Layout, the doc will be displayed as a third column on the right (3 column layout)
-or will replace the response details (2 column layout). You can change the layout using the <code>Layout</code> menu at the main toolbar.</p>
+Depending on the chosen layout, the documentation will be displayed as a third column on the right (3 column layout)
+or will replace the response details (2 column layout). You can change the layout using the <code>Settings</code> menu at the main toolbar.</p>
 </div>
 <div class="paragraph">
 <p>A page with 3 column layout might look like</p>
@@ -656,18 +640,58 @@ A simple example JSON looks like</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="theming"><a class="anchor" href="#theming"></a>4. Theming</h2>
+<h2 id="menu"><a class="anchor" href="#menu"></a>4. Menu</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>HAL Explorer supports all the <a href="https://bootswatch.com/">Bootswatch</a> themes (by Thomas Park), an example of the theme "Darkly" looks like</p>
+<p>In the top-level menu you can choose the theme, a few settings, and a small about dialog.</p>
+</div>
+<div class="sect2">
+<h3 id="theming"><a class="anchor" href="#theming"></a>4.1. Theming</h3>
+<div class="paragraph">
+<p>HAL Explorer supports all the <a href="https://bootswatch.com/">Bootswatch</a> themes (by Thomas Park).</p>
+</div>
+<div class="paragraph">
+<p>HAL Explorer also supports a nice <a href="https://github.com/vinorodrigues/bootstrap-dark-5">Dark theme</a> (by Vino Rodrigues):</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="img/dark-theme.png" alt="dark theme">
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="settings"><a class="anchor" href="#settings"></a>4.2. Settings</h3>
 <div class="paragraph">
-<p>HAL Explorer also supports a nice <a href="https://github.com/vinorodrigues/bootstrap-dark-5">Dark theme</a> (by Vino Rodrigues)</p>
+<p>In the <em>Settings</em> sub menu, you can choose</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the layout (see <a href="#_curie_based_documentation">Curie-based Documentation</a>).</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Supported layouts are <em>2 Colum Layout</em> and <em>3 Column Layout</em>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>if HAL EXPLORER should automatically do an <em>HTTP OPTIONS</em> request
+to figure out which HTTP methods are supported for a given link URI.</p>
+</li>
+<li>
+<p>if you want to enable all HTTP methods for links in an HAL-FORMS document.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Usually HAL-FORMS <code>_templates</code> would be used to specify affordances with explicit HTTP methods. But there are some use cases where you might want to be able to make calls using other HTTP methods than GET for certain links.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -682,8 +706,8 @@ A simple example JSON looks like</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.1.1<br>
-Last updated 2022-10-16 14:19:49 UTC
+Version 1.2.0<br>
+Last updated 2023-01-01 18:15:21 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>

@@ -1,7 +1,0 @@
-{
-  "_links": {
-    "self": {
-      "href": "/relative-self.hal.json"
-    }
-  }
-}
