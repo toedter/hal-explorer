@@ -48,8 +48,8 @@ On the right-hand side of the page you find details about the response:
 == Curie-based Documentation
 
 Whenever you see a book icon, you can click on it, and the documentation is shown.
-Depending on the chosen Layout, the doc will be displayed as a third column on the right (3 column layout)
-or will replace the response details (2 column layout). You can change the layout using the `Layout` menu at the main toolbar.
+Depending on the chosen layout, the documentation will be displayed as a third column on the right (3 column layout)
+or will replace the response details (2 column layout). You can change the layout using the `Settings` menu at the main toolbar.
 
 A page with 3 column layout might look like
 

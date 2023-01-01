@@ -27,8 +27,8 @@ For further understanding of this document, please be aware of both
 ** https://bootswatch.com/[Bootswatch themes]
 ** https://github.com/vinorodrigues/bootstrap-dark-5[Dark theme]
 * 2 layouts
-** 2 columns layout with optional documentation
-** 3 columns layout with documentation always visible if available
+** _2 column layout_ with optional documentation
+** _3 column layout_ with documentation always visible if available
 * API URL, theme, layout, and request headers stored as URL fragment
 * Support for Spring Data Rest profiles to populate properties in request editor
 * Support for HAL-FORMS templates

@@ -1,6 +1,6 @@
 {
   "name": "hal-explorer",
-  "version": "1.1.2.snapshot",
+  "version": "1.2.0",
   "license": "MIT",
   "repository": "https://github.com/toedter/hal-explorer",
   "bugs": "https://github.com/toedter/hal-explorer/issues",

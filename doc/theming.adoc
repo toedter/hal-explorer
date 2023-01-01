@@ -1,9 +1,0 @@
-[[theming]]
-= Theming
-
-HAL Explorer supports all the https://bootswatch.com/[Bootswatch] themes (by Thomas Park), an example of the theme "Darkly" looks like
-
-image::img/dark-theme.png[]
-
-HAL Explorer also supports a nice https://github.com/vinorodrigues/bootstrap-dark-5[Dark theme] (by Vino Rodrigues)
-

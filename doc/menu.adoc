@@ -1,0 +1,27 @@
+[[menu]]
+= Menu
+
+In the top-level menu you can choose the theme, a few settings, and a small about dialog.
+
+[[theming]]
+== Theming
+
+HAL Explorer supports all the https://bootswatch.com/[Bootswatch] themes (by Thomas Park).
+
+HAL Explorer also supports a nice https://github.com/vinorodrigues/bootstrap-dark-5[Dark theme] (by Vino Rodrigues):
+
+image::img/dark-theme.png[]
+
+[[settings]]
+== Settings
+
+In the _Settings_ sub menu, you can choose
+
+* the layout (see <<Curie-based Documentation>>).
+** Supported layouts are _2 Colum Layout_ and _3 Column Layout_.
+* if HAL EXPLORER should automatically do an _HTTP OPTIONS_ request
+to figure out which HTTP methods are supported for a given link URI.
+* if you want to enable all HTTP methods for links in an HAL-FORMS document.
+** Usually HAL-FORMS `_templates` would be used to specify affordances with explicit HTTP methods. But there are some use cases where you might want to be able to make calls using other HTTP methods than GET for certain links.
+
+
