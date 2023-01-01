@@ -29,7 +29,7 @@
 <div id="header">
 <h1>Setup</h1>
 <div class="details">
-<span id="revnumber">version 1.1.2-SNAPSHOT</span>
+<span id="revnumber">version 1.2.0</span>
 </div>
 </div>
 <div id="content">
@@ -49,12 +49,12 @@ as well as the latest release and the current snapshot of HAL Explorer (both wit
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Latest Release</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1.1.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.2.0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://toedter.github.io/hal-explorer/release/hal-explorer/#theme=Cosmo&amp;uri=examples/examples.hal-forms.json">HAL Explorer Demo</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Current Snapshot</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1.1.2-SNAPSHOT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.2.1-SNAPSHOT</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://toedter.github.io/hal-explorer/snapshot/hal-explorer/#theme=Cosmo&amp;uri=examples/examples.hal-forms.json">HAL Explorer Demo</a></p></td>
 </tr>
 </tbody>
@@ -66,29 +66,8 @@ When you want to explore a Spring-based service (e.g. running on localhost), you
 section <a href="#_development_server">Development Server</a>.</p>
 </div>
 <div class="paragraph">
-<p>You can also play with the latest snapshot version of HAL Explorer in running demos. The backends
-are implemented with Spring. I host these demos at Heroku,
-so please give them a bit of time to warm up (this might take up to 1 minute).</p>
+<p>You can also play with the latest snapshot version of HAL Explorer.</p>
 </div>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">For HAL:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://chatty42.herokuapp.com/hal-explorer/index.html#theme=Cosmo&amp;url=https://chatty42.herokuapp.com/api">Chatty API</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Spring Data REST Backend</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">For HAL-FORMS:</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://hypermedia-movies-demo.herokuapp.com/hal-explorer/index.html#theme=Cosmo&amp;uri=http://hypermedia-movies-demo.herokuapp.com/api/movies/1">Movies API</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Spring HATEOAS Backend</p></td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 <div class="sect1">
@@ -104,20 +83,20 @@ you could define a dependency to the HAL Explorer WebJar.</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;dependency&gt;
     &lt;groupId&gt;org.webjars&lt;/groupId&gt;
     &lt;artifactId&gt;hal-explorer&lt;/artifactId&gt;
-    &lt;version&gt;1.1.1&lt;/version&gt;
+    &lt;version&gt;1.2.0&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>
 <div class="listingblock secondary">
 <div class="title">Gradle</div>
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">implementation 'org.webjars:hal-explorer:1.1.1'
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">implementation 'org.webjars:hal-explorer:1.2.0'
 </code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>When you use the WebJar with Spring Boot, you can access the HAL Explorer
-in a Web browser at <code>/webjars/hal-explorer/1.1.1/index.html</code>.</p>
+in a Web browser at <code>/webjars/hal-explorer/1.2.0/index.html</code>.</p>
 </div>
 <div class="paragraph">
 <p>If you are using Spring Data REST, you could instead add a dependency like</p>
@@ -142,7 +121,7 @@ in a Web browser at <code>/webjars/hal-explorer/1.1.1/index.html</code>.</p>
 <p>When you use <code>spring-data-rest-hal-explorer</code>, you can access the HAL Explorer in a Web browser at <code>/</code>.</p>
 </div>
 <div class="paragraph">
-<p>Of course, you could always download a zip-based <a href="https://github.com/toedter/hal-explorer/releases/download/v1.1.1/hal-explorer-1.1.1.zip">distribution</a> and put it on any Web server.</p>
+<p>Of course, you could always download a zip-based <a href="https://github.com/toedter/hal-explorer/releases/download/v1.2.0/hal-explorer-1.2.0.zip">distribution</a> and put it on any Web server.</p>
 </div>
 <div class="paragraph">
 <p>The easiest way to integrate the upstream version of HAL Explorer into your backend would be to clone this Git repo,
@@ -243,8 +222,8 @@ The build artifacts will be stored in the <code>dist/</code> directory.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.1.2-SNAPSHOT<br>
-Last updated 2022-12-31 16:45:26 UTC
+Version 1.2.0<br>
+Last updated 2023-01-01 18:15:21 UTC
 </div>
 </div>
 </div>
