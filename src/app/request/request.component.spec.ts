@@ -299,16 +299,14 @@ describe('RequestComponent', () => {
     const jsonHighlighterServiceMock = jasmine.createSpyObj(['syntaxHighlight']);
 
     TestBed.configureTestingModule({
-      imports: [FormsModule],
-      declarations: [RequestComponent],
-      providers: [
-        {provide: RequestService, useValue: requestServiceMock},
-        {provide: AppService, useValue: appServiceMock},
-        {provide: JsonHighlighterService, useValue: jsonHighlighterServiceMock},
+    imports: [FormsModule, RequestComponent],
+    providers: [
+        { provide: RequestService, useValue: requestServiceMock },
+        { provide: AppService, useValue: appServiceMock },
+        { provide: JsonHighlighterService, useValue: jsonHighlighterServiceMock },
         HttpClient
-      ]
-
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

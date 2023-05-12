@@ -39,16 +39,14 @@ describe('AppComponent', () => {
     const domSanitizerMock = jasmine.createSpyObj(['bypassSecurityTrustResourceUrl']);
 
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
-      providers: [
-        {provide: AppService, useValue: appServiceMock},
-        {provide: RequestService, useValue: requestServiceMock},
-        {provide: DomSanitizer, useValue: domSanitizerMock}
-      ]
-    }).compileComponents();
+    imports: [AppComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    providers: [
+        { provide: AppService, useValue: appServiceMock },
+        { provide: RequestService, useValue: requestServiceMock },
+        { provide: DomSanitizer, useValue: domSanitizerMock }
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;

@@ -3,6 +3,9 @@ import * as utpl from 'uri-templates';
 import {URITemplate} from 'uri-templates';
 import {AppService, RequestHeader} from '../app.service';
 import {Command, EventType, HttpRequestEvent, RequestService, UriTemplateParameter} from './request.service';
+import {RequestValidatorDirective} from './request-validator.directive';
+import {NgIf, NgFor, KeyValuePipe} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
 export class DictionaryObject {
   constructor(public prompt, public value) {
@@ -12,7 +15,9 @@ export class DictionaryObject {
 @Component({
   selector: 'app-uri-input',
   templateUrl: './request.component.html',
-  styleUrls: ['./request.component.css']
+  styleUrls: ['./request.component.css'],
+  standalone: true,
+  imports: [FormsModule, NgIf, NgFor, RequestValidatorDirective, KeyValuePipe]
 })
 export class RequestComponent implements OnInit {
   uri: string;

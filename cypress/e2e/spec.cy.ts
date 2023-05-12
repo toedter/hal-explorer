@@ -6,7 +6,7 @@ describe('HAL Explorer App', () => {
     cy.contains('Response Body');
   };
 
-  it('Visits the initial HAL Explorer page', () => {
+  it('Visits the initial HAL Explorer page',  () => {
     cy.visit('/');
     cy.contains('HAL Explorer');
     cy.contains('Theme');
@@ -16,19 +16,19 @@ describe('HAL Explorer App', () => {
     cy.contains('Go!');
   });
 
-  it('should have title "HAL Explorer"', async () => {
+  it('should have title "HAL Explorer"',   () => {
     cy.visit('/');
 
     cy.title().should('eq', 'HAL Explorer');
   });
 
-  it('should display "Edit Headers" as button text', () => {
+  it('should display "Edit Headers" as button text',  () => {
     cy.visit('/');
 
     cy.contains('button.btn.btn-secondary', 'Edit Headers');
   });
 
-  it('should not display HAL sections at startup', () => {
+  it('should not display HAL sections at startup',  () => {
     cy.visit('/');
 
     cy.get('JSON Properties').should('not.exist');
@@ -39,7 +39,7 @@ describe('HAL Explorer App', () => {
     cy.get('Response Body').should('not.exist');
   });
 
-  it('should display HAL sections when rendering users resource', () => {
+  it('should display HAL sections when rendering users resource',  () => {
     cy.visit('/#uri=http://localhost:3000/movies.hal-forms.json');
 
     cy.contains('JSON Properties');
@@ -50,7 +50,7 @@ describe('HAL Explorer App', () => {
     expectResponseDetailsAreDisplayed();
   });
 
-  it('should display only Links section when rendering root api', () => {
+  it('should display only Links section when rendering root api',  () => {
     cy.visit('/#uri=http://localhost:3000/index.hal.json');
 
     cy.get('JSON Properties').should('not.exist');
@@ -59,13 +59,13 @@ describe('HAL Explorer App', () => {
     expectResponseDetailsAreDisplayed();
   });
 
-  it('should display POST request dialog', () => {
+  it('should display POST request dialog',  () => {
     cy.visit('/#uri=http://localhost:3000/movies.hal-forms.json');
     cy.get('button.icon-plus').eq(3).click();
     cy.contains('HTTP Request Input').should('be.visible');
   });
 
-  it('should display user profile in POST request dialog', () => {
+  it('should display user profile in POST request dialog',  () => {
     cy.visit('/#uri=http://localhost:3000/index.hal.json');
     cy.get('button.icon-plus').eq(0).click();
     cy.contains('Email').should('be.visible');
@@ -73,7 +73,7 @@ describe('HAL Explorer App', () => {
     cy.contains('Id').should('be.visible');
   });
 
-  it('should display expanded URI in HAL-FORMS GET request dialog', () => {
+  it('should display expanded URI in HAL-FORMS GET request dialog',  () => {
     cy.visit('/#uri=http://localhost:3000/filter.hal-forms.json');
     cy.get('button.icon-left-open').last().click();
 
@@ -84,7 +84,7 @@ describe('HAL Explorer App', () => {
       ' http://localhost:3000/filter.hal-forms.json?title=myTitle&completed=true ');
   });
 
-  it('should display correct properties HAL-FORMS POST request dialog', () => {
+  it('should display correct properties HAL-FORMS POST request dialog',  () => {
     cy.visit('/#uri=http://localhost:3000/2posts1get.hal-forms.json');
     cy.get('button.icon-plus').last().click();
     cy.get('input[id="request-input-post2"]').type('xxx');

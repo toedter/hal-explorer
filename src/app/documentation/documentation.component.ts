@@ -1,12 +1,15 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {RequestService} from '../request/request.service';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-documentation',
-  templateUrl: './documentation.component.html',
-  styleUrls: ['./documentation.component.css'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-documentation',
+    templateUrl: './documentation.component.html',
+    styleUrls: ['./documentation.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [NgIf]
 })
 export class DocumentationComponent implements OnInit {
   docUri: SafeResourceUrl;

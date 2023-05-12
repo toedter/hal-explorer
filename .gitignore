@@ -56,4 +56,5 @@ build
 
 # cypress
 /cypress/videos/
+/cypress/screenshots/
 

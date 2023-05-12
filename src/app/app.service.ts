@@ -26,27 +26,21 @@ export class AppService {
   private allHttpMethodsForLinksParamBackup: boolean;
 
   private uriSubject: Subject<string> = new Subject<string>();
-  // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private _uriObservable: Observable<string> = this.uriSubject.asObservable();
 
   private themeSubject: Subject<string> = new Subject<string>();
-  // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private _themeObservable: Observable<string> = this.themeSubject.asObservable();
 
   private layoutSubject: Subject<string> = new Subject<string>();
-  // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private _layoutObservable: Observable<string> = this.layoutSubject.asObservable();
 
   private httpOptionsSubject: Subject<boolean> = new Subject<boolean>();
-  // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private _httpOptionsObservable: Observable<boolean> = this.httpOptionsSubject.asObservable();
 
   private allHttpMethodsForLinksSubject: Subject<boolean> = new Subject<boolean>();
-  // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private _allHttpMethodsForLinksObservable: Observable<boolean> = this.allHttpMethodsForLinksSubject.asObservable();
 
   private requestHeadersSubject: Subject<RequestHeader[]> = new Subject<RequestHeader[]>();
-  // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match
   private _requestHeadersObservable: Observable<RequestHeader[]> = this.requestHeadersSubject.asObservable();
 
   private reactOnLocationHashChange = true;
@@ -145,7 +139,7 @@ export class AppService {
   }
 
   private handleLocationHash() {
-    if(!this.reactOnLocationHashChange) {
+    if (!this.reactOnLocationHashChange) {
       this.reactOnLocationHashChange = true;
       return;
     }
@@ -186,11 +180,11 @@ export class AppService {
         m = regex.exec(fragment);
       } else if (key === 'httpOptions') {
         const httpOptionsValue = decodeURIComponent(m[2]);
-        this.httpOptionsParam =  (httpOptionsValue === 'true');
+        this.httpOptionsParam = (httpOptionsValue === 'true');
         m = regex.exec(fragment);
       } else if (key === 'allHttpMethodsForLinks') {
         const allHttpMethodsForLinksValue = decodeURIComponent(m[2]);
-        this.allHttpMethodsForLinksParam =  (allHttpMethodsForLinksValue === 'true');
+        this.allHttpMethodsForLinksParam = (allHttpMethodsForLinksValue === 'true');
         m = regex.exec(fragment);
       } else if (key.startsWith('hkey')) {
         const headerKeyParam = decodeURIComponent(m[2]);

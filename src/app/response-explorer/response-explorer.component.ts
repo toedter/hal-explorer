@@ -1,8 +1,9 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, forwardRef } from '@angular/core';
 import {Command, RequestService, Response} from '../request/request.service';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {AppService} from '../app.service';
+import { NgIf, NgFor, KeyValuePipe } from '@angular/common';
 
 export class Link {
   constructor(public rel: string, public href: string,
@@ -17,10 +18,12 @@ class EmbeddedResource {
 }
 
 @Component({
-  selector: 'app-response-explorer',
-  templateUrl: './response-explorer.component.html',
-  styleUrls: ['./response-explorer.component.css'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-response-explorer',
+    templateUrl: './response-explorer.component.html',
+    styleUrls: ['./response-explorer.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [NgIf, NgFor, forwardRef(() => ResponseExplorerComponent), KeyValuePipe]
 })
 export class ResponseExplorerComponent implements OnInit {
   @Input() jsonRoot: any;

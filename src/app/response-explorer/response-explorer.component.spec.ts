@@ -89,13 +89,13 @@ describe('ResponseExplorerComponent', () => {
     jsonHighlighterServiceMock = jasmine.createSpyObj(['syntaxHighlight']);
 
     TestBed.configureTestingModule({
-      declarations: [ResponseExplorerComponent],
-      providers: [
-        {provide: RequestService, useValue: requestServiceMock},
-        {provide: JsonHighlighterService, useValue: jsonHighlighterServiceMock},
-        {provide: AppService, useValue: appServiceMock}
-      ]
-    })
+    imports: [ResponseExplorerComponent],
+    providers: [
+        { provide: RequestService, useValue: requestServiceMock },
+        { provide: JsonHighlighterService, useValue: jsonHighlighterServiceMock },
+        { provide: AppService, useValue: appServiceMock }
+    ]
+})
       .compileComponents();
   }));
 

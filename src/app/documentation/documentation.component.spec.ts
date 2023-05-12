@@ -22,13 +22,12 @@ describe('DocumentationComponent', () => {
     domSanitizerMock.bypassSecurityTrustResourceUrl.and.returnValue('/doc');
 
     TestBed.configureTestingModule({
-      declarations: [DocumentationComponent],
-      providers: [
-        {provide: RequestService, useValue: requestServiceMock},
-        {provide: DomSanitizer, useValue: domSanitizerMock}
-      ]
-
-    })
+    imports: [DocumentationComponent],
+    providers: [
+        { provide: RequestService, useValue: requestServiceMock },
+        { provide: DomSanitizer, useValue: domSanitizerMock }
+    ]
+})
       .compileComponents();
   }));
 

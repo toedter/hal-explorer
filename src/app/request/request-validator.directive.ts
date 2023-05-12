@@ -2,8 +2,9 @@ import {Directive, Input} from '@angular/core';
 import {AbstractControl, UntypedFormControl, NG_VALIDATORS, Validator, Validators} from '@angular/forms';
 
 @Directive({
-  selector: '[appHalFormsProperty]',
-  providers: [{provide: NG_VALIDATORS, useExisting: RequestValidatorDirective, multi: true}]
+    selector: '[appHalFormsProperty]',
+    providers: [{ provide: NG_VALIDATORS, useExisting: RequestValidatorDirective, multi: true }],
+    standalone: true
 })
 export class RequestValidatorDirective implements Validator {
   @Input('appHalFormsProperty') halFormsProperty: any;

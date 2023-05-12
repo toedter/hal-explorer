@@ -19,12 +19,12 @@ describe('ResponseDetailsComponent', () => {
     const jsonHighlighterServiceMock = jasmine.createSpyObj(['syntaxHighlight']);
 
     TestBed.configureTestingModule({
-      declarations: [ResponseDetailsComponent],
-      providers: [
-        {provide: RequestService, useValue: requestServiceMock},
-        {provide: JsonHighlighterService, useValue: jsonHighlighterServiceMock}
-      ]
-    }).compileComponents();
+    imports: [ResponseDetailsComponent],
+    providers: [
+        { provide: RequestService, useValue: requestServiceMock },
+        { provide: JsonHighlighterService, useValue: jsonHighlighterServiceMock }
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {
