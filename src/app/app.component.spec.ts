@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {AppComponent} from './app.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {AppService} from './app.service';
+import {AppService, RequestHeader} from './app.service';
 import {RequestService} from './request/request.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Subject} from 'rxjs';
@@ -17,21 +17,41 @@ describe('AppComponent', () => {
   let allHttpMethodsForLinksSubject;
 
   beforeEach(waitForAsync(() => {
-    const requestServiceMock = jasmine.createSpyObj(['getResponseObservable', 'getDocumentationObservable']);
-    documentationSubject = new Subject<string>();
+    const requestServiceMock = jasmine.createSpyObj(
+      ['getResponseObservable', 'getNeedInfoObservable', 'setCustomHeaders',
+        'getUri', 'getInputType', 'requestUri', 'computeHalFormsOptionsFromLink', 'getDocumentationObservable']);
+    const needInfoSubject = new Subject<string>();
     responseSubject = new Subject<string>();
-    requestServiceMock.getDocumentationObservable.and.returnValue(documentationSubject);
+    documentationSubject = new Subject<string>();
     requestServiceMock.getResponseObservable.and.returnValue(responseSubject);
+    requestServiceMock.getNeedInfoObservable.and.returnValue(needInfoSubject);
+    requestServiceMock.getUri.and.returnValue('http://localhost/api');
+    requestServiceMock.getInputType.and.returnValue('number');
+    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(property => {
+      property.options.inline = ['a', 'b'];
+    });
+    requestServiceMock.getDocumentationObservable.and.returnValue(documentationSubject);
 
     themeSubject = new Subject<string>();
     layoutSubject = new Subject<string>();
     httpOptionsSubject = new Subject<boolean>();
     allHttpMethodsForLinksSubject = new Subject<boolean>();
 
-    const appServiceMock = jasmine.createSpyObj(['getTheme', 'setTheme', 'getLayout', 'setLayout',
+    const uriSubject = new Subject<string>();
+    const requestHeaderSubject = new Subject<RequestHeader[]>();
+    const appServiceMock = jasmine.createSpyObj(
+      ['getUri', 'getCustomRequestHeaders', 'setCustomRequestHeaders',
+        'getTheme', 'setTheme', 'getLayout', 'setLayout',
         'getHttpOptions', 'setHttpOptions', 'getAllHttpMethodsForLinks', 'setAllHttpMethodsForLinks'],
-      {themeObservable: themeSubject, layoutObservable: layoutSubject,
-        httpOptionsObservable: httpOptionsSubject, allHttpMethodsForLinksObservable: allHttpMethodsForLinksSubject});
+      {
+        themeObservable: themeSubject, layoutObservable: layoutSubject,
+        httpOptionsObservable: httpOptionsSubject, allHttpMethodsForLinksObservable: allHttpMethodsForLinksSubject,
+        uriObservable: uriSubject, requestHeadersObservable: requestHeaderSubject
+      });
+
+    appServiceMock.getUri.and.returnValue('http://localhost/api');
+    appServiceMock.getCustomRequestHeaders.and.returnValue([]);
+
     appServiceMock.getTheme.and.returnValue('Default');
     appServiceMock.getLayout.and.returnValue('2');
     appServiceMock.getHttpOptions.and.returnValue(false);
@@ -39,14 +59,14 @@ describe('AppComponent', () => {
     const domSanitizerMock = jasmine.createSpyObj(['bypassSecurityTrustResourceUrl']);
 
     TestBed.configureTestingModule({
-    imports: [AppComponent],
-    schemas: [NO_ERRORS_SCHEMA],
-    providers: [
-        { provide: AppService, useValue: appServiceMock },
-        { provide: RequestService, useValue: requestServiceMock },
-        { provide: DomSanitizer, useValue: domSanitizerMock }
-    ]
-}).compileComponents();
+      imports: [AppComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        {provide: AppService, useValue: appServiceMock},
+        {provide: RequestService, useValue: requestServiceMock},
+        {provide: DomSanitizer, useValue: domSanitizerMock}
+      ]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
