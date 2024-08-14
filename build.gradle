@@ -1,5 +1,5 @@
 plugins {
-  id "com.github.node-gradle.node" version "4.0.0"
+  id "com.github.node-gradle.node" version "7.0.2"
   id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 
@@ -12,10 +12,9 @@ repositories {
 apply plugin: 'java'
 
 node {
-  version = '18.16.0'
+  version = '20.16.0'
   download = true
-  workDir = file("${rootProject.buildDir}/node")
-  nodeModulesDir = file("${project.projectDir}")
+  workDir = file("${layout.buildDirectory}/node")
 }
 
 yarn_install.inputs.file new File(projectDir, "package.json")
@@ -45,7 +44,7 @@ configurations {
 }
 
 dependencies {
-  docs "io.spring.asciidoctor.backends:spring-asciidoctor-backends:0.0.5"
+  docs "io.spring.asciidoctor.backends:spring-asciidoctor-backends:0.0.7"
 }
 
 asciidoctor {
@@ -58,29 +57,29 @@ asciidoctor {
   }
 }
 
-task doc {
+tasks.register('doc') {
   dependsOn asciidoctor
 
   doLast {
     copy {
       from "$projectDir/dist/hal-explorer"
-      into "$buildDir/docs/gh-pages/snapshot/hal-explorer"
+      into "$layout.buildDirectory/docs/gh-pages/snapshot/hal-explorer"
     }
 
     copy {
       from "$projectDir/test-data"
-      into "$buildDir/docs/gh-pages/snapshot/hal-explorer/examples"
+      into "$layout.buildDirectory/docs/gh-pages/snapshot/hal-explorer/examples"
       filter { line -> line.replaceAll('http://localhost:3000', 'https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples') }
     }
 
     copy {
       from "$projectDir/doc/img/"
-      into "$buildDir/docs/asciidoc/img/"
+      into "$layout.buildDirectory/docs/asciidoc/img/"
     }
 
     copy {
-      from "$buildDir/docs/asciidoc"
-      into "$buildDir/docs/gh-pages/snapshot/reference-doc"
+      from "$layout.buildDirectory/docs/asciidoc"
+      into "$layout.buildDirectory/docs/gh-pages/snapshot/reference-doc"
     }
   }
 }
