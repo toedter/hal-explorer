@@ -18,7 +18,6 @@ import {NgIf, NgFor} from '@angular/common';
 export class AppComponent implements OnInit {
   themes: string[] = [
     'Default',
-    'Dark',
     'Cerulean',
     'Cosmo',
     'Cyborg',
@@ -67,7 +66,7 @@ export class AppComponent implements OnInit {
   useHttpOptions = false;
   enableAllHttpMethodsForLinks = false;
 
-  version = '1.2.2-SNAPSHOT';
+  version = '1.2.2';
   isSnapshotVersion = this.version.endsWith('SNAPSHOT');
 
   constructor(
@@ -104,14 +103,8 @@ export class AppComponent implements OnInit {
   changeTheme(theme: string) {
     this.isCustomTheme = theme !== this.themes[0];
     if (this.isCustomTheme) {
-      if (theme.toLowerCase() === 'dark') {
-        this.selectedThemeUrl =
-          this.sanitizer.bypassSecurityTrustResourceUrl(
-            'https://cdn.jsdelivr.net/npm/bootstrap-dark-5@1.0.1/dist/css/bootstrap-unlit.min.css');
-      } else {
         this.selectedThemeUrl =
           this.sanitizer.bypassSecurityTrustResourceUrl('https://bootswatch.com/5/' + theme.toLowerCase() + '/bootstrap.min.css');
-      }
     }
     this.appService.setTheme(theme);
   }

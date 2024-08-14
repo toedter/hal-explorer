@@ -25,7 +25,6 @@ For further understanding of this document, please be aware of both
 * Available Themes
 ** Bootstrap 5 default theme
 ** https://bootswatch.com/[Bootswatch themes]
-** https://github.com/vinorodrigues/bootstrap-dark-5[Dark theme]
 * 2 layouts
 ** _2 column layout_ with optional documentation
 ** _3 column layout_ with documentation always visible if available

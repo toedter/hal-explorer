@@ -8,10 +8,6 @@ In the top-level menu you can choose the theme, a few settings, and a small abou
 
 HAL Explorer supports all the https://bootswatch.com/[Bootswatch] themes (by Thomas Park).
 
-HAL Explorer also supports a nice https://github.com/vinorodrigues/bootstrap-dark-5[Dark theme] (by Vino Rodrigues):
-
-image::img/dark-theme.png[]
-
 [[settings]]
 == Settings
 
