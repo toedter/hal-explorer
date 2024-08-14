@@ -39,6 +39,8 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.1.4",
+    "@angular-devkit/core": "^18.1.4",
+    "@angular-devkit/schematics": "^18.1.4",
     "@angular-eslint/builder": "18.3.0",
     "@angular-eslint/eslint-plugin": "18.3.0",
     "@angular-eslint/eslint-plugin-template": "18.3.0",
@@ -55,6 +57,7 @@
     "@types/uri-templates": "^0.1.34",
     "@typescript-eslint/eslint-plugin": "^8.1.0",
     "@typescript-eslint/parser": "^8.1.0",
+    "@typescript-eslint/utils": "^8.1.0",
     "concurrently": "^8.2.2",
     "cypress": "13.13.2",
     "eslint": "^9.9.0",
