@@ -76,18 +76,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "hal-explorer:build"
+            "buildTarget": "hal-explorer:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "hal-explorer:build:production"
+              "buildTarget": "hal-explorer:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "hal-explorer:build"
+            "buildTarget": "hal-explorer:build"
           }
         },
         "test": {
