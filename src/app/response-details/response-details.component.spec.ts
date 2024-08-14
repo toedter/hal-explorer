@@ -3,7 +3,7 @@ import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {ResponseDetailsComponent} from './response-details.component';
 import {RequestService, Response} from '../request/request.service';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
-import {HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import {Subject} from 'rxjs';
 
 describe('ResponseDetailsComponent', () => {

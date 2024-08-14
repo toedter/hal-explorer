@@ -1,8 +1,8 @@
 import {TestBed} from '@angular/core/testing';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import {Command, HttpRequestEvent, RequestService, Response} from './request.service';
 import {AppService, RequestHeader} from '../app.service';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {Type} from '@angular/core';
 import {Link} from '../response-explorer/response-explorer.component';
 
@@ -14,9 +14,9 @@ describe('RequestService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [RequestService, AppService, HttpClient]
-    });
+    imports: [],
+    providers: [RequestService, AppService, HttpClient, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     requestService = TestBed.inject(RequestService);
     appService = TestBed.inject(AppService);
     httpMock = TestBed.inject(HttpTestingController as Type<HttpTestingController>);

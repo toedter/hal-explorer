@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import {Observable, Subject} from 'rxjs';
 import * as utpl from 'uri-templates';
 import {URITemplate} from 'uri-templates';

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewEncapsulation, forwardRef } from '@angular/core';
 import {Command, RequestService, Response} from '../request/request.service';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
-import {HttpErrorResponse} from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import {AppService} from '../app.service';
 import { NgIf, NgFor, KeyValuePipe } from '@angular/common';
 

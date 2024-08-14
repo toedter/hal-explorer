@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {Link, ResponseExplorerComponent} from './response-explorer.component';
 import {Command, RequestService, Response} from '../request/request.service';
-import {HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
 import {Subject} from 'rxjs';
 import {AppService} from '../app.service';
