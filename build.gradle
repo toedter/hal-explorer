@@ -14,7 +14,7 @@ apply plugin: 'java'
 node {
   version = '20.16.0'
   download = true
-  workDir = file("${layout.buildDirectory}/node")
+  workDir = file("$projectDir/build/node")
 }
 
 yarn_install.inputs.file new File(projectDir, "package.json")
@@ -63,23 +63,23 @@ tasks.register('doc') {
   doLast {
     copy {
       from "$projectDir/dist/hal-explorer"
-      into "$layout.buildDirectory/docs/gh-pages/snapshot/hal-explorer"
+      into "$projectDir/build/docs/gh-pages/snapshot/hal-explorer"
     }
 
     copy {
       from "$projectDir/test-data"
-      into "$layout.buildDirectory/docs/gh-pages/snapshot/hal-explorer/examples"
+      into "$projectDir/build/docs/gh-pages/snapshot/hal-explorer/examples"
       filter { line -> line.replaceAll('http://localhost:3000', 'https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples') }
     }
 
     copy {
       from "$projectDir/doc/img/"
-      into "$layout.buildDirectory/docs/asciidoc/img/"
+      into "$projectDir/build/docs/asciidoc/img/"
     }
 
     copy {
-      from "$layout.buildDirectory/docs/asciidoc"
-      into "$layout.buildDirectory/docs/gh-pages/snapshot/reference-doc"
+      from "$projectDir/build/docs/asciidoc"
+      into "$projectDir/build/docs/gh-pages/snapshot/reference-doc"
     }
   }
 }
