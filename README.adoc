@@ -46,16 +46,6 @@ image::./doc/img/hal-explorer.png[HAL Explorer]
 ** Options support in request editor
 * HAL-FORMS property constraint validation in request editor
 
-== Demos with Spring based Backends
-
-You can also play with the latest snapshot version of HAL Explorer in demos that provide backends
-implemented with Spring. I host these demos at Heroku,
-so please give them a bit of time to warm up (this might take up to 1 minute).
-
-* For HAL: https://chatty42.herokuapp.com/hal-explorer/index.html#theme=Cosmo&url=https://chatty42.herokuapp.com/api[Chatty API] (Spring Data REST Backend)
-* For HAL-FORMS: http://hypermedia-movies-demo.herokuapp.com/hal-explorer/index.html#theme=Cosmo&uri=http://hypermedia-movies-demo.herokuapp.com/api/movies/1[Movies API]
-(Spring HATEOAS Backend)
-
 == Development Server
 
 Run `yarn start` for a dev server. Navigate to http://localhost:4200/.
