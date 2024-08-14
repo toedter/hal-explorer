@@ -47,7 +47,7 @@
     "@angular/cli": "^17.3.8",
     "@angular/compiler-cli": "^17.3.12",
     "@angular/language-service": "^17.3.12",
-    "@cypress/schematic": "2.5.0",
+    "@cypress/schematic": "2.5.2",
     "@popperjs/core": "^2.11.8",
     "@types/jasmine": "~4.3.2",
     "@types/jasminewd2": "~2.0.10",
