@@ -59,7 +59,7 @@
     "@typescript-eslint/parser": "^8.1.0",
     "@typescript-eslint/utils": "^8.1.0",
     "concurrently": "^8.2.2",
-    "cypress": "13.13.2",
+    "cypress": "13.13.3",
     "eslint": "^9.9.0",
     "jasmine-core": "~5.2.0",
     "jasmine-spec-reporter": "~7.0.0",
