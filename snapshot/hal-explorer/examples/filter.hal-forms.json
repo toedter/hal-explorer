@@ -1,0 +1,26 @@
+{
+  "_links": {
+    "self": {
+      "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/filter.hal-forms.json"
+    }
+  },
+  "_templates": {
+    "default": {
+      "title": "Filter",
+      "method": "GET",
+      "properties": [
+        {
+          "name": "title",
+          "value": "",
+          "prompt": "Title"
+        },
+        {
+          "name": "completed",
+          "value": "",
+          "prompt": "Completed",
+          "regex": "^(true|false)$"
+        }
+      ]
+    }
+  }
+}

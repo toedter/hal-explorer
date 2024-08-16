@@ -1,0 +1,50 @@
+{
+  "description": "Here you find links to HAL Explorer example responses.",
+  "important": "Most JSON responses (requests ending with .json) are served by a file server, so only HTTP GET requests will work.",
+  "_links": {
+    "hal-index": {
+      "href": "index.hal.json",
+      "name": "HAL index example"
+    },
+    "hal-movies": {
+      "href": "movies.hal.json",
+      "name": "HAL movies example"
+    },
+    "hal-forms-index": {
+      "href": "index.hal-forms.json",
+      "name": "HAL-FORMS index example"
+    },
+    "hal-forms-movies": {
+      "href": "movies.hal-forms.json",
+      "name": "HAL-FORMS movies example with template"
+    },
+    "hal-forms-input-types": {
+      "href": "input-types.hal-forms.json",
+      "name": "HAL-FORMS input types example"
+    },
+    "hal-forms-template-http-get": {
+      "href": "movies-templated-target-get.hal-forms.json",
+      "name": "HAL-FORMS template with HTTP GET method"
+    },
+    "hal-forms-template-http-post": {
+      "href": "movies-templated-target-post.hal-forms.json",
+      "name": "HAL-FORMS template with HTTP POST method"
+    },
+    "hal-forms-with-no-self-link": {
+      "href": "no-self-link.hal-forms.json",
+      "name": "HAL-FORMS document with template and no self link"
+    },
+    "hal-forms-with-options": {
+      "href": "options.hal-forms.json",
+      "name": "HAL-FORMS options (inline)"
+    },
+    "hal-forms-with-options-link": {
+      "href": "options-link.hal-forms.json",
+      "name": "HAL-FORMS options (link to json)"
+    },
+    "hal-forms-with-regex": {
+      "href": "regex.hal-forms.json",
+      "name": "HAL-FORMS template property with regex"
+    }
+  }
+}
