@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.10">
+<meta name="generator" content="Asciidoctor 2.0.18">
 <meta name="author" content="Kai Tödter">
 <title>HAL Explorer</title>
 <link rel="stylesheet" href="css/site.css">
@@ -32,7 +32,7 @@
 <div class="details">
 <span id="author" class="author">Kai Tödter</span><br>
 <span id="revnumber">version 1.2.2,</span>
-<span id="revdate">2024-08-16</span>
+<span id="revdate">2024-08-17</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -696,11 +696,16 @@ to figure out which HTTP methods are supported for a given link URI.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.2.2<br>
-Last updated 2024-08-16 11:32:52 UTC
+Last updated 2024-08-17 05:49:09 UTC
 </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
-<script>hljs.initHighlighting()</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
+<script>
+if (!hljs.initHighlighting.called) {
+  hljs.initHighlighting.called = true
+  ;[].slice.call(document.querySelectorAll('pre.highlight > code[data-lang]')).forEach(function (el) { hljs.highlightBlock(el) })
+}
+</script>
 </div>
   </div>
 </div>
