@@ -65,8 +65,8 @@ export class ResponseExplorerComponent implements OnInit {
               this.responseUrl = httpResponse.url;
               this.isHalFormsMediaType = false;
               const contentType = httpResponse.headers.get('content-type');
-              if (contentType?.startsWith('application/prs.hal-forms+json')
-                || this.responseUrl?.endsWith('.hal-forms.json')) {
+              if ((contentType?.startsWith('application/prs.hal-forms+json') && httpResponse?.body?._templates)
+                || (this.responseUrl?.endsWith('.hal-forms.json') && httpResponse?.body?._templates)) {
                 this.isHalFormsMediaType = true;
               }
               if (!(typeof httpResponse.body === 'string' || httpResponse.body instanceof String)) {
