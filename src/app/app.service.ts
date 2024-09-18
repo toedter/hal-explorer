@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {Observable, Subject} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 
 
 export class RequestHeader {
@@ -78,7 +78,7 @@ export class AppService {
     return this.uriParam;
   }
 
-  setUri(uri: string, reactOnLocationHashChange: boolean = true) {
+  setUri(uri: string, reactOnLocationHashChange = true) {
     this.reactOnLocationHashChange = reactOnLocationHashChange;
     this.uriParamBackup = this.uriParam;
     this.uriParam = uri;
@@ -188,7 +188,7 @@ export class AppService {
         m = regex.exec(fragment);
       } else if (key.startsWith('hkey')) {
         const headerKeyParam = decodeURIComponent(m[2]);
-        const headerKeyIndex: number = Number(key.substring(4));
+        const headerKeyIndex = Number(key.substring(4));
         const requestHeader = tempCustomRequestHeaders[headerKeyIndex];
         if (requestHeader) {
           requestHeader.key = headerKeyParam;
@@ -198,7 +198,7 @@ export class AppService {
         m = regex.exec(fragment);
       } else if (key.startsWith('hval')) {
         const headerValueParam = decodeURIComponent(m[2]);
-        const headerValueIndex: number = Number(key.substring(4));
+        const headerValueIndex = Number(key.substring(4));
         const requestHeader = tempCustomRequestHeaders[headerValueIndex];
         if (requestHeader) {
           requestHeader.value = headerValueParam;

@@ -1,9 +1,9 @@
-import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import {DocumentationComponent, getDocHeight} from './documentation.component';
-import {RequestService} from '../request/request.service';
-import {DomSanitizer} from '@angular/platform-browser';
-import {Subject} from 'rxjs';
+import { DocumentationComponent, getDocHeight } from './documentation.component';
+import { RequestService } from '../request/request.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Subject } from 'rxjs';
 
 describe('DocumentationComponent', () => {
   let component: DocumentationComponent;
@@ -22,12 +22,12 @@ describe('DocumentationComponent', () => {
     domSanitizerMock.bypassSecurityTrustResourceUrl.and.returnValue('/doc');
 
     TestBed.configureTestingModule({
-    imports: [DocumentationComponent],
-    providers: [
-        { provide: RequestService, useValue: requestServiceMock },
-        { provide: DomSanitizer, useValue: domSanitizerMock }
-    ]
-})
+      imports: [DocumentationComponent],
+      providers: [
+        {provide: RequestService, useValue: requestServiceMock},
+        {provide: DomSanitizer, useValue: domSanitizerMock}
+      ]
+    })
       .compileComponents();
   }));
 

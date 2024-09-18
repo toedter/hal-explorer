@@ -1,10 +1,10 @@
-import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {AppComponent} from './app.component';
-import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {AppService, RequestHeader} from './app.service';
-import {RequestService} from './request/request.service';
-import {DomSanitizer} from '@angular/platform-browser';
-import {Subject} from 'rxjs';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { AppComponent } from './app.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { AppService, RequestHeader } from './app.service';
+import { RequestService } from './request/request.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Subject } from 'rxjs';
 
 describe('AppComponent', () => {
   let component: AppComponent;

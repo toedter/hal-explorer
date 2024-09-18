@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class JsonHighlighterService {
       JSON.parse(jsonString);
 
       jsonString = jsonString.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      return jsonString.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+      return jsonString.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g,
         (match) => {
           let cssClass = 'number';
           if (/^"/.test(match)) {
@@ -35,7 +35,7 @@ export class JsonHighlighterService {
           }
           return '<span class="' + cssClass + '">' + match + '</span>';
         });
-    } catch (e) {
+    } catch {
       return jsonString;
     }
   }

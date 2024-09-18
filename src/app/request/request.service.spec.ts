@@ -1,24 +1,22 @@
-import {TestBed} from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import {Command, HttpRequestEvent, RequestService, Response} from './request.service';
-import {AppService, RequestHeader} from '../app.service';
+import { Command, HttpRequestEvent, RequestService, Response } from './request.service';
+import { AppService, RequestHeader } from '../app.service';
 import { HttpClient, HttpHeaders, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import {Type} from '@angular/core';
-import {Link} from '../response-explorer/response-explorer.component';
+import { Type } from '@angular/core';
+import { Link } from '../response-explorer/response-explorer.component';
 
 describe('RequestService', () => {
   let requestService: RequestService;
-  let appService: AppService;
   let httpMock: HttpTestingController;
   let httpClient: HttpClient;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [RequestService, AppService, HttpClient, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-});
+      imports: [],
+      providers: [RequestService, AppService, HttpClient, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+    });
     requestService = TestBed.inject(RequestService);
-    appService = TestBed.inject(AppService);
     httpMock = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
     httpClient = TestBed.inject(HttpClient);
   });
@@ -206,10 +204,10 @@ describe('RequestService', () => {
   it('should process json schema', (done) => {
     requestService.getNeedInfoObservable().subscribe((event: HttpRequestEvent) => {
       expect(event.jsonSchema).toBeDefined();
-      expect(event.jsonSchema.properties.hasOwnProperty('fullName')).toBeTruthy();
-      expect(event.jsonSchema.properties.hasOwnProperty('email')).toBeTruthy();
-      expect(event.jsonSchema.properties.hasOwnProperty('id')).toBeTruthy();
-      expect(event.jsonSchema.properties.hasOwnProperty('messages')).toBeFalsy();
+      expect(Object.prototype.hasOwnProperty.call(event.jsonSchema.properties, 'fullName')).toBeTruthy();
+      expect(Object.prototype.hasOwnProperty.call(event.jsonSchema.properties, 'email')).toBeTruthy();
+      expect(Object.prototype.hasOwnProperty.call(event.jsonSchema.properties, 'id')).toBeTruthy();
+      expect(Object.prototype.hasOwnProperty.call(event.jsonSchema.properties, 'messages')).toBeFalsy();
       done();
     });
 
@@ -227,7 +225,7 @@ describe('RequestService', () => {
     expect(jsonSchemaRequest.request.method).toBe('HEAD');
     expect(jsonSchemaRequest.request.headers.get('a')).toBe('b');
 
-    /* eslint-disable */
+
     const jsonSchema: any = {
       'title': 'User',
       'properties': {
@@ -257,7 +255,7 @@ describe('RequestService', () => {
       'type': 'object',
       '$schema': 'http://json-schema.org/draft-04/schema#'
     };
-    /* eslint-enable */
+
 
     const profileRequest = httpMock.expectOne('https://chatty42.herokuapp.com/api/profile/users');
     profileRequest.flush(jsonSchema);

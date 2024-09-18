@@ -1,15 +1,15 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {RequestService} from '../request/request.service';
-import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { RequestService } from '../request/request.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NgIf } from '@angular/common';
 
 @Component({
-    selector: 'app-documentation',
-    templateUrl: './documentation.component.html',
-    styleUrls: ['./documentation.component.css'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: true,
-    imports: [NgIf]
+  selector: 'app-documentation',
+  templateUrl: './documentation.component.html',
+  styleUrls: ['./documentation.component.css'],
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NgIf]
 })
 export class DocumentationComponent implements OnInit {
   docUri: SafeResourceUrl;
@@ -51,7 +51,7 @@ export function getDocHeight(doc): number {
     const doc = iFrame.contentDocument ? iFrame.contentDocument :
       iFrame.contentWindow.document;
     iFrame.style.height = getDocHeight(doc) + 4 + 'px';
-  } catch (e) {
+  } catch {
     // this exception most likely occurs when the iFrame's URL has a CORS issue
     // then just take the original document as base
     iFrame.style.height = (getDocHeight(document) - 130) + 'px';

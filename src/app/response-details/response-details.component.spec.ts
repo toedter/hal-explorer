@@ -1,10 +1,10 @@
-import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import {ResponseDetailsComponent} from './response-details.component';
-import {RequestService, Response} from '../request/request.service';
-import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
+import { ResponseDetailsComponent } from './response-details.component';
+import { RequestService, Response } from '../request/request.service';
+import { JsonHighlighterService } from '../json-highlighter/json-highlighter.service';
 import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
-import {Subject} from 'rxjs';
+import { Subject } from 'rxjs';
 
 describe('ResponseDetailsComponent', () => {
   let component: ResponseDetailsComponent;
@@ -19,12 +19,12 @@ describe('ResponseDetailsComponent', () => {
     const jsonHighlighterServiceMock = jasmine.createSpyObj(['syntaxHighlight']);
 
     TestBed.configureTestingModule({
-    imports: [ResponseDetailsComponent],
-    providers: [
-        { provide: RequestService, useValue: requestServiceMock },
-        { provide: JsonHighlighterService, useValue: jsonHighlighterServiceMock }
-    ]
-}).compileComponents();
+      imports: [ResponseDetailsComponent],
+      providers: [
+        {provide: RequestService, useValue: requestServiceMock},
+        {provide: JsonHighlighterService, useValue: jsonHighlighterServiceMock}
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

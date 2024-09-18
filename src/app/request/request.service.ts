@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
-import {Observable, Subject} from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import * as utpl from 'uri-templates';
-import {URITemplate} from 'uri-templates';
-import {AppService, RequestHeader} from '../app.service';
-import {Link} from '../response-explorer/response-explorer.component';
+import { URITemplate } from 'uri-templates';
+import { AppService, RequestHeader } from '../app.service';
+import { Link } from '../response-explorer/response-explorer.component';
 
 export enum EventType {FillHttpRequest}
 
@@ -171,7 +171,7 @@ export class RequestService {
                 // since we use those properties to generate a editor for POST, PUT and PATCH,
                 // "readOnly" properties should not be displayed
                 Object.keys(jsonSchema.properties).forEach((property) => {
-                  if (jsonSchema.properties[property].hasOwnProperty('readOnly') &&
+                  if (Object.prototype.hasOwnProperty.call(jsonSchema.properties[property], 'readOnly') &&
                     jsonSchema.properties[property].readOnly === true) {
                     delete jsonSchema.properties[property];
                   }
@@ -280,7 +280,7 @@ export class RequestService {
       const uriTemplate: URITemplate = utpl(href);
       href = uriTemplate.fill({});
     }
-    let headers = new HttpHeaders().set('Accept', '*/*');
+    const headers = new HttpHeaders().set('Accept', '*/*');
     this.http.options(href, {headers, observe: 'response'}).subscribe({
       next: (httpResponse: HttpResponse<any>) => {
         link.options = httpResponse.headers.get('allow');

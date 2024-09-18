@@ -1,15 +1,15 @@
-import {Directive, Input} from '@angular/core';
-import {AbstractControl, UntypedFormControl, NG_VALIDATORS, Validator, Validators} from '@angular/forms';
+import { Directive, Input } from '@angular/core';
+import { AbstractControl, NG_VALIDATORS, UntypedFormControl, Validator, Validators } from '@angular/forms';
 
 @Directive({
-    selector: '[appHalFormsProperty]',
-    providers: [{ provide: NG_VALIDATORS, useExisting: RequestValidatorDirective, multi: true }],
-    standalone: true
+  selector: '[appHalFormsProperty]',
+  providers: [{provide: NG_VALIDATORS, useExisting: RequestValidatorDirective, multi: true}],
+  standalone: true
 })
 export class RequestValidatorDirective implements Validator {
   @Input('appHalFormsProperty') halFormsProperty: any;
 
-  validate(control: AbstractControl): { [key: string]: any } | null {
+  validate(control: AbstractControl): Record<string, any> | null {
     if (!this.halFormsProperty) {
       return null;
     }

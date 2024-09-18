@@ -1,4 +1,4 @@
-import {AppService, RequestHeader} from './app.service';
+import { AppService, RequestHeader } from './app.service';
 
 describe('AppService', () => {
   let service: AppService;

@@ -35,9 +35,9 @@
               </thead>
               <tbody>
               <tr *ngFor="let link of links">
-                <td>{{link.rel}}</td>
-                <td>{{link.name}}</td>
-                <td>{{link.title}}</td>
+                <td>{{ link.rel }}</td>
+                <td>{{ link.name }}</td>
+                <td>{{ link.title }}</td>
                 <td>
                   <button
                     [class]="getRequestButtonClass(command.Get) + ' ' + getLinkButtonClass(command.Get, link)"
@@ -104,8 +104,8 @@
               </thead>
               <tbody>
               <tr *ngFor="let template of templates | keyvalue">
-                <td>{{template.key}}</td>
-                <td>{{template.value.title}}</td>
+                <td>{{ template.key }}</td>
+                <td>{{ template.value.title }}</td>
                 <td>
                   <button
                     [class]="getRequestButtonClass(getCommandForTemplateMethod(template.value.method))"
@@ -134,7 +134,7 @@
             <div class="card-header d-flex">
               <a class="text-decoration-none" data-bs-toggle="collapse" [attr.data-parent]="'#' + prefix + 'item_' + i1"
                  [attr.href]="'#' + prefix + 'embedded_' + i1">
-                <h5>{{embeddedResource.name}}</h5></a>
+                <h5>{{ embeddedResource.name }}</h5></a>
             </div>
 
             <div class="card-body p-1">
@@ -146,8 +146,8 @@
                   <div class="card-header d-flex">
                     <a class="text-decoration-none" data-bs-toggle="collapse"
                        [attr.data-parent]="'#' + prefix + 'item_' + i1 + '_' + i2"
-                       [attr.href]="'#' + prefix + 'embedded_object_' + i2">{{embeddedResource.name}}
-                      [{{i2}}]</a>
+                       [attr.href]="'#' + prefix + 'embedded_object_' + i2">{{ embeddedResource.name }}
+                      [{{ i2 }}]</a>
                     <button *ngIf="embeddedResource.docUri"
                             class="icon-book ms-auto btn btn-outline-info btn-sm nav-button"
                             (click)="processCommand(command.Document, embeddedResource.docUri)"

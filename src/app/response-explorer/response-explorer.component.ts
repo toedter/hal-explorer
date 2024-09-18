@@ -1,9 +1,9 @@
-import { Component, Input, OnInit, ViewEncapsulation, forwardRef } from '@angular/core';
-import {Command, RequestService, Response} from '../request/request.service';
-import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
+import { Component, forwardRef, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Command, RequestService, Response } from '../request/request.service';
+import { JsonHighlighterService } from '../json-highlighter/json-highlighter.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import {AppService} from '../app.service';
-import { NgIf, NgFor, KeyValuePipe } from '@angular/common';
+import { AppService } from '../app.service';
+import { KeyValuePipe, NgFor, NgIf } from '@angular/common';
 
 export class Link {
   constructor(public rel: string, public href: string,
@@ -18,12 +18,12 @@ class EmbeddedResource {
 }
 
 @Component({
-    selector: 'app-response-explorer',
-    templateUrl: './response-explorer.component.html',
-    styleUrls: ['./response-explorer.component.css'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: true,
-    imports: [NgIf, NgFor, forwardRef(() => ResponseExplorerComponent), KeyValuePipe]
+  selector: 'app-response-explorer',
+  templateUrl: './response-explorer.component.html',
+  styleUrls: ['./response-explorer.component.css'],
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NgIf, NgFor, forwardRef(() => ResponseExplorerComponent), KeyValuePipe]
 })
 export class ResponseExplorerComponent implements OnInit {
   @Input() jsonRoot: any;
@@ -35,7 +35,7 @@ export class ResponseExplorerComponent implements OnInit {
   links: Link[];
   selfLink: Link;
   embedded: EmbeddedResource[];
-  templates: {};
+  templates: object;
 
   showProperties: boolean;
   showLinks: boolean;
@@ -65,8 +65,8 @@ export class ResponseExplorerComponent implements OnInit {
               this.responseUrl = httpResponse.url;
               this.isHalFormsMediaType = false;
               const contentType = httpResponse.headers.get('content-type');
-              if ((contentType && contentType.startsWith('application/prs.hal-forms+json'))
-                || (this.responseUrl && this.responseUrl.endsWith('.hal-forms.json'))) {
+              if (contentType?.startsWith('application/prs.hal-forms+json')
+                || this.responseUrl?.endsWith('.hal-forms.json')) {
                 this.isHalFormsMediaType = true;
               }
               if (!(typeof httpResponse.body === 'string' || httpResponse.body instanceof String)) {

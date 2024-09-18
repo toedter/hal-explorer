@@ -22,7 +22,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownTheme">
             <a class="dropdown-item" href="#" *ngFor="let theme of themes" (click)="changeTheme(theme)">
-              <i class="icon-ok" [style]="getThemeIconCheckStyle(theme)"></i>{{theme}}</a>
+              <i class="icon-ok" [style]="getThemeIconCheckStyle(theme)"></i>{{ theme }}</a>
           </div>
         </li>
         <li class="nav-item dropdown">
@@ -35,7 +35,7 @@
               <hr *ngIf="setting === '---'" class="dropdown-divider">
               <a *ngIf="setting !== '---'" class="dropdown-item" href="#"
                  (click)="selectSetting(setting)">
-                <i class="icon-ok" [style]="getSettingsIconCheckStyle(setting)"></i>{{setting}}</a>
+                <i class="icon-ok" [style]="getSettingsIconCheckStyle(setting)"></i>{{ setting }}</a>
             </div>
           </div>
         </li>
@@ -64,7 +64,7 @@
             </tr>
             <tr>
               <td>Version:</td>
-              <td>{{version}}</td>
+              <td>{{ version }}</td>
             </tr>
             <tr>
               <td>GitHub:</td>

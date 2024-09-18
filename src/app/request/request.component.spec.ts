@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
-import {FormsModule} from '@angular/forms';
-import {AppService, RequestHeader} from '../app.service';
-import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
-import {DictionaryObject, RequestComponent} from './request.component';
-import {Command, EventType, HttpRequestEvent, RequestService} from './request.service';
-import {Subject} from 'rxjs';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { AppService, RequestHeader } from '../app.service';
+import { JsonHighlighterService } from '../json-highlighter/json-highlighter.service';
+import { DictionaryObject, RequestComponent } from './request.component';
+import { Command, EventType, HttpRequestEvent, RequestService } from './request.service';
+import { Subject } from 'rxjs';
 
 const jsonSchema: any = {
   title: 'User',
@@ -615,7 +615,6 @@ describe('RequestComponent', () => {
     let options = component.getHalFormsOptions({});
     expect(options).toEqual([]);
 
-    const noValueSelected = '<No Value Selected>';
     options = component.getHalFormsOptions({
       options: {},
       required: false
@@ -785,7 +784,8 @@ describe('RequestComponent', () => {
       new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
         undefined, halFormsTemplate);
 
-    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(property => {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(() => {
     });
     needInfoSubject.next(event);
 
@@ -803,7 +803,8 @@ describe('RequestComponent', () => {
       new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
         undefined, halFormsTemplate);
 
-    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(property => {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(() => {
     });
     needInfoSubject.next(event);
 
@@ -820,7 +821,8 @@ describe('RequestComponent', () => {
       new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
         undefined, halFormsTemplate);
 
-    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(property => {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(() => {
     });
     needInfoSubject.next(event);
 
@@ -837,7 +839,8 @@ describe('RequestComponent', () => {
       new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
         undefined, halFormsTemplate);
 
-    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(property => {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(() => {
     });
     needInfoSubject.next(event);
 
@@ -854,7 +857,8 @@ describe('RequestComponent', () => {
       new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
         undefined, halFormsTemplate);
 
-    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(property => {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(() => {
     });
     needInfoSubject.next(event);
 

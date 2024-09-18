@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import {RequestService} from './request/request.service';
-import {AppService} from './app.service';
-import {DocumentationComponent} from './documentation/documentation.component';
-import {ResponseDetailsComponent} from './response-details/response-details.component';
-import {ResponseExplorerComponent} from './response-explorer/response-explorer.component';
-import {RequestComponent} from './request/request.component';
-import {NgIf, NgFor} from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { RequestService } from './request/request.service';
+import { AppService } from './app.service';
+import { DocumentationComponent } from './documentation/documentation.component';
+import { ResponseDetailsComponent } from './response-details/response-details.component';
+import { ResponseExplorerComponent } from './response-explorer/response-explorer.component';
+import { RequestComponent } from './request/request.component';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -103,8 +103,8 @@ export class AppComponent implements OnInit {
   changeTheme(theme: string) {
     this.isCustomTheme = theme !== this.themes[0];
     if (this.isCustomTheme) {
-        this.selectedThemeUrl =
-          this.sanitizer.bypassSecurityTrustResourceUrl('https://bootswatch.com/5/' + theme.toLowerCase() + '/bootstrap.min.css');
+      this.selectedThemeUrl =
+        this.sanitizer.bypassSecurityTrustResourceUrl('https://bootswatch.com/5/' + theme.toLowerCase() + '/bootstrap.min.css');
     }
     this.appService.setTheme(theme);
   }

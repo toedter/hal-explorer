@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as utpl from 'uri-templates';
-import {URITemplate} from 'uri-templates';
-import {AppService, RequestHeader} from '../app.service';
-import {Command, EventType, HttpRequestEvent, RequestService, UriTemplateParameter} from './request.service';
-import {RequestValidatorDirective} from './request-validator.directive';
-import {NgIf, NgFor, KeyValuePipe} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import { URITemplate } from 'uri-templates';
+import { AppService, RequestHeader } from '../app.service';
+import { Command, EventType, HttpRequestEvent, RequestService, UriTemplateParameter } from './request.service';
+import { RequestValidatorDirective } from './request-validator.directive';
+import { KeyValuePipe, NgFor, NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 export class DictionaryObject {
   constructor(public prompt, public value) {
@@ -82,7 +82,7 @@ export class RequestComponent implements OnInit {
                     if (!options.inline) {
                       try {
                         await new Promise((resolve) => setTimeout(resolve, 50));
-                      } catch (e) {
+                      } catch {
                         // ignore
                       }
                     } else {
@@ -383,13 +383,13 @@ export class RequestComponent implements OnInit {
     return 'input';
   }
 
-  getHalFormsOptions(property: any): Array<DictionaryObject> {
+  getHalFormsOptions(property: any): DictionaryObject[] {
     if (!property.options) {
       return [];
     }
 
     const options = property.options;
-    const dictionaryObjects: Array<DictionaryObject> = [];
+    const dictionaryObjects: DictionaryObject[] = [];
 
     if (!property.required && options.maxItems === 1 && !(options.minItems >= 1)) {
       dictionaryObjects.push(new DictionaryObject(this.noValueSelected, this.noValueSelected));

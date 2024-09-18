@@ -1,13 +1,13 @@
-import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import {Link, ResponseExplorerComponent} from './response-explorer.component';
-import {Command, RequestService, Response} from '../request/request.service';
+import { Link, ResponseExplorerComponent } from './response-explorer.component';
+import { Command, RequestService, Response } from '../request/request.service';
 import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
-import {JsonHighlighterService} from '../json-highlighter/json-highlighter.service';
-import {Subject} from 'rxjs';
-import {AppService} from '../app.service';
+import { JsonHighlighterService } from '../json-highlighter/json-highlighter.service';
+import { Subject } from 'rxjs';
+import { AppService } from '../app.service';
 
-/* eslint-disable */
+
 const halFormsResponse = {
   'title': 'The Shawshank Redemption',
   'year': 1994,
@@ -63,7 +63,7 @@ const halFormsResponse = {
     }
   }
 };
-/* eslint-enable */
+
 
 describe('ResponseExplorerComponent', () => {
   let component: ResponseExplorerComponent;
@@ -89,13 +89,13 @@ describe('ResponseExplorerComponent', () => {
     jsonHighlighterServiceMock = jasmine.createSpyObj(['syntaxHighlight']);
 
     TestBed.configureTestingModule({
-    imports: [ResponseExplorerComponent],
-    providers: [
-        { provide: RequestService, useValue: requestServiceMock },
-        { provide: JsonHighlighterService, useValue: jsonHighlighterServiceMock },
-        { provide: AppService, useValue: appServiceMock }
-    ]
-})
+      imports: [ResponseExplorerComponent],
+      providers: [
+        {provide: RequestService, useValue: requestServiceMock},
+        {provide: JsonHighlighterService, useValue: jsonHighlighterServiceMock},
+        {provide: AppService, useValue: appServiceMock}
+      ]
+    })
       .compileComponents();
   }));
 
@@ -134,7 +134,7 @@ describe('ResponseExplorerComponent', () => {
   });
 
   it('should parse HAL response body', () => {
-    /* eslint-disable */
+
     const halResponse = {
       'text': 'hello all!',
       'timeStamp': '2018-06-02T17:12:07.335Z',
@@ -160,7 +160,7 @@ describe('ResponseExplorerComponent', () => {
         },
       }
     };
-    /* eslint-enable */
+
     responseSubject.next(new Response(new HttpResponse({body: halResponse}), null));
 
     expect(component.showProperties).toBeTruthy();
