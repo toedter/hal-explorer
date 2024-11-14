@@ -47,7 +47,7 @@ jobs:
         run: yarn e2e-headless
 
       - name: Upload coverage to codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/ng-test/lcov.info
