@@ -4,12 +4,11 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-documentation',
-  templateUrl: './documentation.component.html',
-  styleUrls: ['./documentation.component.css'],
-  encapsulation: ViewEncapsulation.None,
-  standalone: true,
-  imports: [NgIf]
+    selector: 'app-documentation',
+    templateUrl: './documentation.component.html',
+    styleUrls: ['./documentation.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    imports: [NgIf]
 })
 export class DocumentationComponent implements OnInit {
   docUri: SafeResourceUrl;

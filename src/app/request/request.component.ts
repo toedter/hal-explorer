@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as utpl from 'uri-templates';
+import utpl from 'uri-templates';
 import { URITemplate } from 'uri-templates';
 import { AppService, RequestHeader } from '../app.service';
 import { Command, EventType, HttpRequestEvent, RequestService, UriTemplateParameter } from './request.service';
@@ -13,11 +13,10 @@ export class DictionaryObject {
 }
 
 @Component({
-  selector: 'app-uri-input',
-  templateUrl: './request.component.html',
-  styleUrls: ['./request.component.css'],
-  standalone: true,
-  imports: [FormsModule, NgIf, NgFor, RequestValidatorDirective, KeyValuePipe]
+    selector: 'app-uri-input',
+    templateUrl: './request.component.html',
+    styleUrls: ['./request.component.css'],
+    imports: [FormsModule, NgIf, NgFor, RequestValidatorDirective, KeyValuePipe]
 })
 export class RequestComponent implements OnInit {
   uri: string;

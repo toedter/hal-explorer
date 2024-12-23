@@ -18,12 +18,11 @@ class EmbeddedResource {
 }
 
 @Component({
-  selector: 'app-response-explorer',
-  templateUrl: './response-explorer.component.html',
-  styleUrls: ['./response-explorer.component.css'],
-  encapsulation: ViewEncapsulation.None,
-  standalone: true,
-  imports: [NgIf, NgFor, forwardRef(() => ResponseExplorerComponent), KeyValuePipe]
+    selector: 'app-response-explorer',
+    templateUrl: './response-explorer.component.html',
+    styleUrls: ['./response-explorer.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    imports: [NgIf, NgFor, forwardRef(() => ResponseExplorerComponent), KeyValuePipe]
 })
 export class ResponseExplorerComponent implements OnInit {
   @Input() jsonRoot: any;

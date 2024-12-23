@@ -6,12 +6,11 @@ import { getReasonPhrase } from 'http-status-codes';
 import { NgFor, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-response-details',
-  templateUrl: './response-details.component.html',
-  styleUrls: ['./response-details.component.css'],
-  encapsulation: ViewEncapsulation.None,
-  standalone: true,
-  imports: [NgIf, NgFor]
+    selector: 'app-response-details',
+    templateUrl: './response-details.component.html',
+    styleUrls: ['./response-details.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    imports: [NgIf, NgFor]
 })
 export class ResponseDetailsComponent implements OnInit {
   responseBody: string;
