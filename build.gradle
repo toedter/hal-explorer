@@ -62,7 +62,7 @@ tasks.register('doc') {
 
   doLast {
     copy {
-      from "$projectDir/dist/hal-explorer"
+      from "$projectDir/dist/hal-explorer/browser"
       into "$projectDir/build/docs/gh-pages/snapshot/hal-explorer"
     }
 
