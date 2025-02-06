@@ -1,0 +1,11 @@
+name: SmartBear Pull Request Notify
+
+on:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  call-workflow:
+    uses: pactflow/.github/.github/workflows/smartbear-pull-request-review-notify.yaml@main
+    secrets: inherit
