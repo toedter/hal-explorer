@@ -65,7 +65,7 @@ export class AppComponent implements OnInit {
   useHttpOptions = false;
   enableAllHttpMethodsForLinks = false;
 
-  version = '1.2.3-SNAPSHOT';
+  version = '1.2.3';
   isSnapshotVersion = this.version.endsWith('SNAPSHOT');
 
   constructor(
