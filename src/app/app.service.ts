@@ -47,7 +47,7 @@ export class AppService {
 
   constructor() {
     this.handleLocationHash();
-    window.addEventListener('hashchange', () => this.handleLocationHash(), false);
+    window.addEventListener('storage', () => this.handleLocationHash(), false);
   }
 
   get uriObservable(): Observable<string> {
@@ -166,7 +166,7 @@ export class AppService {
 
     const tempCustomRequestHeaders: RequestHeader[] = new Array(5);
 
-    const fragment = location.hash.substring(1);
+    const fragment = window.sessionStorage.getItem("hash") || "";
     const regex = /([^&=]+)=([^&]*)/g;
     let m = regex.exec(fragment);
     while (m) {
@@ -286,7 +286,7 @@ export class AppService {
       newLocationHash += andPrefix + 'uri=' + this.uriParam;
     }
 
-    window.location.hash = newLocationHash;
+    window.sessionStorage.setItem("hash", newLocationHash);
   }
 }
 
