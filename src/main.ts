@@ -25,7 +25,7 @@ if (window.opener) {
   window.addEventListener('message', (event) => {
     window.sessionStorage.setItem(
       'hash',
-      `hkey0=Authorization&hval0=${encodeURIComponent(`Bearer ${event.data}`)}&uri=/`
+      event.data,
     );
     window.dispatchEvent(new Event('storage'));
     if (!bootstrapped) {
