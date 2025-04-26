@@ -54,7 +54,7 @@
     "concurrently": "^9.1.2",
     "cypress": "14.3.2",
     "eslint": "^9.21.0",
-    "jasmine-core": "~5.6.0",
+    "jasmine-core": "~5.7.0",
     "jasmine-spec-reporter": "~7.0.0",
     "karma": "~6.4.4",
     "karma-chrome-launcher": "~3.2.0",
