@@ -64,7 +64,7 @@
     "lite-server": "^2.6.1",
     "ts-node": "~10.9.2",
     "typescript": "~5.8.2",
-    "typescript-eslint": "8.33.0"
+    "typescript-eslint": "8.34.0"
   },
   "author": {
     "name": "Kai Toedter",
