@@ -72,64 +72,64 @@
     ora "5.4.1"
     rxjs "7.8.1"
 
-"@angular-eslint/builder@19.6.0":
-  version "19.6.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/builder/-/builder-19.6.0.tgz#5b8b58f3a2e1cc22138364c69818b44598fc18be"
-  integrity sha512-hUdYS1mSB09b5ABi2tuWeMTVprYHW+x6KmeAFJfXC6aMOa4NYQBdetIjOLwr7qUDlq1S/+2+HiX/FO76FPHClw==
+"@angular-eslint/builder@19.8.0":
+  version "19.8.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/builder/-/builder-19.8.0.tgz#9ecc78d5e510cc7626189746d41d6aa49eba44b7"
+  integrity sha512-+sDe92BpzlxNZWFuBbKD1L8xsW/dyOU+acPn4V84Vn55XMdhrBWOwDX7oxmBCOwuVTrS3mgHz7d22J1sdNwySw==
   dependencies:
     "@angular-devkit/architect" ">= 0.1900.0 < 0.2000.0"
     "@angular-devkit/core" ">= 19.0.0 < 20.0.0"
 
-"@angular-eslint/bundled-angular-compiler@19.6.0":
-  version "19.6.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-19.6.0.tgz#78bb3cb3285998d5bd243d2fbb0cfd736344aca2"
-  integrity sha512-ro+seaTAg5GvtJ72uWEEnP9J5mT0vtgdqH6YMrmMt4pZbSZxvkLfLjZGkXo/HjVDVcCjPnmZeMwKN+uoEc27Jg==
+"@angular-eslint/bundled-angular-compiler@19.8.0":
+  version "19.8.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-19.8.0.tgz#965eb8c9851c8bd2f87bee444c47998621e5d2d9"
+  integrity sha512-nschDOyrAZPwS2mdC63pAf6vtVRZJ81imnosziOTx5jh1TTEwYdmFpfLA3LBvZUMkwDxkFOjxrMyl/k+c+oLBw==
 
-"@angular-eslint/eslint-plugin-template@19.6.0":
-  version "19.6.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-19.6.0.tgz#42350635b224763ac79a324a49dbb118b7a298a0"
-  integrity sha512-SDGbNSCUuPmqVesy5SvRE2MV7AKvvA/bVJwL9Fz5KYCHYxJz1rrJ8FknjWAfmg0qO2TMs1ZI9hov8JL+Bc4BBw==
+"@angular-eslint/eslint-plugin-template@19.8.0":
+  version "19.8.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-19.8.0.tgz#216f0a8ab8eb33334633095eda122c15b2c4d346"
+  integrity sha512-LXruJuwmRwJR6wfCq1wRxtGeF8lZQFNnS4GHNaRB7BRqYisPQXHsHT8EAnNf2eDwIkkq4TzZC0EfC6eaLlsh0A==
   dependencies:
-    "@angular-eslint/bundled-angular-compiler" "19.6.0"
-    "@angular-eslint/utils" "19.6.0"
+    "@angular-eslint/bundled-angular-compiler" "19.8.0"
+    "@angular-eslint/utils" "19.8.0"
     aria-query "5.3.2"
     axobject-query "4.1.0"
 
-"@angular-eslint/eslint-plugin@19.6.0":
-  version "19.6.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin/-/eslint-plugin-19.6.0.tgz#d189dc191cd04f8d88f6baac4c4cd21f007c66f9"
-  integrity sha512-IOMfFi/rPNrPwxZwIGTqWw0C5pC2Facwg3llmJoQFq8w2sUE0nNBL5uSQv5dT8s6ucum4g+RFNYHNe20SEOvRw==
+"@angular-eslint/eslint-plugin@19.8.0":
+  version "19.8.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin/-/eslint-plugin-19.8.0.tgz#a415cd5f96281e7a25d13e441de52fc935843198"
+  integrity sha512-4wmMopW9mEum3MI865WkWiVvQ7/Ia691LO006zr7Hp6VB+4+zzxZW4CH7X6tuxE2DMVILlU5fsSjR04ex9vuew==
   dependencies:
-    "@angular-eslint/bundled-angular-compiler" "19.6.0"
-    "@angular-eslint/utils" "19.6.0"
+    "@angular-eslint/bundled-angular-compiler" "19.8.0"
+    "@angular-eslint/utils" "19.8.0"
 
-"@angular-eslint/schematics@19.6.0":
-  version "19.6.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/schematics/-/schematics-19.6.0.tgz#c7221ae1f286daa48e74305a922a64b0d6d26cc6"
-  integrity sha512-lJzwHju7bhJ3p+SZnY0JVwGjxF2q68gUdOYhdU62pglfYkS5lm+A5LM/VznRvdpZOH69vvZ9gizQ8W1P525cdw==
+"@angular-eslint/schematics@19.8.0":
+  version "19.8.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/schematics/-/schematics-19.8.0.tgz#e186e27466186b94e6f888ae686c65c36b9be5c1"
+  integrity sha512-jBzRioyfFb8ikhtvQHeSmtc48YhNw+Kb4LN/DqTvPm0dYeWqz8qpIVlUdKUT7wcC46i0vfILjMCSbWEnkRjHiA==
   dependencies:
     "@angular-devkit/core" ">= 19.0.0 < 20.0.0"
     "@angular-devkit/schematics" ">= 19.0.0 < 20.0.0"
-    "@angular-eslint/eslint-plugin" "19.6.0"
-    "@angular-eslint/eslint-plugin-template" "19.6.0"
-    ignore "7.0.4"
+    "@angular-eslint/eslint-plugin" "19.8.0"
+    "@angular-eslint/eslint-plugin-template" "19.8.0"
+    ignore "7.0.5"
     semver "7.7.2"
     strip-json-comments "3.1.1"
 
-"@angular-eslint/template-parser@19.6.0":
-  version "19.6.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/template-parser/-/template-parser-19.6.0.tgz#0b834b593f9921adf04857f10c5598464ac8ece2"
-  integrity sha512-NGxXUZkI5lXjoKnmL51C8DoJx8AjwF9sonieC2EVxgXycK2MYAamFWYGHMiVemzFsg1nIv+JvhHITgjSjyC3HQ==
+"@angular-eslint/template-parser@19.8.0":
+  version "19.8.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/template-parser/-/template-parser-19.8.0.tgz#0aff2a0955828ffb38eb13e2bf5f78d3a6d5560a"
+  integrity sha512-43hWc14pMc0LkqBD+ui7uF6NTUVpNrVnUSQqNCYsn3aoXeOdXKgKQEeBUhotKlxAOyAQjAet0tU24+IAW0xwkw==
   dependencies:
-    "@angular-eslint/bundled-angular-compiler" "19.6.0"
+    "@angular-eslint/bundled-angular-compiler" "19.8.0"
     eslint-scope "^8.0.2"
 
-"@angular-eslint/utils@19.6.0":
-  version "19.6.0"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/utils/-/utils-19.6.0.tgz#b5078ace75c32acb188d458528a0b043646d5beb"
-  integrity sha512-ygtsmRKHNqrzG2mpUj1XwLNRoG+ikYkizsOuq5xPRM8o6dCw03H5eel4s7hnXT4c09WbpnoaVNi9O3xFLIETJQ==
+"@angular-eslint/utils@19.8.0":
+  version "19.8.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/utils/-/utils-19.8.0.tgz#53a7aa0734b93a9ecd11435e7f908a0020f90b38"
+  integrity sha512-ue3seSy4b+H5MN/m1m0SgyWr0XpDjfkGwyYo+uz2bhxpCyhZNzTBKeNRPkTTs+yeq9NhSKEhjvgUSA2nK5LqmA==
   dependencies:
-    "@angular-eslint/bundled-angular-compiler" "19.6.0"
+    "@angular-eslint/bundled-angular-compiler" "19.8.0"
 
 "@angular/animations@^20.0.1":
   version "20.0.1"
@@ -2204,18 +2204,18 @@ ajv@^6.12.3, ajv@^6.12.4:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-angular-eslint@19.6.0:
-  version "19.6.0"
-  resolved "https://registry.yarnpkg.com/angular-eslint/-/angular-eslint-19.6.0.tgz#d21532ef1664095e846430b765c40eb539ba256c"
-  integrity sha512-9qfP6rR6De5xe9WyviD9Vdpg2F3iHTlo7T1129ms0AQXrG9/U/upIQmNUN+Jz9CiJcHDUsniyd+EL8hjuNYnOg==
+angular-eslint@19.8.0:
+  version "19.8.0"
+  resolved "https://registry.yarnpkg.com/angular-eslint/-/angular-eslint-19.8.0.tgz#4708da45019aeaa1bcde83cd308f321169c45725"
+  integrity sha512-5CfrQpuLXb2h7KDfezEH2z/m8HSl3Cy2GCkrp6/7DzgJFZnA9dauokHJFqlrWWiHzfEjgOz3Y8F/1nbbjnTZMg==
   dependencies:
     "@angular-devkit/core" ">= 19.0.0 < 20.0.0"
     "@angular-devkit/schematics" ">= 19.0.0 < 20.0.0"
-    "@angular-eslint/builder" "19.6.0"
-    "@angular-eslint/eslint-plugin" "19.6.0"
-    "@angular-eslint/eslint-plugin-template" "19.6.0"
-    "@angular-eslint/schematics" "19.6.0"
-    "@angular-eslint/template-parser" "19.6.0"
+    "@angular-eslint/builder" "19.8.0"
+    "@angular-eslint/eslint-plugin" "19.8.0"
+    "@angular-eslint/eslint-plugin-template" "19.8.0"
+    "@angular-eslint/schematics" "19.8.0"
+    "@angular-eslint/template-parser" "19.8.0"
     "@typescript-eslint/types" "^8.0.0"
     "@typescript-eslint/utils" "^8.0.0"
 
@@ -4157,15 +4157,20 @@ ignore-walk@^7.0.0:
   dependencies:
     minimatch "^9.0.0"
 
-ignore@7.0.4, ignore@^7.0.0:
-  version "7.0.4"
-  resolved "https://registry.yarnpkg.com/ignore/-/ignore-7.0.4.tgz#a12c70d0f2607c5bf508fb65a40c75f037d7a078"
-  integrity sha512-gJzzk+PQNznz8ysRrC0aOkBNVRBDtE1n53IqyqEf3PXrYwomFs5q4pGMizBMJF+ykh03insJ27hB8gSrD2Hn8A==
+ignore@7.0.5:
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/ignore/-/ignore-7.0.5.tgz#4cb5f6cd7d4c7ab0365738c7aea888baa6d7efd9"
+  integrity sha512-Hs59xBNfUIunMFgWAbGX5cq6893IbWg4KnrjbYwX3tx0ztorVgTDA6B2sxf8ejHJ4wz8BqGUMYlnzNBer5NvGg==
 
 ignore@^5.2.0:
   version "5.3.2"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.3.2.tgz#3cd40e729f3643fd87cb04e50bf0eb722bc596f5"
   integrity sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==
+
+ignore@^7.0.0:
+  version "7.0.4"
+  resolved "https://registry.yarnpkg.com/ignore/-/ignore-7.0.4.tgz#a12c70d0f2607c5bf508fb65a40c75f037d7a078"
+  integrity sha512-gJzzk+PQNznz8ysRrC0aOkBNVRBDtE1n53IqyqEf3PXrYwomFs5q4pGMizBMJF+ykh03insJ27hB8gSrD2Hn8A==
 
 immutable@^3:
   version "3.8.2"
