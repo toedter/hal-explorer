@@ -9,10 +9,30 @@ if (environment.production) {
   enableProdMode();
 }
 
-bootstrapApplication(AppComponent, {
-  providers: [
-    importProvidersFrom(BrowserModule, FormsModule),
-    provideHttpClient(withInterceptorsFromDi())
-  ]
-})
-  .catch(err => console.log(err));
+let bootstrapped = false;
+function bootstrap() {
+  bootstrapped = true;
+  bootstrapApplication(AppComponent, {
+    providers: [
+      importProvidersFrom(BrowserModule, FormsModule),
+      provideHttpClient(withInterceptorsFromDi())
+    ]
+  })
+    .catch(err => console.log(err));
+}
+
+if (window.opener) {
+  window.addEventListener('message', (event) => {
+    window.sessionStorage.setItem(
+      'hash',
+      event.data,
+    );
+    window.dispatchEvent(new Event('storage'));
+    if (!bootstrapped) {
+      bootstrap();
+    }
+  });
+  window.opener.postMessage("ready");
+} else {
+  bootstrap();
+}
