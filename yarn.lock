@@ -876,13 +876,13 @@
     tunnel-agent "^0.6.0"
     uuid "^8.3.2"
 
-"@cypress/schematic@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@cypress/schematic/-/schematic-4.0.0.tgz#f26acb32e3c22e359d08a6a4f52e300af3c811f3"
-  integrity sha512-pVHh6yqnx+EneFrYC3u7u4bktMb8RtNejp/rTnP2IbqAcV+4miXx1rvJ7Dk+Gfxqnh3J+b69XhgseJm45bdyAw==
+"@cypress/schematic@4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@cypress/schematic/-/schematic-4.1.0.tgz#376c79b190074fe27a97d1e6e8bfdd816d1e3964"
+  integrity sha512-BNWGju2qNkFY1ePe3dvHbOKXS4KFEFYcCXyFQTwU3UGnw/vqFa2095/nVXLQ9IbZc7INLPKGJ4h04mOravgZHg==
   dependencies:
     jsonc-parser "^3.3.1"
-    rxjs "~7.8.1"
+    rxjs "~7.8.2"
 
 "@cypress/xvfb@^1.2.4":
   version "1.2.4"
@@ -6422,7 +6422,7 @@ rxjs@7.8.1, rxjs@^7.5.1:
   dependencies:
     tslib "^2.1.0"
 
-rxjs@7.8.2, rxjs@^7.8.1, rxjs@~7.8.1, rxjs@~7.8.2:
+rxjs@7.8.2, rxjs@^7.8.1, rxjs@~7.8.2:
   version "7.8.2"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.8.2.tgz#955bc473ed8af11a002a2be52071bf475638607b"
   integrity sha512-dhKf903U/PQZY6boNNtAGdWbG85WAbjT/1xYoZIC7FAY0yWapOBQVsVrDl58W86//e1VpMNBtRV4MaXfdMySFA==
