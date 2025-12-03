@@ -323,9 +323,9 @@
     zod "3.25.76"
 
 "@angular/common@^20.0.1":
-  version "20.3.3"
-  resolved "https://registry.yarnpkg.com/@angular/common/-/common-20.3.3.tgz#75279bc782172e47ae28052f7e4428fe8aa0e159"
-  integrity sha512-iArFCXvgYJCpxLZv8o6rV7Cxuqv1hbndoeUmQgL7ekXwVS6BA49VErXbTPM+pfhAJ+v1fc/DG3rzBwXk3eW2lw==
+  version "20.3.15"
+  resolved "https://registry.yarnpkg.com/@angular/common/-/common-20.3.15.tgz#a261e9bb14124db6e791a59ca17f0dea2f938b1c"
+  integrity sha512-k4mCXWRFiOHK3bUKfWkRQQ8KBPxW8TAJuKLYCsSHPCpMz6u0eA1F0VlrnOkZVKWPI792fOaEAWH2Y4PTaXlUHw==
   dependencies:
     tslib "^2.3.0"
 
