@@ -35,7 +35,7 @@
     "tslib": "^2.8.1",
     "uri-templates": "^0.2.0",
     "webdriver-manager": "^12.1.9",
-    "zone.js": "~0.15.0"
+    "zone.js": "~0.16.0"
   },
   "devDependencies": {
     "@angular-devkit/core": "^21.0.3",
