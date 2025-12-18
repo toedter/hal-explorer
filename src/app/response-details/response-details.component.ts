@@ -21,8 +21,8 @@ export class ResponseDetailsComponent implements OnInit {
 
   httpResponseReasonPhrase: string;
 
-  private requestService = inject(RequestService);
-  private jsonHighlighterService = inject(JsonHighlighterService);
+  private readonly requestService = inject(RequestService);
+  private readonly jsonHighlighterService = inject(JsonHighlighterService);
 
   ngOnInit() {
     this.requestService.getResponseObservable().subscribe({

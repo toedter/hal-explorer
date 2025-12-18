@@ -12,8 +12,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 export class DocumentationComponent implements OnInit {
   docUri: SafeResourceUrl;
 
-  private requestService = inject(RequestService);
-  private sanitizer = inject(DomSanitizer);
+  private readonly requestService = inject(RequestService);
+  private readonly sanitizer = inject(DomSanitizer);
 
   ngOnInit() {
     this.requestService.getDocumentationObservable().subscribe({

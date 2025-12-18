@@ -64,9 +64,9 @@ export class AppComponent implements OnInit {
   version = '1.2.4-SNAPSHOT';
   isSnapshotVersion = this.version.endsWith('SNAPSHOT');
 
-  private appService = inject(AppService);
-  private requestService = inject(RequestService);
-  private sanitizer = inject(DomSanitizer);
+  private readonly appService = inject(AppService);
+  private readonly requestService = inject(RequestService);
+  private readonly sanitizer = inject(DomSanitizer);
 
   ngOnInit(): void {
     this.requestService.getResponseObservable().subscribe(() => {

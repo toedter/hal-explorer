@@ -42,8 +42,8 @@ export class RequestComponent implements OnInit {
 
   noValueSelected = '<No Value Selected>';
 
-  private appService = inject(AppService);
-  private requestService = inject(RequestService);
+  private readonly appService = inject(AppService);
+  private readonly requestService = inject(RequestService);
 
   ngOnInit() {
     this.jsonSchema = undefined;

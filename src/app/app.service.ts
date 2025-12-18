@@ -26,23 +26,19 @@ export class AppService {
   private httpOptionsParamBackup: boolean;
   private allHttpMethodsForLinksParamBackup: boolean;
 
-  private uriSubject: Subject<string> = new Subject<string>();
-  private _uriObservable: Observable<string> = this.uriSubject.asObservable();
-
-  private themeSubject: Subject<string> = new Subject<string>();
-  private _themeObservable: Observable<string> = this.themeSubject.asObservable();
-
-  private layoutSubject: Subject<string> = new Subject<string>();
-  private _layoutObservable: Observable<string> = this.layoutSubject.asObservable();
-
-  private httpOptionsSubject: Subject<boolean> = new Subject<boolean>();
-  private _httpOptionsObservable: Observable<boolean> = this.httpOptionsSubject.asObservable();
-
-  private allHttpMethodsForLinksSubject: Subject<boolean> = new Subject<boolean>();
-  private _allHttpMethodsForLinksObservable: Observable<boolean> = this.allHttpMethodsForLinksSubject.asObservable();
-
-  private requestHeadersSubject: Subject<RequestHeader[]> = new Subject<RequestHeader[]>();
-  private _requestHeadersObservable: Observable<RequestHeader[]> = this.requestHeadersSubject.asObservable();
+  private readonly uriSubject: Subject<string> = new Subject<string>();
+  private readonly _uriObservable: Observable<string> = this.uriSubject.asObservable();
+  private readonly themeSubject: Subject<string> = new Subject<string>();
+  private readonly _themeObservable: Observable<string> = this.themeSubject.asObservable();
+  private readonly layoutSubject: Subject<string> = new Subject<string>();
+  private readonly _layoutObservable: Observable<string> = this.layoutSubject.asObservable();
+  private readonly httpOptionsSubject: Subject<boolean> = new Subject<boolean>();
+  private readonly _httpOptionsObservable: Observable<boolean> = this.httpOptionsSubject.asObservable();
+  private readonly allHttpMethodsForLinksSubject: Subject<boolean> = new Subject<boolean>();
+  private readonly _allHttpMethodsForLinksObservable: Observable<boolean> =
+    this.allHttpMethodsForLinksSubject.asObservable();
+  private readonly requestHeadersSubject: Subject<RequestHeader[]> = new Subject<RequestHeader[]>();
+  private readonly _requestHeadersObservable: Observable<RequestHeader[]> = this.requestHeadersSubject.asObservable();
 
   private reactOnLocationHashChange = true;
 

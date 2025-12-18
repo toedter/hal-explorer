@@ -62,9 +62,9 @@ export class ResponseExplorerComponent implements OnInit {
 
   httpErrorResponse: HttpErrorResponse;
 
-  private requestService = inject(RequestService);
-  private jsonHighlighterService = inject(JsonHighlighterService);
-  private appService = inject(AppService);
+  private readonly requestService = inject(RequestService);
+  private readonly jsonHighlighterService = inject(JsonHighlighterService);
+  private readonly appService = inject(AppService);
 
   ngOnInit() {
     if (this.jsonRoot) {

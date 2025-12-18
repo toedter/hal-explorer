@@ -47,22 +47,22 @@ export class Response {
   providedIn: 'root',
 })
 export class RequestService {
-  private responseSubject: Subject<Response> = new Subject<Response>();
-  private responseObservable: Observable<Response> = this.responseSubject.asObservable();
+  private readonly responseSubject: Subject<Response> = new Subject<Response>();
+  private readonly responseObservable: Observable<Response> = this.responseSubject.asObservable();
 
-  private needInfoSubject: Subject<any> = new Subject<any>();
-  private needInfoObservable: Observable<any> = this.needInfoSubject.asObservable();
+  private readonly needInfoSubject: Subject<any> = new Subject<any>();
+  private readonly needInfoObservable: Observable<any> = this.needInfoSubject.asObservable();
 
-  private documentationSubject: Subject<string> = new Subject<string>();
-  private documentationObservable: Observable<string> = this.documentationSubject.asObservable();
+  private readonly documentationSubject: Subject<string> = new Subject<string>();
+  private readonly documentationObservable: Observable<string> = this.documentationSubject.asObservable();
 
   private requestHeaders: HttpHeaders = new HttpHeaders({
     Accept: 'application/prs.hal-forms+json, application/hal+json, application/json, */*',
   });
   private customRequestHeaders: RequestHeader[];
 
-  private appService = inject(AppService);
-  private http = inject(HttpClient);
+  private readonly appService = inject(AppService);
+  private readonly http = inject(HttpClient);
 
   getResponseObservable(): Observable<Response> {
     return this.responseObservable;
