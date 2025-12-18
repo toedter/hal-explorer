@@ -77,9 +77,16 @@ export class AppService {
 
   setUri(uri: string, reactOnLocationHashChange = true) {
     this.reactOnLocationHashChange = reactOnLocationHashChange;
+    const previousUri = this.uriParam;
     this.uriParamBackup = this.uriParam;
     this.uriParam = uri;
     this.setLocationHash();
+
+    // Emit the URI change immediately if it changed, even when reactOnLocationHashChange is false
+    // This ensures the input field gets updated when clicking links
+    if (previousUri !== uri) {
+      this.uriSubject.next(this.uriParam);
+    }
   }
 
   getTheme(): string {

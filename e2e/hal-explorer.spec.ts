@@ -65,14 +65,42 @@ test.describe('HAL Explorer App', () => {
   test('should display POST request dialog', async ({ page }) => {
     await page.goto('/#uri=http://localhost:3000/movies.hal-forms.json');
     await page.waitForLoadState('networkidle');
-    await page.locator('button.icon-plus').nth(3).click();
+
+    // Wait for the HAL-FORMS Template Elements section to be loaded
+    await expect(page.locator('h5:has-text("HAL-FORMS Template Elements")')).toBeVisible();
+
+    const postButton = page.locator('button.icon-plus').nth(3);
+    await expect(postButton).toBeVisible();
+    await expect(postButton).toBeEnabled();
+
+    await postButton.click();
+
+    // Wait for the modal to be fully visible (Bootstrap modal has animation)
+    const modal = page.locator('#httpRequestModal');
+    await expect(modal).toHaveClass(/show/, { timeout: 10000 });
     await expect(page.getByText('HTTP Request Input')).toBeVisible();
   });
 
   test('should display user profile in POST request dialog', async ({ page }) => {
     await page.goto('/#uri=http://localhost:3000/index.hal.json');
     await page.waitForLoadState('networkidle');
-    await page.locator('button.icon-plus').nth(0).click();
+
+    // Wait for the links section to be fully loaded
+    await expect(page.locator('h5:has-text("Links")').first()).toBeVisible();
+
+    // Ensure the POST button is visible and clickable
+    const postButton = page.locator('button.icon-plus').first();
+    await expect(postButton).toBeVisible();
+    await expect(postButton).toBeEnabled();
+
+    await postButton.click();
+
+    // Wait for the modal to be fully visible (Bootstrap modal has animation)
+    const modal = page.locator('#httpRequestModal');
+    await expect(modal).toHaveClass(/show/, { timeout: 10000 });
+    await expect(page.getByText('HTTP Request Input')).toBeVisible();
+
+    // Verify profile fields are displayed
     await expect(page.getByText('Email')).toBeVisible();
     await expect(page.getByText('Full name')).toBeVisible();
     await expect(page.getByText('Id')).toBeVisible();
@@ -81,18 +109,29 @@ test.describe('HAL Explorer App', () => {
   test('should display expanded URI in HAL-FORMS GET request dialog', async ({ page }) => {
     await page.goto('/#uri=http://localhost:3000/filter.hal-forms.json');
     await page.waitForLoadState('networkidle');
-    await page.locator('button.icon-left-open').last().click();
+
+    // Wait for the HAL-FORMS section to be loaded
+    await expect(page.locator('h5:has-text("HAL-FORMS Template Elements")')).toBeVisible();
+
+    const getButton = page.locator('button.icon-left-open').last();
+    await expect(getButton).toBeVisible();
+    await expect(getButton).toBeEnabled();
+
+    await getButton.click();
+
+    // Wait for the modal to be fully visible (Bootstrap modal has animation)
+    const modal = page.locator('#httpRequestModal');
+    await expect(modal).toHaveClass(/show/, { timeout: 10000 });
+    await expect(page.getByText('HTTP Request Input')).toBeVisible();
 
     await page.locator('input[id="request-input-title"]').fill('myTitle');
     await page.locator('input[id="request-input-completed"]').fill('true');
     // Trigger change event by pressing Tab or clicking elsewhere
     await page.locator('input[id="request-input-completed"]').press('Tab');
 
-    // Wait a bit for the URI to update
-    await page.waitForTimeout(500);
-
+    // Wait for the URI to update by checking it contains the expected value
     await expect(page.locator('[id="request-input-expanded-uri"]'))
-      .toContainText('title=myTitle');
+      .toContainText('title=myTitle', { timeout: 2000 });
   });
 
   test('should display correct properties HAL-FORMS POST request dialog', async ({ page }) => {
@@ -102,11 +141,38 @@ test.describe('HAL Explorer App', () => {
     // Click the first POST button (Post 1 template)
     await page.locator('button.icon-plus').last().click();
 
+    // Wait for the modal to be fully visible (Bootstrap modal has animation)
+    const modal = page.locator('#httpRequestModal');
+    await expect(modal).toHaveClass(/show/, { timeout: 10000 });
+
     // Verify the HTTP Request Input modal opens
     await expect(page.getByText('HTTP Request Input')).toBeVisible();
 
     // Verify the label with title "POST 2" is visible (proves correct template loaded)
     await expect(page.locator('label[title="post2"]')).toBeVisible();
+  });
+
+  test('should update URI input field when clicking a link', async ({ page }) => {
+    // Navigate to the root API which has links
+    await page.goto('/#uri=http://localhost:3000/index.hal.json');
+    await page.waitForLoadState('networkidle');
+
+    // Verify the initial URI is displayed in the input field
+    const uriInput = page.locator('#InputApiUri');
+    await expect(uriInput).toHaveValue('http://localhost:3000/index.hal.json');
+
+    // Click the GET button for the 'chatty:users' link (first non-templated link)
+    // This simulates clicking a link icon in the UI
+    await page.locator('button.icon-left-open').first().click();
+
+    // Wait for the browser URL to update
+    await expect(page).toHaveURL(/#uri=http:\/\/localhost:3000\/users\.hal\.json/);
+
+    // Wait for navigation to complete
+    await page.waitForLoadState('networkidle');
+
+    // Verify the URI input field has been updated to the new URL
+    await expect(uriInput).toHaveValue('http://localhost:3000/users.hal.json');
   });
 
 });
