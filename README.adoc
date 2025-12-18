@@ -96,8 +96,7 @@ src/main/java/resources/static/hal-explorer.
 
 * `yarn test` to run the unit test suite against your default browser.
 * `yarn test-headless` to run the unit test suite against headless Chrome.
-* `yarn e2e` to run the e2e test suite against your default browser.
-* `yarn e2e-headless` to run the e2e test suite against headless Chrome.
+* `yarn e2e` to run the e2e test suite against default browsers (using Playwright).
 
 Take a look at `package.json` for more test options.
 
