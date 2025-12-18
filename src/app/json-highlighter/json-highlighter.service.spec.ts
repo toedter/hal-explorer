@@ -7,7 +7,7 @@ describe('JsonHighlighterService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [JsonHighlighterService]
+      providers: [JsonHighlighterService],
     });
     jsonHighlighterService = TestBed.inject(JsonHighlighterService);
   });
@@ -17,20 +17,18 @@ describe('JsonHighlighterService', () => {
   }));
 
   it('should highlight HAL JSON', inject([JsonHighlighterService], () => {
-    const output = jsonHighlighterService.syntaxHighlight('{\n' +
-      '  "_links": {\n' +
-      '    "self": {\n' +
-      '      "href": "/api/buildinfo"\n' +
-      '    }\n' +
-      '  }\n' +
-      '}');
-    expect(output).toBe('{\n' +
-      '  <span class="hal">"_links":</span> {\n' +
-      '    <span class="key">"self":</span> {\n' +
-      '      <span class="key">"href":</span> <span class="string">"/api/buildinfo"</span>\n' +
-      '    }\n' +
-      '  }\n' +
-      '}');
+    const output = jsonHighlighterService.syntaxHighlight(
+      '{\n' + '  "_links": {\n' + '    "self": {\n' + '      "href": "/api/buildinfo"\n' + '    }\n' + '  }\n' + '}'
+    );
+    expect(output).toBe(
+      '{\n' +
+        '  <span class="hal">"_links":</span> {\n' +
+        '    <span class="key">"self":</span> {\n' +
+        '      <span class="key">"href":</span> <span class="string">"/api/buildinfo"</span>\n' +
+        '    }\n' +
+        '  }\n' +
+        '}'
+    );
   }));
 
   it('should highlight number', inject([JsonHighlighterService], () => {

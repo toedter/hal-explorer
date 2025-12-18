@@ -6,15 +6,23 @@ import { AppService } from '../app.service';
 import { KeyValuePipe } from '@angular/common';
 
 export class Link {
-  constructor(public rel: string, public href: string,
-              public title: string, public name: string,
-              public docUri?: string, public options?: string) {
-  }
+  constructor(
+    public rel: string,
+    public href: string,
+    public title: string,
+    public name: string,
+    public docUri?: string,
+    public options?: string
+  ) {}
 }
 
 class EmbeddedResource {
-  constructor(public name: string, public content: any, public isArray: boolean, public docUri?: string) {
-  }
+  constructor(
+    public name: string,
+    public content: any,
+    public isArray: boolean,
+    public docUri?: string
+  ) {}
 }
 
 export interface HalFormsTemplate {
@@ -26,11 +34,11 @@ export interface HalFormsTemplate {
 }
 
 @Component({
-    selector: 'app-response-explorer',
-    templateUrl: './response-explorer.component.html',
-    styleUrls: ['./response-explorer.component.css'],
-    encapsulation: ViewEncapsulation.None,
-    imports: [KeyValuePipe]
+  selector: 'app-response-explorer',
+  templateUrl: './response-explorer.component.html',
+  styleUrls: ['./response-explorer.component.css'],
+  encapsulation: ViewEncapsulation.None,
+  imports: [KeyValuePipe],
 })
 export class ResponseExplorerComponent implements OnInit {
   @Input() jsonRoot: any;
@@ -62,28 +70,29 @@ export class ResponseExplorerComponent implements OnInit {
     if (this.jsonRoot) {
       this.processJsonObject(this.jsonRoot);
     } else {
-      this.requestService.getResponseObservable()
-        .subscribe({
-          next: (response: Response) => {
-            const httpResponse = response.httpResponse;
-            this.httpErrorResponse = response.httpErrorResponse;
-            if (httpResponse) {
-              this.responseUrl = httpResponse.url;
-              this.isHalFormsMediaType = false;
-              const contentType = httpResponse.headers.get('content-type');
-              if ((contentType?.startsWith('application/prs.hal-forms+json') && httpResponse?.body?._templates)
-                || (this.responseUrl?.endsWith('.hal-forms.json') && httpResponse?.body?._templates)) {
-                this.isHalFormsMediaType = true;
-              }
-              if (!(typeof httpResponse.body === 'string' || httpResponse.body instanceof String)) {
-                this.processJsonObject(httpResponse.body);
-              } else {
-                this.processJsonObject({});
-              }
+      this.requestService.getResponseObservable().subscribe({
+        next: (response: Response) => {
+          const httpResponse = response.httpResponse;
+          this.httpErrorResponse = response.httpErrorResponse;
+          if (httpResponse) {
+            this.responseUrl = httpResponse.url;
+            this.isHalFormsMediaType = false;
+            const contentType = httpResponse.headers.get('content-type');
+            if (
+              (contentType?.startsWith('application/prs.hal-forms+json') && httpResponse?.body?._templates) ||
+              (this.responseUrl?.endsWith('.hal-forms.json') && httpResponse?.body?._templates)
+            ) {
+              this.isHalFormsMediaType = true;
             }
-          },
-          error: error => console.error('Error during HTTP request: ' + JSON.stringify(error))
-        });
+            if (!(typeof httpResponse.body === 'string' || httpResponse.body instanceof String)) {
+              this.processJsonObject(httpResponse.body);
+            } else {
+              this.processJsonObject({});
+            }
+          }
+        },
+        error: error => console.error('Error during HTTP request: ' + JSON.stringify(error)),
+      });
     }
   }
 
@@ -108,8 +117,7 @@ export class ResponseExplorerComponent implements OnInit {
 
     if (Object.keys(jsonProperties).length > 0) {
       this.showProperties = true;
-      this.properties =
-        this.jsonHighlighterService.syntaxHighlight(JSON.stringify(jsonProperties, undefined, 2));
+      this.properties = this.jsonHighlighterService.syntaxHighlight(JSON.stringify(jsonProperties, undefined, 2));
     }
 
     const links = json._links;
@@ -120,25 +128,22 @@ export class ResponseExplorerComponent implements OnInit {
     }
     if (links) {
       this.showLinks = true;
-      Object.getOwnPropertyNames(links).forEach(
-        (val: string) => {
-          if (links[val] instanceof Array) {
-            links[val].forEach(
-              (entry: Link, i: number) => {
-                if (val === 'curies') {
-                  this.curieLinks.push(entry);
-                }
-                this.links.push(new Link(val + ' [' + i + ']', entry.href, entry.title, entry.name));
-              });
-          } else {
-            const link = new Link(val, links[val].href, links[val].title, links[val].name);
-            this.links.push(link);
-            if (val === 'self') {
-              this.selfLink = link;
+      Object.getOwnPropertyNames(links).forEach((val: string) => {
+        if (links[val] instanceof Array) {
+          links[val].forEach((entry: Link, i: number) => {
+            if (val === 'curies') {
+              this.curieLinks.push(entry);
             }
+            this.links.push(new Link(val + ' [' + i + ']', entry.href, entry.title, entry.name));
+          });
+        } else {
+          const link = new Link(val, links[val].href, links[val].title, links[val].name);
+          this.links.push(link);
+          if (val === 'self') {
+            this.selfLink = link;
           }
         }
-      );
+      });
 
       if (this.appService.getHttpOptions()) {
         this.links.forEach((link: Link) => {
@@ -168,11 +173,9 @@ export class ResponseExplorerComponent implements OnInit {
         }
       });
 
-      Object.getOwnPropertyNames(embedded).forEach(
-        (val: string) => {
-          this.embedded.push(new EmbeddedResource(val, embedded[val], embedded[val] instanceof Array, docUri));
-        }
-      );
+      Object.getOwnPropertyNames(embedded).forEach((val: string) => {
+        this.embedded.push(new EmbeddedResource(val, embedded[val], embedded[val] instanceof Array, docUri));
+      });
     }
 
     if (this.isHalFormsMediaType && json._templates) {
@@ -198,9 +201,11 @@ export class ResponseExplorerComponent implements OnInit {
       return '';
     }
 
-    if (!this.isHalFormsMediaType
-      || Command[command].toLowerCase() === 'get'
-      || this.appService.getAllHttpMethodsForLinks()) {
+    if (
+      !this.isHalFormsMediaType ||
+      Command[command].toLowerCase() === 'get' ||
+      this.appService.getAllHttpMethodsForLinks()
+    ) {
       return '';
     }
 
@@ -226,20 +231,19 @@ export class ResponseExplorerComponent implements OnInit {
     let target = href;
     if (this.isHalFormsMediaType) {
       if (this.templates) {
-        Object.getOwnPropertyNames(this.templates).forEach(
-          (val: string) => {
-            if (this.templates[val].method === Command[command].toLowerCase()) {
-              if (this.templates[val].target) {
-                target = this.templates[val].target;
-                return;
-              }
+        Object.getOwnPropertyNames(this.templates).forEach((val: string) => {
+          if (this.templates[val].method === Command[command].toLowerCase()) {
+            if (this.templates[val].target) {
+              target = this.templates[val].target;
+              return;
             }
           }
-        );
+        });
       }
     }
 
-    if (this.responseUrl) { // fixes #19
+    if (this.responseUrl) {
+      // fixes #19
       const absoluteURL = new URL(target, this.responseUrl).href;
       target = decodeURI(absoluteURL);
     }

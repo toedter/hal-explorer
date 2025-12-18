@@ -6,31 +6,47 @@ import { URITemplate } from 'uri-templates';
 import { AppService, RequestHeader } from '../app.service';
 import { Link } from '../response-explorer/response-explorer.component';
 
-export enum EventType {FillHttpRequest}
+export enum EventType {
+  FillHttpRequest,
+}
 
-export enum Command {Get, Post, Put, Patch, Delete, Document}
+export enum Command {
+  Get,
+  Post,
+  Put,
+  Patch,
+  Delete,
+  Document,
+}
 
 export class HttpRequestEvent {
-  constructor(public type: EventType, public command: Command,
-              public uri: string, public jsonSchema?: any, public halFormsTemplate?: any) {
-  }
+  constructor(
+    public type: EventType,
+    public command: Command,
+    public uri: string,
+    public jsonSchema?: any,
+    public halFormsTemplate?: any
+  ) {}
 }
 
 export class UriTemplateParameter {
-  constructor(public key: string, public value: string) {
-  }
+  constructor(
+    public key: string,
+    public value: string
+  ) {}
 }
 
 export class Response {
-  constructor(public httpResponse: HttpResponse<any>, public httpErrorResponse: HttpErrorResponse) {
-  }
+  constructor(
+    public httpResponse: HttpResponse<any>,
+    public httpErrorResponse: HttpErrorResponse
+  ) {}
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RequestService {
-
   private responseSubject: Subject<Response> = new Subject<Response>();
   private responseObservable: Observable<Response> = this.responseSubject.asObservable();
 
@@ -40,10 +56,9 @@ export class RequestService {
   private documentationSubject: Subject<string> = new Subject<string>();
   private documentationObservable: Observable<string> = this.documentationSubject.asObservable();
 
-  private requestHeaders: HttpHeaders = new HttpHeaders(
-    {
-      Accept: 'application/prs.hal-forms+json, application/hal+json, application/json, */*'
-    });
+  private requestHeaders: HttpHeaders = new HttpHeaders({
+    Accept: 'application/prs.hal-forms+json, application/hal+json, application/json, */*',
+  });
   private customRequestHeaders: RequestHeader[];
 
   private appService = inject(AppService);
@@ -70,7 +85,12 @@ export class RequestService {
 
   requestUri(uri: string, httpMethod: string, body?: string, contentType?: string) {
     let headers = this.requestHeaders;
-    if (contentType || httpMethod.toLowerCase() === 'post' || httpMethod.toLowerCase() === 'put' || httpMethod.toLowerCase() === 'patch') {
+    if (
+      contentType ||
+      httpMethod.toLowerCase() === 'post' ||
+      httpMethod.toLowerCase() === 'put' ||
+      httpMethod.toLowerCase() === 'patch'
+    ) {
       if (contentType) {
         headers = headers.set('Content-Type', contentType);
       } else {
@@ -79,21 +99,25 @@ export class RequestService {
     } else {
       this.appService.setUri(uri, false);
     }
-    this.http.request(httpMethod, uri, {headers, observe: 'response', body}).subscribe({
-        next: (response: HttpResponse<any>) => {
-          this.responseSubject.next(new Response(response, null));
-        },
-        error: (error: HttpErrorResponse) => {
-          this.responseSubject.next(new Response(null, error));
-        }
-      }
-    );
+    this.http.request(httpMethod, uri, { headers, observe: 'response', body }).subscribe({
+      next: (response: HttpResponse<any>) => {
+        this.responseSubject.next(new Response(response, null));
+      },
+      error: (error: HttpErrorResponse) => {
+        this.responseSubject.next(new Response(null, error));
+      },
+    });
   }
 
   processCommand(command: Command, uri: string, halFormsTemplate?: any) {
     if (command === Command.Get && !this.isUriTemplated(uri) && !halFormsTemplate) {
       this.requestUri(uri, 'GET');
-    } else if (command === Command.Get || command === Command.Post || command === Command.Put || command === Command.Patch) {
+    } else if (
+      command === Command.Get ||
+      command === Command.Post ||
+      command === Command.Put ||
+      command === Command.Patch
+    ) {
       const event = new HttpRequestEvent(EventType.FillHttpRequest, command, uri);
       if (halFormsTemplate || command === Command.Get) {
         event.halFormsTemplate = halFormsTemplate;
@@ -119,15 +143,14 @@ export class RequestService {
       const uriTemplate: URITemplate = utpl(uri);
       uri = uriTemplate.fill({});
     }
-    this.http.request('HEAD', uri,
-      {headers: this.requestHeaders, observe: 'response'}).subscribe({
+    this.http.request('HEAD', uri, { headers: this.requestHeaders, observe: 'response' }).subscribe({
       next: (response: HttpResponse<any>) => {
         let hasProfile = false;
         const linkHeader = response.headers.get('link');
         if (linkHeader) {
           const w3cLinks = linkHeader.split(',');
           let profileUri;
-          w3cLinks.forEach((w3cLink) => {
+          w3cLinks.forEach(w3cLink => {
             const parts = w3cLink.split(';');
 
             const hrefWrappedWithBrackets = parts[0];
@@ -144,10 +167,9 @@ export class RequestService {
 
           if (profileUri) {
             hasProfile = true;
-            let headers = new HttpHeaders(
-              {
-                Accept: 'application/schema+json'
-              });
+            let headers = new HttpHeaders({
+              Accept: 'application/schema+json',
+            });
 
             if (this.customRequestHeaders) {
               for (const requestHeader of this.customRequestHeaders) {
@@ -155,7 +177,7 @@ export class RequestService {
               }
             }
 
-            this.http.get(profileUri, {headers, observe: 'response'}).subscribe({
+            this.http.get(profileUri, { headers, observe: 'response' }).subscribe({
               next: (httpResponse: HttpResponse<any>) => {
                 const jsonSchema = httpResponse.body;
 
@@ -170,9 +192,11 @@ export class RequestService {
 
                 // since we use those properties to generate a editor for POST, PUT and PATCH,
                 // "readOnly" properties should not be displayed
-                Object.keys(jsonSchema.properties).forEach((property) => {
-                  if (Object.prototype.hasOwnProperty.call(jsonSchema.properties[property], 'readOnly') &&
-                    jsonSchema.properties[property].readOnly === true) {
+                Object.keys(jsonSchema.properties).forEach(property => {
+                  if (
+                    Object.prototype.hasOwnProperty.call(jsonSchema.properties[property], 'readOnly') &&
+                    jsonSchema.properties[property].readOnly === true
+                  ) {
                     delete jsonSchema.properties[property];
                   }
                 });
@@ -183,7 +207,7 @@ export class RequestService {
               error: () => {
                 console.warn('Cannot get JSON schema for: ', profileUri);
                 this.needInfoSubject.next(httpRequestEvent);
-              }
+              },
             });
           }
         }
@@ -195,7 +219,7 @@ export class RequestService {
       error: () => {
         console.warn('Cannot get JSON schema information for: ', uri);
         this.needInfoSubject.next(httpRequestEvent);
-      }
+      },
     });
   }
 
@@ -211,7 +235,9 @@ export class RequestService {
     }
     if (addDefaultAcceptHeader === true) {
       this.requestHeaders = this.requestHeaders.append(
-        'Accept', 'application/prs.hal-forms+json, application/hal+json, application/json, */*');
+        'Accept',
+        'application/prs.hal-forms+json, application/hal+json, application/json, */*'
+      );
     }
   }
 
@@ -260,18 +286,23 @@ export class RequestService {
       property.options.link.href = uriTemplate.fill({});
     }
 
-    this.http.get(property.options.link.href, {
-      headers,
-      observe: 'response'
-    }).subscribe((response: HttpResponse<any>) => {
-      property.options.inline = response.body;
-      const contentType = response.headers.get('content-type');
-      if (contentType
-        && (contentType.startsWith('application/prs.hal-forms+json') || contentType.startsWith('application/hal+json'))
-        && response.body._embedded) {
-        property.options.inline = response.body._embedded[Object.keys(response.body._embedded)[0]];
-      }
-    });
+    this.http
+      .get(property.options.link.href, {
+        headers,
+        observe: 'response',
+      })
+      .subscribe((response: HttpResponse<any>) => {
+        property.options.inline = response.body;
+        const contentType = response.headers.get('content-type');
+        if (
+          contentType &&
+          (contentType.startsWith('application/prs.hal-forms+json') ||
+            contentType.startsWith('application/hal+json')) &&
+          response.body._embedded
+        ) {
+          property.options.inline = response.body._embedded[Object.keys(response.body._embedded)[0]];
+        }
+      });
   }
 
   getHttpOptions(link: Link): void {
@@ -281,14 +312,14 @@ export class RequestService {
       href = uriTemplate.fill({});
     }
     const headers = new HttpHeaders().set('Accept', '*/*');
-    this.http.options(href, {headers, observe: 'response'}).subscribe({
+    this.http.options(href, { headers, observe: 'response' }).subscribe({
       next: (httpResponse: HttpResponse<any>) => {
         link.options = httpResponse.headers.get('allow');
       },
       error: () => {
         console.warn('Cannot get OPTIONS for: ', link);
         link.options = 'http-options-error';
-      }
-    })
+      },
+    });
   }
 }

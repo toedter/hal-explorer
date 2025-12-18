@@ -21,9 +21,9 @@ describe('ResponseDetailsComponent', () => {
     TestBed.configureTestingModule({
       imports: [ResponseDetailsComponent],
       providers: [
-        {provide: RequestService, useValue: requestServiceMock},
-        {provide: JsonHighlighterService, useValue: jsonHighlighterServiceMock}
-      ]
+        { provide: RequestService, useValue: requestServiceMock },
+        { provide: JsonHighlighterService, useValue: jsonHighlighterServiceMock },
+      ],
     }).compileComponents();
   }));
 
@@ -38,32 +38,31 @@ describe('ResponseDetailsComponent', () => {
   });
 
   it('should handle json HTTP response', () => {
-    responseSubject.next(new Response(new HttpResponse({body: {key: 'test'}}), null));
+    responseSubject.next(new Response(new HttpResponse({ body: { key: 'test' } }), null));
 
     expect(component.httpResponse.status).toBe(200);
     expect(component.isString).toBeFalsy();
   });
 
   it('should handle string HTTP response', () => {
-    responseSubject.next((new Response(new HttpResponse({body: 'string'}), null)));
+    responseSubject.next(new Response(new HttpResponse({ body: 'string' }), null));
 
     expect(component.httpResponse.status).toBe(200);
     expect(component.isString).toBeTruthy();
   });
 
   it('should handle HTTP response headers', () => {
-    const responseHeaders: HttpHeaders = new HttpHeaders(
-      {
-        key: 'value'
-      });
-    responseSubject.next(new Response(new HttpResponse({headers: responseHeaders}), null));
+    const responseHeaders: HttpHeaders = new HttpHeaders({
+      key: 'value',
+    });
+    responseSubject.next(new Response(new HttpResponse({ headers: responseHeaders }), null));
 
     expect(component.httpResponse.status).toBe(200);
     expect(component.httpResponse.headers.keys().length).toBe(1);
   });
 
   it('should handle HTTP response status 0', () => {
-    responseSubject.next(new Response(new HttpResponse({status: 0, statusText: 'unknown'}), null));
+    responseSubject.next(new Response(new HttpResponse({ status: 0, statusText: 'unknown' }), null));
 
     expect(component.httpResponse.status).toBe(0);
     expect(component.httpResponse.statusText).toBe('unknown');
@@ -72,8 +71,9 @@ describe('ResponseDetailsComponent', () => {
   it('should handle HTTP response error (as string)', () => {
     spyOn(window.console, 'error');
 
-    responseSubject.next(new Response(null,
-      new HttpErrorResponse({status: 404, statusText: 'Not Found', error: 'error string'})));
+    responseSubject.next(
+      new Response(null, new HttpErrorResponse({ status: 404, statusText: 'Not Found', error: 'error string' }))
+    );
 
     expect(window.console.error).not.toHaveBeenCalled();
   });
@@ -81,8 +81,9 @@ describe('ResponseDetailsComponent', () => {
   it('should handle HTTP response error (as object)', () => {
     spyOn(window.console, 'error');
 
-    responseSubject.next(new Response(null,
-      new HttpErrorResponse({status: 404, statusText: 'Not Found', error: {error: 0}})));
+    responseSubject.next(
+      new Response(null, new HttpErrorResponse({ status: 404, statusText: 'Not Found', error: { error: 0 } }))
+    );
 
     expect(window.console.error).not.toHaveBeenCalled();
   });
@@ -90,7 +91,7 @@ describe('ResponseDetailsComponent', () => {
   it('should handle HTTP response subject error', () => {
     spyOn(window.console, 'error');
 
-    responseSubject.error(new Response(null, new HttpErrorResponse({status: 404, statusText: 'Not Found'})));
+    responseSubject.error(new Response(null, new HttpErrorResponse({ status: 404, statusText: 'Not Found' })));
 
     expect(window.console.error).toHaveBeenCalled();
   });
@@ -98,7 +99,7 @@ describe('ResponseDetailsComponent', () => {
   it('should handle HTTP response subject error with status 0', () => {
     spyOn(window.console, 'error');
 
-    responseSubject.next(new Response(null, new HttpErrorResponse({status: 0, statusText: 'Unknown status'})));
+    responseSubject.next(new Response(null, new HttpErrorResponse({ status: 0, statusText: 'Unknown status' })));
 
     expect(window.console.error).not.toHaveBeenCalled();
     expect(component.httpErrorResponse.status).toBe(0);

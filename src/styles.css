@@ -1,10 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
-@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 pre {
   padding: 5px;
   margin: 5px;
-  color: inherit !important
+  color: inherit !important;
 }
 
 .string {
@@ -35,8 +35,8 @@ pre {
   color: #a94442;
 }
 
-.form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+.form-control::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: lightgrey;
   opacity: 1; /* Firefox */
 }
-

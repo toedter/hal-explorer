@@ -82,11 +82,14 @@ describe('AppService', () => {
     expect(service.getCustomRequestHeaders()[0].value).toBe('application/json');
     expect(service.getCustomRequestHeaders()[1].key).toBe('authorization');
     expect(service.getCustomRequestHeaders()[1].value).toBe('bearer euztsfghfhgwztuzt');
-    expect(window.location.hash).toBe('#hkey0=accept&hval0=application/json&hkey1=authorization&hval1=bearer%20euztsfghfhgwztuzt');
+    expect(window.location.hash).toBe(
+      '#hkey0=accept&hval0=application/json&hkey1=authorization&hval1=bearer%20euztsfghfhgwztuzt'
+    );
   });
 
   it('should parse window location hash', () => {
-    window.location.hash = '#theme=Cosmo&layout=3&httpOptions=true&allHttpMethodsForLinks=true&hkey0=accept&hval0=text/plain&uri=https://chatty42.herokuapp.com/api/users';
+    window.location.hash =
+      '#theme=Cosmo&layout=3&httpOptions=true&allHttpMethodsForLinks=true&hkey0=accept&hval0=text/plain&uri=https://chatty42.herokuapp.com/api/users';
     service = new AppService();
 
     expect(service.getCustomRequestHeaders()[0].key).toBe('accept');
@@ -99,7 +102,8 @@ describe('AppService', () => {
   });
 
   it('should parse window location hash with hval before hkey', () => {
-    window.location.hash = '#theme=Cosmo&layout=3&hval0=text/plain&hkey0=accept&uri=https://chatty42.herokuapp.com/api/users';
+    window.location.hash =
+      '#theme=Cosmo&layout=3&hval0=text/plain&hkey0=accept&uri=https://chatty42.herokuapp.com/api/users';
     service = new AppService();
 
     expect(service.getCustomRequestHeaders()[0].key).toBe('accept');
@@ -110,7 +114,8 @@ describe('AppService', () => {
   });
 
   it('should parse window location hash with deprecated hkey "url"', () => {
-    window.location.hash = '#theme=Cosmo&layout=3&hval0=text/plain&hkey0=accept&url=https://chatty42.herokuapp.com/api/users';
+    window.location.hash =
+      '#theme=Cosmo&layout=3&hval0=text/plain&hkey0=accept&url=https://chatty42.herokuapp.com/api/users';
     service = new AppService();
 
     expect(service.getCustomRequestHeaders()[0].key).toBe('accept');
@@ -121,7 +126,8 @@ describe('AppService', () => {
   });
 
   it('should parse window location hash with unknown hkeys', () => {
-    window.location.hash = '#theme=Cosmo&xxx=7&layout=3&hval0=text/plain&hkey0=accept&yyy=xxx&url=https://chatty42.herokuapp.com/api/users';
+    window.location.hash =
+      '#theme=Cosmo&xxx=7&layout=3&hval0=text/plain&hkey0=accept&yyy=xxx&url=https://chatty42.herokuapp.com/api/users';
     service = new AppService();
 
     expect(service.getCustomRequestHeaders()[0].key).toBe('accept');
@@ -141,5 +147,4 @@ describe('AppService', () => {
     expect(service.themeObservable).toBeDefined();
     expect(service.uriObservable).toBeDefined();
   });
-
 });

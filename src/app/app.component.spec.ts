@@ -17,9 +17,16 @@ describe('AppComponent', () => {
   let allHttpMethodsForLinksSubject;
 
   beforeEach(waitForAsync(() => {
-    const requestServiceMock = jasmine.createSpyObj(
-      ['getResponseObservable', 'getNeedInfoObservable', 'setCustomHeaders',
-        'getUri', 'getInputType', 'requestUri', 'computeHalFormsOptionsFromLink', 'getDocumentationObservable']);
+    const requestServiceMock = jasmine.createSpyObj([
+      'getResponseObservable',
+      'getNeedInfoObservable',
+      'setCustomHeaders',
+      'getUri',
+      'getInputType',
+      'requestUri',
+      'computeHalFormsOptionsFromLink',
+      'getDocumentationObservable',
+    ]);
     const needInfoSubject = new Subject<string>();
     responseSubject = new Subject<string>();
     documentationSubject = new Subject<string>();
@@ -40,14 +47,28 @@ describe('AppComponent', () => {
     const uriSubject = new Subject<string>();
     const requestHeaderSubject = new Subject<RequestHeader[]>();
     const appServiceMock = jasmine.createSpyObj(
-      ['getUri', 'getCustomRequestHeaders', 'setCustomRequestHeaders',
-        'getTheme', 'setTheme', 'getLayout', 'setLayout',
-        'getHttpOptions', 'setHttpOptions', 'getAllHttpMethodsForLinks', 'setAllHttpMethodsForLinks'],
+      [
+        'getUri',
+        'getCustomRequestHeaders',
+        'setCustomRequestHeaders',
+        'getTheme',
+        'setTheme',
+        'getLayout',
+        'setLayout',
+        'getHttpOptions',
+        'setHttpOptions',
+        'getAllHttpMethodsForLinks',
+        'setAllHttpMethodsForLinks',
+      ],
       {
-        themeObservable: themeSubject, layoutObservable: layoutSubject,
-        httpOptionsObservable: httpOptionsSubject, allHttpMethodsForLinksObservable: allHttpMethodsForLinksSubject,
-        uriObservable: uriSubject, requestHeadersObservable: requestHeaderSubject
-      });
+        themeObservable: themeSubject,
+        layoutObservable: layoutSubject,
+        httpOptionsObservable: httpOptionsSubject,
+        allHttpMethodsForLinksObservable: allHttpMethodsForLinksSubject,
+        uriObservable: uriSubject,
+        requestHeadersObservable: requestHeaderSubject,
+      }
+    );
 
     appServiceMock.getUri.and.returnValue('http://localhost/api');
     appServiceMock.getCustomRequestHeaders.and.returnValue([]);
@@ -62,10 +83,10 @@ describe('AppComponent', () => {
       imports: [AppComponent],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
-        {provide: AppService, useValue: appServiceMock},
-        {provide: RequestService, useValue: requestServiceMock},
-        {provide: DomSanitizer, useValue: domSanitizerMock}
-      ]
+        { provide: AppService, useValue: appServiceMock },
+        { provide: RequestService, useValue: requestServiceMock },
+        { provide: DomSanitizer, useValue: domSanitizerMock },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
@@ -125,7 +146,7 @@ describe('AppComponent', () => {
   });
 
   it('should select settings (HTTP OPTIONS)', () => {
-    component.selectSetting('Use HTTP OPTIONS')
+    component.selectSetting('Use HTTP OPTIONS');
 
     expect(component.useHttpOptions).toBeTrue();
   });
@@ -137,15 +158,14 @@ describe('AppComponent', () => {
   });
 
   it('should select settings (Link methods)', () => {
-    component.selectSetting('Enable all HTTP Methods for HAL-FORMS Links')
+    component.selectSetting('Enable all HTTP Methods for HAL-FORMS Links');
 
     expect(component.enableAllHttpMethodsForLinks).toBeTrue();
   });
 
   it('should select settings (Layout)', () => {
-    component.selectSetting('2 Column Layout')
+    component.selectSetting('2 Column Layout');
 
     expect(component.isTwoColumnLayout).toBeTrue();
   });
-
 });

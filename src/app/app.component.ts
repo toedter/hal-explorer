@@ -8,10 +8,10 @@ import { ResponseExplorerComponent } from './response-explorer/response-explorer
 import { RequestComponent } from './request/request.component';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css'],
-    imports: [RequestComponent, ResponseExplorerComponent, ResponseDetailsComponent, DocumentationComponent]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+  imports: [RequestComponent, ResponseExplorerComponent, ResponseDetailsComponent, DocumentationComponent],
 })
 export class AppComponent implements OnInit {
   themes: string[] = [
@@ -40,13 +40,10 @@ export class AppComponent implements OnInit {
     'United',
     'Vapor',
     'Yeti',
-    'Zephyr'
+    'Zephyr',
   ];
 
-  layouts: string[] = [
-    '2 Columns',
-    '3 Columns'
-  ];
+  layouts: string[] = ['2 Columns', '3 Columns'];
 
   settings: string[] = [
     '2 Column Layout',
@@ -54,7 +51,7 @@ export class AppComponent implements OnInit {
     '---',
     'Use HTTP OPTIONS',
     '---',
-    'Enable all HTTP Methods for HAL-FORMS Links'
+    'Enable all HTTP Methods for HAL-FORMS Links',
   ];
 
   isCustomTheme = false;
@@ -72,15 +69,13 @@ export class AppComponent implements OnInit {
   private sanitizer = inject(DomSanitizer);
 
   ngOnInit(): void {
-    this.requestService.getResponseObservable()
-      .subscribe(() => {
-        this.showDocumentation = false;
-      });
+    this.requestService.getResponseObservable().subscribe(() => {
+      this.showDocumentation = false;
+    });
 
-    this.requestService.getDocumentationObservable()
-      .subscribe(() => {
-        this.showDocumentation = true;
-      });
+    this.requestService.getDocumentationObservable().subscribe(() => {
+      this.showDocumentation = true;
+    });
 
     this.appService.themeObservable.subscribe(theme => this.changeTheme(theme));
     this.changeTheme(this.appService.getTheme());
@@ -91,16 +86,18 @@ export class AppComponent implements OnInit {
     this.appService.httpOptionsObservable.subscribe(useHttpOptions => this.changeHttpOptions(useHttpOptions));
     this.changeHttpOptions(this.appService.getHttpOptions());
 
-    this.appService.allHttpMethodsForLinksObservable.subscribe(
-      allHttpMethodsForLinks => this.changeAllHttpMethodsForLinks(allHttpMethodsForLinks));
+    this.appService.allHttpMethodsForLinksObservable.subscribe(allHttpMethodsForLinks =>
+      this.changeAllHttpMethodsForLinks(allHttpMethodsForLinks)
+    );
     this.changeAllHttpMethodsForLinks(this.appService.getAllHttpMethodsForLinks());
   }
 
   changeTheme(theme: string) {
     this.isCustomTheme = theme !== this.themes[0];
     if (this.isCustomTheme) {
-      this.selectedThemeUrl =
-        this.sanitizer.bypassSecurityTrustResourceUrl('https://bootswatch.com/5/' + theme.toLowerCase() + '/bootstrap.min.css');
+      this.selectedThemeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+        'https://bootswatch.com/5/' + theme.toLowerCase() + '/bootstrap.min.css'
+      );
     }
     this.appService.setTheme(theme);
   }
@@ -128,7 +125,7 @@ export class AppComponent implements OnInit {
       this.enableAllHttpMethodsForLinks = !this.enableAllHttpMethodsForLinks;
       this.appService.setAllHttpMethodsForLinks(this.enableAllHttpMethodsForLinks);
     } else {
-      this.changeLayout(setting)
+      this.changeLayout(setting);
     }
   }
 
@@ -141,9 +138,11 @@ export class AppComponent implements OnInit {
   }
 
   getSettingsIconCheckStyle(setting: string): string {
-    if ((setting.includes('OPTIONS') && this.useHttpOptions)
-      || setting.includes(this.appService.getLayout())
-      || (setting.includes('Links') && this.enableAllHttpMethodsForLinks)) {
+    if (
+      (setting.includes('OPTIONS') && this.useHttpOptions) ||
+      setting.includes(this.appService.getLayout()) ||
+      (setting.includes('Links') && this.enableAllHttpMethodsForLinks)
+    ) {
       return '';
     }
 

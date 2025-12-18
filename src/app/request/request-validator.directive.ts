@@ -3,8 +3,8 @@ import { AbstractControl, NG_VALIDATORS, UntypedFormControl, Validator, Validato
 
 @Directive({
   selector: '[appHalFormsProperty]',
-  providers: [{provide: NG_VALIDATORS, useExisting: RequestValidatorDirective, multi: true}],
-  standalone: true
+  providers: [{ provide: NG_VALIDATORS, useExisting: RequestValidatorDirective, multi: true }],
+  standalone: true,
 })
 export class RequestValidatorDirective implements Validator {
   @Input('appHalFormsProperty') halFormsProperty: any;
@@ -55,20 +55,20 @@ export class RequestValidatorDirective implements Validator {
       if (control.value instanceof Array) {
         noSelectedItems = control.value.length;
       }
-      if (this.halFormsProperty.options.maxItems && (noSelectedItems > this.halFormsProperty.options.maxItems)) {
+      if (this.halFormsProperty.options.maxItems && noSelectedItems > this.halFormsProperty.options.maxItems) {
         validationResult = Object.assign(validationResult, {
           maxItems: {
             maxItems: this.halFormsProperty.options.maxItems,
-            actual: control.value.length
-          }
+            actual: control.value.length,
+          },
         });
       }
-      if (this.halFormsProperty.options.minItems && (noSelectedItems < this.halFormsProperty.options.minItems)) {
+      if (this.halFormsProperty.options.minItems && noSelectedItems < this.halFormsProperty.options.minItems) {
         validationResult = Object.assign(validationResult, {
           minItems: {
             minItems: this.halFormsProperty.options.minItems,
-            actual: control.value.length
-          }
+            actual: control.value.length,
+          },
         });
       }
     }

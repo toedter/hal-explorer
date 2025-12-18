@@ -24,11 +24,10 @@ describe('DocumentationComponent', () => {
     TestBed.configureTestingModule({
       imports: [DocumentationComponent],
       providers: [
-        {provide: RequestService, useValue: requestServiceMock},
-        {provide: DomSanitizer, useValue: domSanitizerMock}
-      ]
-    })
-      .compileComponents();
+        { provide: RequestService, useValue: requestServiceMock },
+        { provide: DomSanitizer, useValue: domSanitizerMock },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -84,7 +83,7 @@ describe('DocumentationComponent', () => {
   });
 
   it('should get iframe doc height', () => {
-    const iFrame = {style: {}, contentWindow: {document}};
+    const iFrame = { style: {}, contentWindow: { document } };
     spyOn(document, 'getElementById').and.returnValue(iFrame as any);
 
     (window as any).setIframeHeight(1);
@@ -94,7 +93,7 @@ describe('DocumentationComponent', () => {
   });
 
   it('should not get iframe doc height from cross origin', () => {
-    const iFrame = {style: {}, contentDocument: {}};
+    const iFrame = { style: {}, contentDocument: {} };
     spyOn(document, 'getElementById').and.returnValue(iFrame as any);
 
     (window as any).setIframeHeight(1);
@@ -102,5 +101,3 @@ describe('DocumentationComponent', () => {
     expect((iFrame.style as any).height).not.toBe('10px');
   });
 });
-
-

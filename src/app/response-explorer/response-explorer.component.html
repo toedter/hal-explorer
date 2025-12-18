@@ -12,189 +12,211 @@
                 <pre [innerHTML]="properties"></pre>
               </div>
             </div>
-            <br>
+            <br />
+          </div>
+        }
+        @if (showLinks) {
+          <div>
+            <div class="legend">
+              <h5>Links</h5>
             </div>
-          }
-          @if (showLinks) {
-            <div>
-              <div class="legend">
-                <h5>Links</h5>
-              </div>
-              <div class="bs-component">
-                <div class="table-responsive-sm">
-                  <table class="table table-striped table-sm">
-                    <thead>
+            <div class="bs-component">
+              <div class="table-responsive-sm">
+                <table class="table table-striped table-sm">
+                  <thead>
+                    <tr>
+                      <th scope="col">Relation</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Title</th>
+                      <th scope="col">HTTP Request</th>
+                      <th scope="col">
+                        <span style="float: right">Doc &nbsp;</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (link of links; track link) {
                       <tr>
-                        <th scope="col">Relation</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">HTTP Request</th>
-                        <th scope="col">
-                          <span style="float: right;">Doc &nbsp;</span>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @for (link of links; track link) {
-                        <tr>
-                          <td>{{ link.rel }}</td>
-                          <td>{{ link.name }}</td>
-                          <td>{{ link.title }}</td>
-                          <td>
-                            <button
-                              [class]="getRequestButtonClass(command.Get) + ' ' + getLinkButtonClass(command.Get, link)"
-                              [disabled]="isButtonDisabled(command.Get, link)"
-                              (click)="processCommand(command.Get, getRelTargetUrl(link.href, command.Get))"
-                              title="GET Request">
-                            </button>
-                            <button
-                              [class]="getRequestButtonClass(command.Post)  + ' ' + getLinkButtonClass(command.Post, link)"
-                              [disabled]="isButtonDisabled(command.Post, link)"
-                              (click)="processCommand(command.Post, getRelTargetUrl(link.href, command.Post))"
-                              title="POST Request">
-                            </button>
-                            <button
-                              [class]="getRequestButtonClass(command.Put) + ' ' + getLinkButtonClass(command.Put, link)"
-                              [disabled]="isButtonDisabled(command.Put, link)"
-                              (click)="processCommand(command.Put, getRelTargetUrl(link.href, command.Put))"
-                              title="PUT Request">
-                            </button>
-                            <button
-                              [class]="getRequestButtonClass(command.Patch) + ' ' + getLinkButtonClass(command.Patch, link)"
-                              [disabled]="isButtonDisabled(command.Patch, link)"
-                              (click)="processCommand(command.Patch, getRelTargetUrl(link.href, command.Patch))"
-                              title="PATCH Request">
-                            </button>
-                            <button
-                              [class]="getRequestButtonClass(command.Delete) + ' ' + getLinkButtonClass(command.Delete, link)"
-                              [disabled]="isButtonDisabled(command.Delete, link)"
-                              (click)="processCommand(command.Delete, getRelTargetUrl(link.href, command.Delete))"
-                              title="DELETE Request">
-                            </button>
-                          </td>
-                          <td>
-                            <span style="float: right;">
-                              @if (link.docUri) {
-                                <button
-                                  class="icon-book ml-auto btn btn-outline-info btn-sm nav-button"
-                                  (click)="processCommand(command.Document, link.docUri)"
-                                  title="Show Documentation">
-                                </button>
-                              }
-                            </span>
-                          </td>
-                        </tr>
-                      }
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <br>
-              </div>
-            }
-            @if (hasHalFormsTemplates) {
-              <div>
-                <div class="legend">
-                  <h5>HAL-FORMS Template Elements</h5>
-                </div>
-                <div class="bs-component">
-                  <div class="table-responsive-sm">
-                    <table class="table table-striped table-sm">
-                      <thead>
-                        <tr>
-                          <th scope="col">Name</th>
-                          <th scope="col">Title</th>
-                          <th scope="col">HTTP Request</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @for (template of templates | keyvalue; track template) {
-                          <tr>
-                            <td>{{ template.key }}</td>
-                            <td>{{ template.value.title }}</td>
-                            <td>
+                        <td>{{ link.rel }}</td>
+                        <td>{{ link.name }}</td>
+                        <td>{{ link.title }}</td>
+                        <td>
+                          <button
+                            [class]="getRequestButtonClass(command.Get) + ' ' + getLinkButtonClass(command.Get, link)"
+                            [disabled]="isButtonDisabled(command.Get, link)"
+                            (click)="processCommand(command.Get, getRelTargetUrl(link.href, command.Get))"
+                            title="GET Request"
+                          ></button>
+                          <button
+                            [class]="getRequestButtonClass(command.Post) + ' ' + getLinkButtonClass(command.Post, link)"
+                            [disabled]="isButtonDisabled(command.Post, link)"
+                            (click)="processCommand(command.Post, getRelTargetUrl(link.href, command.Post))"
+                            title="POST Request"
+                          ></button>
+                          <button
+                            [class]="getRequestButtonClass(command.Put) + ' ' + getLinkButtonClass(command.Put, link)"
+                            [disabled]="isButtonDisabled(command.Put, link)"
+                            (click)="processCommand(command.Put, getRelTargetUrl(link.href, command.Put))"
+                            title="PUT Request"
+                          ></button>
+                          <button
+                            [class]="
+                              getRequestButtonClass(command.Patch) + ' ' + getLinkButtonClass(command.Patch, link)
+                            "
+                            [disabled]="isButtonDisabled(command.Patch, link)"
+                            (click)="processCommand(command.Patch, getRelTargetUrl(link.href, command.Patch))"
+                            title="PATCH Request"
+                          ></button>
+                          <button
+                            [class]="
+                              getRequestButtonClass(command.Delete) + ' ' + getLinkButtonClass(command.Delete, link)
+                            "
+                            [disabled]="isButtonDisabled(command.Delete, link)"
+                            (click)="processCommand(command.Delete, getRelTargetUrl(link.href, command.Delete))"
+                            title="DELETE Request"
+                          ></button>
+                        </td>
+                        <td>
+                          <span style="float: right">
+                            @if (link.docUri) {
                               <button
-                                [class]="getRequestButtonClass(getCommandForTemplateMethod(template.value.method))"
-                    (click)="processCommand(getCommandForTemplateMethod(template.value.method),
-                     getUrlForTemplateTarget(template.value.target), template)"
-                                [disabled]="false"
-                                title="{{template.value.method?.toUpperCase() || 'GET'}} Request">
-                              </button>
-                            </td>
-                          </tr>
-                        }
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <br>
-                </div>
-              }
-              @if (showEmbedded) {
-                <div>
-                  <div class="legend">
-                    <h5>Embedded Resources</h5>
-                  </div>
-                  <div>
-                    @for (embeddedResource of embedded; track embeddedResource; let i1 = $index) {
-                      <div class="card"
-                        [attr.id]="prefix + 'item_' + i1">
-                        <div class="card-header d-flex">
-                          <a class="text-decoration-none" data-bs-toggle="collapse" [attr.data-parent]="'#' + prefix + 'item_' + i1"
-                            [attr.href]="'#' + prefix + 'embedded_' + i1">
-                            <h5>{{ embeddedResource.name }}</h5></a>
-                          </div>
-                          <div class="card-body p-1">
-                            @if (embeddedResource.isArray) {
-                              <div [attr.id]="prefix + 'embedded_' + i1"
-                                class="collapse show">
-                                @for (subEmbeddedResource of embeddedResource.content; track subEmbeddedResource; let i2 = $index) {
-                                  <div class="card m-1"
-                                    [attr.id]="prefix + 'item_' + i1 + '_' + i2">
-                                    <div class="card-header d-flex">
-                                      <a class="text-decoration-none" data-bs-toggle="collapse"
-                                        [attr.data-parent]="'#' + prefix + 'item_' + i1 + '_' + i2"
-                                        [attr.href]="'#' + prefix + 'embedded_object_' + i2">{{ embeddedResource.name }}
-                                      [{{ i2 }}]</a>
-                                      @if (embeddedResource.docUri) {
-                                        <button
-                                          class="icon-book ms-auto btn btn-outline-info btn-sm nav-button"
-                                          (click)="processCommand(command.Document, embeddedResource.docUri)"
-                                          title="Show Documentation">
-                                        </button>
-                                      }
-                                    </div>
-                                    <div [attr.id]="prefix + 'embedded_object_' + i2" class="collapse">
-                                      <div class="card-body">
-                                        <app-response-explorer [jsonRoot]="subEmbeddedResource"
-                                          [prefix]="prefix + 'x_'"
-                                          [curieLinks]="curieLinks"
-                                          [isHalFormsMediaType]="isHalFormsMediaType">
-                                        </app-response-explorer>
-                                      </div>
-                                    </div>
-                                  </div>
-                                }
-                              </div>
+                                class="icon-book ml-auto btn btn-outline-info btn-sm nav-button"
+                                (click)="processCommand(command.Document, link.docUri)"
+                                title="Show Documentation"
+                              ></button>
                             }
-                          </div>
-                          @if (!embeddedResource.isArray) {
-                            <div [attr.id]="prefix + 'embedded_' + i1" class="collapse">
+                          </span>
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <br />
+          </div>
+        }
+        @if (hasHalFormsTemplates) {
+          <div>
+            <div class="legend">
+              <h5>HAL-FORMS Template Elements</h5>
+            </div>
+            <div class="bs-component">
+              <div class="table-responsive-sm">
+                <table class="table table-striped table-sm">
+                  <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">Title</th>
+                      <th scope="col">HTTP Request</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (template of templates | keyvalue; track template) {
+                      <tr>
+                        <td>{{ template.key }}</td>
+                        <td>{{ template.value.title }}</td>
+                        <td>
+                          <button
+                            [class]="getRequestButtonClass(getCommandForTemplateMethod(template.value.method))"
+                            (click)="
+                              processCommand(
+                                getCommandForTemplateMethod(template.value.method),
+                                getUrlForTemplateTarget(template.value.target),
+                                template
+                              )
+                            "
+                            [disabled]="false"
+                            title="{{ template.value.method?.toUpperCase() || 'GET' }} Request"
+                          ></button>
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <br />
+          </div>
+        }
+        @if (showEmbedded) {
+          <div>
+            <div class="legend">
+              <h5>Embedded Resources</h5>
+            </div>
+            <div>
+              @for (embeddedResource of embedded; track embeddedResource; let i1 = $index) {
+                <div class="card" [attr.id]="prefix + 'item_' + i1">
+                  <div class="card-header d-flex">
+                    <a
+                      class="text-decoration-none"
+                      data-bs-toggle="collapse"
+                      [attr.data-parent]="'#' + prefix + 'item_' + i1"
+                      [attr.href]="'#' + prefix + 'embedded_' + i1"
+                    >
+                      <h5>{{ embeddedResource.name }}</h5></a
+                    >
+                  </div>
+                  <div class="card-body p-1">
+                    @if (embeddedResource.isArray) {
+                      <div [attr.id]="prefix + 'embedded_' + i1" class="collapse show">
+                        @for (
+                          subEmbeddedResource of embeddedResource.content;
+                          track subEmbeddedResource;
+                          let i2 = $index
+                        ) {
+                          <div class="card m-1" [attr.id]="prefix + 'item_' + i1 + '_' + i2">
+                            <div class="card-header d-flex">
+                              <a
+                                class="text-decoration-none"
+                                data-bs-toggle="collapse"
+                                [attr.data-parent]="'#' + prefix + 'item_' + i1 + '_' + i2"
+                                [attr.href]="'#' + prefix + 'embedded_object_' + i2"
+                                >{{ embeddedResource.name }} [{{ i2 }}]</a
+                              >
+                              @if (embeddedResource.docUri) {
+                                <button
+                                  class="icon-book ms-auto btn btn-outline-info btn-sm nav-button"
+                                  (click)="processCommand(command.Document, embeddedResource.docUri)"
+                                  title="Show Documentation"
+                                ></button>
+                              }
+                            </div>
+                            <div [attr.id]="prefix + 'embedded_object_' + i2" class="collapse">
                               <div class="card-body">
-                                <app-response-explorer [jsonRoot]="embeddedResource.content"
+                                <app-response-explorer
+                                  [jsonRoot]="subEmbeddedResource"
                                   [prefix]="prefix + 'x_'"
                                   [curieLinks]="curieLinks"
-                                  [isHalFormsMediaType]="isHalFormsMediaType">
+                                  [isHalFormsMediaType]="isHalFormsMediaType"
+                                >
                                 </app-response-explorer>
                               </div>
                             </div>
-                          }
-                        </div>
-                      }
-                    </div>
+                          </div>
+                        }
+                      </div>
+                    }
                   </div>
-                }
-              </div>
+                  @if (!embeddedResource.isArray) {
+                    <div [attr.id]="prefix + 'embedded_' + i1" class="collapse">
+                      <div class="card-body">
+                        <app-response-explorer
+                          [jsonRoot]="embeddedResource.content"
+                          [prefix]="prefix + 'x_'"
+                          [curieLinks]="curieLinks"
+                          [isHalFormsMediaType]="isHalFormsMediaType"
+                        >
+                        </app-response-explorer>
+                      </div>
+                    </div>
+                  }
+                </div>
+              }
             </div>
           </div>
         }
+      </div>
+    </div>
+  </div>
+}

@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class JsonHighlighterService {
-
   // this is a TypeScript adaption of
   // https://stackoverflow.com/questions/4810841/how-can-i-pretty-print-json-using-javascript
   syntaxHighlight(jsonString: string): string {
@@ -16,8 +15,9 @@ export class JsonHighlighterService {
       JSON.parse(jsonString);
 
       jsonString = jsonString.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      return jsonString.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g,
-        (match) => {
+      return jsonString.replace(
+        /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g,
+        match => {
           let cssClass = 'number';
           if (/^"/.test(match)) {
             if (/:$/.test(match)) {
@@ -34,7 +34,8 @@ export class JsonHighlighterService {
             cssClass = 'null';
           }
           return '<span class="' + cssClass + '">' + match + '</span>';
-        });
+        }
+      );
     } catch {
       return jsonString;
     }

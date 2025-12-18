@@ -11,8 +11,8 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideZoneChangeDetection(),importProvidersFrom(BrowserModule, FormsModule),
-    provideHttpClient(withInterceptorsFromDi())
-  ]
-})
-  .catch(err => console.log(err));
+    provideZoneChangeDetection(),
+    importProvidersFrom(BrowserModule, FormsModule),
+    provideHttpClient(withInterceptorsFromDi()),
+  ],
+}).catch(err => console.log(err));

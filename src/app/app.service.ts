@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
-
 export class RequestHeader {
-  constructor(public key: string, public value: string) {
-  }
+  constructor(
+    public key: string,
+    public value: string
+  ) {}
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AppService {
   private uriParam: string;
@@ -180,11 +181,11 @@ export class AppService {
         m = regex.exec(fragment);
       } else if (key === 'httpOptions') {
         const httpOptionsValue = decodeURIComponent(m[2]);
-        this.httpOptionsParam = (httpOptionsValue === 'true');
+        this.httpOptionsParam = httpOptionsValue === 'true';
         m = regex.exec(fragment);
       } else if (key === 'allHttpMethodsForLinks') {
         const allHttpMethodsForLinksValue = decodeURIComponent(m[2]);
-        this.allHttpMethodsForLinksParam = (allHttpMethodsForLinksValue === 'true');
+        this.allHttpMethodsForLinksParam = allHttpMethodsForLinksValue === 'true';
         m = regex.exec(fragment);
       } else if (key.startsWith('hkey')) {
         const headerKeyParam = decodeURIComponent(m[2]);
@@ -206,10 +207,12 @@ export class AppService {
           tempCustomRequestHeaders[headerValueIndex] = new RequestHeader(undefined, headerValueParam);
         }
         m = regex.exec(fragment);
-      } else if (key === 'url') { // keep this for backward compatibility
+      } else if (key === 'url') {
+        // keep this for backward compatibility
         this.uriParam = fragment.substring(fragment.indexOf('url=') + 4);
         m = null;
-      } else if (key === 'uri') { // uri ist the new parameter that replaced url
+      } else if (key === 'uri') {
+        // uri ist the new parameter that replaced url
         this.uriParam = fragment.substring(fragment.indexOf('uri=') + 4);
         m = null;
       } else {
@@ -277,8 +280,17 @@ export class AppService {
     }
 
     for (let i = 0; i < this.customRequestHeaders.length; i++) {
-      newLocationHash += andPrefix + 'hkey' + i + '=' + this.customRequestHeaders[i].key +
-        '&' + 'hval' + i + '=' + this.customRequestHeaders[i].value;
+      newLocationHash +=
+        andPrefix +
+        'hkey' +
+        i +
+        '=' +
+        this.customRequestHeaders[i].key +
+        '&' +
+        'hval' +
+        i +
+        '=' +
+        this.customRequestHeaders[i].value;
       andPrefix = '&';
     }
 
@@ -289,4 +301,3 @@ export class AppService {
     window.location.hash = newLocationHash;
   }
 }
-

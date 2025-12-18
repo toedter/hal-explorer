@@ -1,0 +1,16 @@
+# Ignore artifacts:
+dist
+coverage
+node_modules
+build
+.angular
+
+# Ignore generated files
+*.log
+*.lock
+yarn.lock
+package-lock.json
+
+# Ignore test data
+test-data
+

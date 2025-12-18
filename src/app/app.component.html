@@ -1,48 +1,70 @@
 @if (isCustomTheme) {
   <div>
-    <link [href]="selectedThemeUrl" rel="stylesheet">
+    <link [href]="selectedThemeUrl" rel="stylesheet" />
   </div>
 }
 
 <nav class="navbar navbar-expand-lg navbar-toggleable-md navbar-dark bg-dark">
   <div class="container-fluid">
     <div class="navbar-brand">
-      <img src="favicon.ico" width="30" height="30" class="d-inline-block align-top" alt="">
+      <img src="favicon.ico" width="30" height="30" class="d-inline-block align-top" alt="" />
       HAL Explorer
     </div>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbar1" aria-controls="navbar1" aria-expanded="false"
-            aria-label="Toggle navigation">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbar1"
+      aria-controls="navbar1"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbar1">
       <ul class="navbar-nav">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownTheme" role="button" data-bs-toggle="dropdown"
-             aria-haspopup="true" aria-expanded="false">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdownTheme"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
             Theme
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownTheme">
             @for (theme of themes; track theme) {
               <a class="dropdown-item" href="#" (click)="changeTheme(theme)">
-                <i class="icon-ok" [style]="getThemeIconCheckStyle(theme)"></i>{{ theme }}</a>
+                <i class="icon-ok" [style]="getThemeIconCheckStyle(theme)"></i>{{ theme }}</a
+              >
             }
           </div>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLayout" role="button" data-bs-toggle="dropdown"
-             aria-haspopup="true" aria-expanded="false">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdownLayout"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
             Settings
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownLayout">
             @for (setting of settings; track setting) {
               <div>
                 @if (setting === '---') {
-                  <hr class="dropdown-divider">
+                  <hr class="dropdown-divider" />
                 }
                 @if (setting !== '---') {
                   <a class="dropdown-item" href="#" (click)="selectSetting(setting)">
-                    <i class="icon-ok" [style]="getSettingsIconCheckStyle(setting)"></i>{{ setting }}</a>
+                    <i class="icon-ok" [style]="getSettingsIconCheckStyle(setting)"></i>{{ setting }}</a
+                  >
                 }
               </div>
             }
@@ -55,8 +77,14 @@
 </nav>
 
 <!-- Modal About Dialog -->
-<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalLabel"
-     aria-hidden="true">
+<div
+  class="modal fade"
+  id="aboutModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="aboutModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -67,40 +95,46 @@
         <div class="container-fluid">
           <table class="table table-striped table-sm">
             <tbody>
-            <tr>
-              <td>Author:</td>
-              <td>Kai Tödter</td>
-            </tr>
-            <tr>
-              <td>Version:</td>
-              <td>{{ version }}</td>
-            </tr>
-            <tr>
-              <td>GitHub:</td>
-              <td><a class="p-0 text-decoration-none" href="https://github.com/toedter/hal-explorer">https://github.com/toedter/hal-explorer</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Docs:</td>
-              @if (isSnapshotVersion) {
-                <td><a class="p-0 text-decoration-none"
-                  href="https://toedter.github.io/hal-explorer/snapshot/reference-doc/">Snapshot
-                  Reference
-                  Documentation</a>
+              <tr>
+                <td>Author:</td>
+                <td>Kai Tödter</td>
+              </tr>
+              <tr>
+                <td>Version:</td>
+                <td>{{ version }}</td>
+              </tr>
+              <tr>
+                <td>GitHub:</td>
+                <td>
+                  <a class="p-0 text-decoration-none" href="https://github.com/toedter/hal-explorer"
+                    >https://github.com/toedter/hal-explorer</a
+                  >
                 </td>
-              }
-              @if (!isSnapshotVersion) {
-                <td><a class="p-0 text-decoration-none"
-                  href="https://toedter.github.io/hal-explorer/release/reference-doc/">Release
-                  Reference
-                  Documentation</a>
-                </td>
-              }
-            </tr>
+              </tr>
+              <tr>
+                <td>Docs:</td>
+                @if (isSnapshotVersion) {
+                  <td>
+                    <a
+                      class="p-0 text-decoration-none"
+                      href="https://toedter.github.io/hal-explorer/snapshot/reference-doc/"
+                      >Snapshot Reference Documentation</a
+                    >
+                  </td>
+                }
+                @if (!isSnapshotVersion) {
+                  <td>
+                    <a
+                      class="p-0 text-decoration-none"
+                      href="https://toedter.github.io/hal-explorer/release/reference-doc/"
+                      >Release Reference Documentation</a
+                    >
+                  </td>
+                }
+              </tr>
             </tbody>
           </table>
         </div>
-
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -114,7 +148,7 @@
     <div class="row gx-2">
       <div class="form-group col-xl">
         <app-uri-input></app-uri-input>
-        <br>
+        <br />
         <app-response-explorer></app-response-explorer>
       </div>
       <div class="form-group col-xl">
@@ -132,7 +166,7 @@
     <div class="row gx-2">
       <div class="form-group col-xl">
         <app-uri-input></app-uri-input>
-        <br>
+        <br />
         <app-response-explorer></app-response-explorer>
       </div>
       <div class="form-group col-xl">
@@ -142,4 +176,3 @@
     </div>
   </div>
 }
-

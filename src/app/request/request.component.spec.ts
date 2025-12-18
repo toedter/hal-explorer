@@ -13,28 +13,28 @@ const jsonSchema: any = {
     fullName: {
       title: 'Full name',
       readOnly: false,
-      type: 'string'
+      type: 'string',
     },
     messages: {
       title: 'Messages',
       readOnly: true,
       type: 'string',
-      format: 'uri'
+      format: 'uri',
     },
     id: {
       title: 'Id',
       readOnly: false,
-      type: 'string'
+      type: 'string',
     },
     email: {
       title: 'Email',
       readOnly: false,
-      type: 'string'
-    }
+      type: 'string',
+    },
   },
   definitions: {},
   type: 'object',
-  $schema: 'http://json-schema.org/draft-04/schema#'
+  $schema: 'http://json-schema.org/draft-04/schema#',
 };
 
 const halFormsTemplates = {
@@ -47,14 +47,14 @@ const halFormsTemplates = {
         {
           name: 'title',
           prompt: 'Titel',
-          required: true
+          required: true,
         },
         {
           name: 'year',
           prompt: 'Jahr',
-          required: true
-        }
-      ]
+          required: true,
+        },
+      ],
     },
     updateMoviePartially: {
       title: 'Change Movie (partially)',
@@ -64,20 +64,20 @@ const halFormsTemplates = {
         {
           name: 'title',
           prompt: 'Titel',
-          required: false
+          required: false,
         },
         {
           name: 'year',
           prompt: 'Jahr',
-          required: false
-        }
-      ]
+          required: false,
+        },
+      ],
     },
     deleteMovie: {
       title: 'Delete Movie',
       method: 'delete',
       contentType: '',
-      properties: []
+      properties: [],
     },
     getDirectors: {
       title: 'Get Directors',
@@ -92,8 +92,8 @@ const halFormsTemplates = {
         {
           name: 'last-name',
           prompt: 'Last Name',
-        }
-      ]
+        },
+      ],
     },
     getDirectorsWithInvalidMethod: {
       title: 'Get Directors',
@@ -108,8 +108,8 @@ const halFormsTemplates = {
         {
           name: 'last-name',
           prompt: 'Last Name',
-        }
-      ]
+        },
+      ],
     },
     withOptionsAndNoInline: {
       title: 'Change Movie with Options',
@@ -121,11 +121,11 @@ const halFormsTemplates = {
           prompt: 'Titel',
           required: true,
           options: {
-            selectedValues: ['Movie 1', 'Movie 2']
+            selectedValues: ['Movie 1', 'Movie 2'],
           },
-          maxItems: 1
-        }
-      ]
+          maxItems: 1,
+        },
+      ],
     },
     withOptionsAndInline: {
       title: 'Change Movie with Options and Inline',
@@ -138,10 +138,10 @@ const halFormsTemplates = {
           options: {
             selectedValues: ['Movie 1'],
             inline: ['Movie 1', 'Movie 2'],
-            maxItems: 1
-          }
-        }
-      ]
+            maxItems: 1,
+          },
+        },
+      ],
     },
     withOptionsAndInlineAndNoSelectedValues: {
       title: 'Change Movie with Options and Inline and no selected values',
@@ -153,10 +153,10 @@ const halFormsTemplates = {
           prompt: 'Titel',
           options: {
             inline: ['Movie 1', 'Movie 2'],
-            maxItems: 1
-          }
-        }
-      ]
+            maxItems: 1,
+          },
+        },
+      ],
     },
     withOptionsAndInlineAndRequired: {
       title: 'Change Movie with Options and Inline and Required',
@@ -169,10 +169,10 @@ const halFormsTemplates = {
           required: true,
           options: {
             inline: ['Movie 1', 'Movie 2'],
-            maxItems: 1
-          }
-        }
-      ]
+            maxItems: 1,
+          },
+        },
+      ],
     },
     withOptionsAndLink: {
       title: 'Change Movie with Options and Link',
@@ -185,12 +185,12 @@ const halFormsTemplates = {
           required: true,
           options: {
             link: {
-              href: 'http://options.com'
+              href: 'http://options.com',
             },
-            maxItems: 1
-          }
-        }
-      ]
+            maxItems: 1,
+          },
+        },
+      ],
     },
     withMultipleOptions: {
       title: 'Change Movie with multiple Options',
@@ -204,10 +204,10 @@ const halFormsTemplates = {
           options: {
             selectedValues: ['Movie 1', 'Movie 2'],
             inline: ['Movie 1', 'Movie 2'],
-            maxItems: 2
-          }
-        }
-      ]
+            maxItems: 2,
+          },
+        },
+      ],
     },
     withMultipleOptionsAndNoSelectedValues: {
       title: 'Change Movie with multiple Options and no selected values',
@@ -220,10 +220,10 @@ const halFormsTemplates = {
           required: true,
           options: {
             inline: ['Movie 1', 'Movie 2'],
-            maxItems: 2
-          }
-        }
-      ]
+            maxItems: 2,
+          },
+        },
+      ],
     },
     withOptionsAndMalformedInline: {
       title: 'Change Movie with Options and malformed Inline',
@@ -234,11 +234,11 @@ const halFormsTemplates = {
           name: 'title',
           prompt: 'Titel',
           options: {
-            inline: {_embedded: ['Movie 1', 'Movie 2']},
-            maxItems: 1
-          }
-        }
-      ]
+            inline: { _embedded: ['Movie 1', 'Movie 2'] },
+            maxItems: 1,
+          },
+        },
+      ],
     },
     withOptionsAndMalformedInline2: {
       title: 'Change Movie with Options and malformed Inline (',
@@ -249,19 +249,19 @@ const halFormsTemplates = {
           name: 'title',
           prompt: 'Titel',
           options: {
-            inline: [{key: 'malformed'}]
+            inline: [{ key: 'malformed' }],
           },
-          maxItems: 1
-        }
-      ]
+          maxItems: 1,
+        },
+      ],
     },
     withNoProperties: {
       title: 'Clear all items',
       method: 'POST',
       contentType: 'application/json',
-      target: '/api/carts/2e769b7c-2fff-4830-9beb-737c3a4a65e9/clear'
-    }
-  }
+      target: '/api/carts/2e769b7c-2fff-4830-9beb-737c3a4a65e9/clear',
+    },
+  },
 };
 
 describe('RequestComponent', () => {
@@ -275,9 +275,15 @@ describe('RequestComponent', () => {
   let appServiceMock;
 
   beforeEach(waitForAsync(() => {
-    requestServiceMock = jasmine.createSpyObj(
-      ['getResponseObservable', 'getNeedInfoObservable', 'setCustomHeaders',
-        'getUri', 'getInputType', 'requestUri', 'computeHalFormsOptionsFromLink']);
+    requestServiceMock = jasmine.createSpyObj([
+      'getResponseObservable',
+      'getNeedInfoObservable',
+      'setCustomHeaders',
+      'getUri',
+      'getInputType',
+      'requestUri',
+      'computeHalFormsOptionsFromLink',
+    ]);
     needInfoSubject = new Subject<string>();
     responseSubject = new Subject<string>();
     requestServiceMock.getResponseObservable.and.returnValue(responseSubject);
@@ -290,9 +296,10 @@ describe('RequestComponent', () => {
 
     uriSubject = new Subject<string>();
     requestHeaderSubject = new Subject<RequestHeader[]>();
-    appServiceMock = jasmine.createSpyObj(
-      ['getUri', 'getCustomRequestHeaders', 'setCustomRequestHeaders'],
-      {uriObservable: uriSubject, requestHeadersObservable: requestHeaderSubject});
+    appServiceMock = jasmine.createSpyObj(['getUri', 'getCustomRequestHeaders', 'setCustomRequestHeaders'], {
+      uriObservable: uriSubject,
+      requestHeadersObservable: requestHeaderSubject,
+    });
     appServiceMock.getUri.and.returnValue('http://localhost/api');
     appServiceMock.getCustomRequestHeaders.and.returnValue([]);
 
@@ -301,11 +308,11 @@ describe('RequestComponent', () => {
     TestBed.configureTestingModule({
       imports: [FormsModule, RequestComponent],
       providers: [
-        {provide: RequestService, useValue: requestServiceMock},
-        {provide: AppService, useValue: appServiceMock},
-        {provide: JsonHighlighterService, useValue: jsonHighlighterServiceMock},
-        HttpClient
-      ]
+        { provide: RequestService, useValue: requestServiceMock },
+        { provide: AppService, useValue: appServiceMock },
+        { provide: JsonHighlighterService, useValue: jsonHighlighterServiceMock },
+        HttpClient,
+      ],
     }).compileComponents();
   }));
 
@@ -321,7 +328,10 @@ describe('RequestComponent', () => {
 
   it('should fill uri template with query params', () => {
     const event: HttpRequestEvent = new HttpRequestEvent(
-      EventType.FillHttpRequest, Command.Get, 'http://localhost/api/things{?page,size}');
+      EventType.FillHttpRequest,
+      Command.Get,
+      'http://localhost/api/things{?page,size}'
+    );
     needInfoSubject.next(event);
     component.uriTemplateParameters[0].value = '0';
     component.uriTemplateParameters[1].value = '10';
@@ -331,7 +341,10 @@ describe('RequestComponent', () => {
 
   it('should fill uri template with simple params', () => {
     const event: HttpRequestEvent = new HttpRequestEvent(
-      EventType.FillHttpRequest, Command.Get, 'http://localhost/api/things/{id}');
+      EventType.FillHttpRequest,
+      Command.Get,
+      'http://localhost/api/things/{id}'
+    );
     needInfoSubject.next(event);
     component.uriTemplateParameters[0].value = '1234';
     component.computeUriFromTemplate();
@@ -347,8 +360,12 @@ describe('RequestComponent', () => {
   });
 
   it('should fill http request with json schema', () => {
-    const event: HttpRequestEvent =
-      new HttpRequestEvent(EventType.FillHttpRequest, Command.Post, 'http://localhost/api/things', jsonSchema);
+    const event: HttpRequestEvent = new HttpRequestEvent(
+      EventType.FillHttpRequest,
+      Command.Post,
+      'http://localhost/api/things',
+      jsonSchema
+    );
     needInfoSubject.next(event);
     expect(component.jsonSchema.toString).toEqual(jsonSchema.toString);
   });
@@ -356,12 +373,16 @@ describe('RequestComponent', () => {
   it('should fill http request with HAL-FORMS template properties', () => {
     const halFormsTemplate = {
       key: 'default',
-      value: halFormsTemplates._templates.default
+      value: halFormsTemplates._templates.default,
     };
 
-    const event: HttpRequestEvent =
-      new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
-        undefined, halFormsTemplate);
+    const event: HttpRequestEvent = new HttpRequestEvent(
+      EventType.FillHttpRequest,
+      Command.Put,
+      'http://localhost/api/movies',
+      undefined,
+      halFormsTemplate
+    );
 
     needInfoSubject.next(event);
 
@@ -387,7 +408,7 @@ describe('RequestComponent', () => {
   });
 
   it('should get change request body based on HAL-FORMS template property with POST method', () => {
-    component.halFormsTemplate = {value: halFormsTemplates._templates.default};
+    component.halFormsTemplate = { value: halFormsTemplates._templates.default };
     component.halFormsProperties = component.halFormsTemplate.value.properties;
     component.halFormsProperties[0].value = 'Movie Title';
     component.halFormsProperties[1].value = '2019';
@@ -398,7 +419,7 @@ describe('RequestComponent', () => {
   });
 
   it('should get change request URI based on HAL-FORMS template property with Get method', () => {
-    component.halFormsTemplate = {value: halFormsTemplates._templates.getDirectors};
+    component.halFormsTemplate = { value: halFormsTemplates._templates.getDirectors };
     component.halFormsProperties = component.halFormsTemplate.value.properties;
     component.halFormsProperties[0].value = 'George';
     component.halFormsProperties[1].value = 'Lucas';
@@ -410,7 +431,7 @@ describe('RequestComponent', () => {
   });
 
   it('should get change request URI based on HAL-FORMS template property with invalid method', () => {
-    component.halFormsTemplate = {value: halFormsTemplates._templates.getDirectorsWithInvalidMethod};
+    component.halFormsTemplate = { value: halFormsTemplates._templates.getDirectorsWithInvalidMethod };
     component.halFormsProperties = component.halFormsTemplate.value.properties;
     component.halFormsProperties[0].value = 'George';
     component.halFormsProperties[1].value = 'Lucas';
@@ -450,39 +471,40 @@ describe('RequestComponent', () => {
       errors: {
         required: true,
         pattern: {
-          requiredPattern: '\\d{3}$'
+          requiredPattern: '\\d{3}$',
         },
         maxlength: {
-          requiredLength: 3
+          requiredLength: 3,
         },
         minlength: {
-          requiredLength: 1
+          requiredLength: 1,
         },
         max: {
-          max: 100
+          max: 100,
         },
         min: {
-          min: 1
+          min: 1,
         },
         email: true,
         maxItems: {
-          maxItems: 2
+          maxItems: 2,
         },
         minItems: {
-          minItems: 1
-        }
-      }
+          minItems: 1,
+        },
+      },
     };
     const errorMessage: string = component.getValidationErrors(errors);
-    const expectedResult = 'Value is required\n'
-      + 'Value does not match pattern: \\d{3}$\n'
-      + 'Value does not have required max length: 3\n'
-      + 'Value does not have required min length: 1\n'
-      + 'Value is bigger than max: 100\n'
-      + 'Value is smaller than min: 1\n'
-      + 'Value is not a valid email\n'
-      + 'Selection exceeds the maximum number of items: 2\n'
-      + 'Selection falls below the minimum number of items: 1\n';
+    const expectedResult =
+      'Value is required\n' +
+      'Value does not match pattern: \\d{3}$\n' +
+      'Value does not have required max length: 3\n' +
+      'Value does not have required min length: 1\n' +
+      'Value is bigger than max: 100\n' +
+      'Value is smaller than min: 1\n' +
+      'Value is not a valid email\n' +
+      'Selection exceeds the maximum number of items: 2\n' +
+      'Selection falls below the minimum number of items: 1\n';
     expect(errorMessage).toBe(expectedResult);
   });
 
@@ -494,7 +516,7 @@ describe('RequestComponent', () => {
 
   it('should get no validation errors', () => {
     const errors = {
-      errors: {}
+      errors: {},
     };
     const errorMessage: string = component.getValidationErrors(errors);
     const expectedResult = '';
@@ -523,8 +545,8 @@ describe('RequestComponent', () => {
   it('should get JSON Schema input type', () => {
     component.jsonSchema = {
       test: {
-        type: 'integer'
-      }
+        type: 'integer',
+      },
     };
 
     const inputType = component.getInputType('test');
@@ -557,7 +579,7 @@ describe('RequestComponent', () => {
     let uiElement = component.getUiElementForHalFormsTemplateProperty({});
     expect(uiElement).toBe('input');
 
-    uiElement = component.getUiElementForHalFormsTemplateProperty({options: {}});
+    uiElement = component.getUiElementForHalFormsTemplateProperty({ options: {} });
     expect(uiElement).toBe('select');
   });
 
@@ -568,9 +590,9 @@ describe('RequestComponent', () => {
     const noValueSelected = '<No Value Selected>';
     options = component.getHalFormsOptions({
       options: {
-        maxItems: 1
+        maxItems: 1,
       },
-      required: false
+      required: false,
     });
     expect(options[0].prompt).toBe(noValueSelected);
     expect(options[0].value).toBe(noValueSelected);
@@ -578,8 +600,8 @@ describe('RequestComponent', () => {
     options = component.getHalFormsOptions({
       options: {
         inline: ['a', 'b'],
-        maxItems: 1
-      }
+        maxItems: 1,
+      },
     });
     expect(options[0].prompt).toBe(noValueSelected);
     expect(options[0].value).toBe(noValueSelected);
@@ -593,15 +615,15 @@ describe('RequestComponent', () => {
         inline: [
           {
             prompt: 'a',
-            value: 'x'
+            value: 'x',
           },
           {
             prompt: 'b',
-            value: 'y'
-          }
+            value: 'y',
+          },
         ],
-        maxItems: 1
-      }
+        maxItems: 1,
+      },
     });
     expect(options[0].prompt).toBe(noValueSelected);
     expect(options[0].value).toBe(noValueSelected);
@@ -617,14 +639,14 @@ describe('RequestComponent', () => {
 
     options = component.getHalFormsOptions({
       options: {},
-      required: false
+      required: false,
     });
     expect(options).toEqual([]);
 
     options = component.getHalFormsOptions({
       options: {
-        inline: ['a', 'b']
-      }
+        inline: ['a', 'b'],
+      },
     });
     expect(options[0].prompt).toBe('a');
     expect(options[0].value).toBe('a');
@@ -636,14 +658,14 @@ describe('RequestComponent', () => {
         inline: [
           {
             prompt: 'a',
-            value: 'x'
+            value: 'x',
           },
           {
             prompt: 'b',
-            value: 'y'
-          }
-        ]
-      }
+            value: 'y',
+          },
+        ],
+      },
     });
     expect(options[0].prompt).toBe('a');
     expect(options[0].value).toBe('x');
@@ -656,14 +678,14 @@ describe('RequestComponent', () => {
         inline: [
           {
             prompt: 'a',
-            value: 'x'
+            value: 'x',
           },
           {
             prompt: 'b',
-            value: 'y'
-          }
-        ]
-      }
+            value: 'y',
+          },
+        ],
+      },
     });
     expect(options[0].prompt).toBe('a');
     expect(options[0].value).toBe('x');
@@ -675,19 +697,23 @@ describe('RequestComponent', () => {
     let selected = component.isHalFormsOptionSelected({}, 'x');
     expect(selected).toBeFalse();
 
-    selected = component.isHalFormsOptionSelected({value: ['x']}, 'x');
+    selected = component.isHalFormsOptionSelected({ value: ['x'] }, 'x');
     expect(selected).toBeTrue();
   });
 
   it('should ignore HAL-FORMS options with no inline', () => {
     const halFormsTemplate = {
       key: 'withOptionsAndNoInline',
-      value: halFormsTemplates._templates.withOptionsAndNoInline
+      value: halFormsTemplates._templates.withOptionsAndNoInline,
     };
 
-    const event: HttpRequestEvent =
-      new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
-        undefined, halFormsTemplate);
+    const event: HttpRequestEvent = new HttpRequestEvent(
+      EventType.FillHttpRequest,
+      Command.Put,
+      'http://localhost/api/movies',
+      undefined,
+      halFormsTemplate
+    );
 
     needInfoSubject.next(event);
 
@@ -698,12 +724,16 @@ describe('RequestComponent', () => {
   it('should populate HAL-FORMS options value and inline', () => {
     const halFormsTemplate = {
       key: 'withOptionsAndInline',
-      value: halFormsTemplates._templates.withOptionsAndInline
+      value: halFormsTemplates._templates.withOptionsAndInline,
     };
 
-    const event: HttpRequestEvent =
-      new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
-        undefined, halFormsTemplate);
+    const event: HttpRequestEvent = new HttpRequestEvent(
+      EventType.FillHttpRequest,
+      Command.Put,
+      'http://localhost/api/movies',
+      undefined,
+      halFormsTemplate
+    );
 
     needInfoSubject.next(event);
 
@@ -716,12 +746,16 @@ describe('RequestComponent', () => {
   it('should populate HAL-FORMS options value and inline and no selected values', () => {
     const halFormsTemplate = {
       key: 'withOptionsAndInlineAndNoSelectedValues',
-      value: halFormsTemplates._templates.withOptionsAndInlineAndNoSelectedValues
+      value: halFormsTemplates._templates.withOptionsAndInlineAndNoSelectedValues,
     };
 
-    const event: HttpRequestEvent =
-      new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
-        undefined, halFormsTemplate);
+    const event: HttpRequestEvent = new HttpRequestEvent(
+      EventType.FillHttpRequest,
+      Command.Put,
+      'http://localhost/api/movies',
+      undefined,
+      halFormsTemplate
+    );
 
     needInfoSubject.next(event);
 
@@ -734,12 +768,16 @@ describe('RequestComponent', () => {
   it('should populate HAL-FORMS options value and inline and required', () => {
     const halFormsTemplate = {
       key: 'withOptionsAndInlineAndRequired',
-      value: halFormsTemplates._templates.withOptionsAndInlineAndRequired
+      value: halFormsTemplates._templates.withOptionsAndInlineAndRequired,
     };
 
-    const event: HttpRequestEvent =
-      new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
-        undefined, halFormsTemplate);
+    const event: HttpRequestEvent = new HttpRequestEvent(
+      EventType.FillHttpRequest,
+      Command.Put,
+      'http://localhost/api/movies',
+      undefined,
+      halFormsTemplate
+    );
 
     needInfoSubject.next(event);
 
@@ -761,87 +799,109 @@ describe('RequestComponent', () => {
   it('should compute HAL-FORMS options from options.link', () => {
     const halFormsTemplate = {
       key: 'withOptionsAndLink',
-      value: halFormsTemplates._templates.withOptionsAndLink
+      value: halFormsTemplates._templates.withOptionsAndLink,
     };
 
-    const event: HttpRequestEvent =
-      new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
-        undefined, halFormsTemplate);
+    const event: HttpRequestEvent = new HttpRequestEvent(
+      EventType.FillHttpRequest,
+      Command.Put,
+      'http://localhost/api/movies',
+      undefined,
+      halFormsTemplate
+    );
 
     needInfoSubject.next(event);
 
-    expect((halFormsTemplates._templates.withOptionsAndLink.properties[0].options as any).computedOptions[0].prompt).toEqual('a');
+    expect(
+      (halFormsTemplates._templates.withOptionsAndLink.properties[0].options as any).computedOptions[0].prompt
+    ).toEqual('a');
   });
 
   it('should not compute HAL-FORMS options from options.link', () => {
     const halFormsTemplate = {
       key: 'withOptionsAndLink',
-      value: halFormsTemplates._templates.withOptionsAndLink
+      value: halFormsTemplates._templates.withOptionsAndLink,
     };
     (halFormsTemplates._templates.withOptionsAndLink.properties[0].options as any).inline = undefined;
 
-    const event: HttpRequestEvent =
-      new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
-        undefined, halFormsTemplate);
+    const event: HttpRequestEvent = new HttpRequestEvent(
+      EventType.FillHttpRequest,
+      Command.Put,
+      'http://localhost/api/movies',
+      undefined,
+      halFormsTemplate
+    );
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(() => {
-    });
+    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(() => {});
     needInfoSubject.next(event);
 
     expect((halFormsTemplates._templates.withOptionsAndLink.properties[0].options as any).inline).toBeUndefined();
   });
 
-
   it('should compute HAL-FORMS with multiple options', () => {
     const halFormsTemplate = {
       key: 'withMultipleOptions',
-      value: halFormsTemplates._templates.withMultipleOptions
+      value: halFormsTemplates._templates.withMultipleOptions,
     };
 
-    const event: HttpRequestEvent =
-      new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
-        undefined, halFormsTemplate);
+    const event: HttpRequestEvent = new HttpRequestEvent(
+      EventType.FillHttpRequest,
+      Command.Put,
+      'http://localhost/api/movies',
+      undefined,
+      halFormsTemplate
+    );
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(() => {
-    });
+    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(() => {});
     needInfoSubject.next(event);
 
-    expect((halFormsTemplates._templates.withMultipleOptions.properties[0] as any).value).toEqual(['Movie 1', 'Movie 2']);
+    expect((halFormsTemplates._templates.withMultipleOptions.properties[0] as any).value).toEqual([
+      'Movie 1',
+      'Movie 2',
+    ]);
   });
 
   it('should compute HAL-FORMS with multiple options and no selected values', () => {
     const halFormsTemplate = {
       key: 'withMultipleOptionsAndNoSelectedValues',
-      value: halFormsTemplates._templates.withMultipleOptionsAndNoSelectedValues
+      value: halFormsTemplates._templates.withMultipleOptionsAndNoSelectedValues,
     };
 
-    const event: HttpRequestEvent =
-      new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
-        undefined, halFormsTemplate);
+    const event: HttpRequestEvent = new HttpRequestEvent(
+      EventType.FillHttpRequest,
+      Command.Put,
+      'http://localhost/api/movies',
+      undefined,
+      halFormsTemplate
+    );
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(() => {
-    });
+    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(() => {});
     needInfoSubject.next(event);
 
-    expect((halFormsTemplates._templates.withMultipleOptionsAndNoSelectedValues.properties[0] as any).value).toEqual(['Movie 1']);
+    expect((halFormsTemplates._templates.withMultipleOptionsAndNoSelectedValues.properties[0] as any).value).toEqual([
+      'Movie 1',
+    ]);
   });
 
   it('should ignore HAL-FORMS options with malformed inline (no array)', () => {
     const halFormsTemplate = {
       key: 'withOptionsAndMalformedInline',
-      value: halFormsTemplates._templates.withOptionsAndMalformedInline
+      value: halFormsTemplates._templates.withOptionsAndMalformedInline,
     };
 
-    const event: HttpRequestEvent =
-      new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
-        undefined, halFormsTemplate);
+    const event: HttpRequestEvent = new HttpRequestEvent(
+      EventType.FillHttpRequest,
+      Command.Put,
+      'http://localhost/api/movies',
+      undefined,
+      halFormsTemplate
+    );
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(() => {
-    });
+    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(() => {});
     needInfoSubject.next(event);
 
     expect((halFormsTemplates._templates.withOptionsAndMalformedInline.properties[0] as any).options).toBeUndefined();
@@ -850,16 +910,19 @@ describe('RequestComponent', () => {
   it('should ignore HAL-FORMS options with malformed inline (malformed content)', () => {
     const halFormsTemplate = {
       key: 'withOptionsAndMalformedInline2',
-      value: halFormsTemplates._templates.withOptionsAndMalformedInline2
+      value: halFormsTemplates._templates.withOptionsAndMalformedInline2,
     };
 
-    const event: HttpRequestEvent =
-      new HttpRequestEvent(EventType.FillHttpRequest, Command.Put, 'http://localhost/api/movies',
-        undefined, halFormsTemplate);
+    const event: HttpRequestEvent = new HttpRequestEvent(
+      EventType.FillHttpRequest,
+      Command.Put,
+      'http://localhost/api/movies',
+      undefined,
+      halFormsTemplate
+    );
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(() => {
-    });
+    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(() => {});
     needInfoSubject.next(event);
 
     expect((halFormsTemplates._templates.withOptionsAndMalformedInline2.properties[0] as any).options).toBeUndefined();
@@ -922,12 +985,16 @@ describe('RequestComponent', () => {
   it('should handle template with no properties', () => {
     const halFormsTemplate = {
       key: 'withNoProperties',
-      value: halFormsTemplates._templates.withNoProperties
+      value: halFormsTemplates._templates.withNoProperties,
     };
     component.halFormsProperties = undefined;
-    const event: HttpRequestEvent =
-      new HttpRequestEvent(EventType.FillHttpRequest, Command.Post, 'http://localhost/api/movies',
-        undefined, halFormsTemplate);
+    const event: HttpRequestEvent = new HttpRequestEvent(
+      EventType.FillHttpRequest,
+      Command.Post,
+      'http://localhost/api/movies',
+      undefined,
+      halFormsTemplate
+    );
 
     needInfoSubject.next(event);
 
