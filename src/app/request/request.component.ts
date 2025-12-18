@@ -4,7 +4,7 @@ import { URITemplate } from 'uri-templates';
 import { AppService, RequestHeader } from '../app.service';
 import { Command, EventType, HttpRequestEvent, RequestService, UriTemplateParameter } from './request.service';
 import { RequestValidatorDirective } from './request-validator.directive';
-import { KeyValuePipe, NgFor, NgIf } from '@angular/common';
+import { KeyValuePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 export class DictionaryObject {
@@ -16,7 +16,7 @@ export class DictionaryObject {
     selector: 'app-uri-input',
     templateUrl: './request.component.html',
     styleUrls: ['./request.component.css'],
-    imports: [FormsModule, NgIf, NgFor, RequestValidatorDirective, KeyValuePipe]
+    imports: [FormsModule, RequestValidatorDirective, KeyValuePipe]
 })
 export class RequestComponent implements OnInit {
   uri: string;
@@ -314,19 +314,21 @@ export class RequestComponent implements OnInit {
     }
   }
 
-  getTooltip(key: string): string {
+  getTooltip(key: string | number | symbol): string {
+    const keyStr = String(key);
     if (!this.jsonSchema) {
       return '';
     }
-    let tooltip = this.jsonSchema[key].type;
-    if (this.jsonSchema[key].format) {
-      tooltip += ' in ' + this.jsonSchema[key].format + ' format';
+    let tooltip = this.jsonSchema[keyStr].type;
+    if (this.jsonSchema[keyStr].format) {
+      tooltip += ' in ' + this.jsonSchema[keyStr].format + ' format';
     }
     return tooltip;
   }
 
-  getInputType(key: string): string {
-    return this.requestService.getInputType(this.jsonSchema[key].type, this.jsonSchema[key].format);
+  getInputType(key: string | number | symbol): string {
+    const keyStr = String(key);
+    return this.requestService.getInputType(this.jsonSchema[keyStr].type, this.jsonSchema[keyStr].format);
   }
 
   getValidationErrors(ngModel: any): string {

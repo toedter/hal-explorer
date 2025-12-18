@@ -1,259 +1,310 @@
 <br>
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="bs-component">
-        <form (ngSubmit)="getUri()">
-          <div class="input-group">
-            <button type="button" class="btn btn-secondary" (click)="showEditHeadersDialog()">Edit Headers
-            </button>
-            <input [(ngModel)]="uri" type="url" class="form-control" id="InputApiUri"
-                   placeholder="Enter API URI" name="uri">
-
-            <button type="submit" id="go" class="btn btn-primary">Go!</button>
-          </div>
-        </form>
-      </div>
-
-      <div *ngIf="hasCustomRequestHeaders">
-        <br>
-        <div class="legend">
-          <h5>Custom Request Headers</h5>
-        </div>
-
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
         <div class="bs-component">
-          <table class="table table-striped table-sm">
-            <tbody>
-            <tr *ngFor="let header of requestHeaders">
-              <td class="w-25">{{ header.key }}</td>
-              <td class="w-75">{{ header.value }}</td>
-            </tr>
-            </tbody>
-          </table>
+          <form (ngSubmit)="getUri()">
+            <div class="input-group">
+              <button type="button" class="btn btn-secondary" (click)="showEditHeadersDialog()">Edit Headers
+              </button>
+              <input [(ngModel)]="uri" type="url" class="form-control" id="InputApiUri"
+                placeholder="Enter API URI" name="uri">
+
+                <button type="submit" id="go" class="btn btn-primary">Go!</button>
+              </div>
+            </form>
+          </div>
+
+          @if (hasCustomRequestHeaders) {
+            <div>
+              <br>
+                <div class="legend">
+                  <h5>Custom Request Headers</h5>
+                </div>
+                <div class="bs-component">
+                  <table class="table table-striped table-sm">
+                    <tbody>
+                      @for (header of requestHeaders; track header) {
+                        <tr>
+                          <td class="w-25">{{ header.key }}</td>
+                          <td class="w-75">{{ header.value }}</td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            }
+
+          </div>
         </div>
       </div>
 
-    </div>
-  </div>
-</div>
+      <div id="HttpRequestTrigger" data-bs-toggle="modal" data-bs-target="#httpRequestModal"></div>
 
-<div id="HttpRequestTrigger" data-bs-toggle="modal" data-bs-target="#httpRequestModal"></div>
-
-<div class="modal fade" id="httpRequestModal" role="dialog" aria-hidden="false">
-  <div class="modal-dialog modal-xl" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">HTTP Request Input</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body me-2">
-        <form #myForm="ngForm">
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="uri">URI
-              <span *ngIf="isUriTemplate">Template</span>
-            </label>
-            <div class="p-1 col-sm-9">
-              <div class="form-control text-truncate" readonly="true"
-                   title="{{httpRequestEvent.uri}}"
-                   id="uri">{{ httpRequestEvent.uri }}
-              </div>
+      <div class="modal fade" id="httpRequestModal" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-xl" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">HTTP Request Input</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-          </div>
-
-          <div *ngIf="isUriTemplate" class="form-group">
-            <label>Parameters</label>
-            <div id="uri-parameters" class="form-group row"
-                 *ngFor="let parameter of uriTemplateParameters">
-              <label class="col-sm-3 col-form-label">{{ parameter.key }}</label>
-              <div class="p-1 col-sm-9">
-                <input class="form-control" [(ngModel)]="parameter.value"
-                       (keyup)="computeUriFromTemplate()"
-                       name="{{parameter.key}}">
-              </div>
-            </div>
-            <div *ngIf="httpRequestEvent.command !== commandPlaceholder.Get
-                      && httpRequestEvent.command !== commandPlaceholder.Delete" class="form-group row">
-              <label class="col-sm-3 col-form-label" for="expandedURI">Expanded URI</label>
-              <div class="p-1 col-sm-9">
-                <div class="form-control text-truncate"
-                     title="{{newRequestUri}}" id="expandedURI">{{ newRequestUri }}
+            <div class="modal-body me-2">
+              <form #myForm="ngForm">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label" for="uri">URI
+                    @if (isUriTemplate) {
+                      <span>Template</span>
+                    }
+                  </label>
+                  <div class="p-1 col-sm-9">
+                    <div class="form-control text-truncate" readonly="true"
+                      title="{{httpRequestEvent.uri}}"
+                      id="uri">{{ httpRequestEvent.uri }}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
 
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">HTTP Method</label>
-            <div class="p-1 col-sm-9">
-              <div class="form-control text-truncate" readonly="true">
-                {{ commandPlaceholder[httpRequestEvent.command] }}
-              </div>
-            </div>
-          </div>
+                @if (isUriTemplate) {
+                  <div class="form-group">
+                    <label>Parameters</label>
+                    @for (parameter of uriTemplateParameters; track parameter) {
+                      <div id="uri-parameters" class="form-group row"
+                        >
+                        <label class="col-sm-3 col-form-label">{{ parameter.key }}</label>
+                        <div class="p-1 col-sm-9">
+                          <input class="form-control" [(ngModel)]="parameter.value"
+                            (keyup)="computeUriFromTemplate()"
+                            name="{{parameter.key}}">
+                          </div>
+                        </div>
+                      }
+                      @if (httpRequestEvent.command !== commandPlaceholder.Get
+                        && httpRequestEvent.command !== commandPlaceholder.Delete) {
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label" for="expandedURI">Expanded URI</label>
+                          <div class="p-1 col-sm-9">
+                            <div class="form-control text-truncate"
+                              title="{{newRequestUri}}" id="expandedURI">{{ newRequestUri }}
+                            </div>
+                          </div>
+                        </div>
+                      }
+                    </div>
+                  }
 
-          <div *ngIf="halFormsContentType" class="form-group row">
-            <label class="col-sm-3 col-form-label">HAL-FORMS Content Type</label>
-            <div class="p-1 col-sm-9">
-              <div class="form-control text-truncate" readonly="true">
-                {{ halFormsContentType }}
-              </div>
-            </div>
-          </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">HTTP Method</label>
+                    <div class="p-1 col-sm-9">
+                      <div class="form-control text-truncate" readonly="true">
+                        {{ commandPlaceholder[httpRequestEvent.command] }}
+                      </div>
+                    </div>
+                  </div>
 
-          <div *ngIf="jsonSchema">
-            <hr>
-            <label class="mb-2">Spring Profile (JSON Schema)</label>
-            <div class="form-group row" *ngFor="let item of jsonSchema | keyvalue">
-              <label [title]="getTooltip(item.key)"
-                     class="text-info col-sm-3 col-form-label">{{ jsonSchema[item.key].title }}
-              </label>
-              <div class="p-1 col-sm-9">
-                <input [type]="getInputType(item.key)" class="form-control"
-                       [(ngModel)]="jsonSchema[item.key].value" [ngModelOptions]="{standalone: true}"
-                       (keyup)="propertyChanged()">
-              </div>
-            </div>
-            <hr>
-          </div>
+                  @if (halFormsContentType) {
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">HAL-FORMS Content Type</label>
+                      <div class="p-1 col-sm-9">
+                        <div class="form-control text-truncate" readonly="true">
+                          {{ halFormsContentType }}
+                        </div>
+                      </div>
+                    </div>
+                  }
 
-          <div *ngIf="halFormsProperties">
-            <hr>
-            <label class="mb-2">HAL-FORMS Properties
-              <span *ngIf="halFormsPropertyKey"> [{{ halFormsPropertyKey }}]</span>
-            </label>
-            <div class="form-group row" *ngFor="let item of halFormsProperties">
-              <label *ngIf="item.prompt" [title]="item.name" class="text-info col-sm-3 col-form-label">
-                {{ item.prompt }}
-                <span *ngIf="item.required">*</span>
-              </label>
-              <label *ngIf="!item.prompt" class="text-info col-sm-3 col-form-label">
-                {{ item.name }}
-                <span *ngIf="item.required">*</span>
-              </label>
-              <div class="p-1 col-sm-9">
-                <div *ngIf="getUiElementForHalFormsTemplateProperty(item) === 'input'">
-                  <input class="form-control" [(ngModel)]="item.value"
-                         name="{{item.name}}" id="request-input-{{item.name}}" #ngModel="ngModel"
-                         type="{{item.type}}"
-                         placeholder="{{item.placeholder}}"
-                         [appHalFormsProperty]="item"
-                         (change)="propertyChanged()"
-                         (keyup)="propertyChanged()">
-                  <div class="error-text">{{ getValidationErrors(ngModel) }}</div>
-                </div>
-                <div *ngIf="getUiElementForHalFormsTemplateProperty(item) === 'select'">
-                  <select
-                    *ngIf="getUiElementForHalFormsTemplateProperty(item) === 'select' && item.options?.maxItems === 1"
-                    class="form-select" [(ngModel)]="item.value"
-                    name="{{item.name}}" id="request-option-{{item.name}}"
-                    [appHalFormsProperty]="item"
-                    (change)="propertyChanged()">
-                    <option *ngFor="let option of item.options.computedOptions"
-                            [value]="option.value" [selected]="isHalFormsOptionSelected(item, option.value)">
-                      {{ option.prompt }}
-                    </option>
-                  </select>
-                  <select
-                    *ngIf="getUiElementForHalFormsTemplateProperty(item) === 'select' && item.options?.maxItems !== 1"
-                    class="form-control" [(ngModel)]="item.value"
-                    name="{{item.name}}" id="request-option-multiple-{{item.name}}"
-                    [appHalFormsProperty]="item"
-                    (change)="propertyChanged()"
-                    multiple>
-                    <option *ngFor="let option of item.options.computedOptions"
-                            [value]="option.value" [selected]="isHalFormsOptionSelected(item, option.value)">
-                      {{ option.prompt }}
-                    </option>
-                  </select>
-                  <div class="error-text">{{ getValidationErrors(item) }}</div>
-                </div>
-              </div>
-            </div>
-            <hr>
-          </div>
+                  @if (jsonSchema) {
+                    <div>
+                      <hr>
+                        <label class="mb-2">Spring Profile (JSON Schema)</label>
+                        @for (item of jsonSchema | keyvalue; track item) {
+                          <div class="form-group row">
+                            <label [title]="getTooltip(item.key)"
+                              class="text-info col-sm-3 col-form-label">{{ jsonSchema[item.key].title }}
+                            </label>
+                            <div class="p-1 col-sm-9">
+                              <input [type]="getInputType(item.key)" class="form-control"
+                                [(ngModel)]="jsonSchema[item.key].value" [ngModelOptions]="{standalone: true}"
+                                (keyup)="propertyChanged()">
+                              </div>
+                            </div>
+                          }
+                          <hr>
+                          </div>
+                        }
 
-          <div *ngIf="httpRequestEvent.command === commandPlaceholder.Post
-                      || httpRequestEvent.command === commandPlaceholder.Put
-                      || httpRequestEvent.command === commandPlaceholder.Patch" class="form-group row">
-            <label class="col-sm-3 col-form-label" for="body">Body</label>
-            <div class="p-1 col-sm-9">
-            <textarea *ngIf="myForm.valid" [(ngModel)]="requestBody" class="form-control" id="body" rows="5"
-                      name="bodyArea">
-            </textarea>
-              <textarea *ngIf="myForm.invalid" class="form-control" id="invalidBody" rows="5"
-                        name="invalidBodyArea">
-            </textarea>
-            </div>
-          </div>
-          <div *ngIf="httpRequestEvent.command === commandPlaceholder.Get
-                      || httpRequestEvent.command === commandPlaceholder.Delete" class="form-group row">
-            <label class="col-sm-3 col-form-label" for="body">Expanded URI</label>
-            <div class="p-1 col-sm-9">
-              <div id="request-input-expanded-uri" class="form-control text-truncate" readonly="true">
-                {{ newRequestUri }}
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
+                        @if (halFormsProperties) {
+                          <div>
+                            <hr>
+                              <label class="mb-2">HAL-FORMS Properties
+                                @if (halFormsPropertyKey) {
+                                  <span> [{{ halFormsPropertyKey }}]</span>
+                                }
+                              </label>
+                              @for (item of halFormsProperties; track item) {
+                                <div class="form-group row">
+                                  @if (item.prompt) {
+                                    <label [title]="item.name" class="text-info col-sm-3 col-form-label">
+                                      {{ item.prompt }}
+                                      @if (item.required) {
+                                        <span>*</span>
+                                      }
+                                    </label>
+                                  }
+                                  @if (!item.prompt) {
+                                    <label class="text-info col-sm-3 col-form-label">
+                                      {{ item.name }}
+                                      @if (item.required) {
+                                        <span>*</span>
+                                      }
+                                    </label>
+                                  }
+                                  <div class="p-1 col-sm-9">
+                                    @if (getUiElementForHalFormsTemplateProperty(item) === 'input') {
+                                      <div>
+                                        <input class="form-control" [(ngModel)]="item.value"
+                                          name="{{item.name}}" id="request-input-{{item.name}}" #ngModel="ngModel"
+                                          type="{{item.type}}"
+                                          placeholder="{{item.placeholder}}"
+                                          [appHalFormsProperty]="item"
+                                          (change)="propertyChanged()"
+                                          (keyup)="propertyChanged()">
+                                          <div class="error-text">{{ getValidationErrors(ngModel) }}</div>
+                                        </div>
+                                      }
+                                      @if (getUiElementForHalFormsTemplateProperty(item) === 'select') {
+                                        <div>
+                                          @if (getUiElementForHalFormsTemplateProperty(item) === 'select' && item.options?.maxItems === 1) {
+                                            <select
+                                              class="form-select" [(ngModel)]="item.value"
+                                              name="{{item.name}}" id="request-option-{{item.name}}"
+                                              [appHalFormsProperty]="item"
+                                              (change)="propertyChanged()">
+                                              @for (option of item.options.computedOptions; track option) {
+                                                <option
+                                                  [value]="option.value" [selected]="isHalFormsOptionSelected(item, option.value)">
+                                                  {{ option.prompt }}
+                                                </option>
+                                              }
+                                            </select>
+                                          }
+                                          @if (getUiElementForHalFormsTemplateProperty(item) === 'select' && item.options?.maxItems !== 1) {
+                                            <select
+                                              class="form-control" [(ngModel)]="item.value"
+                                              name="{{item.name}}" id="request-option-multiple-{{item.name}}"
+                                              [appHalFormsProperty]="item"
+                                              (change)="propertyChanged()"
+                                              multiple>
+                                              @for (option of item.options.computedOptions; track option) {
+                                                <option
+                                                  [value]="option.value" [selected]="isHalFormsOptionSelected(item, option.value)">
+                                                  {{ option.prompt }}
+                                                </option>
+                                              }
+                                            </select>
+                                          }
+                                          <div class="error-text">{{ getValidationErrors(item) }}</div>
+                                        </div>
+                                      }
+                                    </div>
+                                  </div>
+                                }
+                                <hr>
+                                </div>
+                              }
 
-      <div class="modal-footer">
-        <button id="requestDialogGoButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                (click)="makeHttpRequest()" [disabled]="myForm.invalid">Go!
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+                              @if (httpRequestEvent.command === commandPlaceholder.Post
+                                || httpRequestEvent.command === commandPlaceholder.Put
+                                || httpRequestEvent.command === commandPlaceholder.Patch) {
+                                <div class="form-group row">
+                                  <label class="col-sm-3 col-form-label" for="body">Body</label>
+                                  <div class="p-1 col-sm-9">
+                                    @if (myForm.valid) {
+                                      <textarea [(ngModel)]="requestBody" class="form-control" id="body" rows="5"
+                                        name="bodyArea">
+                                      </textarea>
+                                    }
+                                    @if (myForm.invalid) {
+                                      <textarea class="form-control" id="invalidBody" rows="5"
+                                        name="invalidBodyArea">
+                                      </textarea>
+                                    }
+                                  </div>
+                                </div>
+                              }
+                              @if (httpRequestEvent.command === commandPlaceholder.Get
+                                || httpRequestEvent.command === commandPlaceholder.Delete) {
+                                <div class="form-group row">
+                                  <label class="col-sm-3 col-form-label" for="body">Expanded URI</label>
+                                  <div class="p-1 col-sm-9">
+                                    <div id="request-input-expanded-uri" class="form-control text-truncate" readonly="true">
+                                      {{ newRequestUri }}
+                                    </div>
+                                  </div>
+                                </div>
+                              }
+                            </form>
+                          </div>
 
-<div id="requestHeadersModalTrigger" data-bs-toggle="modal" data-bs-target="#requestHeadersModal"></div>
+                          <div class="modal-footer">
+                            <button id="requestDialogGoButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                              (click)="makeHttpRequest()" [disabled]="myForm.invalid">Go!
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
-<div class="modal fade" id="requestHeadersModal" role="dialog" aria-labelledby="requestHeadersModalLabel"
-     aria-hidden="false">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="requestHeadersModalLabel">Custom Request Headers</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <div id="titles" class="form-group row">
-              <div class="p-2 col-sm-3">
-                Key
-              </div>
-              <div class="p-2 col-sm-9">
-                Value
-              </div>
-            </div>
+                    <div id="requestHeadersModalTrigger" data-bs-toggle="modal" data-bs-target="#requestHeadersModal"></div>
 
-            <div id="headers" class="form-group row" *ngFor="let header of tempRequestHeaders">
-              <div class="p-2 col-sm-3">
-                <input class="form-control" [(ngModel)]="header.key"
-                       [ngModelOptions]="{standalone: true}">
-              </div>
-              <div class="p-2 col-sm-9">
-                <input class="form-control" [(ngModel)]="header.value"
-                       [ngModelOptions]="{standalone: true}">
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <div class="me-auto">
-          <button type="button" class="btn btn-outline-primary me-2" (click)="clearRequestHeaders()">Clear</button>
-          <button type="button" class="btn btn-outline-primary me-2"
-                  (click)="setAcceptRequestHeader('application/hal+json')">Accept HAL
-          </button>
-          <button type="button" class="btn btn-outline-primary"
-                  (click)="setAcceptRequestHeader('application/prs.hal-forms+json')">Accept HAL-FORMS
-          </button>
-        </div>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="updateRequestHeaders()">OK
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+                    <div class="modal fade" id="requestHeadersModal" role="dialog" aria-labelledby="requestHeadersModalLabel"
+                      aria-hidden="false">
+                      <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="requestHeadersModalLabel">Custom Request Headers</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <form>
+                              <div class="form-group">
+                                <div id="titles" class="form-group row">
+                                  <div class="p-2 col-sm-3">
+                                    Key
+                                  </div>
+                                  <div class="p-2 col-sm-9">
+                                    Value
+                                  </div>
+                                </div>
+
+                                @for (header of tempRequestHeaders; track header) {
+                                  <div id="headers" class="form-group row">
+                                    <div class="p-2 col-sm-3">
+                                      <input class="form-control" [(ngModel)]="header.key"
+                                        [ngModelOptions]="{standalone: true}">
+                                      </div>
+                                      <div class="p-2 col-sm-9">
+                                        <input class="form-control" [(ngModel)]="header.value"
+                                          [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                      </div>
+                                    }
+                                  </div>
+                                </form>
+                              </div>
+                              <div class="modal-footer">
+                                <div class="me-auto">
+                                  <button type="button" class="btn btn-outline-primary me-2" (click)="clearRequestHeaders()">Clear</button>
+                                  <button type="button" class="btn btn-outline-primary me-2"
+                                    (click)="setAcceptRequestHeader('application/hal+json')">Accept HAL
+                                  </button>
+                                  <button type="button" class="btn btn-outline-primary"
+                                    (click)="setAcceptRequestHeader('application/prs.hal-forms+json')">Accept HAL-FORMS
+                                  </button>
+                                </div>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="updateRequestHeaders()">OK
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>

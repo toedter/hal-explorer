@@ -3,14 +3,14 @@ import { RequestService, Response } from '../request/request.service';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { JsonHighlighterService } from '../json-highlighter/json-highlighter.service';
 import { getReasonPhrase } from 'http-status-codes';
-import { NgFor, NgIf } from '@angular/common';
+
 
 @Component({
     selector: 'app-response-details',
     templateUrl: './response-details.component.html',
     styleUrls: ['./response-details.component.css'],
     encapsulation: ViewEncapsulation.None,
-    imports: [NgIf, NgFor]
+    imports: []
 })
 export class ResponseDetailsComponent implements OnInit {
   responseBody: string;

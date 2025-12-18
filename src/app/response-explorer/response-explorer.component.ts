@@ -1,9 +1,9 @@
-import { Component, forwardRef, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { Command, RequestService, Response } from '../request/request.service';
 import { JsonHighlighterService } from '../json-highlighter/json-highlighter.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AppService } from '../app.service';
-import { KeyValuePipe, NgFor, NgIf } from '@angular/common';
+import { KeyValuePipe } from '@angular/common';
 
 export class Link {
   constructor(public rel: string, public href: string,
@@ -17,12 +17,20 @@ class EmbeddedResource {
   }
 }
 
+export interface HalFormsTemplate {
+  title?: string;
+  method?: string;
+  target?: string;
+  contentType?: string;
+  properties?: any[];
+}
+
 @Component({
     selector: 'app-response-explorer',
     templateUrl: './response-explorer.component.html',
     styleUrls: ['./response-explorer.component.css'],
     encapsulation: ViewEncapsulation.None,
-    imports: [NgIf, NgFor, forwardRef(() => ResponseExplorerComponent), KeyValuePipe]
+    imports: [KeyValuePipe]
 })
 export class ResponseExplorerComponent implements OnInit {
   @Input() jsonRoot: any;
@@ -34,7 +42,7 @@ export class ResponseExplorerComponent implements OnInit {
   links: Link[];
   selfLink: Link;
   embedded: EmbeddedResource[];
-  templates: object;
+  templates: Record<string, HalFormsTemplate>;
 
   showProperties: boolean;
   showLinks: boolean;
@@ -254,7 +262,10 @@ export class ResponseExplorerComponent implements OnInit {
     return base + 'btn-outline-success icon-left-open';
   }
 
-  getCommandForTemplateMethod(method: string): Command {
+  getCommandForTemplateMethod(method?: string): Command {
+    if (!method) {
+      return Command.Get;
+    }
     const command = Command[method[0].toUpperCase() + method.substring(1).toLowerCase()];
     if (command) {
       return command;
@@ -262,7 +273,7 @@ export class ResponseExplorerComponent implements OnInit {
     return Command.Get;
   }
 
-  getUrlForTemplateTarget(target: string): string {
+  getUrlForTemplateTarget(target?: string): string {
     if (target) {
       return target;
     } else if (this.selfLink) {

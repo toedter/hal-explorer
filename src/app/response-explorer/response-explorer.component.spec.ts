@@ -288,6 +288,12 @@ describe('ResponseExplorerComponent', () => {
     expect(unknownMethodCommand).toBe(Command.Get);
   });
 
+  it('should get command for null template method', () => {
+    const unknownMethodCommand = component.getCommandForTemplateMethod();
+
+    expect(unknownMethodCommand).toBe(Command.Get);
+  });
+
   it('should get uri for template target', () => {
     const href = 'http://api.com';
     (component.selfLink as any) = {};
