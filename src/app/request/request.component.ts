@@ -172,6 +172,20 @@ export class RequestComponent implements OnInit {
     );
   }
 
+  handleModalKeydown(event: KeyboardEvent, form: any) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      // Check if the form is valid before submitting
+      if (form && form.valid) {
+        // Click the Go button which will submit and close the modal
+        const goButton = document.getElementById('requestDialogGoButton');
+        if (goButton) {
+          goButton.click();
+        }
+      }
+    }
+  }
+
   goFromHashChange(uri: string) {
     this.uri = uri;
     this.requestService.getUri(this.uri);

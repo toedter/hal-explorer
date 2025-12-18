@@ -56,7 +56,7 @@
             Settings
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownLayout">
-            @for (setting of settings; track setting) {
+            @for (setting of settings; track $index) {
               <div>
                 @if (setting === '---') {
                   <hr class="dropdown-divider" />

@@ -29,7 +29,7 @@
           <div class="bs-component">
             <table class="table table-striped table-sm">
               <tbody>
-                @for (header of requestHeaders; track header) {
+                @for (header of requestHeaders; track header.key) {
                   <tr>
                     <td class="w-25">{{ header.key }}</td>
                     <td class="w-75">{{ header.value }}</td>
@@ -46,7 +46,7 @@
 
 <div id="HttpRequestTrigger" data-bs-toggle="modal" data-bs-target="#httpRequestModal"></div>
 
-<div class="modal fade" id="httpRequestModal" role="dialog" aria-hidden="false">
+<div class="modal fade" id="httpRequestModal" tabindex="-1" role="dialog" aria-modal="true" (keydown)="handleModalKeydown($event, myForm)">
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -72,7 +72,7 @@
           @if (isUriTemplate) {
             <div class="form-group">
               <label>Parameters</label>
-              @for (parameter of uriTemplateParameters; track parameter) {
+              @for (parameter of uriTemplateParameters; track parameter.key) {
                 <div id="uri-parameters" class="form-group row">
                   <label class="col-sm-3 col-form-label">{{ parameter.key }}</label>
                   <div class="p-1 col-sm-9">
@@ -125,7 +125,7 @@
             <div>
               <hr />
               <label class="mb-2">Spring Profile (JSON Schema)</label>
-              @for (item of jsonSchema | keyvalue; track item) {
+              @for (item of jsonSchema | keyvalue; track item.key) {
                 <div class="form-group row">
                   <label [title]="getTooltip(item.key)" class="text-info col-sm-3 col-form-label"
                     >{{ jsonSchema[item.key].title }}
@@ -154,7 +154,7 @@
                   <span> [{{ halFormsPropertyKey }}]</span>
                 }
               </label>
-              @for (item of halFormsProperties; track item) {
+              @for (item of halFormsProperties; track item.name) {
                 <div class="form-group row">
                   @if (item.prompt) {
                     <label [title]="item.name" class="text-info col-sm-3 col-form-label">
@@ -203,7 +203,7 @@
                             [appHalFormsProperty]="item"
                             (change)="propertyChanged()"
                           >
-                            @for (option of item.options.computedOptions; track option) {
+                            @for (option of item.options.computedOptions; track option.value) {
                               <option [value]="option.value" [selected]="isHalFormsOptionSelected(item, option.value)">
                                 {{ option.prompt }}
                               </option>
@@ -222,7 +222,7 @@
                             (change)="propertyChanged()"
                             multiple
                           >
-                            @for (option of item.options.computedOptions; track option) {
+                            @for (option of item.options.computedOptions; track option.value) {
                               <option [value]="option.value" [selected]="isHalFormsOptionSelected(item, option.value)">
                                 {{ option.prompt }}
                               </option>
@@ -312,7 +312,7 @@
               <div class="p-2 col-sm-9">Value</div>
             </div>
 
-            @for (header of tempRequestHeaders; track header) {
+            @for (header of tempRequestHeaders; track $index) {
               <div id="headers" class="form-group row">
                 <div class="p-2 col-sm-3">
                   <input class="form-control" [(ngModel)]="header.key" [ngModelOptions]="{ standalone: true }" />

@@ -35,7 +35,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @for (link of links; track link) {
+                    @for (link of links; track link.href) {
                       <tr>
                         <td>{{ link.rel }}</td>
                         <td>{{ link.name }}</td>
@@ -112,7 +112,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @for (template of templates | keyvalue; track template) {
+                    @for (template of templates | keyvalue; track template.key) {
                       <tr>
                         <td>{{ template.key }}</td>
                         <td>{{ template.value.title }}</td>
@@ -145,7 +145,7 @@
               <h5>Embedded Resources</h5>
             </div>
             <div>
-              @for (embeddedResource of embedded; track embeddedResource; let i1 = $index) {
+              @for (embeddedResource of embedded; track embeddedResource.name; let i1 = $index) {
                 <div class="card" [attr.id]="prefix + 'item_' + i1">
                   <div class="card-header d-flex">
                     <a

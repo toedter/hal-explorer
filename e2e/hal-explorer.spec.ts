@@ -81,12 +81,17 @@ test.describe('HAL Explorer App', () => {
     await expect(page.getByText('HTTP Request Input')).toBeVisible();
   });
 
-  test('should display user profile in POST request dialog', async ({ page }) => {
+  test('should display user profile in POST request dialog', { tag: '@flaky' }, async ({ page }) => {
     await page.goto('/#uri=http://localhost:3000/index.hal.json');
     await page.waitForLoadState('networkidle');
 
     // Wait for the links section to be fully loaded
     await expect(page.locator('h5:has-text("Links")').first()).toBeVisible();
+
+    // Ensure Bootstrap is loaded
+    await page.waitForFunction(() => {
+      return typeof (window as any).bootstrap !== 'undefined';
+    }, { timeout: 10000 });
 
     // Ensure the POST button is visible and clickable
     const postButton = page.locator('button.icon-plus').first();
@@ -132,6 +137,71 @@ test.describe('HAL Explorer App', () => {
     // Wait for the URI to update by checking it contains the expected value
     await expect(page.locator('[id="request-input-expanded-uri"]'))
       .toContainText('title=myTitle', { timeout: 2000 });
+  });
+
+  test('should close modal on ESC key', async ({ page }) => {
+    await page.goto('/#uri=http://localhost:3000/filter.hal-forms.json');
+    await page.waitForLoadState('networkidle');
+
+    // Wait for the HAL-FORMS section to be loaded
+    await expect(page.locator('h5:has-text("HAL-FORMS Template Elements")')).toBeVisible();
+
+    const getButton = page.locator('button.icon-left-open').last();
+    await expect(getButton).toBeVisible();
+    await expect(getButton).toBeEnabled();
+
+    await getButton.click();
+
+    // Wait for the modal to be fully visible
+    const modal = page.locator('#httpRequestModal');
+    await expect(modal).toHaveClass(/show/, { timeout: 10000 });
+    await expect(page.getByText('HTTP Request Input')).toBeVisible();
+
+    // Focus on an input field to ensure keyboard events are captured
+    const titleInput = page.locator('input[id="request-input-title"]');
+    await titleInput.click();
+
+    // Press ESC key to close the modal
+    await page.keyboard.press('Escape');
+
+    // Verify the modal is closed (no longer has 'show' class)
+    await expect(modal).not.toHaveClass(/show/, { timeout: 5000 });
+  });
+
+  test('should submit request on Enter key in parameterized GET request dialog', async ({ page }) => {
+    await page.goto('/#uri=http://localhost:3000/filter.hal-forms.json');
+    await page.waitForLoadState('networkidle');
+
+    // Wait for the HAL-FORMS section to be loaded
+    await expect(page.locator('h5:has-text("HAL-FORMS Template Elements")')).toBeVisible();
+
+    const getButton = page.locator('button.icon-left-open').last();
+    await expect(getButton).toBeVisible();
+    await expect(getButton).toBeEnabled();
+
+    await getButton.click();
+
+    // Wait for the modal to be fully visible
+    const modal = page.locator('#httpRequestModal');
+    await expect(modal).toHaveClass(/show/, { timeout: 10000 });
+    await expect(page.getByText('HTTP Request Input')).toBeVisible();
+
+    // Fill in the parameters (focus is on the last filled input)
+    await page.locator('input[id="request-input-title"]').fill('myTitle');
+    const completedInput = page.locator('input[id="request-input-completed"]');
+    await completedInput.fill('true');
+
+    // Wait a bit for Angular to process the change and update the expanded URI
+    await page.waitForTimeout(500);
+
+    // Press Enter key to submit the request (focus is already on the completed input field)
+    await completedInput.press('Enter');
+
+    // Verify the modal is closed after submission
+    await expect(modal).not.toHaveClass(/show/, { timeout: 5000 });
+
+    // Verify the URL was updated with the title parameter (meaning the request was made)
+    await expect(page).toHaveURL(/title=myTitle/);
   });
 
   test('should display correct properties HAL-FORMS POST request dialog', async ({ page }) => {
