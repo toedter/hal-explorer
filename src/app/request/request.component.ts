@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import utpl from 'uri-templates';
 import { URITemplate } from 'uri-templates';
 import { AppService, RequestHeader } from '../app.service';
@@ -40,8 +40,8 @@ export class RequestComponent implements OnInit {
 
   noValueSelected = '<No Value Selected>';
 
-  constructor(private appService: AppService, private requestService: RequestService) {
-  }
+  private appService = inject(AppService);
+  private requestService = inject(RequestService);
 
   ngOnInit() {
     this.jsonSchema = undefined;

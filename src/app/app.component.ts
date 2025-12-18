@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RequestService } from './request/request.service';
 import { AppService } from './app.service';
@@ -6,13 +6,12 @@ import { DocumentationComponent } from './documentation/documentation.component'
 import { ResponseDetailsComponent } from './response-details/response-details.component';
 import { ResponseExplorerComponent } from './response-explorer/response-explorer.component';
 import { RequestComponent } from './request/request.component';
-import { NgFor, NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
-    imports: [NgIf, NgFor, RequestComponent, ResponseExplorerComponent, ResponseDetailsComponent, DocumentationComponent]
+    imports: [RequestComponent, ResponseExplorerComponent, ResponseDetailsComponent, DocumentationComponent]
 })
 export class AppComponent implements OnInit {
   themes: string[] = [
@@ -68,11 +67,9 @@ export class AppComponent implements OnInit {
   version = '1.2.4-SNAPSHOT';
   isSnapshotVersion = this.version.endsWith('SNAPSHOT');
 
-  constructor(
-    private appService: AppService,
-    private requestService: RequestService,
-    private sanitizer: DomSanitizer) {
-  }
+  private appService = inject(AppService);
+  private requestService = inject(RequestService);
+  private sanitizer = inject(DomSanitizer);
 
   ngOnInit(): void {
     this.requestService.getResponseObservable()

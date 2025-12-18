@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import utpl from 'uri-templates';
@@ -46,8 +46,8 @@ export class RequestService {
     });
   private customRequestHeaders: RequestHeader[];
 
-  constructor(private appService: AppService, private http: HttpClient) {
-  }
+  private appService = inject(AppService);
+  private http = inject(HttpClient);
 
   getResponseObservable(): Observable<Response> {
     return this.responseObservable;

@@ -41,7 +41,7 @@ jobs:
         run: yarn build
 
       - name: Unit tests
-        run: yarn test-headless
+        run: yarn test:headless
 
       - name: Install Playwright Browsers
         run: yarn playwright install --with-deps

@@ -1,6 +1,8 @@
-<div *ngIf="isCustomTheme">
-  <link [href]="selectedThemeUrl" rel="stylesheet">
-</div>
+@if (isCustomTheme) {
+  <div>
+    <link [href]="selectedThemeUrl" rel="stylesheet">
+  </div>
+}
 
 <nav class="navbar navbar-expand-lg navbar-toggleable-md navbar-dark bg-dark">
   <div class="container-fluid">
@@ -21,8 +23,10 @@
             Theme
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownTheme">
-            <a class="dropdown-item" href="#" *ngFor="let theme of themes" (click)="changeTheme(theme)">
-              <i class="icon-ok" [style]="getThemeIconCheckStyle(theme)"></i>{{ theme }}</a>
+            @for (theme of themes; track theme) {
+              <a class="dropdown-item" href="#" (click)="changeTheme(theme)">
+                <i class="icon-ok" [style]="getThemeIconCheckStyle(theme)"></i>{{ theme }}</a>
+            }
           </div>
         </li>
         <li class="nav-item dropdown">
@@ -31,12 +35,17 @@
             Settings
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownLayout">
-            <div *ngFor="let setting of settings">
-              <hr *ngIf="setting === '---'" class="dropdown-divider">
-              <a *ngIf="setting !== '---'" class="dropdown-item" href="#"
-                 (click)="selectSetting(setting)">
-                <i class="icon-ok" [style]="getSettingsIconCheckStyle(setting)"></i>{{ setting }}</a>
-            </div>
+            @for (setting of settings; track setting) {
+              <div>
+                @if (setting === '---') {
+                  <hr class="dropdown-divider">
+                }
+                @if (setting !== '---') {
+                  <a class="dropdown-item" href="#" (click)="selectSetting(setting)">
+                    <i class="icon-ok" [style]="getSettingsIconCheckStyle(setting)"></i>{{ setting }}</a>
+                }
+              </div>
+            }
           </div>
         </li>
         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#aboutModal">About</a>
@@ -73,15 +82,20 @@
             </tr>
             <tr>
               <td>Docs:</td>
-              <td *ngIf="isSnapshotVersion"><a class="p-0 text-decoration-none"
-                                               href="https://toedter.github.io/hal-explorer/snapshot/reference-doc/">Snapshot
-                Reference
-                Documentation</a>
-              <td *ngIf="!isSnapshotVersion"><a class="p-0 text-decoration-none"
-                                                href="https://toedter.github.io/hal-explorer/release/reference-doc/">Release
-                Reference
-                Documentation</a>
-              </td>
+              @if (isSnapshotVersion) {
+                <td><a class="p-0 text-decoration-none"
+                  href="https://toedter.github.io/hal-explorer/snapshot/reference-doc/">Snapshot
+                  Reference
+                  Documentation</a>
+                </td>
+              }
+              @if (!isSnapshotVersion) {
+                <td><a class="p-0 text-decoration-none"
+                  href="https://toedter.github.io/hal-explorer/release/reference-doc/">Release
+                  Reference
+                  Documentation</a>
+                </td>
+              }
             </tr>
             </tbody>
           </table>
@@ -95,32 +109,37 @@
   </div>
 </div>
 
-<div *ngIf="!isTwoColumnLayout" class="container-fluid">
-  <div class="row gx-2">
-    <div class="form-group col-xl">
-      <app-uri-input></app-uri-input>
-      <br>
-      <app-response-explorer></app-response-explorer>
-    </div>
-    <div class="form-group col-xl">
-      <app-response-details></app-response-details>
-    </div>
-    <div class="form-group col-xl">
-      <app-documentation></app-documentation>
+@if (!isTwoColumnLayout) {
+  <div class="container-fluid">
+    <div class="row gx-2">
+      <div class="form-group col-xl">
+        <app-uri-input></app-uri-input>
+        <br>
+        <app-response-explorer></app-response-explorer>
+      </div>
+      <div class="form-group col-xl">
+        <app-response-details></app-response-details>
+      </div>
+      <div class="form-group col-xl">
+        <app-documentation></app-documentation>
+      </div>
     </div>
   </div>
-</div>
+}
 
-<div *ngIf="isTwoColumnLayout" class="container-fluid">
-  <div class="row gx-2">
-    <div class="form-group col-xl">
-      <app-uri-input></app-uri-input>
-      <br>
-      <app-response-explorer></app-response-explorer>
-    </div>
-    <div class="form-group col-xl">
-      <app-response-details [hidden]="showDocumentation"></app-response-details>
-      <app-documentation></app-documentation>
+@if (isTwoColumnLayout) {
+  <div class="container-fluid">
+    <div class="row gx-2">
+      <div class="form-group col-xl">
+        <app-uri-input></app-uri-input>
+        <br>
+        <app-response-explorer></app-response-explorer>
+      </div>
+      <div class="form-group col-xl">
+        <app-response-details [hidden]="showDocumentation"></app-response-details>
+        <app-documentation></app-documentation>
+      </div>
     </div>
   </div>
-</div>
+}
+

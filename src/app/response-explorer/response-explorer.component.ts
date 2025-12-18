@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { Command, RequestService, Response } from '../request/request.service';
 import { JsonHighlighterService } from '../json-highlighter/json-highlighter.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -54,10 +54,9 @@ export class ResponseExplorerComponent implements OnInit {
 
   httpErrorResponse: HttpErrorResponse;
 
-  constructor(private requestService: RequestService,
-              private jsonHighlighterService: JsonHighlighterService,
-              private appService: AppService) {
-  }
+  private requestService = inject(RequestService);
+  private jsonHighlighterService = inject(JsonHighlighterService);
+  private appService = inject(AppService);
 
   ngOnInit() {
     if (this.jsonRoot) {

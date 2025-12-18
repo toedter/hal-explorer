@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { RequestService } from '../request/request.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
@@ -13,8 +13,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 export class DocumentationComponent implements OnInit {
   docUri: SafeResourceUrl;
 
-  constructor(private requestService: RequestService, private sanitizer: DomSanitizer) {
-  }
+  private requestService = inject(RequestService);
+  private sanitizer = inject(DomSanitizer);
 
   ngOnInit() {
     this.requestService.getDocumentationObservable()

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { RequestService, Response } from '../request/request.service';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { JsonHighlighterService } from '../json-highlighter/json-highlighter.service';
@@ -22,8 +22,8 @@ export class ResponseDetailsComponent implements OnInit {
 
   httpResponseReasonPhrase: string;
 
-  constructor(private requestService: RequestService, private jsonHighlighterService: JsonHighlighterService) {
-  }
+  private requestService = inject(RequestService);
+  private jsonHighlighterService = inject(JsonHighlighterService);
 
   ngOnInit() {
     this.requestService.getResponseObservable()
