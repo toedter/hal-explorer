@@ -76,7 +76,8 @@
         "serve": {
           "builder": "@angular/build:dev-server",
           "options": {
-            "buildTarget": "hal-explorer:build"
+            "buildTarget": "hal-explorer:build",
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {
