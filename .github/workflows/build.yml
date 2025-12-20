@@ -44,7 +44,7 @@ jobs:
         run: yarn test:headless
 
       - name: Install Playwright Browsers
-        run: yarn playwright install --with-deps
+        run: yarn playwright install chromium --with-deps
 
       - name: E2E tests
         run: yarn e2e:chromium
