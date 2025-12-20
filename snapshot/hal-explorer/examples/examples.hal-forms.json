@@ -10,6 +10,10 @@
       "href": "movies.hal.json",
       "name": "HAL movies example"
     },
+    "hal-doc-anchor": {
+      "href": "index-with-doc-anchor.hal.json",
+      "name": "Example for documentation anchor in curie"
+    },
     "hal-forms-index": {
       "href": "index.hal-forms.json",
       "name": "HAL-FORMS index example"

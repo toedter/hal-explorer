@@ -1,0 +1,14 @@
+{
+  "_links": {
+    "chatty:resources-message": {
+      "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/messages.hal.json"
+    },
+    "curies": [
+      {
+        "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/messages.html#{rel}",
+        "name": "chatty",
+        "templated": true
+      }
+    ]
+  }
+}
