@@ -245,5 +245,58 @@ test.describe('HAL Explorer App', () => {
     await expect(uriInput).toHaveValue('http://localhost:3000/users.hal.json');
   });
 
+  test('should toggle scrollable documentation setting via UI', async ({ page }) => {
+    // Navigate to a simple resource first
+    await page.goto('/#uri=http://localhost:3000/index.hal.json');
+    await page.waitForLoadState('networkidle');
+
+    // Verify the page loads correctly
+    await expect(page.locator('h5:has-text("Links")').first()).toBeVisible();
+
+    // Verify the URL does NOT initially include scrollableDocumentation=true
+    await expect(page).not.toHaveURL(/scrollableDocumentation=true/);
+
+    // Open the Settings menu
+    const settingsDropdown = page.locator('a.nav-link', { hasText: 'Settings' });
+    await settingsDropdown.click();
+    await expect(page.locator('.dropdown-menu[aria-labelledby="navbarDropdownLayout"]')).toBeVisible();
+
+    // Verify the "Scrollable Documentation" setting does NOT initially have a checkmark
+    const scrollableDocSetting = page.locator('.dropdown-item', { hasText: 'Scrollable Documentation' });
+    await expect(scrollableDocSetting).toBeVisible();
+    const checkIcon = scrollableDocSetting.locator('i.icon-ok');
+    const iconStyleBefore = await checkIcon.evaluate((el: HTMLElement) => window.getComputedStyle(el).visibility);
+    expect(iconStyleBefore).toBe('hidden');
+
+    // Click the "Scrollable Documentation" setting to enable it
+    await scrollableDocSetting.click();
+
+    // Wait a moment for the setting to be applied
+    await page.waitForTimeout(500);
+
+    // Note: Due to a known issue, the URI parameter may be lost when toggling settings
+    // We're testing that the setting itself toggles correctly, not the URL persistence
+
+    // Open Settings menu again to verify the checkmark is now shown
+    await settingsDropdown.click();
+    await expect(page.locator('.dropdown-menu[aria-labelledby="navbarDropdownLayout"]')).toBeVisible();
+
+    // Verify the checkmark is now visible
+    const iconStyleAfter = await checkIcon.evaluate((el: HTMLElement) => window.getComputedStyle(el).visibility);
+    expect(iconStyleAfter).not.toBe('hidden');
+
+    // Click the setting again to disable it
+    await scrollableDocSetting.click();
+    await page.waitForTimeout(500);
+
+    // Open Settings menu one more time
+    await settingsDropdown.click();
+    await expect(page.locator('.dropdown-menu[aria-labelledby="navbarDropdownLayout"]')).toBeVisible();
+
+    // Verify the checkmark is hidden again
+    const iconStyleFinal = await checkIcon.evaluate((el: HTMLElement) => window.getComputedStyle(el).visibility);
+    expect(iconStyleFinal).toBe('hidden');
+  });
+
 });
 
