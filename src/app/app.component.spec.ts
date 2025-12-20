@@ -15,6 +15,7 @@ describe('AppComponent', () => {
   let layoutSubject;
   let httpOptionsSubject;
   let allHttpMethodsForLinksSubject;
+  let scrollableDocumentationSubject;
 
   beforeEach(waitForAsync(() => {
     const requestServiceMock = jasmine.createSpyObj([
@@ -43,6 +44,7 @@ describe('AppComponent', () => {
     layoutSubject = new Subject<string>();
     httpOptionsSubject = new Subject<boolean>();
     allHttpMethodsForLinksSubject = new Subject<boolean>();
+    scrollableDocumentationSubject = new Subject<boolean>();
 
     const uriSubject = new Subject<string>();
     const requestHeaderSubject = new Subject<RequestHeader[]>();
@@ -59,12 +61,15 @@ describe('AppComponent', () => {
         'setHttpOptions',
         'getAllHttpMethodsForLinks',
         'setAllHttpMethodsForLinks',
+        'getScrollableDocumentation',
+        'setScrollableDocumentation',
       ],
       {
         themeObservable: themeSubject,
         layoutObservable: layoutSubject,
         httpOptionsObservable: httpOptionsSubject,
         allHttpMethodsForLinksObservable: allHttpMethodsForLinksSubject,
+        scrollableDocumentationObservable: scrollableDocumentationSubject,
         uriObservable: uriSubject,
         requestHeadersObservable: requestHeaderSubject,
       }
@@ -77,6 +82,7 @@ describe('AppComponent', () => {
     appServiceMock.getLayout.and.returnValue('2');
     appServiceMock.getHttpOptions.and.returnValue(false);
     appServiceMock.getAllHttpMethodsForLinks.and.returnValue(false);
+    appServiceMock.getScrollableDocumentation.and.returnValue(false);
     const domSanitizerMock = jasmine.createSpyObj(['bypassSecurityTrustResourceUrl']);
 
     TestBed.configureTestingModule({
@@ -167,5 +173,17 @@ describe('AppComponent', () => {
     component.selectSetting('2 Column Layout');
 
     expect(component.isTwoColumnLayout).toBeTrue();
+  });
+
+  it('should react on scrollable documentation change', () => {
+    scrollableDocumentationSubject.next(true);
+
+    expect(component.scrollableDocumentation).toBeTrue();
+  });
+
+  it('should select settings (Scrollable Documentation)', () => {
+    component.selectSetting('Scrollable Documentation');
+
+    expect(component.scrollableDocumentation).toBeTrue();
   });
 });

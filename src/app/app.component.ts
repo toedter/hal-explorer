@@ -52,6 +52,8 @@ export class AppComponent implements OnInit {
     'Use HTTP OPTIONS',
     '---',
     'Enable all HTTP Methods for HAL-FORMS Links',
+    '---',
+    'Scrollable Documentation',
   ];
 
   isCustomTheme = false;
@@ -60,6 +62,7 @@ export class AppComponent implements OnInit {
   isTwoColumnLayout = true;
   useHttpOptions = false;
   enableAllHttpMethodsForLinks = false;
+  scrollableDocumentation = false;
 
   version = '1.2.4-SNAPSHOT';
   isSnapshotVersion = this.version.endsWith('SNAPSHOT');
@@ -90,6 +93,11 @@ export class AppComponent implements OnInit {
       this.changeAllHttpMethodsForLinks(allHttpMethodsForLinks)
     );
     this.changeAllHttpMethodsForLinks(this.appService.getAllHttpMethodsForLinks());
+
+    this.appService.scrollableDocumentationObservable.subscribe(scrollableDocumentation =>
+      this.changeScrollableDocumentation(scrollableDocumentation)
+    );
+    this.changeScrollableDocumentation(this.appService.getScrollableDocumentation());
   }
 
   changeTheme(theme: string) {
@@ -117,6 +125,11 @@ export class AppComponent implements OnInit {
     this.enableAllHttpMethodsForLinks = allHttpMethodsForLinks;
   }
 
+  changeScrollableDocumentation(scrollableDocumentation: boolean) {
+    this.appService.setScrollableDocumentation(scrollableDocumentation);
+    this.scrollableDocumentation = scrollableDocumentation;
+  }
+
   selectSetting(setting: string) {
     if (setting.includes('OPTIONS')) {
       this.useHttpOptions = !this.useHttpOptions;
@@ -124,6 +137,9 @@ export class AppComponent implements OnInit {
     } else if (setting.includes('Links')) {
       this.enableAllHttpMethodsForLinks = !this.enableAllHttpMethodsForLinks;
       this.appService.setAllHttpMethodsForLinks(this.enableAllHttpMethodsForLinks);
+    } else if (setting.includes('Scrollable')) {
+      this.scrollableDocumentation = !this.scrollableDocumentation;
+      this.appService.setScrollableDocumentation(this.scrollableDocumentation);
     } else {
       this.changeLayout(setting);
     }
@@ -141,7 +157,8 @@ export class AppComponent implements OnInit {
     if (
       (setting.includes('OPTIONS') && this.useHttpOptions) ||
       setting.includes(this.appService.getLayout()) ||
-      (setting.includes('Links') && this.enableAllHttpMethodsForLinks)
+      (setting.includes('Links') && this.enableAllHttpMethodsForLinks) ||
+      (setting.includes('Scrollable') && this.scrollableDocumentation)
     ) {
       return '';
     }

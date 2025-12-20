@@ -1,3 +1,10 @@
-iframe {
+#doc-iframe {
   width: 100%;
+}
+
+#doc-iframe-scrollable {
+  width: 100%;
+  border: 1px solid #ddd;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

@@ -17,6 +17,7 @@ export class AppService {
   private layoutParam: string;
   private httpOptionsParam: boolean;
   private allHttpMethodsForLinksParam: boolean;
+  private scrollableDocumentationParam: boolean;
 
   private customRequestHeaders: RequestHeader[];
 
@@ -25,6 +26,7 @@ export class AppService {
   private layoutParamBackup: string;
   private httpOptionsParamBackup: boolean;
   private allHttpMethodsForLinksParamBackup: boolean;
+  private scrollableDocumentationParamBackup: boolean;
 
   private readonly uriSubject: Subject<string> = new Subject<string>();
   private readonly _uriObservable: Observable<string> = this.uriSubject.asObservable();
@@ -37,6 +39,9 @@ export class AppService {
   private readonly allHttpMethodsForLinksSubject: Subject<boolean> = new Subject<boolean>();
   private readonly _allHttpMethodsForLinksObservable: Observable<boolean> =
     this.allHttpMethodsForLinksSubject.asObservable();
+  private readonly scrollableDocumentationSubject: Subject<boolean> = new Subject<boolean>();
+  private readonly _scrollableDocumentationObservable: Observable<boolean> =
+    this.scrollableDocumentationSubject.asObservable();
   private readonly requestHeadersSubject: Subject<RequestHeader[]> = new Subject<RequestHeader[]>();
   private readonly _requestHeadersObservable: Observable<RequestHeader[]> = this.requestHeadersSubject.asObservable();
 
@@ -65,6 +70,10 @@ export class AppService {
 
   get allHttpMethodsForLinksObservable(): Observable<boolean> {
     return this._allHttpMethodsForLinksObservable;
+  }
+
+  get scrollableDocumentationObservable(): Observable<boolean> {
+    return this._scrollableDocumentationObservable;
   }
 
   get requestHeadersObservable(): Observable<RequestHeader[]> {
@@ -133,6 +142,17 @@ export class AppService {
     this.setLocationHash();
   }
 
+  getScrollableDocumentation(): boolean {
+    return this.scrollableDocumentationParam;
+  }
+
+  setScrollableDocumentation(scrollable: boolean) {
+    this.scrollableDocumentationParamBackup = this.scrollableDocumentationParam;
+    this.scrollableDocumentationParam = scrollable;
+    this.scrollableDocumentationSubject.next(scrollable);
+    this.setLocationHash();
+  }
+
   getCustomRequestHeaders(): RequestHeader[] {
     return this.customRequestHeaders;
   }
@@ -168,6 +188,10 @@ export class AppService {
       this.allHttpMethodsForLinksParam = false;
     }
 
+    if (!this.scrollableDocumentationParam) {
+      this.scrollableDocumentationParam = false;
+    }
+
     const tempCustomRequestHeaders: RequestHeader[] = new Array(5);
 
     const fragment = location.hash.substring(1);
@@ -189,6 +213,10 @@ export class AppService {
       } else if (key === 'allHttpMethodsForLinks') {
         const allHttpMethodsForLinksValue = decodeURIComponent(m[2]);
         this.allHttpMethodsForLinksParam = allHttpMethodsForLinksValue === 'true';
+        m = regex.exec(fragment);
+      } else if (key === 'scrollableDocumentation') {
+        const scrollableDocumentationValue = decodeURIComponent(m[2]);
+        this.scrollableDocumentationParam = scrollableDocumentationValue === 'true';
         m = regex.exec(fragment);
       } else if (key.startsWith('hkey')) {
         const headerKeyParam = decodeURIComponent(m[2]);
@@ -244,6 +272,10 @@ export class AppService {
       this.allHttpMethodsForLinksSubject.next(this.allHttpMethodsForLinksParam);
     }
 
+    if (this.scrollableDocumentationParamBackup !== this.scrollableDocumentationParam) {
+      this.scrollableDocumentationSubject.next(this.scrollableDocumentationParam);
+    }
+
     this.customRequestHeaders = [];
     let publishRequestHeaders = false;
     for (let i = 0; i < 5; i++) {
@@ -272,13 +304,18 @@ export class AppService {
       andPrefix = '&';
     }
 
-    if (this.httpOptionsParam != false) {
+    if (this.httpOptionsParam) {
       newLocationHash += andPrefix + 'httpOptions=' + this.httpOptionsParam;
       andPrefix = '&';
     }
 
-    if (this.allHttpMethodsForLinksParam != false) {
+    if (this.allHttpMethodsForLinksParam) {
       newLocationHash += andPrefix + 'allHttpMethodsForLinks=' + this.allHttpMethodsForLinksParam;
+      andPrefix = '&';
+    }
+
+    if (this.scrollableDocumentationParam) {
+      newLocationHash += andPrefix + 'scrollableDocumentation=' + this.scrollableDocumentationParam;
       andPrefix = '&';
     }
 
@@ -301,6 +338,6 @@ export class AppService {
       newLocationHash += andPrefix + 'uri=' + this.uriParam;
     }
 
-    window.location.hash = newLocationHash;
+    globalThis.location.hash = newLocationHash;
   }
 }
