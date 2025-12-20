@@ -1,0 +1,14 @@
+{
+  "_links": {
+    "chatty:resources-message": {
+      "href": "http://localhost:3000/messages.hal.json"
+    },
+    "curies": [
+      {
+        "href": "http://localhost:3000/messages.html#{rel}",
+        "name": "chatty",
+        "templated": true
+      }
+    ]
+  }
+}
