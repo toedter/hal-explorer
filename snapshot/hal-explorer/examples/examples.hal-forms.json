@@ -12,7 +12,7 @@
     },
     "hal-doc-anchor": {
       "href": "index-with-doc-anchor.hal.json",
-      "name": "Example for documentation anchor in curie"
+      "name": "HAL example for documentation anchor in curie"
     },
     "hal-forms-index": {
       "href": "index.hal-forms.json",
