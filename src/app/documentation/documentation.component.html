@@ -16,7 +16,12 @@
             ></iframe>
           }
           @if (!isScrollable) {
-            <iframe id="doc-iframe" title="Documentation" [src]="docUri" onload="setIframeHeight('doc-iframe')"></iframe>
+            <iframe
+              id="doc-iframe"
+              title="Documentation"
+              [src]="docUri"
+              onload="setIframeHeight('doc-iframe')"
+            ></iframe>
           }
         </div>
       </div>

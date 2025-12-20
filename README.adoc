@@ -53,7 +53,7 @@ The app will automatically reload if you change any of the source files.
 The development server has a build-in proxy configuration
 so that all calls to `/api` are forwarded to `localhost:8080/api`.
 This is convenient when you want to test a local server without having to deal with CORS.
-If you run `yarn startl`, an additional file server is started with port 3000.
+If you run `yarn start:fs`, an additional file server is started with port 3000.
 In the test-data directory, you find some JSON examples. Try it out with the URL
 http://localhost:4200/#uri=http://localhost:3000/movies.hal-forms.json.
 

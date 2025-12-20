@@ -7,7 +7,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "startl": "concurrently \"node test-server.js\" \"ng serve\" --kill-others --success first",
+    "start:fs": "concurrently \"node test-server.js\" \"ng serve\" --kill-others --success first",
     "build": "ng build --configuration production",
     "test": "ng test",
     "test:headless": "ng test --browsers ChromeHeadless --code-coverage --watch=false",
