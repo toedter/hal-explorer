@@ -60,7 +60,7 @@
     "concurrently": "^9.2.1",
     "cors": "^2.8.5",
     "eslint": "^9.39.2",
-    "express": "^4.21.2",
+    "express": "^5.0.0",
     "jasmine-core": "~5.13.0",
     "jasmine-spec-reporter": "~7.0.0",
     "karma": "~6.4.4",
