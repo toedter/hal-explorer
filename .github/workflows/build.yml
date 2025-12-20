@@ -47,7 +47,7 @@ jobs:
         run: yarn playwright install --with-deps
 
       - name: E2E tests
-        run: yarn e2e
+        run: yarn e2e:chromium
 
       - name: Upload coverage to codecov
         uses: codecov/codecov-action@v4
