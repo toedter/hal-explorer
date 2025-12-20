@@ -149,7 +149,6 @@ export class AppService {
   setScrollableDocumentation(scrollable: boolean) {
     this.scrollableDocumentationParamBackup = this.scrollableDocumentationParam;
     this.scrollableDocumentationParam = scrollable;
-    this.scrollableDocumentationSubject.next(scrollable);
     this.setLocationHash();
   }
 
