@@ -24,6 +24,75 @@
     <div class="collapse navbar-collapse" id="navbar1">
       <ul class="navbar-nav">
         <li class="nav-item dropdown">
+          <button
+            class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center"
+            id="bd-theme"
+            type="button"
+            aria-expanded="false"
+            data-bs-toggle="dropdown"
+            data-bs-display="static"
+            aria-label="Toggle theme ({{ activeColorMode }})"
+          >
+            @if (activeColorMode === 'light') {
+              <i class="bi bi-sun-fill"></i>
+            }
+            @if (activeColorMode === 'dark') {
+              <i class="bi bi-moon-stars-fill"></i>
+            }
+            @if (activeColorMode === 'auto') {
+              <i class="bi bi-circle-half"></i>
+            }
+            <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
+            <li>
+              <button
+                type="button"
+                class="dropdown-item d-flex align-items-center"
+                (click)="setColorMode('light')"
+                [class.active]="activeColorMode === 'light'"
+                aria-pressed="{{ activeColorMode === 'light' }}"
+              >
+                <i class="bi bi-sun-fill me-2 opacity-50"></i>
+                Light
+                @if (activeColorMode === 'light') {
+                  <i class="bi bi-check2 ms-auto"></i>
+                }
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                class="dropdown-item d-flex align-items-center"
+                (click)="setColorMode('dark')"
+                [class.active]="activeColorMode === 'dark'"
+                aria-pressed="{{ activeColorMode === 'dark' }}"
+              >
+                <i class="bi bi-moon-stars-fill me-2 opacity-50"></i>
+                Dark
+                @if (activeColorMode === 'dark') {
+                  <i class="bi bi-check2 ms-auto"></i>
+                }
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                class="dropdown-item d-flex align-items-center"
+                (click)="setColorMode('auto')"
+                [class.active]="activeColorMode === 'auto'"
+                aria-pressed="{{ activeColorMode === 'auto' }}"
+              >
+                <i class="bi bi-circle-half me-2 opacity-50"></i>
+                Auto
+                @if (activeColorMode === 'auto') {
+                  <i class="bi bi-check2 ms-auto"></i>
+                }
+              </button>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
             href="#"

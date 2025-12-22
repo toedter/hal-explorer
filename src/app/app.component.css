@@ -2,3 +2,57 @@
   padding-right: 5px;
   padding-left: 5px;
 }
+
+/* Color mode switcher - make icons match navbar text color */
+#bd-theme {
+  color: inherit;
+  text-decoration: none;
+}
+
+#bd-theme:hover,
+#bd-theme:focus {
+  opacity: 0.8;
+}
+
+/* Bootstrap Icons inherit color from parent */
+#bd-theme i {
+  font-size: 1rem;
+}
+
+/* Ensure icons inherit the navbar text color */
+.navbar-dark #bd-theme {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.navbar-dark #bd-theme:hover,
+.navbar-dark #bd-theme:focus {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.navbar-light #bd-theme {
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.navbar-light #bd-theme:hover,
+.navbar-light #bd-theme:focus {
+  color: rgba(0, 0, 0, 0.75);
+}
+
+/* For Bootstrap 5.3+ data-bs-theme support */
+[data-bs-theme='dark'] .navbar #bd-theme {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+[data-bs-theme='dark'] .navbar #bd-theme:hover,
+[data-bs-theme='dark'] .navbar #bd-theme:focus {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+[data-bs-theme='light'] .navbar-dark #bd-theme {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+[data-bs-theme='light'] .navbar-dark #bd-theme:hover,
+[data-bs-theme='light'] .navbar-dark #bd-theme:focus {
+  color: rgba(255, 255, 255, 0.75);
+}

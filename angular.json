@@ -31,7 +31,8 @@
             ],
             "styles": [
               "src/styles.css",
-              "src/assets/fontello/css/fontello.css"
+              "src/assets/fontello/css/fontello.css",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"

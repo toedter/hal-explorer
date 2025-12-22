@@ -188,4 +188,46 @@ describe('AppComponent', () => {
 
     expect(component.scrollableDocumentation).toBeTrue();
   });
+
+  it('should initialize color mode from localStorage', () => {
+    spyOn(localStorage, 'getItem').and.returnValue('dark');
+    component.initializeColorMode();
+
+    expect(component.activeColorMode).toBe('dark');
+  });
+
+  it('should initialize color mode to auto when not in localStorage', () => {
+    spyOn(localStorage, 'getItem').and.returnValue(null);
+    component.initializeColorMode();
+
+    expect(component.activeColorMode).toBe('auto');
+  });
+
+  it('should set color mode to light', () => {
+    spyOn(localStorage, 'setItem');
+    component.setColorMode('light');
+
+    expect(component.activeColorMode).toBe('light');
+    expect(localStorage.setItem).toHaveBeenCalledWith('colorMode', 'light');
+    expect(document.documentElement.getAttribute('data-bs-theme')).toBe('light');
+  });
+
+  it('should set color mode to dark', () => {
+    spyOn(localStorage, 'setItem');
+    component.setColorMode('dark');
+
+    expect(component.activeColorMode).toBe('dark');
+    expect(localStorage.setItem).toHaveBeenCalledWith('colorMode', 'dark');
+    expect(document.documentElement.getAttribute('data-bs-theme')).toBe('dark');
+  });
+
+  it('should set color mode to auto and detect system preference', () => {
+    spyOn(localStorage, 'setItem');
+    spyOn(window, 'matchMedia').and.returnValue({ matches: true } as MediaQueryList);
+    component.setColorMode('auto');
+
+    expect(component.activeColorMode).toBe('auto');
+    expect(localStorage.setItem).toHaveBeenCalledWith('colorMode', 'auto');
+    expect(document.documentElement.getAttribute('data-bs-theme')).toBe('dark');
+  });
 });

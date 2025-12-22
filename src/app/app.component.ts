@@ -64,6 +64,7 @@ export class AppComponent implements OnInit {
   useHttpOptions = false;
   enableAllHttpMethodsForLinks = false;
   scrollableDocumentation = false;
+  activeColorMode: 'light' | 'dark' | 'auto' = 'auto';
 
   version = '1.2.4-SNAPSHOT';
   isSnapshotVersion = this.version.endsWith('SNAPSHOT');
@@ -73,6 +74,9 @@ export class AppComponent implements OnInit {
   private readonly sanitizer = inject(DomSanitizer);
 
   ngOnInit(): void {
+    // Initialize color mode from localStorage or default to 'auto'
+    this.initializeColorMode();
+
     this.requestService.getResponseObservable().subscribe(() => {
       this.showDocumentation = false;
     });
@@ -165,5 +169,29 @@ export class AppComponent implements OnInit {
     }
 
     return 'visibility: hidden';
+  }
+
+  initializeColorMode(): void {
+    const storedColorMode = localStorage.getItem('colorMode') as 'light' | 'dark' | 'auto' | null;
+    this.activeColorMode = storedColorMode || 'auto';
+    this.applyColorMode();
+  }
+
+  setColorMode(mode: 'light' | 'dark' | 'auto'): void {
+    this.activeColorMode = mode;
+    localStorage.setItem('colorMode', mode);
+    this.applyColorMode();
+  }
+
+  private applyColorMode(): void {
+    let effectiveMode = this.activeColorMode;
+
+    // If auto, detect system preference
+    if (effectiveMode === 'auto') {
+      effectiveMode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    // Apply the theme to the document
+    document.documentElement.setAttribute('data-bs-theme', effectiveMode);
   }
 }
