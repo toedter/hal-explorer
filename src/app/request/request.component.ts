@@ -280,7 +280,19 @@ export class RequestComponent implements OnInit {
               this.requestBody += '  "' + item.name + '": ' + '"' + item.value + '"';
             }
           } else {
-            this.newRequestUri += item.name + '=' + item.value;
+            // For GET requests with multiple values (array), repeat the parameter name
+            if (optionsAsArray && Array.isArray(item.value)) {
+              // Add each value as a separate query parameter with the same name
+              for (let i = 0; i < item.value.length; i++) {
+                if (i > 0) {
+                  this.newRequestUri += '&';
+                }
+                this.newRequestUri += item.name + '=' + encodeURIComponent(item.value[i]);
+              }
+            } else {
+              // Single value (not an array)
+              this.newRequestUri += item.name + '=' + encodeURIComponent(item.value);
+            }
           }
           hasQueryParams = true;
         }

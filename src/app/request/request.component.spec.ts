@@ -444,6 +444,32 @@ describe('RequestComponent', () => {
     expect(component.newRequestUri).toBe('http://directors.com?first-name=George&last-name=Lucas');
   });
 
+  it('should get change request URI with multiple selected values for same parameter', () => {
+    // Test case for multiple values (e.g., sort parameter with multiple sort orders)
+    component.halFormsTemplate = {
+      value: {
+        method: 'GET',
+        properties: [
+          {
+            name: 'sort',
+            options: {
+              maxItems: 5, // Multiple values allowed
+              inline: ['name,asc', 'id,desc', 'date,asc'],
+            },
+          },
+        ],
+      },
+    };
+    component.halFormsProperties = component.halFormsTemplate.value.properties;
+    component.halFormsProperties[0].value = ['name,asc', 'id,desc'];
+
+    component.originalRequestUri = 'http://api.com/items';
+    component.propertyChanged();
+
+    // Should repeat parameter name for each value (comma is encoded as %2C)
+    expect(component.newRequestUri).toBe('http://api.com/items?sort=name%2Casc&sort=id%2Cdesc');
+  });
+
   it('should get tooltip with no json schema', () => {
     const tooltip = component.getTooltip('x');
     expect(tooltip).toBe('');
