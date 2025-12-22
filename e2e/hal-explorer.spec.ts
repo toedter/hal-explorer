@@ -298,5 +298,32 @@ test.describe('HAL Explorer App', () => {
     expect(iconStyleFinal).toBe('hidden');
   });
 
+  test('should display links and affordances for 401 error with HAL-FORMS content', async ({ page }) => {
+    await page.goto('/#uri=http://localhost:3000/error-401-with-hal-forms.json');
+    await page.waitForLoadState('networkidle');
+
+    // Verify that error is displayed
+    await expect(page.locator('h5:has-text("Response Status")')).toBeVisible();
+    await expect(page.getByRole('cell', { name: '401' })).toBeVisible();
+    await expect(page.getByRole('cell', { name: 'Unauthorized' })).toBeVisible();
+
+    // Verify that links are displayed despite the error
+    await expect(page.locator('h5:has-text("Links")').first()).toBeVisible();
+    await expect(page.getByRole('cell', { name: 'self', exact: true })).toBeVisible();
+    await expect(page.getByRole('cell', { name: 'Login to access this resource' })).toBeVisible();
+    await expect(page.getByRole('cell', { name: 'Register a new account' })).toBeVisible();
+
+    // Verify that HAL-FORMS templates are displayed
+    await expect(page.locator('h5:has-text("HAL-FORMS Template Elements")')).toBeVisible();
+
+    // Verify that JSON properties are displayed (error message, status, etc.)
+    await expect(page.locator('h5:has-text("JSON Properties")')).toBeVisible();
+    await expect(page.locator('app-response-explorer pre').filter({ hasText: 'Unauthorized' }).first()).toBeVisible();
+
+    // Verify that HAL-FORMS template names are displayed in the table
+    await expect(page.getByRole('cell', { name: 'Login', exact: true })).toBeVisible();
+    await expect(page.getByRole('cell', { name: 'Register', exact: true })).toBeVisible();
+  });
+
 });
 

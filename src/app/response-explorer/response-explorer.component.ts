@@ -74,6 +74,8 @@ export class ResponseExplorerComponent implements OnInit {
         next: (response: Response) => {
           const httpResponse = response.httpResponse;
           this.httpErrorResponse = response.httpErrorResponse;
+
+          // Process successful response
           if (httpResponse) {
             this.responseUrl = httpResponse.url;
             this.isHalFormsMediaType = false;
@@ -86,6 +88,23 @@ export class ResponseExplorerComponent implements OnInit {
             }
             if (!(typeof httpResponse.body === 'string' || httpResponse.body instanceof String)) {
               this.processJsonObject(httpResponse.body);
+            } else {
+              this.processJsonObject({});
+            }
+          }
+          // Process error response - it may still contain valid HAL-FORMS document with links and affordances
+          else if (this.httpErrorResponse) {
+            this.responseUrl = this.httpErrorResponse.url;
+            this.isHalFormsMediaType = false;
+            const contentType = this.httpErrorResponse.headers.get('content-type');
+            if (
+              (contentType?.startsWith('application/prs.hal-forms+json') && this.httpErrorResponse?.error?._templates) ||
+              (this.responseUrl?.endsWith('.hal-forms.json') && this.httpErrorResponse?.error?._templates)
+            ) {
+              this.isHalFormsMediaType = true;
+            }
+            if (this.httpErrorResponse.error && !(typeof this.httpErrorResponse.error === 'string' || this.httpErrorResponse.error instanceof String)) {
+              this.processJsonObject(this.httpErrorResponse.error);
             } else {
               this.processJsonObject({});
             }

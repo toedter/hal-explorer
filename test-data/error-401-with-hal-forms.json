@@ -1,0 +1,66 @@
+{
+  "timestamp": "2025-12-22T08:54:52.742Z",
+  "status": 401,
+  "error": "Unauthorized",
+  "message": "Authentication required to access this resource",
+  "_links": {
+    "self": {
+      "href": "http://localhost:3000/api/protected-resource"
+    },
+    "login": {
+      "href": "http://localhost:3000/api/auth/login",
+      "title": "Login to access this resource"
+    },
+    "register": {
+      "href": "http://localhost:3000/api/auth/register",
+      "title": "Register a new account"
+    }
+  },
+  "_templates": {
+    "login": {
+      "title": "Login",
+      "method": "post",
+      "target": "http://localhost:3000/api/auth/login",
+      "contentType": "application/json",
+      "properties": [
+        {
+          "name": "username",
+          "prompt": "Username",
+          "required": true
+        },
+        {
+          "name": "password",
+          "prompt": "Password",
+          "type": "password",
+          "required": true
+        }
+      ]
+    },
+    "register": {
+      "title": "Register",
+      "method": "post",
+      "target": "http://localhost:3000/api/auth/register",
+      "contentType": "application/json",
+      "properties": [
+        {
+          "name": "username",
+          "prompt": "Username",
+          "required": true
+        },
+        {
+          "name": "email",
+          "prompt": "Email",
+          "type": "email",
+          "required": true
+        },
+        {
+          "name": "password",
+          "prompt": "Password",
+          "type": "password",
+          "required": true
+        }
+      ]
+    }
+  }
+}
+

@@ -353,4 +353,60 @@ describe('ResponseExplorerComponent', () => {
     );
     expect(component.getRelTargetUrl('/test', Command.Get)).toBe('http://localhost/test');
   });
+
+  it('should parse HAL-FORMS error response body (e.g., 401) and extract links and affordances', () => {
+    const responseHeaders: HttpHeaders = new HttpHeaders({
+      'content-type': 'application/prs.hal-forms+json',
+    });
+    const errorResponse = new HttpErrorResponse({
+      status: 401,
+      statusText: 'Unauthorized',
+      headers: responseHeaders,
+      error: halFormsResponse,
+      url: 'http://localhost:4200/api/movies/1',
+    });
+
+    responseSubject.next(new Response(null, errorResponse));
+
+    // Even though there's an error, the HAL-FORMS content should be processed
+    expect(component.httpErrorResponse).toBeTruthy();
+    expect(component.httpErrorResponse.status).toBe(401);
+    expect(component.showProperties).toBeTruthy();
+    expect(component.showLinks).toBeTruthy();
+    expect(component.links.length).toBe(2);
+    expect(component.hasHalFormsTemplates).toBeTruthy();
+    expect(component.isHalFormsMediaType).toBeTruthy();
+    expect(Object.keys(component.templates).length).toBe(3);
+  });
+
+  it('should handle error response with no body', () => {
+    const errorResponse = new HttpErrorResponse({
+      status: 500,
+      statusText: 'Internal Server Error',
+      url: 'http://localhost:4200/api/movies/1',
+    });
+
+    responseSubject.next(new Response(null, errorResponse));
+
+    expect(component.httpErrorResponse).toBeTruthy();
+    expect(component.showProperties).toBeFalsy();
+    expect(component.showLinks).toBeFalsy();
+    expect(component.hasHalFormsTemplates).toBeFalsy();
+  });
+
+  it('should handle error response with string body', () => {
+    const errorResponse = new HttpErrorResponse({
+      status: 404,
+      statusText: 'Not Found',
+      error: 'Resource not found',
+      url: 'http://localhost:4200/api/movies/999',
+    });
+
+    responseSubject.next(new Response(null, errorResponse));
+
+    expect(component.httpErrorResponse).toBeTruthy();
+    expect(component.showProperties).toBeFalsy();
+    expect(component.showLinks).toBeFalsy();
+    expect(component.hasHalFormsTemplates).toBeFalsy();
+  });
 });
