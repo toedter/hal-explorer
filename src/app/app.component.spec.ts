@@ -21,6 +21,7 @@ describe('AppComponent', () => {
     const requestServiceMock = jasmine.createSpyObj([
       'getResponseObservable',
       'getNeedInfoObservable',
+      'getLoadingObservable',
       'setCustomHeaders',
       'getUri',
       'getInputType',
@@ -33,6 +34,7 @@ describe('AppComponent', () => {
     documentationSubject = new Subject<string>();
     requestServiceMock.getResponseObservable.and.returnValue(responseSubject);
     requestServiceMock.getNeedInfoObservable.and.returnValue(needInfoSubject);
+    requestServiceMock.getLoadingObservable.and.returnValue(new Subject<boolean>());
     requestServiceMock.getUri.and.returnValue('http://localhost/api');
     requestServiceMock.getInputType.and.returnValue('number');
     requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(property => {

@@ -75,12 +75,14 @@ describe('ResponseExplorerComponent', () => {
     requestServiceMock = jasmine.createSpyObj([
       'getResponseObservable',
       'getDocumentationObservable',
+      'getLoadingObservable',
       'processCommand',
       'getHttpOptions',
     ]);
     responseSubject = new Subject<Response>();
     spyOn(responseSubject, 'subscribe').and.callThrough();
     requestServiceMock.getResponseObservable.and.returnValue(responseSubject);
+    requestServiceMock.getLoadingObservable.and.returnValue(new Subject<boolean>());
 
     appServiceMock = jasmine.createSpyObj(['getHttpOptions', 'getAllHttpMethodsForLinks']);
     appServiceMock.getHttpOptions.and.returnValue(true);
