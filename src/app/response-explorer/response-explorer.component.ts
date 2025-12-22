@@ -98,12 +98,16 @@ export class ResponseExplorerComponent implements OnInit {
             this.isHalFormsMediaType = false;
             const contentType = this.httpErrorResponse.headers.get('content-type');
             if (
-              (contentType?.startsWith('application/prs.hal-forms+json') && this.httpErrorResponse?.error?._templates) ||
+              (contentType?.startsWith('application/prs.hal-forms+json') &&
+                this.httpErrorResponse?.error?._templates) ||
               (this.responseUrl?.endsWith('.hal-forms.json') && this.httpErrorResponse?.error?._templates)
             ) {
               this.isHalFormsMediaType = true;
             }
-            if (this.httpErrorResponse.error && !(typeof this.httpErrorResponse.error === 'string' || this.httpErrorResponse.error instanceof String)) {
+            if (
+              this.httpErrorResponse.error &&
+              !(typeof this.httpErrorResponse.error === 'string' || this.httpErrorResponse.error instanceof String)
+            ) {
               this.processJsonObject(this.httpErrorResponse.error);
             } else {
               this.processJsonObject({});
