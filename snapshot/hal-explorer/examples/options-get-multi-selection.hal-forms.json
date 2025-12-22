@@ -1,0 +1,37 @@
+{
+  "_templates": {
+    "search": {
+      "method": "GET",
+      "properties": [
+        {
+          "name": "sort",
+          "type": "text",
+          "options": {
+            "promptField": "prompt",
+            "valueField": "value",
+            "minItems": 0,
+            "inline": [
+              {
+                "value": "name,asc",
+                "prompt": "name ASC"
+              },
+              {
+                "value": "name,desc",
+                "prompt": "name DESC"
+              },
+              {
+                "value": "bank_account,asc",
+                "prompt": "bank_account ASC"
+              },
+              {
+                "value": "bank_account,desc",
+                "prompt": "bank_account DESC"
+              }
+            ]
+          }
+        }
+      ],
+      "target": "http://localhost:9000/suppliers"
+    }
+  }
+}

@@ -30,6 +30,10 @@
       "href": "movies-templated-target-get.hal-forms.json",
       "name": "HAL-FORMS template with HTTP GET method"
     },
+    "hal-forms-template-http-get-multi-selection": {
+      "href": "options-get-multi-selection.hal-forms.json",
+      "name": "HAL-FORMS template with HTTP GET method and multiple option selection"
+    },
     "hal-forms-template-http-post": {
       "href": "movies-templated-target-post.hal-forms.json",
       "name": "HAL-FORMS template with HTTP POST method"
