@@ -299,7 +299,7 @@ test.describe('HAL Explorer App', () => {
   });
 
   test('should display links and affordances for 401 error with HAL-FORMS content', async ({ page }) => {
-    await page.goto('/#uri=http://localhost:3000/error-401-with-hal-forms.json');
+    await page.goto('/#uri=http://localhost:3000/error-401-with-templates.hal-forms.json');
     await page.waitForLoadState('networkidle');
 
     // Verify that error is displayed

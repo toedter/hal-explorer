@@ -27,10 +27,10 @@ app.use((req, res, next) => {
 });
 
 // Route to simulate a 401 error with HAL-FORMS content
-app.get('/error-401-with-hal-forms.json', (req, res) => {
+app.get('/error-401-with-templates.hal-forms.json', (req, res) => {
   res.setHeader('Content-Type', 'application/prs.hal-forms+json');
   res.status(401);
-  res.sendFile(path.join(__dirname, 'test-data', 'error-401-with-hal-forms.json'));
+  res.sendFile(path.join(__dirname, 'test-data', 'error-401-with-templates.hal-forms.json'));
 });
 
 // Serve static files from test-data directory
