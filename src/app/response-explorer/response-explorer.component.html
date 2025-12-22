@@ -158,11 +158,7 @@
                 <div class="card-body p-1">
                   @if (embeddedResource.isArray) {
                     <div [attr.id]="prefix + 'embedded_' + i1" class="collapse show">
-                      @for (
-                        subEmbeddedResource of embeddedResource.content;
-                        track subEmbeddedResource;
-                        let i2 = $index
-                      ) {
+                      @for (subEmbeddedResource of embeddedResource.content; track i2; let i2 = $index) {
                         <div class="card m-1" [attr.id]="prefix + 'item_' + i1 + '_' + i2">
                           <div class="card-header d-flex">
                             <a

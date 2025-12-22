@@ -5,7 +5,9 @@
       <div class="bs-component">
         <form (ngSubmit)="getUri()">
           <div class="input-group">
-            <button type="button" class="btn btn-secondary" (click)="showEditHeadersDialog()" [disabled]="isLoading">Edit Headers</button>
+            <button type="button" class="btn btn-secondary" (click)="showEditHeadersDialog()" [disabled]="isLoading">
+              Edit Headers
+            </button>
             <input
               [(ngModel)]="uri"
               type="url"
@@ -211,7 +213,7 @@
                             [appHalFormsProperty]="item"
                             (change)="propertyChanged()"
                           >
-                            @for (option of item.options.computedOptions; track option.value) {
+                            @for (option of item.options.computedOptions; track $index) {
                               <option [value]="option.value" [selected]="isHalFormsOptionSelected(item, option.value)">
                                 {{ option.prompt }}
                               </option>
@@ -230,7 +232,7 @@
                             (change)="propertyChanged()"
                             multiple
                           >
-                            @for (option of item.options.computedOptions; track option.value) {
+                            @for (option of item.options.computedOptions; track $index) {
                               <option [value]="option.value" [selected]="isHalFormsOptionSelected(item, option.value)">
                                 {{ option.prompt }}
                               </option>
