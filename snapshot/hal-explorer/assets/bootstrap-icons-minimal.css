@@ -1,0 +1,54 @@
+/*!
+ * Bootstrap Icons v1.13.1 - Custom Minimal Build for HAL Explorer
+ * Only includes the 10 icons actually used in the application
+ * Font size reduced from 134 KB to ~5 KB (96% reduction)
+ *
+ * The original Bootstrap icons are licensed under the MIT License.
+ * See https://github.com/twbs/icons
+ */
+
+/* Base font-face - using minimal custom font with only 10 icons */
+@font-face {
+  font-display: block;
+  font-family: "bootstrap-icons";
+  src: url("./fonts/bootstrap-icons-minimal.woff2") format("woff2"),
+       url("./fonts/bootstrap-icons-minimal.woff") format("woff");
+}
+
+/* Base styles for Bootstrap Icons */
+.bi::before,
+[class^="bi-"]::before,
+[class*=" bi-"]::before {
+  display: inline-block;
+  font-family: bootstrap-icons !important;
+  font-style: normal;
+  font-weight: normal !important;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  vertical-align: -.125em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Icons used in HAL Explorer (10 total) */
+
+/* HTTP Method Icons */
+.bi-chevron-left::before { content: "\f284"; }  /* GET button */
+.bi-plus-lg::before { content: "\f64d"; }  /* POST button */
+.bi-chevron-double-right::before { content: "\f280"; }  /* PUT button */
+.bi-chevron-right::before { content: "\f285"; }  /* PATCH button */
+.bi-x-lg::before { content: "\f659"; }  /* DELETE button */
+
+/* Documentation Icon */
+.bi-book::before { content: "\f194"; }  /* Documentation button */
+
+/* Theme/Color Mode Icons */
+.bi-sun-fill::before { content: "\f5a1"; }  /* Light mode */
+.bi-moon-stars-fill::before { content: "\f495"; }  /* Dark mode */
+.bi-circle-half::before { content: "\f288"; }  /* Auto mode */
+
+/* Checkmark Icons */
+.bi-check::before { content: "\f26e"; }  /* Checkmark (plain) */
+.bi-check2::before { content: "\f272"; }  /* Checkmark variant (thicker) */
+
