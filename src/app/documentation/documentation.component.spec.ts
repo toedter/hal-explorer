@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DocumentationComponent, getDocHeight } from './documentation.component';
 import { RequestService } from '../request/request.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AppService } from '../app.service';
 import { Subject } from 'rxjs';
 
 describe('DocumentationComponent', () => {
@@ -21,11 +22,18 @@ describe('DocumentationComponent', () => {
     const domSanitizerMock = jasmine.createSpyObj(['bypassSecurityTrustResourceUrl']);
     domSanitizerMock.bypassSecurityTrustResourceUrl.and.returnValue('/doc');
 
+    const scrollableDocumentationSubject = new Subject<boolean>();
+    const appServiceMock = jasmine.createSpyObj(['getScrollableDocumentation'], {
+      scrollableDocumentationObservable: scrollableDocumentationSubject,
+    });
+    appServiceMock.getScrollableDocumentation.and.returnValue(false);
+
     TestBed.configureTestingModule({
       imports: [DocumentationComponent],
       providers: [
         { provide: RequestService, useValue: requestServiceMock },
         { provide: DomSanitizer, useValue: domSanitizerMock },
+        { provide: AppService, useValue: appServiceMock },
       ],
     }).compileComponents();
   }));
@@ -99,5 +107,16 @@ describe('DocumentationComponent', () => {
     (window as any).setIframeHeight(1);
 
     expect((iFrame.style as any).height).not.toBe('10px');
+  });
+
+  it('should update iframe height on window resize', () => {
+    component.isScrollable = true;
+
+    // Trigger resize event
+    component.onResize();
+
+    // Height should be calculated
+    expect(component.iframeHeight).toBeDefined();
+    expect(component.iframeHeight).not.toBe('0px');
   });
 });

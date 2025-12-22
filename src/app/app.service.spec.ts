@@ -146,5 +146,27 @@ describe('AppService', () => {
     expect(service.requestHeadersObservable).toBeDefined();
     expect(service.themeObservable).toBeDefined();
     expect(service.uriObservable).toBeDefined();
+    expect(service.scrollableDocumentationObservable).toBeDefined();
+  });
+
+  it('should set scrollable documentation', () => {
+    service.setScrollableDocumentation(true);
+    expect(service.getScrollableDocumentation()).toBe(true);
+    expect(window.location.hash).toBe('#scrollableDocumentation=true');
+  });
+
+  it('should unset scrollable documentation', () => {
+    service.setScrollableDocumentation(false);
+    expect(service.getScrollableDocumentation()).toBe(false);
+    expect(window.location.hash).toBe('');
+  });
+
+  it('should parse window location hash with scrollableDocumentation', () => {
+    window.location.hash = '#theme=Cosmo&scrollableDocumentation=true&uri=https://example.com/api';
+    service = new AppService();
+
+    expect(service.getScrollableDocumentation()).toBeTrue();
+    expect(service.getTheme()).toBe('Cosmo');
+    expect(service.getUri()).toBe('https://example.com/api');
   });
 });

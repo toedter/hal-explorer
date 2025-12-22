@@ -39,6 +39,14 @@ describe('RequestService', () => {
     expect(requestService.getInputType('something else')).toBe('text');
   });
 
+  it('should not make request with empty URI', () => {
+    requestService.getUri('');
+    httpMock.expectNone('');
+
+    requestService.getUri('   ');
+    httpMock.expectNone('   ');
+  });
+
   it('should set default accept request header', done => {
     requestService.getResponseObservable().subscribe((response: Response) => {
       expect(response.httpResponse.body).toBe('body');
@@ -190,6 +198,28 @@ describe('RequestService', () => {
       done();
     });
     requestService.processCommand(Command.Document, 'http://doc');
+  });
+
+  it('should emit loading state during request', done => {
+    const loadingStates: boolean[] = [];
+
+    requestService.getLoadingObservable().subscribe((loading: boolean) => {
+      loadingStates.push(loading);
+
+      // After request completes, we should have [true, false]
+      if (loadingStates.length === 2) {
+        expect(loadingStates[0]).toBe(true); // Loading started
+        expect(loadingStates[1]).toBe(false); // Loading finished
+        done();
+      }
+    });
+
+    requestService.getUri('test-request');
+
+    const testRequest = httpMock.expectOne('test-request');
+    testRequest.flush('body');
+
+    httpMock.verify();
   });
 
   it('should process delete command', done => {

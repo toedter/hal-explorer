@@ -603,6 +603,67 @@ describe('RequestComponent', () => {
     expect(dictionaryObject.value).toBe('value');
   });
 
+  it('should handle modal keydown with Enter key and valid form', () => {
+    const mockButton = { click: jasmine.createSpy('click') };
+    spyOn(document, 'getElementById').and.returnValue(mockButton as any);
+
+    const event = new KeyboardEvent('keydown', { key: 'Enter' });
+    const form = { valid: true };
+    const preventDefaultSpy = spyOn(event, 'preventDefault');
+
+    component.handleModalKeydown(event, form);
+
+    expect(preventDefaultSpy).toHaveBeenCalled();
+    expect(mockButton.click).toHaveBeenCalled();
+  });
+
+  it('should not submit modal on Enter key with invalid form', () => {
+    const event = new KeyboardEvent('keydown', { key: 'Enter' });
+    const form = { valid: false };
+    const goButton = document.createElement('button');
+    goButton.id = 'requestDialogGoButton';
+    document.body.appendChild(goButton);
+
+    spyOn(event, 'preventDefault');
+    spyOn(goButton, 'click');
+
+    component.handleModalKeydown(event, form);
+
+    expect(event.preventDefault).toHaveBeenCalled();
+    expect(goButton.click).not.toHaveBeenCalled();
+
+    document.body.removeChild(goButton);
+  });
+
+  it('should handle modal keydown with non-Enter key', () => {
+    const event = new KeyboardEvent('keydown', { key: 'Escape' });
+    const form = { valid: true };
+
+    spyOn(event, 'preventDefault');
+
+    component.handleModalKeydown(event, form);
+
+    expect(event.preventDefault).not.toHaveBeenCalled();
+  });
+
+  it('should subscribe to loading observable', () => {
+    const loadingSubject = new Subject<boolean>();
+    requestServiceMock.getLoadingObservable.and.returnValue(loadingSubject);
+
+    // Create new component to trigger ngOnInit
+    const newFixture = TestBed.createComponent(RequestComponent);
+    const newComponent = newFixture.componentInstance;
+    newFixture.detectChanges();
+
+    expect(newComponent.isLoading).toBe(false);
+
+    loadingSubject.next(true);
+    expect(newComponent.isLoading).toBe(true);
+
+    loadingSubject.next(false);
+    expect(newComponent.isLoading).toBe(false);
+  });
+
   it('should get UI element for HAL-FORMS property', () => {
     let uiElement = component.getUiElementForHalFormsTemplateProperty({});
     expect(uiElement).toBe('input');

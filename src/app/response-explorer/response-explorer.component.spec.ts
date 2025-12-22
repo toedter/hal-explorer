@@ -216,6 +216,39 @@ describe('ResponseExplorerComponent', () => {
     expect(component.getLinkButtonClass(Command.Get, link)).toBe('');
   });
 
+  it('should disable all buttons when loading', () => {
+    const loadingSubject = new Subject<boolean>();
+    requestServiceMock.getLoadingObservable.and.returnValue(loadingSubject);
+
+    // Create new component to trigger ngOnInit with new loading observable
+    const newFixture = TestBed.createComponent(ResponseExplorerComponent);
+    const newComponent = newFixture.componentInstance;
+    newFixture.detectChanges();
+
+    // Initially not loading
+    expect(newComponent.isButtonDisabled(Command.Get)).toBeFalse();
+
+    // Set loading to true
+    loadingSubject.next(true);
+
+    // All buttons should be disabled when loading
+    expect(newComponent.isButtonDisabled(Command.Get)).toBeTrue();
+    expect(newComponent.isButtonDisabled(Command.Post)).toBeTrue();
+    expect(newComponent.isButtonDisabled(Command.Put)).toBeTrue();
+    expect(newComponent.isButtonDisabled(Command.Patch)).toBeTrue();
+    expect(newComponent.isButtonDisabled(Command.Delete)).toBeTrue();
+
+    // With link
+    const link = new Link('rel', 'href', 'title', 'name', 'docUri', 'GET');
+    expect(newComponent.isButtonDisabled(Command.Get, link)).toBeTrue();
+
+    // Set loading to false
+    loadingSubject.next(false);
+
+    // Buttons should be enabled again based on normal rules
+    expect(newComponent.isButtonDisabled(Command.Get)).toBeFalse();
+  });
+
   it('should get HAL-FORMS request button class and state', () => {
     const responseHeaders: HttpHeaders = new HttpHeaders({
       'content-type': 'application/prs.hal-forms+json',
