@@ -32,7 +32,7 @@
     },
     "hal-forms-template-http-get-multi-selection": {
       "href": "options-get-multi-selection.hal-forms.json",
-      "name": "HAL-FORMS template with HTTP GET method and multiple option selection"
+      "name": "HAL-FORMS template with HTTP GET method (multiple options)"
     },
     "hal-forms-template-http-post": {
       "href": "movies-templated-target-post.hal-forms.json",
@@ -44,7 +44,11 @@
     },
     "hal-forms-with-options": {
       "href": "options.hal-forms.json",
-      "name": "HAL-FORMS options (inline)"
+      "name": "HAL-FORMS options (single, inline)"
+    },
+    "hal-forms-with-multiple-options": {
+      "href": "options-multiple.hal-forms.json",
+      "name": "HAL-FORMS options (multiple, inline)"
     },
     "hal-forms-with-options-link": {
       "href": "options-link.hal-forms.json",
