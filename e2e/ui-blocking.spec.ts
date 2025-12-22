@@ -30,7 +30,7 @@ test.describe('UI Blocking During Requests', () => {
 
     // Verify links are visible and enabled
     await expect(page.locator('h5:has-text("Links")').first()).toBeVisible();
-    const firstGetButton = page.locator('button.icon-left-open').first();
+    const firstGetButton = page.locator('button:has(i.bi-chevron-left)').first();
     await expect(firstGetButton).toBeEnabled();
 
     // Click a link button
@@ -40,7 +40,7 @@ test.describe('UI Blocking During Requests', () => {
     await page.waitForLoadState('networkidle');
 
     // After request completes, buttons should be enabled again
-    await expect(page.locator('button.icon-left-open').first()).toBeEnabled();
+    await expect(page.locator('button:has(i.bi-chevron-left)').first()).toBeEnabled();
   });
 
   test('should disable template buttons during request', async ({ page }) => {
@@ -52,7 +52,7 @@ test.describe('UI Blocking During Requests', () => {
     await expect(page.locator('h5:has-text("HAL-FORMS Template Elements")')).toBeVisible();
 
     // Verify template button is enabled
-    const templateButton = page.locator('button.icon-left-open').first();
+    const templateButton = page.locator('button:has(i.bi-chevron-left)').first();
     await expect(templateButton).toBeEnabled();
 
     // After navigating, buttons should remain functional
@@ -85,7 +85,7 @@ test.describe('UI Blocking During Requests', () => {
     await page.waitForLoadState('networkidle');
 
     // Check if documentation button exists and is enabled
-    const docButton = page.locator('button.icon-book').first();
+    const docButton = page.locator('button:has(i.bi-book)').first();
     if (await docButton.count() > 0) {
       await expect(docButton).toBeEnabled();
     }

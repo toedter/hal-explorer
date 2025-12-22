@@ -287,15 +287,15 @@ export class ResponseExplorerComponent implements OnInit {
   getRequestButtonClass(command: Command) {
     const base = 'ms-1 btn btn-sm nav-button ';
     if (command === Command.Post) {
-      return base + 'btn-outline-info icon-plus';
+      return base + 'btn-outline-info';
     } else if (command === Command.Put) {
-      return base + 'btn-outline-warning icon-right-open';
+      return base + 'btn-outline-warning';
     } else if (command === Command.Patch) {
-      return base + 'btn-outline-warning icon-right-open';
+      return base + 'btn-outline-warning';
     } else if (command === Command.Delete) {
-      return base + 'btn-outline-danger icon-cancel';
+      return base + 'btn-outline-danger';
     }
-    return base + 'btn-outline-success icon-left-open';
+    return base + 'btn-outline-primary';
   }
 
   getCommandForTemplateMethod(method?: string): Command {

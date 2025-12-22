@@ -35,7 +35,6 @@ module.exports = tseslint.config(
   },
   {
     files: ["**/*.html"],
-    ignores: ["**/assets/fontello/**"],
     extends: [
       ...angular.configs.templateRecommended,
       ...angular.configs.templateAccessibility,

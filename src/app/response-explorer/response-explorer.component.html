@@ -45,25 +45,33 @@
                           [disabled]="isButtonDisabled(command.Get, link)"
                           (click)="processCommand(command.Get, getRelTargetUrl(link.href, command.Get))"
                           title="GET Request"
-                        ></button>
+                        >
+                          <i class="bi bi-chevron-left"></i>
+                        </button>
                         <button
                           [class]="getRequestButtonClass(command.Post) + ' ' + getLinkButtonClass(command.Post, link)"
                           [disabled]="isButtonDisabled(command.Post, link)"
                           (click)="processCommand(command.Post, getRelTargetUrl(link.href, command.Post))"
                           title="POST Request"
-                        ></button>
+                        >
+                          <i class="bi bi-plus-lg"></i>
+                        </button>
                         <button
                           [class]="getRequestButtonClass(command.Put) + ' ' + getLinkButtonClass(command.Put, link)"
                           [disabled]="isButtonDisabled(command.Put, link)"
                           (click)="processCommand(command.Put, getRelTargetUrl(link.href, command.Put))"
                           title="PUT Request"
-                        ></button>
+                        >
+                          <i class="bi bi-chevron-double-right"></i>
+                        </button>
                         <button
                           [class]="getRequestButtonClass(command.Patch) + ' ' + getLinkButtonClass(command.Patch, link)"
                           [disabled]="isButtonDisabled(command.Patch, link)"
                           (click)="processCommand(command.Patch, getRelTargetUrl(link.href, command.Patch))"
                           title="PATCH Request"
-                        ></button>
+                        >
+                          <i class="bi bi-chevron-right"></i>
+                        </button>
                         <button
                           [class]="
                             getRequestButtonClass(command.Delete) + ' ' + getLinkButtonClass(command.Delete, link)
@@ -71,17 +79,21 @@
                           [disabled]="isButtonDisabled(command.Delete, link)"
                           (click)="processCommand(command.Delete, getRelTargetUrl(link.href, command.Delete))"
                           title="DELETE Request"
-                        ></button>
+                        >
+                          <i class="bi bi-x-lg"></i>
+                        </button>
                       </td>
                       <td>
                         <span style="float: right">
                           @if (link.docUri) {
                             <button
-                              class="icon-book ml-auto btn btn-outline-info btn-sm nav-button"
+                              class="ml-auto btn btn-outline-info btn-sm nav-button"
                               (click)="processCommand(command.Document, link.docUri)"
                               [disabled]="isLoading"
                               title="Show Documentation"
-                            ></button>
+                            >
+                              <i class="bi bi-book"></i>
+                            </button>
                           }
                         </span>
                       </td>
@@ -126,7 +138,23 @@
                           "
                           [disabled]="isLoading"
                           title="{{ template.value.method?.toUpperCase() || 'GET' }} Request"
-                        ></button>
+                        >
+                          @if (getCommandForTemplateMethod(template.value.method) === command.Get) {
+                            <i class="bi bi-chevron-left"></i>
+                          }
+                          @if (getCommandForTemplateMethod(template.value.method) === command.Post) {
+                            <i class="bi bi-plus-lg"></i>
+                          }
+                          @if (getCommandForTemplateMethod(template.value.method) === command.Put) {
+                            <i class="bi bi-chevron-double-right"></i>
+                          }
+                          @if (getCommandForTemplateMethod(template.value.method) === command.Patch) {
+                            <i class="bi bi-chevron-right"></i>
+                          }
+                          @if (getCommandForTemplateMethod(template.value.method) === command.Delete) {
+                            <i class="bi bi-x-lg"></i>
+                          }
+                        </button>
                       </td>
                     </tr>
                   }
@@ -170,11 +198,13 @@
                             >
                             @if (embeddedResource.docUri) {
                               <button
-                                class="icon-book ms-auto btn btn-outline-info btn-sm nav-button"
+                                class="ms-auto btn btn-outline-info btn-sm nav-button"
                                 (click)="processCommand(command.Document, embeddedResource.docUri)"
                                 [disabled]="isLoading"
                                 title="Show Documentation"
-                              ></button>
+                              >
+                                <i class="bi bi-book"></i>
+                              </button>
                             }
                           </div>
                           <div [attr.id]="prefix + 'embedded_object_' + i2" class="collapse">

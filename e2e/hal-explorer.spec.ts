@@ -69,7 +69,7 @@ test.describe('HAL Explorer App', () => {
     // Wait for the HAL-FORMS Template Elements section to be loaded
     await expect(page.locator('h5:has-text("HAL-FORMS Template Elements")')).toBeVisible();
 
-    const postButton = page.locator('button.icon-plus').nth(3);
+    const postButton = page.locator('button:has(i.bi-plus-lg)').nth(3);
     await expect(postButton).toBeVisible();
     await expect(postButton).toBeEnabled();
 
@@ -94,7 +94,7 @@ test.describe('HAL Explorer App', () => {
     }, { timeout: 10000 });
 
     // Ensure the POST button is visible and clickable
-    const postButton = page.locator('button.icon-plus').first();
+    const postButton = page.locator('button:has(i.bi-plus-lg)').first();
     await expect(postButton).toBeVisible();
     await expect(postButton).toBeEnabled();
 
@@ -118,7 +118,7 @@ test.describe('HAL Explorer App', () => {
     // Wait for the HAL-FORMS section to be loaded
     await expect(page.locator('h5:has-text("HAL-FORMS Template Elements")')).toBeVisible();
 
-    const getButton = page.locator('button.icon-left-open').last();
+    const getButton = page.locator('button:has(i.bi-chevron-left)').last();
     await expect(getButton).toBeVisible();
     await expect(getButton).toBeEnabled();
 
@@ -146,7 +146,7 @@ test.describe('HAL Explorer App', () => {
     // Wait for the HAL-FORMS section to be loaded
     await expect(page.locator('h5:has-text("HAL-FORMS Template Elements")')).toBeVisible();
 
-    const getButton = page.locator('button.icon-left-open').last();
+    const getButton = page.locator('button:has(i.bi-chevron-left)').last();
     await expect(getButton).toBeVisible();
     await expect(getButton).toBeEnabled();
 
@@ -175,7 +175,7 @@ test.describe('HAL Explorer App', () => {
     // Wait for the HAL-FORMS section to be loaded
     await expect(page.locator('h5:has-text("HAL-FORMS Template Elements")')).toBeVisible();
 
-    const getButton = page.locator('button.icon-left-open').last();
+    const getButton = page.locator('button:has(i.bi-chevron-left)').last();
     await expect(getButton).toBeVisible();
     await expect(getButton).toBeEnabled();
 
@@ -209,7 +209,7 @@ test.describe('HAL Explorer App', () => {
     await page.waitForLoadState('networkidle');
 
     // Click the first POST button (Post 1 template)
-    await page.locator('button.icon-plus').last().click();
+    await page.locator('button:has(i.bi-plus-lg)').last().click();
 
     // Wait for the modal to be fully visible (Bootstrap modal has animation)
     const modal = page.locator('#httpRequestModal');
@@ -233,7 +233,7 @@ test.describe('HAL Explorer App', () => {
 
     // Click the GET button for the 'chatty:users' link (first non-templated link)
     // This simulates clicking a link icon in the UI
-    await page.locator('button.icon-left-open').first().click();
+    await page.locator('button:has(i.bi-chevron-left)').first().click();
 
     // Wait for the browser URL to update
     await expect(page).toHaveURL(/#uri=http:\/\/localhost:3000\/users\.hal\.json/);
@@ -264,7 +264,7 @@ test.describe('HAL Explorer App', () => {
     // Verify the "Scrollable Documentation" setting does NOT initially have a checkmark
     const scrollableDocSetting = page.locator('.dropdown-item', { hasText: 'Scrollable Documentation' });
     await expect(scrollableDocSetting).toBeVisible();
-    const checkIcon = scrollableDocSetting.locator('i.icon-ok');
+    const checkIcon = scrollableDocSetting.locator('i.bi-check');
     const iconStyleBefore = await checkIcon.evaluate((el: HTMLElement) => window.getComputedStyle(el).visibility);
     expect(iconStyleBefore).toBe('hidden');
 

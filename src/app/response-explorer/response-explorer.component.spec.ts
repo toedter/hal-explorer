@@ -255,22 +255,12 @@ describe('ResponseExplorerComponent', () => {
     });
     responseSubject.next(new Response(new HttpResponse({ headers: responseHeaders, body: halFormsResponse }), null));
 
-    expect(component.getRequestButtonClass(Command.Get)).toBe(
-      'ms-1 btn btn-sm nav-button btn-outline-success icon-left-open'
-    );
-    expect(component.getRequestButtonClass(Command.Post)).toBe('ms-1 btn btn-sm nav-button btn-outline-info icon-plus');
-    expect(component.getRequestButtonClass(Command.Put)).toBe(
-      'ms-1 btn btn-sm nav-button btn-outline-warning icon-right-open'
-    );
-    expect(component.getRequestButtonClass(Command.Patch)).toBe(
-      'ms-1 btn btn-sm nav-button btn-outline-warning icon-right-open'
-    );
-    expect(component.getRequestButtonClass(Command.Delete)).toBe(
-      'ms-1 btn btn-sm nav-button btn-outline-danger icon-cancel'
-    );
-    expect(component.getRequestButtonClass(undefined)).toBe(
-      'ms-1 btn btn-sm nav-button btn-outline-success icon-left-open'
-    );
+    expect(component.getRequestButtonClass(Command.Get)).toBe('ms-1 btn btn-sm nav-button btn-outline-primary');
+    expect(component.getRequestButtonClass(Command.Post)).toBe('ms-1 btn btn-sm nav-button btn-outline-info');
+    expect(component.getRequestButtonClass(Command.Put)).toBe('ms-1 btn btn-sm nav-button btn-outline-warning');
+    expect(component.getRequestButtonClass(Command.Patch)).toBe('ms-1 btn btn-sm nav-button btn-outline-warning');
+    expect(component.getRequestButtonClass(Command.Delete)).toBe('ms-1 btn btn-sm nav-button btn-outline-danger');
+    expect(component.getRequestButtonClass(undefined)).toBe('ms-1 btn btn-sm nav-button btn-outline-primary');
   });
 
   it('should populate HAL-FORMS request button class and state', () => {
@@ -279,7 +269,7 @@ describe('ResponseExplorerComponent', () => {
     });
     responseSubject.next(new Response(new HttpResponse({ headers: responseHeaders, body: halFormsResponse }), null));
 
-    expect(component.getRequestButtonClass(Command.Post)).toBe('ms-1 btn btn-sm nav-button btn-outline-info icon-plus');
+    expect(component.getRequestButtonClass(Command.Post)).toBe('ms-1 btn btn-sm nav-button btn-outline-info');
   });
 
   it('should invoke request service when processing command', () => {

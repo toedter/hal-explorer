@@ -107,7 +107,7 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdownTheme">
             @for (theme of themes; track theme) {
               <a class="dropdown-item" href="#" (click)="changeTheme(theme)">
-                <i class="icon-ok" [style]="getThemeIconCheckStyle(theme)"></i>{{ theme }}</a
+                <i class="bi bi-check" [style]="getThemeIconCheckStyle(theme)"></i>{{ theme }}</a
               >
             }
           </div>
@@ -132,7 +132,7 @@
                 }
                 @if (setting !== '---') {
                   <a class="dropdown-item" href="#" (click)="selectSetting(setting)">
-                    <i class="icon-ok" [style]="getSettingsIconCheckStyle(setting)"></i>{{ setting }}</a
+                    <i class="bi bi-check" [style]="getSettingsIconCheckStyle(setting)"></i>{{ setting }}</a
                   >
                 }
               </div>
