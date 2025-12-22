@@ -1,37 +1,51 @@
 {
+  "_links": {
+    "self": {
+      "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/options-get-multi-selection.hal-forms.json"
+    }
+  },
   "_templates": {
     "search": {
+      "title": "Search Items",
       "method": "GET",
+      "target": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/items",
       "properties": [
         {
           "name": "sort",
+          "prompt": "Sort Order",
           "type": "text",
           "options": {
             "promptField": "prompt",
             "valueField": "value",
             "minItems": 0,
+            "maxItems": 5,
             "inline": [
               {
                 "value": "name,asc",
-                "prompt": "name ASC"
+                "prompt": "Name (ascending)"
               },
               {
                 "value": "name,desc",
-                "prompt": "name DESC"
+                "prompt": "Name (descending)"
               },
               {
-                "value": "bank_account,asc",
-                "prompt": "bank_account ASC"
+                "value": "date,asc",
+                "prompt": "Date (ascending)"
               },
               {
-                "value": "bank_account,desc",
-                "prompt": "bank_account DESC"
+                "value": "date,desc",
+                "prompt": "Date (descending)"
               }
             ]
           }
+        },
+        {
+          "name": "filter",
+          "prompt": "Filter",
+          "type": "text"
         }
-      ],
-      "target": "http://localhost:9000/suppliers"
+      ]
     }
   }
 }
+
