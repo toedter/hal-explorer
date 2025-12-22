@@ -79,6 +79,7 @@
                             <button
                               class="icon-book ml-auto btn btn-outline-info btn-sm nav-button"
                               (click)="processCommand(command.Document, link.docUri)"
+                              [disabled]="isLoading"
                               title="Show Documentation"
                             ></button>
                           }
@@ -123,7 +124,7 @@
                               template
                             )
                           "
-                          [disabled]="false"
+                          [disabled]="isLoading"
                           title="{{ template.value.method?.toUpperCase() || 'GET' }} Request"
                         ></button>
                       </td>
@@ -175,6 +176,7 @@
                               <button
                                 class="icon-book ms-auto btn btn-outline-info btn-sm nav-button"
                                 (click)="processCommand(command.Document, embeddedResource.docUri)"
+                                [disabled]="isLoading"
                                 title="Show Documentation"
                               ></button>
                             }

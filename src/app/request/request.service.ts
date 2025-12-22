@@ -56,6 +56,9 @@ export class RequestService {
   private readonly documentationSubject: Subject<string> = new Subject<string>();
   private readonly documentationObservable: Observable<string> = this.documentationSubject.asObservable();
 
+  private readonly loadingSubject: Subject<boolean> = new Subject<boolean>();
+  private readonly loadingObservable: Observable<boolean> = this.loadingSubject.asObservable();
+
   private requestHeaders: HttpHeaders = new HttpHeaders({
     Accept: 'application/prs.hal-forms+json, application/hal+json, application/json, */*',
   });
@@ -76,6 +79,14 @@ export class RequestService {
     return this.documentationObservable;
   }
 
+  getLoadingObservable(): Observable<boolean> {
+    return this.loadingObservable;
+  }
+
+  private setLoading(loading: boolean): void {
+    this.loadingSubject.next(loading);
+  }
+
   getUri(uri: string) {
     if (!uri || uri.trim().length === 0) {
       return;
@@ -84,6 +95,7 @@ export class RequestService {
   }
 
   requestUri(uri: string, httpMethod: string, body?: string, contentType?: string) {
+    this.setLoading(true);
     let headers = this.requestHeaders;
     if (
       contentType ||
@@ -102,9 +114,11 @@ export class RequestService {
     this.http.request(httpMethod, uri, { headers, observe: 'response', body }).subscribe({
       next: (response: HttpResponse<any>) => {
         this.responseSubject.next(new Response(response, null));
+        this.setLoading(false);
       },
       error: (error: HttpErrorResponse) => {
         this.responseSubject.next(new Response(null, error));
+        this.setLoading(false);
       },
     });
   }

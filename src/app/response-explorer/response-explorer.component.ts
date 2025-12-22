@@ -56,6 +56,7 @@ export class ResponseExplorerComponent implements OnInit {
   showLinks: boolean;
   showEmbedded: boolean;
   hasHalFormsTemplates: boolean;
+  isLoading = false;
 
   command = Command;
   responseUrl;
@@ -67,6 +68,10 @@ export class ResponseExplorerComponent implements OnInit {
   private readonly appService = inject(AppService);
 
   ngOnInit() {
+    this.requestService.getLoadingObservable().subscribe(loading => {
+      this.isLoading = loading;
+    });
+
     if (this.jsonRoot) {
       this.processJsonObject(this.jsonRoot);
     } else {
@@ -236,6 +241,11 @@ export class ResponseExplorerComponent implements OnInit {
   }
 
   isButtonDisabled(command: Command, link?: Link): boolean {
+    // Disable all buttons when a request is in progress
+    if (this.isLoading) {
+      return true;
+    }
+
     if (link && link.options) {
       if (link.options === 'http-options-error') {
         return false;

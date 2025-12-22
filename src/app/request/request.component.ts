@@ -39,6 +39,7 @@ export class RequestComponent implements OnInit {
   halFormsTemplate: any;
   halFormsPropertyKey: string;
   halFormsContentType: string;
+  isLoading = false;
 
   noValueSelected = '<No Value Selected>';
 
@@ -51,6 +52,10 @@ export class RequestComponent implements OnInit {
     this.halFormsContentType = undefined;
     this.uri = this.appService.getUri();
     this.tempRequestHeaders = this.appService.getCustomRequestHeaders();
+
+    this.requestService.getLoadingObservable().subscribe(loading => {
+      this.isLoading = loading;
+    });
 
     this.requestService.getNeedInfoObservable().subscribe(async (value: any) => {
       if (value.type === EventType.FillHttpRequest) {
