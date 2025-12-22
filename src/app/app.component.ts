@@ -16,6 +16,7 @@ import { RequestComponent } from './request/request.component';
 export class AppComponent implements OnInit {
   themes: string[] = [
     'Default',
+    'Brite',
     'Cerulean',
     'Cosmo',
     'Cyborg',
