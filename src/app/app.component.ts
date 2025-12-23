@@ -172,14 +172,14 @@ export class AppComponent implements OnInit {
   }
 
   initializeColorMode(): void {
-    const storedColorMode = localStorage.getItem('colorMode') as 'light' | 'dark' | 'auto' | null;
+    const storedColorMode = localStorage.getItem('hal-explorer.colorMode') as 'light' | 'dark' | 'auto' | null;
     this.activeColorMode = storedColorMode || 'auto';
     this.applyColorMode();
   }
 
   setColorMode(mode: 'light' | 'dark' | 'auto'): void {
     this.activeColorMode = mode;
-    localStorage.setItem('colorMode', mode);
+    localStorage.setItem('hal-explorer.colorMode', mode);
     this.applyColorMode();
   }
 

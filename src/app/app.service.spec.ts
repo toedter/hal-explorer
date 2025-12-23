@@ -5,6 +5,7 @@ describe('AppService', () => {
 
   beforeEach(() => {
     window.location.hash = '';
+    localStorage.clear();
     service = new AppService();
   });
 
@@ -15,49 +16,49 @@ describe('AppService', () => {
   it('should set custom theme', () => {
     service.setTheme('Cosmo');
     expect(service.getTheme()).toBe('Cosmo');
-    expect(window.location.hash).toBe('#theme=Cosmo');
+    expect(localStorage.getItem('hal-explorer.theme')).toBe('Cosmo');
   });
 
   it('should set default theme', () => {
     service.setTheme('Default');
     expect(service.getTheme()).toBe('Default');
-    expect(window.location.hash).toBe('');
+    expect(localStorage.getItem('hal-explorer.theme')).toBe('Default');
   });
 
   it('should set 2 column layout', () => {
     service.setLayout('2');
     expect(service.getLayout()).toBe('2');
-    expect(window.location.hash).toBe('');
+    expect(localStorage.getItem('hal-explorer.layout')).toBe('2');
   });
 
   it('should set 3 column layout', () => {
     service.setLayout('3');
     expect(service.getLayout()).toBe('3');
-    expect(window.location.hash).toBe('#layout=3');
+    expect(localStorage.getItem('hal-explorer.layout')).toBe('3');
   });
 
   it('should set HTTP OPTIONS', () => {
     service.setHttpOptions(true);
     expect(service.getHttpOptions()).toBe(true);
-    expect(window.location.hash).toBe('#httpOptions=true');
+    expect(localStorage.getItem('hal-explorer.httpOptions')).toBe('true');
   });
 
   it('should unset HTTP OPTIONS', () => {
     service.setHttpOptions(false);
     expect(service.getHttpOptions()).toBe(false);
-    expect(window.location.hash).toBe('');
+    expect(localStorage.getItem('hal-explorer.httpOptions')).toBe('false');
   });
 
   it('should set all HTTP methods for links', () => {
     service.setAllHttpMethodsForLinks(true);
     expect(service.getAllHttpMethodsForLinks()).toBe(true);
-    expect(window.location.hash).toBe('#allHttpMethodsForLinks=true');
+    expect(localStorage.getItem('hal-explorer.allHttpMethodsForLinks')).toBe('true');
   });
 
   it('should unset all HTTP methods for links', () => {
     service.setAllHttpMethodsForLinks(false);
     expect(service.getAllHttpMethodsForLinks()).toBe(false);
-    expect(window.location.hash).toBe('');
+    expect(localStorage.getItem('hal-explorer.allHttpMethodsForLinks')).toBe('false');
   });
 
   it('should not set invalid layout', () => {
@@ -66,7 +67,8 @@ describe('AppService', () => {
     service.setLayout('4');
 
     expect(service.getLayout()).toBe('2');
-    expect(window.location.hash).toBe('');
+    // Layout should remain '2' (the default), but localStorage.getItem might be null if never set
+    // The important thing is the service returns the correct default value
     expect(window.console.error).toHaveBeenCalled();
   });
 
@@ -88,8 +90,12 @@ describe('AppService', () => {
   });
 
   it('should parse window location hash', () => {
-    window.location.hash =
-      '#theme=Cosmo&layout=3&httpOptions=true&allHttpMethodsForLinks=true&hkey0=accept&hval0=text/plain&uri=https://chatty42.herokuapp.com/api/users';
+    // Set localStorage values
+    localStorage.setItem('hal-explorer.theme', 'Cosmo');
+    localStorage.setItem('hal-explorer.layout', '3');
+    localStorage.setItem('hal-explorer.httpOptions', 'true');
+    localStorage.setItem('hal-explorer.allHttpMethodsForLinks', 'true');
+    window.location.hash = '#hkey0=accept&hval0=text/plain&uri=https://chatty42.herokuapp.com/api/users';
     service = new AppService();
 
     expect(service.getCustomRequestHeaders()[0].key).toBe('accept');
@@ -102,8 +108,9 @@ describe('AppService', () => {
   });
 
   it('should parse window location hash with hval before hkey', () => {
-    window.location.hash =
-      '#theme=Cosmo&layout=3&hval0=text/plain&hkey0=accept&uri=https://chatty42.herokuapp.com/api/users';
+    localStorage.setItem('hal-explorer.theme', 'Cosmo');
+    localStorage.setItem('hal-explorer.layout', '3');
+    window.location.hash = '#hval0=text/plain&hkey0=accept&uri=https://chatty42.herokuapp.com/api/users';
     service = new AppService();
 
     expect(service.getCustomRequestHeaders()[0].key).toBe('accept');
@@ -114,8 +121,9 @@ describe('AppService', () => {
   });
 
   it('should parse window location hash with deprecated hkey "url"', () => {
-    window.location.hash =
-      '#theme=Cosmo&layout=3&hval0=text/plain&hkey0=accept&url=https://chatty42.herokuapp.com/api/users';
+    localStorage.setItem('hal-explorer.theme', 'Cosmo');
+    localStorage.setItem('hal-explorer.layout', '3');
+    window.location.hash = '#hval0=text/plain&hkey0=accept&url=https://chatty42.herokuapp.com/api/users';
     service = new AppService();
 
     expect(service.getCustomRequestHeaders()[0].key).toBe('accept');
@@ -126,8 +134,9 @@ describe('AppService', () => {
   });
 
   it('should parse window location hash with unknown hkeys', () => {
-    window.location.hash =
-      '#theme=Cosmo&xxx=7&layout=3&hval0=text/plain&hkey0=accept&yyy=xxx&url=https://chatty42.herokuapp.com/api/users';
+    localStorage.setItem('hal-explorer.theme', 'Cosmo');
+    localStorage.setItem('hal-explorer.layout', '3');
+    window.location.hash = '#xxx=7&hval0=text/plain&hkey0=accept&yyy=xxx&url=https://chatty42.herokuapp.com/api/users';
     service = new AppService();
 
     expect(service.getCustomRequestHeaders()[0].key).toBe('accept');
@@ -152,17 +161,19 @@ describe('AppService', () => {
   it('should set scrollable documentation', () => {
     service.setScrollableDocumentation(true);
     expect(service.getScrollableDocumentation()).toBe(true);
-    expect(window.location.hash).toBe('#scrollableDocumentation=true');
+    expect(localStorage.getItem('hal-explorer.scrollableDocumentation')).toBe('true');
   });
 
   it('should unset scrollable documentation', () => {
     service.setScrollableDocumentation(false);
     expect(service.getScrollableDocumentation()).toBe(false);
-    expect(window.location.hash).toBe('');
+    expect(localStorage.getItem('hal-explorer.scrollableDocumentation')).toBe('false');
   });
 
-  it('should parse window location hash with scrollableDocumentation', () => {
-    window.location.hash = '#theme=Cosmo&scrollableDocumentation=true&uri=https://example.com/api';
+  it('should parse scrollableDocumentation from localStorage', () => {
+    localStorage.setItem('hal-explorer.theme', 'Cosmo');
+    localStorage.setItem('hal-explorer.scrollableDocumentation', 'true');
+    window.location.hash = '#uri=https://example.com/api';
     service = new AppService();
 
     expect(service.getScrollableDocumentation()).toBeTrue();

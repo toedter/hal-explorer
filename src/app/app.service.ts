@@ -48,8 +48,32 @@ export class AppService {
   private reactOnLocationHashChange = true;
 
   constructor() {
+    this.initializeFromLocalStorage();
     this.handleLocationHash();
     window.addEventListener('hashchange', () => this.handleLocationHash(), false);
+  }
+
+  private initializeFromLocalStorage(): void {
+    // Load settings from localStorage
+    const storedTheme = localStorage.getItem('hal-explorer.theme');
+    this.themeParam = storedTheme || 'Default';
+    this.themeParamBackup = this.themeParam;
+
+    const storedLayout = localStorage.getItem('hal-explorer.layout');
+    this.layoutParam = storedLayout || '2';
+    this.layoutParamBackup = this.layoutParam;
+
+    const storedHttpOptions = localStorage.getItem('hal-explorer.httpOptions');
+    this.httpOptionsParam = storedHttpOptions === 'true';
+    this.httpOptionsParamBackup = this.httpOptionsParam;
+
+    const storedAllHttpMethodsForLinks = localStorage.getItem('hal-explorer.allHttpMethodsForLinks');
+    this.allHttpMethodsForLinksParam = storedAllHttpMethodsForLinks === 'true';
+    this.allHttpMethodsForLinksParamBackup = this.allHttpMethodsForLinksParam;
+
+    const storedScrollableDocumentation = localStorage.getItem('hal-explorer.scrollableDocumentation');
+    this.scrollableDocumentationParam = storedScrollableDocumentation === 'true';
+    this.scrollableDocumentationParamBackup = this.scrollableDocumentationParam;
   }
 
   get uriObservable(): Observable<string> {
@@ -105,7 +129,8 @@ export class AppService {
   setTheme(theme: string) {
     this.themeParamBackup = this.themeParam;
     this.themeParam = theme;
-    this.setLocationHash();
+    localStorage.setItem('hal-explorer.theme', theme);
+    this.themeSubject.next(this.themeParam);
   }
 
   getLayout(): string {
@@ -116,7 +141,8 @@ export class AppService {
     if (layout === '2' || layout === '3') {
       this.layoutParamBackup = this.layoutParam;
       this.layoutParam = layout;
-      this.setLocationHash();
+      localStorage.setItem('hal-explorer.layout', layout);
+      this.layoutSubject.next(this.layoutParam);
     } else {
       console.error('Cannot set unknown layout: ' + layout);
     }
@@ -129,7 +155,9 @@ export class AppService {
   setHttpOptions(options: boolean) {
     this.httpOptionsParamBackup = this.httpOptionsParam;
     this.httpOptionsParam = options;
-    this.setLocationHash();
+    localStorage.setItem('hal-explorer.httpOptions', String(options));
+    this.httpOptionsSubject.next(this.httpOptionsParam);
+    this.uriSubject.next(this.uriParam);
   }
 
   getAllHttpMethodsForLinks(): boolean {
@@ -139,7 +167,8 @@ export class AppService {
   setAllHttpMethodsForLinks(options: boolean) {
     this.allHttpMethodsForLinksParamBackup = this.allHttpMethodsForLinksParam;
     this.allHttpMethodsForLinksParam = options;
-    this.setLocationHash();
+    localStorage.setItem('hal-explorer.allHttpMethodsForLinks', String(options));
+    this.allHttpMethodsForLinksSubject.next(this.allHttpMethodsForLinksParam);
   }
 
   getScrollableDocumentation(): boolean {
@@ -149,7 +178,8 @@ export class AppService {
   setScrollableDocumentation(scrollable: boolean) {
     this.scrollableDocumentationParamBackup = this.scrollableDocumentationParam;
     this.scrollableDocumentationParam = scrollable;
-    this.setLocationHash();
+    localStorage.setItem('hal-explorer.scrollableDocumentation', String(scrollable));
+    this.scrollableDocumentationSubject.next(this.scrollableDocumentationParam);
   }
 
   getCustomRequestHeaders(): RequestHeader[] {
@@ -171,26 +201,6 @@ export class AppService {
       this.uriParam = '';
     }
 
-    if (!this.themeParam) {
-      this.themeParam = 'Default';
-    }
-
-    if (!this.layoutParam) {
-      this.layoutParam = '2';
-    }
-
-    if (!this.httpOptionsParam) {
-      this.httpOptionsParam = false;
-    }
-
-    if (!this.allHttpMethodsForLinksParam) {
-      this.allHttpMethodsForLinksParam = false;
-    }
-
-    if (!this.scrollableDocumentationParam) {
-      this.scrollableDocumentationParam = false;
-    }
-
     const tempCustomRequestHeaders: RequestHeader[] = new Array(5);
 
     const fragment = location.hash.substring(1);
@@ -199,25 +209,7 @@ export class AppService {
     while (m) {
       const key = decodeURIComponent(m[1]);
 
-      if (key === 'theme') {
-        this.themeParam = decodeURIComponent(m[2]);
-        m = regex.exec(fragment);
-      } else if (key === 'layout') {
-        this.layoutParam = decodeURIComponent(m[2]);
-        m = regex.exec(fragment);
-      } else if (key === 'httpOptions') {
-        const httpOptionsValue = decodeURIComponent(m[2]);
-        this.httpOptionsParam = httpOptionsValue === 'true';
-        m = regex.exec(fragment);
-      } else if (key === 'allHttpMethodsForLinks') {
-        const allHttpMethodsForLinksValue = decodeURIComponent(m[2]);
-        this.allHttpMethodsForLinksParam = allHttpMethodsForLinksValue === 'true';
-        m = regex.exec(fragment);
-      } else if (key === 'scrollableDocumentation') {
-        const scrollableDocumentationValue = decodeURIComponent(m[2]);
-        this.scrollableDocumentationParam = scrollableDocumentationValue === 'true';
-        m = regex.exec(fragment);
-      } else if (key.startsWith('hkey')) {
+      if (key.startsWith('hkey')) {
         const headerKeyParam = decodeURIComponent(m[2]);
         const headerKeyIndex = Number(key.substring(4));
         const requestHeader = tempCustomRequestHeaders[headerKeyIndex];
@@ -246,33 +238,13 @@ export class AppService {
         this.uriParam = fragment.substring(fragment.indexOf('uri=') + 4);
         m = null;
       } else {
+        // Skip unknown parameters (for backward compatibility with old URLs that have theme, layout, etc.)
         m = regex.exec(fragment);
       }
     }
 
     if (this.uriParamBackup !== this.uriParam) {
       this.uriSubject.next(this.uriParam);
-    }
-
-    if (this.themeParamBackup !== this.themeParam) {
-      this.themeSubject.next(this.themeParam);
-    }
-
-    if (this.layoutParamBackup !== this.layoutParam) {
-      this.layoutSubject.next(this.layoutParam);
-    }
-
-    if (this.httpOptionsParamBackup !== this.httpOptionsParam) {
-      this.httpOptionsSubject.next(this.httpOptionsParam);
-      this.uriSubject.next(this.uriParam);
-    }
-
-    if (this.allHttpMethodsForLinksParamBackup !== this.allHttpMethodsForLinksParam) {
-      this.allHttpMethodsForLinksSubject.next(this.allHttpMethodsForLinksParam);
-    }
-
-    if (this.scrollableDocumentationParamBackup !== this.scrollableDocumentationParam) {
-      this.scrollableDocumentationSubject.next(this.scrollableDocumentationParam);
     }
 
     this.customRequestHeaders = [];
@@ -292,31 +264,6 @@ export class AppService {
   private setLocationHash() {
     let newLocationHash = '';
     let andPrefix = '';
-
-    if (this.themeParam.toLowerCase() !== 'default') {
-      newLocationHash += andPrefix + 'theme=' + this.themeParam;
-      andPrefix = '&';
-    }
-
-    if (this.layoutParam !== '2') {
-      newLocationHash += andPrefix + 'layout=' + this.layoutParam;
-      andPrefix = '&';
-    }
-
-    if (this.httpOptionsParam) {
-      newLocationHash += andPrefix + 'httpOptions=' + this.httpOptionsParam;
-      andPrefix = '&';
-    }
-
-    if (this.allHttpMethodsForLinksParam) {
-      newLocationHash += andPrefix + 'allHttpMethodsForLinks=' + this.allHttpMethodsForLinksParam;
-      andPrefix = '&';
-    }
-
-    if (this.scrollableDocumentationParam) {
-      newLocationHash += andPrefix + 'scrollableDocumentation=' + this.scrollableDocumentationParam;
-      andPrefix = '&';
-    }
 
     for (let i = 0; i < this.customRequestHeaders.length; i++) {
       newLocationHash +=

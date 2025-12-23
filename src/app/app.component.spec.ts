@@ -208,7 +208,7 @@ describe('AppComponent', () => {
     component.setColorMode('light');
 
     expect(component.activeColorMode).toBe('light');
-    expect(localStorage.setItem).toHaveBeenCalledWith('colorMode', 'light');
+    expect(localStorage.setItem).toHaveBeenCalledWith('hal-explorer.colorMode', 'light');
     expect(document.documentElement.getAttribute('data-bs-theme')).toBe('light');
   });
 
@@ -217,7 +217,7 @@ describe('AppComponent', () => {
     component.setColorMode('dark');
 
     expect(component.activeColorMode).toBe('dark');
-    expect(localStorage.setItem).toHaveBeenCalledWith('colorMode', 'dark');
+    expect(localStorage.setItem).toHaveBeenCalledWith('hal-explorer.colorMode', 'dark');
     expect(document.documentElement.getAttribute('data-bs-theme')).toBe('dark');
   });
 
@@ -227,7 +227,7 @@ describe('AppComponent', () => {
     component.setColorMode('auto');
 
     expect(component.activeColorMode).toBe('auto');
-    expect(localStorage.setItem).toHaveBeenCalledWith('colorMode', 'auto');
+    expect(localStorage.setItem).toHaveBeenCalledWith('hal-explorer.colorMode', 'auto');
     expect(document.documentElement.getAttribute('data-bs-theme')).toBe('dark');
   });
 });
