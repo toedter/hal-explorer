@@ -12,7 +12,7 @@ repositories {
 apply plugin: 'java'
 
 node {
-  version = '20.16.0'
+  version = '24.12.0'
   download = true
   workDir = file("$projectDir/build/node")
 }
