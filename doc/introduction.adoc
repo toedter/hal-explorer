@@ -19,16 +19,18 @@ For further understanding of this document, please be aware of both
 [[features]]
 == Features
 
-* Responsive design
-* Syntax highlighted response body
-* Custom request headers
+* Color Modes
+** Dark
+** Light
+** Auto
 * Available Themes
 ** Bootstrap 5 default theme
 ** https://bootswatch.com/[Bootswatch themes]
 * 2 layouts
 ** _2 column layout_ with optional documentation
 ** _3 column layout_ with documentation always visible if available
-* API URL, theme, layout, and request headers stored as URL fragment
+* API URL and custom request headers stored as URL fragment
+* Settings are stored in local storage
 * Support for Spring Data Rest profiles to populate properties in request editor
 * Support for HAL-FORMS templates
 ** Template elements in response explorer (see screenshot)

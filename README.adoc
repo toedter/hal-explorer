@@ -29,16 +29,18 @@ image::./doc/img/hal-explorer.png[HAL Explorer]
 
 == Features
 
-* Responsive design
-* Syntax highlighted response body
-* Custom request headers
+* Color Modes
+** Dark
+** Light
+** Auto
 * Available Themes
 ** Bootstrap 5 default theme
 ** https://bootswatch.com/[Bootswatch themes]
-* 2 layouts
-** 2 columns layout with optional documentation
-** 3 columns layout with documentation always visible if available
-* API URL, theme, layout, and request headers stored as URL fragment
+* 2 Column Layouts
+** _2 column layout_ with optional documentation
+** _3 column layout_ with documentation always visible if available
+* API URL and custom request headers stored as URL fragment
+* Settings are stored in local storage
 * Support for Spring Data Rest profiles to populate properties in request editor
 * Support for HAL-FORMS templates
 ** Template elements in response explorer (see screenshot)
@@ -46,16 +48,22 @@ image::./doc/img/hal-explorer.png[HAL Explorer]
 ** Options support in request editor
 * HAL-FORMS property constraint validation in request editor
 
+
 == Development Server
 
 Run `yarn start` for a dev server. Navigate to http://localhost:4200/.
 The app will automatically reload if you change any of the source files.
 The development server has a build-in proxy configuration
-so that all calls to `/api` are forwarded to `localhost:8080/api`.
+so that all calls to `/api` are forwarded to `localhost:8080/api`
+and `/docs` are forwarded to `localhost:8080/docs`.
 This is convenient when you want to test a local server without having to deal with CORS.
-If you run `yarn start:fs`, an additional file server is started with port 3000.
-In the test-data directory, you find some JSON examples. Try it out with the URL
-http://localhost:4200/#uri=http://localhost:3000/movies.hal-forms.json.
+
+If you run `yarn start:fs`, an additional file server is started at port 3000.
+In the test-data directory, you find some JSON examples.
+Calls to `/test-data` are forwarded to `localhost:3000/test-data`.
+
+Try it out with the URL
+http://localhost:4200/#uri=/test-data/movies.hal-forms.json.
 
 == Build
 
