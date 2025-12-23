@@ -48,7 +48,6 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/vitest/lcov.info
-          verbose: true
 
       - name: Install Playwright Browsers
         run: yarn playwright install chromium --with-deps
