@@ -51,7 +51,7 @@ export class AppService {
   private initializeFromLocalStorage(): void {
     // Load settings from localStorage
     const storedTheme = localStorage.getItem('hal-explorer.theme');
-    this.themeParam = storedTheme || 'Default';
+    this.themeParam = storedTheme || 'Cosmo';
 
     const storedLayout = localStorage.getItem('hal-explorer.columnLayout');
     this.columnLayoutParam = storedLayout || '2';
