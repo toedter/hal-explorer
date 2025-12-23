@@ -25,7 +25,13 @@ You can also find the current release at https://hal-explorer.com.
 
 == TL;DR
 
-image::./doc/img/hal-explorer.png[HAL Explorer]
+HAL Explorer (Dark Mode with Cosmo Theme):
+
+image::./doc/img/hal-explorer-dark.png[HAL Explorer Dark Mode]
+
+HAL Explorer (Light Mode with Cosmo Theme):
+
+image::./doc/img/hal-explorer-light.png[HAL Explorer Light Mode]
 
 == Features
 

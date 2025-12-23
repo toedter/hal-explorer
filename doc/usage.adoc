@@ -6,7 +6,7 @@
 When you start HAL Explorer, you see an input field in the top left area, where you can input the URI of a REST service, that returns HAL or HAL-FORMS documents. Once you click `Go!` or hit enter, the response is displayed. A typical response would look like
 
 
-image::img/hal-explorer.png[]
+image::img/hal-explorer-light.png[]
 
 == Links
 
