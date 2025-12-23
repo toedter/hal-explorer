@@ -1,26 +1,26 @@
 [[menu]]
 = Menu
 
-In the top-level menu you can choose the color mode, theme, settings, and view the 'About' dialog.
+In the top-level menu, you can choose the color mode, theme, and settings, and view the About dialog.
 
 [[color-mode]]
 == Color Mode
 
 HAL Explorer supports three color modes:
 
-* **Light** - Light color scheme
-* **Dark** - Dark color scheme
-* **Auto** - Automatically detects your system's preferred color scheme (Default)
+* *Light* - Light color scheme
+* *Dark* - Dark color scheme
+* *Auto* - Automatically detects your system's preferred color scheme (default)
 
 The color mode is stored in your browser's local storage and persists across sessions.
 
 [[theming]]
 == Theming
 
-HAL Explorer supports all the https://bootswatch.com/[Bootswatch] themes (by Thomas Park).
-The default theme is Cosmo. You can select from 25+ different themes including:
+HAL Explorer supports all of the https://bootswatch.com/[Bootswatch] themes (by Thomas Park).
+The default theme is Cosmo. You can select from 25+ different themes, including:
 
-* Default (HAL Explorers default theme)
+* Default (HAL Explorer's default theme)
 * Cosmo, Darkly, Flatly, Materia, and many more
 
 The selected theme is stored in your browser's local storage and persists across sessions.
@@ -28,18 +28,18 @@ The selected theme is stored in your browser's local storage and persists across
 [[settings]]
 == Settings
 
-In the _Settings_ sub menu, you can configure:
+In the _Settings_ submenu, you can configure:
 
-* **Layout** - Choose between different column layouts (see <<Curie-based Documentation>>)
+* *Layout* - Choose between different column layouts (see <<Curie-based Documentation>>)
 ** _2 Column Layout_ - Two columns with optional documentation
 ** _3 Column Layout_ - Three columns with documentation always visible when available
 
-* **Use HTTP OPTIONS** - Enable automatic HTTP OPTIONS requests to discover which HTTP methods are supported for a given link URI
+* *Use HTTP OPTIONS* - Enable automatic HTTP OPTIONS requests to discover which HTTP methods are supported for a given link URI
 
-* **Enable all HTTP Methods for HAL-FORMS Links** - Enable all HTTP methods for links in HAL-FORMS documents
-** Usually HAL-FORMS `_templates` would be used to specify affordances with explicit HTTP methods. But there are some use cases where you might want to be able to make calls using other HTTP methods than GET for certain links.
+* *Enable all HTTP Methods for HAL-FORMS Links* - Enable all HTTP methods for links in HAL-FORMS documents
+** Usually, HAL-FORMS `_templates` are used to specify affordances with explicit HTTP methods. However, there are some use cases where you might want to make calls using HTTP methods other than GET for certain links.
 
-* **Scrollable Documentation** - When enabled, documentation is rendered in a scrollable iframe with a fixed maximum height instead of expanding the main page height
+* *Scrollable Documentation* - When enabled, documentation is rendered in a scrollable iframe with a fixed maximum height instead of expanding the main page height
 
 All settings are stored in your browser's local storage with the `hal-explorer.` prefix and persist across sessions.
 

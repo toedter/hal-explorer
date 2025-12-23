@@ -10,7 +10,7 @@ Kai Tödter
 :toclevels: 5
 :fold: all
 
-With HAL Explorer you can explore HAL and HAL-FORMS based RESTful Hypermedia APIs.
+HAL Explorer allows you to explore HAL and HAL-FORMS based RESTful Hypermedia APIs.
 
 (C) 2025 The original authors.
 

@@ -6,11 +6,11 @@
 [[fundamentals]]
 == Fundamentals
 
-With HAL Explorer you can browse and explore HAL
+HAL Explorer allows you to browse and explore HAL
 and HAL-FORMS-based RESTful Hypermedia APIs.
-HAL Explorer was inspired by Mike Kelly's https://github.com/mikekelly/hal-browser[HAL-Browser].
-HAL Explorer also supports Spring Profiles.
-For further understanding of this document, please be aware of both
+HAL Explorer was inspired by Mike Kelly's https://github.com/mikekelly/hal-browser[HAL-Browser]
+and also supports Spring Profiles.
+For a complete understanding of this documentation, please familiarize yourself with:
 
 * the http://stateless.co/hal_specification.html[HAL] Specification
 * the https://rwcbook.github.io/hal-forms/[HAL-FORMS] Specification
@@ -25,7 +25,7 @@ For further understanding of this document, please be aware of both
 ** Auto (automatically detects system preference)
 * Available Themes
 ** Bootstrap 5 default theme
-** https://bootswatch.com/[Bootswatch themes] (25+ themes available, Cosmo is the default)
+** https://bootswatch.com/[Bootswatch themes] (25+ themes available; Cosmo is the default)
 * Column Layouts
 ** _2 column layout_ with optional documentation
 ** _3 column layout_ with documentation always visible when available
@@ -39,9 +39,9 @@ For further understanding of this document, please be aware of both
 ** URI template parameter editor with validation
 ** Keyboard shortcuts (Enter to submit, ESC to close dialogs)
 * Settings
-** All settings stored in browser's local storage with `hal-explorer.` namespace
+** All settings stored in the browser's local storage with `hal-explorer.` namespace
 ** Configurable HTTP OPTIONS usage for link discovery
-** Enable all HTTP methods for HAL-FORMS links
+** Option to enable all HTTP methods for HAL-FORMS links
 ** Scrollable documentation mode for large documentation content
 * Spring Data REST Integration
 ** Support for Spring Data REST profiles to populate properties in request editor

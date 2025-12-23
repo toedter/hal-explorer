@@ -3,15 +3,15 @@
 
 == JSON Properties
 
-When you start HAL Explorer, you see an input field in the top left area, where you can input the URI of a REST service, that returns HAL or HAL-FORMS documents. Once you click `Go!` or hit enter, the response is displayed. A typical response would look like
+When you start HAL Explorer, you will see an input field in the top-left area where you can enter the URI of a REST service that returns HAL or HAL-FORMS documents. Once you click `Go!` or press Enter, the response is displayed. A typical response looks like:
 
 
 image::img/hal-explorer-light.png[]
 
 == Links
 
-Just below the URI you find the top-level JSON properties. If the response contains links, you find them below.
-Since HAL does not provide any affordances what HTTP method you should use to follow the link, you find colored buttons for each HTTP method:
+Just below the URI, you will find the top-level JSON properties. If the response contains links, they are displayed below.
+Since HAL does not provide affordances indicating which HTTP method you should use to follow a link, you will find colored buttons for each HTTP method:
 
 * `<` : HTTP GET
 * `+` : HTTP POST
@@ -24,7 +24,7 @@ you can click on the book icon to display it.
 
 If a link relation provides a name or a title, they are displayed in the links table.
 
-You can click on a link button to follow the link. If a link is templated, a modal dialog will pop up, where you can fill the template parameters, like
+You can click on a link button to follow the link. If a link is templated, a modal dialog will appear where you can fill in the template parameters, like:
 
 image::img/templated-request.png[]
 
@@ -32,61 +32,61 @@ When you click on `Go!`, an HTTP call to the `Expanded URI` will be made.
 
 == Embedded Resources
 
-If the response contains embedded resources, you find them in the section "Embedded Resources".
-You can click on an embedded resource to expand it, like
+If the response contains embedded resources, you will find them in the "Embedded Resources" section.
+You can click on an embedded resource to expand it, like:
 
 image::img/expanded-embedded-resource.png[]
 
 == Response Details
 
-On the right-hand side of the page you find details about the response:
+On the right-hand side of the page, you will find details about the response:
 
-* The Response Status code and text
+* Response Status code and text
 * All Response Headers
-* The response body in highlighted JSON
+* Response body with syntax-highlighted JSON
 
 == Curie-based Documentation
 
-Whenever you see a book icon, you can click on it, and the documentation is shown.
-Depending on the chosen layout, the documentation will be displayed as a third column on the right (3 column layout)
-or will replace the response details (2 column layout). You can change the layout using the `Settings` menu at the main toolbar.
+Whenever you see a book icon, you can click on it to display the documentation.
+Depending on the chosen layout, the documentation will be displayed as a third column on the right (3-column layout)
+or will replace the response details (2-column layout). You can change the layout using the `Settings` menu in the main toolbar.
 
-A page with 3 column layout might look like
+A page with a 3-column layout might look like:
 
 image::img/3-column-layout.png[]
 
 == HAL-FORMS
 
 HAL Explorer supports the latest HAL-FORMS specification. Whenever a HAL-FORMS based response contains
-templates (`_templates`), all template elements will be displayed under the Links section, like
+templates (`_templates`), all template elements will be displayed in the Links section, like:
 
 image::img/hal-explorer-templates.png[]
 
 Since HAL-FORMS uses affordances to describe which HTTP method should be used for each template element, you can
-only follow links using HTTP GET, but use exactly the HTTP method specified in a template element.
+follow links using HTTP GET, but must use the specific HTTP method defined in each template element.
 
 == Updating REST Resources
 
-Whenever you click on an HTTP POST button, a modal dialog pops up, where you can enter the body of the post, and the query parameters (only if the URI is templated). In raw HAL based documents, it looks like
+Whenever you click on an HTTP POST button, a modal dialog appears where you can enter the request body and query parameters (only if the URI is templated). For raw HAL-based documents, it looks like:
 
 image::img/hal-post-dialog.png[]
 
-When your server is implemented using https://spring.io/projects/spring-data-rest[Spring Data REST], a JSON Schema-based Spring profile is automatically created. HAL Explorer automatically detects Spring Profiles, and instead of just presenting an empty body, form elements for all attributes are displayed, like
+When your server is implemented using https://spring.io/projects/spring-data-rest[Spring Data REST], a JSON Schema-based Spring profile is automatically created. HAL Explorer automatically detects Spring Profiles, and instead of presenting an empty body, form elements for all attributes are displayed, like:
 
 image::img/request-input.png[]
 
-When your response is based on HAL-FORMS, all the properties of the corresponding template element are shown, like
+When your response is based on HAL-FORMS, all the properties of the corresponding template element are shown, like:
 
 image::img/hal-forms-post-dialog.png[]
 
-When HAL-FORMS is used, the fields are also validated and validation errors are displayed below the input area.
-Only for valid forms, the body is displayed, and the HTTP request can be made.
+When HAL-FORMS is used, the fields are also validated, and validation errors are displayed below the input area.
+Only for valid forms is the body displayed, and the HTTP request can be made.
 
 == Adding Request Headers
 
-When want to add certain request headers to all calls, click on `Edit Headers` in the top-left corner.
-THen, a modal dialog pops up where you can add headers. This is handy when you want to add things like
-bearer tokens for authorization, like
+When you want to add certain request headers to all calls, click on `Edit Headers` in the top-left corner.
+Then, a modal dialog will appear where you can add headers. This is useful when you want to add items like
+bearer tokens for authorization, like:
 
 image::img/request-headers.png[]
 
@@ -98,16 +98,16 @@ request header for `HAL` or `HAL-FORMS` documents.
 
 The following configuration is stored in the browser's local storage and persists across sessions:
 
-* Color Mode (Light/Dark/Auto, default is Auto)
-* Theme (Default is Bootswatch Cosmo)
-* Column Layout (2 or 3 columns, default is 2)
-* HTTP OPTIONS setting (Default is off)
-* Enable all HTTP Methods for HAL-FORMS Links setting (Default is off)
-* Scrollable Documentation setting (Default is off)
+* Color Mode (Light/Dark/Auto; default is Auto)
+* Theme (default is Bootswatch Cosmo)
+* Column Layout (2 or 3 columns; default is 2)
+* HTTP OPTIONS setting (default is off)
+* Enable all HTTP Methods for HAL-FORMS Links setting (default is off)
+* Scrollable Documentation setting (default is off)
 
 === Bookmarking
 
-The following configuration is transported in URL parameters, so HAL Explorer URLs can easily be bookmarked and shared:
+The following configuration is included in URL parameters, so HAL Explorer URLs can be easily bookmarked and shared:
 
 * URI
 * Request Headers
@@ -115,13 +115,13 @@ The following configuration is transported in URL parameters, so HAL Explorer UR
 == HAL-FORMS Options
 
 HAL Explorer supports HAL-FORMS https://rwcbook.github.io/hal-forms/#options-element[Options].
-A simple example JSON looks like
+A simple example JSON looks like:
 
 [source, json]
 ----
 include::../test-data/options.hal-forms.json[]
 ----
 
-When clicking on the POST request button, the dialog looks like
+When clicking on the POST request button, the dialog looks like:
 
 image::img/hal-forms-options.png[]
