@@ -23,7 +23,8 @@
     "e2e:firefox": "playwright test --project=firefox",
     "e2e:webkit": "playwright test --project=webkit",
     "e2e:report": "playwright show-report",
-    "test-server": "node test-server.js"
+    "test-server": "node test-server.js",
+    "prepare": "husky"
   },
   "dependencies": {
     "@angular/animations": "^21.0.6",
@@ -50,6 +51,8 @@
     "@angular/cli": "^21.0.3",
     "@angular/compiler-cli": "^21.0.6",
     "@angular/language-service": "^21.0.6",
+    "@commitlint/cli": "^20.2.0",
+    "@commitlint/config-conventional": "^20.2.0",
     "@playwright/test": "^1.57.0",
     "@popperjs/core": "^2.11.8",
     "@types/jasmine": "~5.1.13",
@@ -61,6 +64,7 @@
     "cors": "^2.8.5",
     "eslint": "^9.39.2",
     "express": "^5.0.0",
+    "husky": "^9.1.7",
     "jasmine-core": "~5.13.0",
     "jasmine-spec-reporter": "~7.0.0",
     "karma": "~6.4.4",
@@ -68,6 +72,7 @@
     "karma-coverage": "~2.2.1",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "^2.1.0",
+    "lint-staged": "^16.2.7",
     "playwright": "^1.57.0",
     "prettier": "^3.7.4",
     "ts-node": "~10.9.2",
@@ -78,6 +83,16 @@
     "name": "Kai Toedter",
     "email": "kai@toedter.com",
     "url": "https://toedter.com"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "*.{ts,js,json,css,scss,html}": [
+      "prettier --write"
+    ]
   },
   "private": true
 }

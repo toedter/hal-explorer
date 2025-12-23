@@ -1,16 +1,18 @@
-# Ignore artifacts:
-dist
-coverage
+# Dependencies
 node_modules
+package-lock.json
+yarn.lock
+
+# Build outputs
+dist
 build
+coverage
 .angular
 
-# Ignore generated files
+# Generated files
 *.log
-*.lock
-yarn.lock
-package-lock.json
+*.tgz
 
-# Ignore test data
-test-data
+# Documentation
+doc/img
 

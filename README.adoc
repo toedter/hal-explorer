@@ -132,6 +132,39 @@ When you use Spring Boot, a good location in your project's source tree would be
 
 Take a look at `package.json` for more test options.
 
+== Development
+
+=== Git Hooks
+
+This project uses https://typicode.github.io/husky/[Husky] to manage Git hooks:
+
+* **Pre-commit hook**: Automatically formats staged files using Prettier via lint-staged
+* **Commit-msg hook**: Validates commit messages against conventional commit standards
+
+=== Commit Message Convention
+
+Commit messages must follow the https://www.conventionalcommits.org/[Conventional Commits] specification.
+The format is: `type(scope): subject`
+
+Valid types are: `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refactor`, `revert`, `style`, `test`
+
+Examples:
+```
+feat: add dark mode support
+fix: resolve navigation bug in sidebar
+docs: update installation instructions
+```
+
+The commit message will be automatically validated when you commit.
+
+=== Code Formatting
+
+This project uses https://prettier.io/[Prettier] for code formatting.
+Files are automatically formatted on commit, but you can also run formatting manually:
+
+* `yarn format` - Format all source files
+* `yarn format:check` - Check if files are formatted correctly
+
 [[license]]
 == License
 

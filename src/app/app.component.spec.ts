@@ -88,7 +88,7 @@ describe('AppComponent', () => {
     const domSanitizerMock = jasmine.createSpyObj(['bypassSecurityTrustResourceUrl']);
     // Return a mock SafeResourceUrl object
     domSanitizerMock.bypassSecurityTrustResourceUrl.and.returnValue({
-      changingThisBreaksApplicationSecurity: 'https://bootswatch.com/5/cosmo/bootstrap.min.css'
+      changingThisBreaksApplicationSecurity: 'https://bootswatch.com/5/cosmo/bootstrap.min.css',
     });
 
     TestBed.configureTestingModule({
