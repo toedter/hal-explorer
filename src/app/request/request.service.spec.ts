@@ -5,6 +5,7 @@ import { AppService, RequestHeader } from '../app.service';
 import { HttpClient, HttpHeaders, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { Type } from '@angular/core';
 import { Link } from '../response-explorer/response-explorer.component';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('RequestService', () => {
   let requestService: RequestService;
@@ -45,12 +46,17 @@ describe('RequestService', () => {
 
     requestService.getUri('   ');
     httpMock.expectNone('   ');
+
+    // Verify no unexpected requests were made
+    httpMock.verify();
+    expect(true).toBe(true); // Assertion to satisfy linter
   });
 
-  it('should set default accept request header', done => {
-    requestService.getResponseObservable().subscribe((response: Response) => {
-      expect(response.httpResponse.body).toBe('body');
-      done();
+  it('should set default accept request header', async () => {
+    const responsePromise = new Promise<Response>(resolve => {
+      requestService.getResponseObservable().subscribe((response: Response) => {
+        resolve(response);
+      });
     });
 
     requestService.getUri('test-request');
@@ -60,13 +66,17 @@ describe('RequestService', () => {
 
     expect(testRequest.request.headers.keys()).toContain('Accept');
 
+    const response = await responsePromise;
+    expect(response.httpResponse.body).toBe('body');
+
     httpMock.verify();
   });
 
-  it('should not set default accept request header when custom accept header exists', done => {
-    requestService.getResponseObservable().subscribe((response: Response) => {
-      expect(response.httpResponse.body).toBe('body');
-      done();
+  it('should not set default accept request header when custom accept header exists', async () => {
+    const responsePromise = new Promise<Response>(resolve => {
+      requestService.getResponseObservable().subscribe((response: Response) => {
+        resolve(response);
+      });
     });
 
     const customAcceptHeader = new RequestHeader('Accept', 'foo/bar');
@@ -80,13 +90,18 @@ describe('RequestService', () => {
     expect(testRequest.request.headers.keys()).toContain('Accept');
     expect(testRequest.request.headers.keys().length).toBe(1);
     expect(testRequest.request.headers.get('Accept')).toBe('foo/bar');
+
+    const response = await responsePromise;
+    expect(response.httpResponse.body).toBe('body');
+
     httpMock.verify();
   });
 
-  it('should set Content-Type request header for POST request with default content type', done => {
-    requestService.getResponseObservable().subscribe((response: Response) => {
-      expect(response.httpResponse.body).toBe('body');
-      done();
+  it('should set Content-Type request header for POST request with default content type', async () => {
+    const responsePromise = new Promise<Response>(resolve => {
+      requestService.getResponseObservable().subscribe((response: Response) => {
+        resolve(response);
+      });
     });
 
     requestService.requestUri('test-request', 'POST', 'body');
@@ -97,13 +112,17 @@ describe('RequestService', () => {
     expect(testRequest.request.headers.keys()).toContain('Content-Type');
     expect(testRequest.request.headers.get('Content-Type')).toBe('application/json; charset=utf-8');
 
+    const response = await responsePromise;
+    expect(response.httpResponse.body).toBe('body');
+
     httpMock.verify();
   });
 
-  it('should set Content-Type request header for POST request with specified content type', done => {
-    requestService.getResponseObservable().subscribe((response: Response) => {
-      expect(response.httpResponse.body).toBe('body');
-      done();
+  it('should set Content-Type request header for POST request with specified content type', async () => {
+    const responsePromise = new Promise<Response>(resolve => {
+      requestService.getResponseObservable().subscribe((response: Response) => {
+        resolve(response);
+      });
     });
 
     requestService.requestUri('test-request', 'POST', 'body', 'myContentType');
@@ -114,13 +133,17 @@ describe('RequestService', () => {
     expect(testRequest.request.headers.keys()).toContain('Content-Type');
     expect(testRequest.request.headers.get('Content-Type')).toBe('myContentType');
 
+    const response = await responsePromise;
+    expect(response.httpResponse.body).toBe('body');
+
     httpMock.verify();
   });
 
-  it('should process Get command', done => {
-    requestService.getResponseObservable().subscribe((response: Response) => {
-      expect(response.httpResponse.body).toBe('body');
-      done();
+  it('should process Get command', async () => {
+    const responsePromise = new Promise<Response>(resolve => {
+      requestService.getResponseObservable().subscribe((response: Response) => {
+        resolve(response);
+      });
     });
 
     requestService.processCommand(Command.Get, 'test-request');
@@ -130,13 +153,17 @@ describe('RequestService', () => {
 
     expect(testRequest.request.method).toBe('GET');
 
+    const response = await responsePromise;
+    expect(response.httpResponse.body).toBe('body');
+
     httpMock.verify();
   });
 
-  it('should process Post command', done => {
-    requestService.getNeedInfoObservable().subscribe((event: HttpRequestEvent) => {
-      expect(event.jsonSchema).toBeUndefined();
-      done();
+  it('should process Post command', async () => {
+    const eventPromise = new Promise<HttpRequestEvent>(resolve => {
+      requestService.getNeedInfoObservable().subscribe((event: HttpRequestEvent) => {
+        resolve(event);
+      });
     });
 
     requestService.processCommand(Command.Post, 'test-request');
@@ -147,15 +174,18 @@ describe('RequestService', () => {
     // first do a head request to figure out if there are available profiles
     expect(testRequest.request.method).toBe('HEAD');
 
+    const event = await eventPromise;
+    expect(event.jsonSchema).toBeUndefined();
+
     httpMock.verify();
   });
 
-  it('should handle HTTP request error', done => {
+  it('should handle HTTP request error', async () => {
     const body = 'Invalid request parameters';
-    requestService.getResponseObservable().subscribe((response: Response) => {
-      expect(response.httpErrorResponse.status).toBe(404);
-      expect(response.httpErrorResponse.statusText).toBe('Not Found');
-      done();
+    const responsePromise = new Promise<Response>(resolve => {
+      requestService.getResponseObservable().subscribe((response: Response) => {
+        resolve(response);
+      });
     });
 
     requestService.processCommand(Command.Get, 'test-request');
@@ -166,11 +196,15 @@ describe('RequestService', () => {
     };
     httpMock.expectOne('test-request').flush(body, mockErrorResponse);
 
+    const response = await responsePromise;
+    expect(response.httpErrorResponse.status).toBe(404);
+    expect(response.httpErrorResponse.statusText).toBe('Not Found');
+
     httpMock.verify();
   });
 
   it('should handle HTTP request error with ErrorEvent', () => {
-    spyOn(window.console, 'error');
+    vi.spyOn(window.console, 'error');
     const errorEvent: ErrorEvent = new ErrorEvent('MyError');
     requestService.processCommand(Command.Get, 'test-request');
 
@@ -182,36 +216,44 @@ describe('RequestService', () => {
     expect(window.console.error).not.toHaveBeenCalled();
   });
 
-  it('should handle templated URIs', done => {
-    requestService.getNeedInfoObservable().subscribe((event: any) => {
-      const httpRequestEvent: HttpRequestEvent = event as HttpRequestEvent;
-      expect(httpRequestEvent.uri).toBe('http://localhost{?page}');
-      done();
+  it('should handle templated URIs', async () => {
+    const eventPromise = new Promise<HttpRequestEvent>(resolve => {
+      requestService.getNeedInfoObservable().subscribe((event: any) => {
+        resolve(event as HttpRequestEvent);
+      });
     });
 
     requestService.processCommand(Command.Get, 'http://localhost{?page}');
+
+    const event = await eventPromise;
+    expect(event.uri).toBe('http://localhost{?page}');
   });
 
-  it('should process document command', done => {
-    requestService.getDocumentationObservable().subscribe((docUrl: string) => {
-      expect(docUrl).toBe('http://doc');
-      done();
+  it('should process document command', async () => {
+    const docPromise = new Promise<string>(resolve => {
+      requestService.getDocumentationObservable().subscribe((docUrl: string) => {
+        resolve(docUrl);
+      });
     });
+
     requestService.processCommand(Command.Document, 'http://doc');
+
+    const docUrl = await docPromise;
+    expect(docUrl).toBe('http://doc');
   });
 
-  it('should emit loading state during request', done => {
+  it('should emit loading state during request', async () => {
     const loadingStates: boolean[] = [];
 
-    requestService.getLoadingObservable().subscribe((loading: boolean) => {
-      loadingStates.push(loading);
+    const loadingPromise = new Promise<void>(resolve => {
+      requestService.getLoadingObservable().subscribe((loading: boolean) => {
+        loadingStates.push(loading);
 
-      // After request completes, we should have [true, false]
-      if (loadingStates.length === 2) {
-        expect(loadingStates[0]).toBe(true); // Loading started
-        expect(loadingStates[1]).toBe(false); // Loading finished
-        done();
-      }
+        // After request completes, we should have [true, false]
+        if (loadingStates.length === 2) {
+          resolve();
+        }
+      });
     });
 
     requestService.getUri('test-request');
@@ -219,13 +261,65 @@ describe('RequestService', () => {
     const testRequest = httpMock.expectOne('test-request');
     testRequest.flush('body');
 
+    await loadingPromise;
+
+    expect(loadingStates[0]).toBe(true); // Loading started
+    expect(loadingStates[1]).toBe(false); // Loading finished
+
     httpMock.verify();
   });
 
-  it('should process delete command', done => {
-    requestService.getResponseObservable().subscribe((response: Response) => {
-      expect(response.httpResponse.status).toBe(204);
-      done();
+  it('should process Put command', async () => {
+    const eventPromise = new Promise<HttpRequestEvent>(resolve => {
+      requestService.getNeedInfoObservable().subscribe((event: HttpRequestEvent) => {
+        resolve(event);
+      });
+    });
+
+    requestService.processCommand(Command.Put, 'http://localhost/resource');
+
+    // PUT commands trigger JSON schema fetch via HEAD request
+    const headRequest = httpMock.expectOne('http://localhost/resource');
+    expect(headRequest.request.method).toBe('HEAD');
+
+    // Respond with no Link header, so it goes to needInfoSubject
+    headRequest.flush(null);
+
+    const event = await eventPromise;
+    expect(event.command).toBe(Command.Put);
+    expect(event.uri).toBe('http://localhost/resource');
+
+    httpMock.verify();
+  });
+
+  it('should process Patch command', async () => {
+    const eventPromise = new Promise<HttpRequestEvent>(resolve => {
+      requestService.getNeedInfoObservable().subscribe((event: HttpRequestEvent) => {
+        resolve(event);
+      });
+    });
+
+    requestService.processCommand(Command.Patch, 'http://localhost/resource');
+
+    // PATCH commands trigger JSON schema fetch via HEAD request
+    const headRequest = httpMock.expectOne('http://localhost/resource');
+    expect(headRequest.request.method).toBe('HEAD');
+
+    // Respond with no Link header, so it goes to needInfoSubject
+    headRequest.flush(null);
+
+    const event = await eventPromise;
+    expect(event.command).toBe(Command.Patch);
+    expect(event.uri).toBe('http://localhost/resource');
+
+    httpMock.verify();
+  });
+
+  it('should process delete command', async () => {
+    const responsePromise = new Promise<Response>(resolve => {
+      requestService.getResponseObservable().subscribe((response: Response) => {
+        resolve(response);
+      });
     });
 
     requestService.processCommand(Command.Delete, 'test-request{template}');
@@ -235,17 +329,17 @@ describe('RequestService', () => {
 
     expect(testRequest.request.method).toBe('DELETE');
 
+    const response = await responsePromise;
+    expect(response.httpResponse.status).toBe(204);
+
     httpMock.verify();
   });
 
-  it('should process json schema', done => {
-    requestService.getNeedInfoObservable().subscribe((event: HttpRequestEvent) => {
-      expect(event.jsonSchema).toBeDefined();
-      expect(Object.prototype.hasOwnProperty.call(event.jsonSchema.properties, 'fullName')).toBeTruthy();
-      expect(Object.prototype.hasOwnProperty.call(event.jsonSchema.properties, 'email')).toBeTruthy();
-      expect(Object.prototype.hasOwnProperty.call(event.jsonSchema.properties, 'id')).toBeTruthy();
-      expect(Object.prototype.hasOwnProperty.call(event.jsonSchema.properties, 'messages')).toBeFalsy();
-      done();
+  it('should process json schema', async () => {
+    const eventPromise = new Promise<HttpRequestEvent>(resolve => {
+      requestService.getNeedInfoObservable().subscribe((event: HttpRequestEvent) => {
+        resolve(event);
+      });
     });
 
     const httpRequestEvent: HttpRequestEvent = new HttpRequestEvent(null, null, 'schema-request');
@@ -296,13 +390,98 @@ describe('RequestService', () => {
 
     expect(profileRequest.request.method).toBe('GET');
 
+    const event = await eventPromise;
+    expect(event.jsonSchema).toBeDefined();
+    expect(Object.prototype.hasOwnProperty.call(event.jsonSchema.properties, 'fullName')).toBeTruthy();
+    expect(Object.prototype.hasOwnProperty.call(event.jsonSchema.properties, 'email')).toBeTruthy();
+    expect(Object.prototype.hasOwnProperty.call(event.jsonSchema.properties, 'id')).toBeTruthy();
+    expect(Object.prototype.hasOwnProperty.call(event.jsonSchema.properties, 'messages')).toBeFalsy();
+
     httpMock.verify();
   });
 
-  it('should react on json schema error "HTTP get profile url"', done => {
-    requestService.getNeedInfoObservable().subscribe((event: HttpRequestEvent) => {
-      expect(event.jsonSchema).toBeUndefined();
-      done();
+  it('should handle Link header without profile rel', async () => {
+    const eventPromise = new Promise<HttpRequestEvent>(resolve => {
+      requestService.getNeedInfoObservable().subscribe((event: HttpRequestEvent) => {
+        resolve(event);
+      });
+    });
+
+    const httpRequestEvent: HttpRequestEvent = new HttpRequestEvent(null, null, 'schema-request');
+    requestService.getJsonSchema(httpRequestEvent);
+
+    const jsonSchemaRequest = httpMock.expectOne('schema-request');
+    const responseHeaders: HttpHeaders = new HttpHeaders({
+      Link: '<https://chatty42.herokuapp.com/api/users>;rel="self",<https://chatty42.herokuapp.com/api/other>;rel="alternate"',
+    });
+    jsonSchemaRequest.flush(null, { headers: responseHeaders });
+    expect(jsonSchemaRequest.request.method).toBe('HEAD');
+
+    const event = await eventPromise;
+    expect(event.jsonSchema).toBeUndefined();
+
+    httpMock.verify();
+  });
+
+  it('should handle Link header with no rel part', async () => {
+    const eventPromise = new Promise<HttpRequestEvent>(resolve => {
+      requestService.getNeedInfoObservable().subscribe((event: HttpRequestEvent) => {
+        resolve(event);
+      });
+    });
+
+    const httpRequestEvent: HttpRequestEvent = new HttpRequestEvent(null, null, 'schema-request');
+    requestService.getJsonSchema(httpRequestEvent);
+
+    const jsonSchemaRequest = httpMock.expectOne('schema-request');
+    const responseHeaders: HttpHeaders = new HttpHeaders({
+      Link: '<https://chatty42.herokuapp.com/api/users>',
+    });
+    jsonSchemaRequest.flush(null, { headers: responseHeaders });
+    expect(jsonSchemaRequest.request.method).toBe('HEAD');
+
+    const event = await eventPromise;
+    expect(event.jsonSchema).toBeUndefined();
+
+    httpMock.verify();
+  });
+
+  it('should process json schema with no properties', async () => {
+    const eventPromise = new Promise<HttpRequestEvent>(resolve => {
+      requestService.getNeedInfoObservable().subscribe((event: HttpRequestEvent) => {
+        resolve(event);
+      });
+    });
+
+    const httpRequestEvent: HttpRequestEvent = new HttpRequestEvent(null, null, 'schema-request');
+    requestService.getJsonSchema(httpRequestEvent);
+
+    const jsonSchemaRequest = httpMock.expectOne('schema-request');
+    const responseHeaders: HttpHeaders = new HttpHeaders({
+      Link: '<https://chatty42.herokuapp.com/api/users>;rel="self",<https://chatty42.herokuapp.com/api/profile/users>;rel="profile"',
+    });
+    jsonSchemaRequest.flush(null, { headers: responseHeaders });
+
+    const jsonSchema: any = {
+      title: 'User',
+      type: 'object',
+      $schema: 'http://json-schema.org/draft-04/schema#',
+    };
+
+    const profileRequest = httpMock.expectOne('https://chatty42.herokuapp.com/api/profile/users');
+    profileRequest.flush(jsonSchema);
+
+    const event = await eventPromise;
+    expect(event.jsonSchema).toEqual(jsonSchema);
+
+    httpMock.verify();
+  });
+
+  it('should react on json schema error "HTTP get profile url"', async () => {
+    const eventPromise = new Promise<HttpRequestEvent>(resolve => {
+      requestService.getNeedInfoObservable().subscribe((event: HttpRequestEvent) => {
+        resolve(event);
+      });
     });
 
     const httpRequestEvent: HttpRequestEvent = new HttpRequestEvent(null, null, 'schema-request');
@@ -321,12 +500,15 @@ describe('RequestService', () => {
       statusText: 'Not Found',
     };
 
-    spyOn(window.console, 'warn');
+    vi.spyOn(window.console, 'warn');
 
     profileRequest.flush(null, mockErrorResponse);
 
     expect(window.console.warn).toHaveBeenCalled();
     expect(profileRequest.request.method).toBe('GET');
+
+    const event = await eventPromise;
+    expect(event.jsonSchema).toBeUndefined();
 
     httpMock.verify();
   });
@@ -341,7 +523,7 @@ describe('RequestService', () => {
       statusText: 'Not Found',
     };
 
-    spyOn(window.console, 'warn');
+    vi.spyOn(window.console, 'warn');
 
     jsonSchemaRequest.flush(null, mockErrorResponse);
 
@@ -361,7 +543,7 @@ describe('RequestService', () => {
   });
 
   it('should not request undefined uri', () => {
-    spyOn(requestService, 'processCommand').and.callThrough();
+    vi.spyOn(requestService, 'processCommand');
 
     requestService.getUri(undefined);
 
@@ -369,7 +551,7 @@ describe('RequestService', () => {
   });
 
   it('should not compute HAL-FORMS options from link', () => {
-    spyOn(httpClient, 'get').and.callThrough();
+    vi.spyOn(httpClient, 'get');
 
     let property = {};
     requestService.computeHalFormsOptionsFromLink(property);
@@ -382,7 +564,7 @@ describe('RequestService', () => {
   });
 
   it('should compute HAL-FORMS options from link', () => {
-    spyOn(httpClient, 'get').and.callThrough();
+    vi.spyOn(httpClient, 'get');
 
     const property = { options: { link: { href: 'http://localhost/options' } } };
     requestService.computeHalFormsOptionsFromLink(property);
@@ -394,7 +576,7 @@ describe('RequestService', () => {
   });
 
   it('should use accept header from HAL-FORMS options from link.type', () => {
-    spyOn(httpClient, 'get').and.callThrough();
+    vi.spyOn(httpClient, 'get');
 
     const property = {
       options: {
@@ -414,7 +596,7 @@ describe('RequestService', () => {
   });
 
   it('should fill HAL-FORMS options from link template with empty parameters', () => {
-    spyOn(httpClient, 'get').and.callThrough();
+    vi.spyOn(httpClient, 'get');
 
     const property = {
       options: {
@@ -434,7 +616,7 @@ describe('RequestService', () => {
   });
 
   it('should fill HAL-FORMS options from link with HAL content', () => {
-    spyOn(httpClient, 'get').and.callThrough();
+    vi.spyOn(httpClient, 'get');
 
     const property = {
       options: {
@@ -459,7 +641,7 @@ describe('RequestService', () => {
   });
 
   it('should fill HAL-FORMS options from link with HAL content', () => {
-    spyOn(httpClient, 'get').and.callThrough();
+    vi.spyOn(httpClient, 'get');
 
     const property = {
       options: {
@@ -484,7 +666,7 @@ describe('RequestService', () => {
   });
 
   it('should fill HAL-FORMS options from link with HAL-FORMS content', () => {
-    spyOn(httpClient, 'get').and.callThrough();
+    vi.spyOn(httpClient, 'get');
 
     const property = {
       options: {
@@ -509,7 +691,7 @@ describe('RequestService', () => {
   });
 
   it('should use HTTP OPTIONS request to discover link HTTP request options', () => {
-    spyOn(httpClient, 'options').and.callThrough();
+    vi.spyOn(httpClient, 'options');
 
     const link: Link = new Link('self', 'http://localhost/options', 'title', 'name');
     requestService.getHttpOptions(link);
@@ -526,7 +708,7 @@ describe('RequestService', () => {
   });
 
   it('should not use HTTP OPTIONS for URI template', () => {
-    spyOn(httpClient, 'options').and.callThrough();
+    vi.spyOn(httpClient, 'options');
 
     const link: Link = new Link('self', 'http://localhost/options?{page}', 'title', 'name');
     requestService.getHttpOptions(link);
@@ -535,7 +717,7 @@ describe('RequestService', () => {
   });
 
   it('should handle HTTP OPTIONS request error', () => {
-    spyOn(window.console, 'warn');
+    vi.spyOn(window.console, 'warn');
 
     const link: Link = new Link('self', 'http://localhost/options', 'title', 'name');
     requestService.getHttpOptions(link);

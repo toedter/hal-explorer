@@ -1,5 +1,6 @@
 import { AbstractControl, UntypedFormControl } from '@angular/forms';
 import { RequestValidatorDirective } from './request-validator.directive';
+import { describe, expect, it } from 'vitest';
 
 describe('RequestValidatorDirective', () => {
   it('should create an instance', () => {
@@ -16,7 +17,7 @@ describe('RequestValidatorDirective', () => {
     const control: AbstractControl = new UntypedFormControl();
     const validationResult = directive.validate(control);
 
-    expect(validationResult.required).toBeTrue();
+    expect(validationResult.required).toBe(true);
   });
 
   it('should validate defined value and "required"', () => {

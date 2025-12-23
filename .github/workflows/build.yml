@@ -53,7 +53,7 @@ jobs:
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage/ng-test/lcov.info
+          files: ./coverage/vitest/lcov.info
 
       - name: Set up JDK 17
         uses: actions/setup-java@v5

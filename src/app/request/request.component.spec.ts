@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { AppService, RequestHeader } from '../app.service';
 import { JsonHighlighterService } from '../json-highlighter/json-highlighter.service';
 import { DictionaryObject, RequestComponent } from './request.component';
 import { Command, EventType, HttpRequestEvent, RequestService } from './request.service';
 import { Subject } from 'rxjs';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const jsonSchema: any = {
   title: 'User',
@@ -274,38 +275,43 @@ describe('RequestComponent', () => {
   let requestHeaderSubject;
   let appServiceMock;
 
-  beforeEach(waitForAsync(() => {
-    requestServiceMock = jasmine.createSpyObj([
-      'getResponseObservable',
-      'getNeedInfoObservable',
-      'getLoadingObservable',
-      'setCustomHeaders',
-      'getUri',
-      'getInputType',
-      'requestUri',
-      'computeHalFormsOptionsFromLink',
-    ]);
+  beforeEach(async () => {
+    requestServiceMock = {
+      getResponseObservable: vi.fn(),
+      getNeedInfoObservable: vi.fn(),
+      getLoadingObservable: vi.fn(),
+      setCustomHeaders: vi.fn(),
+      getUri: vi.fn(),
+      getInputType: vi.fn(),
+      requestUri: vi.fn(),
+      computeHalFormsOptionsFromLink: vi.fn(),
+    };
     needInfoSubject = new Subject<string>();
     responseSubject = new Subject<string>();
-    requestServiceMock.getResponseObservable.and.returnValue(responseSubject);
-    requestServiceMock.getNeedInfoObservable.and.returnValue(needInfoSubject);
-    requestServiceMock.getLoadingObservable.and.returnValue(new Subject<boolean>());
-    requestServiceMock.getUri.and.returnValue('http://localhost/api');
-    requestServiceMock.getInputType.and.returnValue('number');
-    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(property => {
+    requestServiceMock.getResponseObservable.mockReturnValue(responseSubject);
+    requestServiceMock.getNeedInfoObservable.mockReturnValue(needInfoSubject);
+    requestServiceMock.getLoadingObservable.mockReturnValue(new Subject<boolean>());
+    requestServiceMock.getUri.mockReturnValue('http://localhost/api');
+    requestServiceMock.getInputType.mockReturnValue('number');
+    requestServiceMock.computeHalFormsOptionsFromLink.mockImplementation(property => {
       property.options.inline = ['a', 'b'];
     });
 
     uriSubject = new Subject<string>();
     requestHeaderSubject = new Subject<RequestHeader[]>();
-    appServiceMock = jasmine.createSpyObj(['getUri', 'getCustomRequestHeaders', 'setCustomRequestHeaders'], {
+    appServiceMock = {
+      getUri: vi.fn(),
+      getCustomRequestHeaders: vi.fn(),
+      setCustomRequestHeaders: vi.fn(),
       uriObservable: uriSubject,
       requestHeadersObservable: requestHeaderSubject,
-    });
-    appServiceMock.getUri.and.returnValue('http://localhost/api');
-    appServiceMock.getCustomRequestHeaders.and.returnValue([]);
+    };
+    appServiceMock.getUri.mockReturnValue('http://localhost/api');
+    appServiceMock.getCustomRequestHeaders.mockReturnValue([]);
 
-    const jsonHighlighterServiceMock = jasmine.createSpyObj(['syntaxHighlight']);
+    const jsonHighlighterServiceMock = {
+      syntaxHighlight: vi.fn(),
+    };
 
     TestBed.configureTestingModule({
       imports: [FormsModule, RequestComponent],
@@ -316,12 +322,17 @@ describe('RequestComponent', () => {
         HttpClient,
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RequestComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    fixture?.destroy();
+    vi.restoreAllMocks();
   });
 
   it('should create', () => {
@@ -604,12 +615,12 @@ describe('RequestComponent', () => {
   });
 
   it('should handle modal keydown with Enter key and valid form', () => {
-    const mockButton = { click: jasmine.createSpy('click') };
-    spyOn(document, 'getElementById').and.returnValue(mockButton as any);
+    const mockButton = { click: vi.fn() };
+    vi.spyOn(document, 'getElementById').mockReturnValue(mockButton as any);
 
     const event = new KeyboardEvent('keydown', { key: 'Enter' });
     const form = { valid: true };
-    const preventDefaultSpy = spyOn(event, 'preventDefault');
+    const preventDefaultSpy = vi.spyOn(event, 'preventDefault');
 
     component.handleModalKeydown(event, form);
 
@@ -624,8 +635,8 @@ describe('RequestComponent', () => {
     goButton.id = 'requestDialogGoButton';
     document.body.appendChild(goButton);
 
-    spyOn(event, 'preventDefault');
-    spyOn(goButton, 'click');
+    vi.spyOn(event, 'preventDefault');
+    vi.spyOn(goButton, 'click');
 
     component.handleModalKeydown(event, form);
 
@@ -639,7 +650,7 @@ describe('RequestComponent', () => {
     const event = new KeyboardEvent('keydown', { key: 'Escape' });
     const form = { valid: true };
 
-    spyOn(event, 'preventDefault');
+    vi.spyOn(event, 'preventDefault');
 
     component.handleModalKeydown(event, form);
 
@@ -648,7 +659,7 @@ describe('RequestComponent', () => {
 
   it('should subscribe to loading observable', () => {
     const loadingSubject = new Subject<boolean>();
-    requestServiceMock.getLoadingObservable.and.returnValue(loadingSubject);
+    requestServiceMock.getLoadingObservable.mockReturnValue(loadingSubject);
 
     // Create new component to trigger ngOnInit
     const newFixture = TestBed.createComponent(RequestComponent);
@@ -784,10 +795,10 @@ describe('RequestComponent', () => {
 
   it('should return selected HAL-FORMS option', () => {
     let selected = component.isHalFormsOptionSelected({}, 'x');
-    expect(selected).toBeFalse();
+    expect(selected).toBe(false);
 
     selected = component.isHalFormsOptionSelected({ value: ['x'] }, 'x');
-    expect(selected).toBeTrue();
+    expect(selected).toBe(true);
   });
 
   it('should ignore HAL-FORMS options with no inline', () => {
@@ -922,7 +933,7 @@ describe('RequestComponent', () => {
     );
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(() => {});
+    requestServiceMock.computeHalFormsOptionsFromLink.mockImplementation(() => {});
     needInfoSubject.next(event);
 
     expect((halFormsTemplates._templates.withOptionsAndLink.properties[0].options as any).inline).toBeUndefined();
@@ -943,7 +954,7 @@ describe('RequestComponent', () => {
     );
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(() => {});
+    requestServiceMock.computeHalFormsOptionsFromLink.mockImplementation(() => {});
     needInfoSubject.next(event);
 
     expect((halFormsTemplates._templates.withMultipleOptions.properties[0] as any).value).toEqual([
@@ -967,7 +978,7 @@ describe('RequestComponent', () => {
     );
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(() => {});
+    requestServiceMock.computeHalFormsOptionsFromLink.mockImplementation(() => {});
     needInfoSubject.next(event);
 
     expect((halFormsTemplates._templates.withMultipleOptionsAndNoSelectedValues.properties[0] as any).value).toEqual([
@@ -990,7 +1001,7 @@ describe('RequestComponent', () => {
     );
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(() => {});
+    requestServiceMock.computeHalFormsOptionsFromLink.mockImplementation(() => {});
     needInfoSubject.next(event);
 
     expect((halFormsTemplates._templates.withOptionsAndMalformedInline.properties[0] as any).options).toBeUndefined();
@@ -1011,7 +1022,7 @@ describe('RequestComponent', () => {
     );
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    requestServiceMock.computeHalFormsOptionsFromLink.and.callFake(() => {});
+    requestServiceMock.computeHalFormsOptionsFromLink.mockImplementation(() => {});
     needInfoSubject.next(event);
 
     expect((halFormsTemplates._templates.withOptionsAndMalformedInline2.properties[0] as any).options).toBeUndefined();

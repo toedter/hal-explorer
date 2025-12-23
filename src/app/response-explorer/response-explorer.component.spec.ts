@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Link, ResponseExplorerComponent } from './response-explorer.component';
 import { Command, RequestService, Response } from '../request/request.service';
@@ -6,6 +6,7 @@ import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/ht
 import { JsonHighlighterService } from '../json-highlighter/json-highlighter.service';
 import { Subject } from 'rxjs';
 import { AppService } from '../app.service';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const halFormsResponse = {
   title: 'The Shawshank Redemption',
@@ -71,25 +72,30 @@ describe('ResponseExplorerComponent', () => {
   let jsonHighlighterServiceMock;
   let appServiceMock;
 
-  beforeEach(waitForAsync(() => {
-    requestServiceMock = jasmine.createSpyObj([
-      'getResponseObservable',
-      'getDocumentationObservable',
-      'getLoadingObservable',
-      'processCommand',
-      'getHttpOptions',
-    ]);
+  beforeEach(async () => {
+    requestServiceMock = {
+      getResponseObservable: vi.fn(),
+      getDocumentationObservable: vi.fn(),
+      getLoadingObservable: vi.fn(),
+      processCommand: vi.fn(),
+      getHttpOptions: vi.fn(),
+    };
     responseSubject = new Subject<Response>();
-    spyOn(responseSubject, 'subscribe').and.callThrough();
-    requestServiceMock.getResponseObservable.and.returnValue(responseSubject);
-    requestServiceMock.getLoadingObservable.and.returnValue(new Subject<boolean>());
+    vi.spyOn(responseSubject, 'subscribe');
+    requestServiceMock.getResponseObservable.mockReturnValue(responseSubject);
+    requestServiceMock.getLoadingObservable.mockReturnValue(new Subject<boolean>());
 
-    appServiceMock = jasmine.createSpyObj(['getHttpOptions', 'getAllHttpMethodsForLinks']);
-    appServiceMock.getHttpOptions.and.returnValue(true);
-    appServiceMock.getAllHttpMethodsForLinks.and.returnValue(false);
-    jsonHighlighterServiceMock = jasmine.createSpyObj(['syntaxHighlight']);
+    appServiceMock = {
+      getHttpOptions: vi.fn(),
+      getAllHttpMethodsForLinks: vi.fn(),
+    };
+    appServiceMock.getHttpOptions.mockReturnValue(true);
+    appServiceMock.getAllHttpMethodsForLinks.mockReturnValue(false);
+    jsonHighlighterServiceMock = {
+      syntaxHighlight: vi.fn(),
+    };
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       imports: [ResponseExplorerComponent],
       providers: [
         { provide: RequestService, useValue: requestServiceMock },
@@ -97,7 +103,7 @@ describe('ResponseExplorerComponent', () => {
         { provide: AppService, useValue: appServiceMock },
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ResponseExplorerComponent);
@@ -191,27 +197,27 @@ describe('ResponseExplorerComponent', () => {
     responseSubject.next(new Response(new HttpResponse({ headers: responseHeaders, body: halFormsResponse }), null));
 
     expect(component.getLinkButtonClass(Command.Get)).toBe('');
-    expect(component.isButtonDisabled(Command.Get)).toBeFalse();
+    expect(component.isButtonDisabled(Command.Get)).toBe(false);
 
     expect(component.getLinkButtonClass(Command.Post)).toBe('btn-outline-light');
-    expect(component.isButtonDisabled(Command.Post)).toBeTrue();
+    expect(component.isButtonDisabled(Command.Post)).toBe(true);
 
     expect(component.getLinkButtonClass(Command.Put)).toBe('btn-outline-light');
-    expect(component.isButtonDisabled(Command.Put)).toBeTrue();
+    expect(component.isButtonDisabled(Command.Put)).toBe(true);
 
     expect(component.getLinkButtonClass(Command.Patch)).toBe('btn-outline-light');
-    expect(component.isButtonDisabled(Command.Patch)).toBeTrue();
+    expect(component.isButtonDisabled(Command.Patch)).toBe(true);
 
     expect(component.getLinkButtonClass(Command.Delete)).toBe('btn-outline-light');
-    expect(component.isButtonDisabled(Command.Delete)).toBeTrue();
+    expect(component.isButtonDisabled(Command.Delete)).toBe(true);
 
     let link = new Link('rel', 'href', 'title', 'name', 'docUri', 'http-options-error');
     expect(component.getLinkButtonClass(Command.Get, link)).toBe('btn-outline-dark');
-    expect(component.isButtonDisabled(Command.Get, link)).toBeFalse();
+    expect(component.isButtonDisabled(Command.Get, link)).toBe(false);
 
     link = new Link('rel', 'href', 'title', 'name', 'docUri', 'POST');
     expect(component.getLinkButtonClass(Command.Get, link)).toBe('btn-outline-light');
-    expect(component.isButtonDisabled(Command.Get, link)).toBeTrue();
+    expect(component.isButtonDisabled(Command.Get, link)).toBe(true);
 
     link.options = 'get';
     expect(component.getLinkButtonClass(Command.Get, link)).toBe('');
@@ -219,7 +225,7 @@ describe('ResponseExplorerComponent', () => {
 
   it('should disable all buttons when loading', () => {
     const loadingSubject = new Subject<boolean>();
-    requestServiceMock.getLoadingObservable.and.returnValue(loadingSubject);
+    requestServiceMock.getLoadingObservable.mockReturnValue(loadingSubject);
 
     // Create new component to trigger ngOnInit with new loading observable
     const newFixture = TestBed.createComponent(ResponseExplorerComponent);
@@ -227,27 +233,27 @@ describe('ResponseExplorerComponent', () => {
     newFixture.detectChanges();
 
     // Initially not loading
-    expect(newComponent.isButtonDisabled(Command.Get)).toBeFalse();
+    expect(newComponent.isButtonDisabled(Command.Get)).toBe(false);
 
     // Set loading to true
     loadingSubject.next(true);
 
     // All buttons should be disabled when loading
-    expect(newComponent.isButtonDisabled(Command.Get)).toBeTrue();
-    expect(newComponent.isButtonDisabled(Command.Post)).toBeTrue();
-    expect(newComponent.isButtonDisabled(Command.Put)).toBeTrue();
-    expect(newComponent.isButtonDisabled(Command.Patch)).toBeTrue();
-    expect(newComponent.isButtonDisabled(Command.Delete)).toBeTrue();
+    expect(newComponent.isButtonDisabled(Command.Get)).toBe(true);
+    expect(newComponent.isButtonDisabled(Command.Post)).toBe(true);
+    expect(newComponent.isButtonDisabled(Command.Put)).toBe(true);
+    expect(newComponent.isButtonDisabled(Command.Patch)).toBe(true);
+    expect(newComponent.isButtonDisabled(Command.Delete)).toBe(true);
 
     // With link
     const link = new Link('rel', 'href', 'title', 'name', 'docUri', 'GET');
-    expect(newComponent.isButtonDisabled(Command.Get, link)).toBeTrue();
+    expect(newComponent.isButtonDisabled(Command.Get, link)).toBe(true);
 
     // Set loading to false
     loadingSubject.next(false);
 
     // Buttons should be enabled again based on normal rules
-    expect(newComponent.isButtonDisabled(Command.Get)).toBeFalse();
+    expect(newComponent.isButtonDisabled(Command.Get)).toBe(false);
   });
 
   it('should get HAL-FORMS request button class and state', () => {
@@ -348,7 +354,7 @@ describe('ResponseExplorerComponent', () => {
   });
 
   it('should log error during HTTP call', () => {
-    spyOn(window.console, 'error');
+    vi.spyOn(window.console, 'error');
 
     responseSubject.error(new Response(null, new HttpErrorResponse({ status: 404, statusText: 'Not Found' })));
 
@@ -424,8 +430,8 @@ describe('ResponseExplorerComponent', () => {
     const errorResponse = new HttpErrorResponse({
       status: 404,
       statusText: 'Not Found',
+      url: 'http://localhost:4200/api/movies/1',
       error: 'Resource not found',
-      url: 'http://localhost:4200/api/movies/999',
     });
 
     responseSubject.next(new Response(null, errorResponse));
@@ -434,5 +440,42 @@ describe('ResponseExplorerComponent', () => {
     expect(component.showProperties).toBeFalsy();
     expect(component.showLinks).toBeFalsy();
     expect(component.hasHalFormsTemplates).toBeFalsy();
+  });
+
+  it('should return undefined when curie href not found', () => {
+    const halJsonWithCuriesAndEmbedded = {
+      _links: {
+        curies: [
+          {
+            name: 'doc',
+            href: 'http://example.com/docs/{rel}',
+            templated: true,
+          },
+        ],
+        self: {
+          href: 'http://example.com/api',
+        },
+      },
+      _embedded: {
+        'noprefix:items': [
+          {
+            name: 'Item 1',
+          },
+        ],
+      },
+    };
+
+    const httpResponse = new HttpResponse({
+      body: halJsonWithCuriesAndEmbedded,
+      headers: new HttpHeaders({ 'Content-Type': 'application/hal+json' }),
+    });
+    responseSubject.next(new Response(httpResponse, null));
+
+    // The embedded resource has a key "noprefix:items" that doesn't match the curie prefix "doc:"
+    // So findDocUriForKey should return undefined
+    expect(component.showEmbedded).toBeTruthy();
+    expect(component.embedded.length).toBe(1);
+    // The docUri should be undefined since no curie matched
+    expect(component.embedded[0].docUri).toBeUndefined();
   });
 });

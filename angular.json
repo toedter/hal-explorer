@@ -21,24 +21,12 @@
               "base": "dist/hal-explorer"
             },
             "index": "src/index.html",
-            "polyfills": [
-              "src/polyfills.ts"
-            ],
+            "polyfills": ["src/polyfills.ts"],
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.css",
-              "src/assets/bootstrap-icons-minimal.css"
-            ],
-            "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-            ],
-            "allowedCommonJsDependencies": [
-              "uri-templates"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.css", "src/assets/bootstrap-icons-minimal.css"],
+            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"],
+            "allowedCommonJsDependencies": ["uri-templates"],
             "extractLicenses": false,
             "sourceMap": true,
             "optimization": false,
@@ -91,42 +79,17 @@
             "buildTarget": "hal-explorer:build"
           }
         },
-        "test": {
-          "builder": "@angular/build:karma",
-          "options": {
-            "main": "src/test.ts",
-            "polyfills": [
-              "src/polyfills.ts"
-            ],
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.css"
-            ],
-            "scripts": []
-          }
-        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }
     }
   },
   "cli": {
-    "schematicCollections": [
-      "@angular-eslint/schematics",
-      "@schematics/angular"
-    ],
+    "schematicCollections": ["@angular-eslint/schematics", "@schematics/angular"],
     "analytics": false
   },
   "schematics": {
@@ -154,5 +117,8 @@
     "@schematics/angular:resolver": {
       "typeSeparator": "."
     }
+  },
+  "test": {
+    "builder": "@angular/build:unit-test"
   }
 }

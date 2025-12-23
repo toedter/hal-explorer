@@ -1,36 +1,45 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ResponseDetailsComponent } from './response-details.component';
 import { RequestService, Response } from '../request/request.service';
 import { JsonHighlighterService } from '../json-highlighter/json-highlighter.service';
 import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('ResponseDetailsComponent', () => {
   let component: ResponseDetailsComponent;
   let fixture: ComponentFixture<ResponseDetailsComponent>;
   let responseSubject;
 
-  beforeEach(waitForAsync(() => {
-    const requestServiceMock = jasmine.createSpyObj(['getResponseObservable']);
+  beforeEach(async () => {
+    const requestServiceMock = {
+      getResponseObservable: vi.fn(),
+    };
     responseSubject = new Subject<Response>();
-    requestServiceMock.getResponseObservable.and.returnValue(responseSubject);
+    requestServiceMock.getResponseObservable.mockReturnValue(responseSubject);
 
-    const jsonHighlighterServiceMock = jasmine.createSpyObj(['syntaxHighlight']);
+    const jsonHighlighterServiceMock = {
+      syntaxHighlight: vi.fn(),
+    };
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       imports: [ResponseDetailsComponent],
       providers: [
         { provide: RequestService, useValue: requestServiceMock },
         { provide: JsonHighlighterService, useValue: jsonHighlighterServiceMock },
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ResponseDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   it('should create', () => {
@@ -69,7 +78,7 @@ describe('ResponseDetailsComponent', () => {
   });
 
   it('should handle HTTP response error (as string)', () => {
-    spyOn(window.console, 'error');
+    vi.spyOn(window.console, 'error');
 
     responseSubject.next(
       new Response(null, new HttpErrorResponse({ status: 404, statusText: 'Not Found', error: 'error string' }))
@@ -79,7 +88,7 @@ describe('ResponseDetailsComponent', () => {
   });
 
   it('should handle HTTP response error (as object)', () => {
-    spyOn(window.console, 'error');
+    vi.spyOn(window.console, 'error');
 
     responseSubject.next(
       new Response(null, new HttpErrorResponse({ status: 404, statusText: 'Not Found', error: { error: 0 } }))
@@ -89,7 +98,7 @@ describe('ResponseDetailsComponent', () => {
   });
 
   it('should handle HTTP response subject error', () => {
-    spyOn(window.console, 'error');
+    vi.spyOn(window.console, 'error');
 
     responseSubject.error(new Response(null, new HttpErrorResponse({ status: 404, statusText: 'Not Found' })));
 
@@ -97,7 +106,7 @@ describe('ResponseDetailsComponent', () => {
   });
 
   it('should handle HTTP response subject error with status 0', () => {
-    spyOn(window.console, 'error');
+    vi.spyOn(window.console, 'error');
 
     responseSubject.next(new Response(null, new HttpErrorResponse({ status: 0, statusText: 'Unknown status' })));
 

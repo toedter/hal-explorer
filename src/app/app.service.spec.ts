@@ -1,4 +1,5 @@
 import { AppService, RequestHeader } from './app.service';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('AppService', () => {
   let service: AppService;
@@ -62,7 +63,7 @@ describe('AppService', () => {
   });
 
   it('should not set invalid layout', () => {
-    spyOn(window.console, 'error');
+    vi.spyOn(window.console, 'error');
 
     service.setColumnLayout('4');
 
@@ -102,8 +103,8 @@ describe('AppService', () => {
     expect(service.getCustomRequestHeaders()[0].value).toBe('text/plain');
     expect(service.getColumnLayout()).toBe('3');
     expect(service.getTheme()).toBe('Cosmo');
-    expect(service.getHttpOptions()).toBeTrue();
-    expect(service.getAllHttpMethodsForLinks()).toBeTrue();
+    expect(service.getHttpOptions()).toBe(true);
+    expect(service.getAllHttpMethodsForLinks()).toBe(true);
     expect(service.getUri()).toBe('https://chatty42.herokuapp.com/api/users');
   });
 
@@ -176,7 +177,7 @@ describe('AppService', () => {
     window.location.hash = '#uri=https://example.com/api';
     service = new AppService();
 
-    expect(service.getScrollableDocumentation()).toBeTrue();
+    expect(service.getScrollableDocumentation()).toBe(true);
     expect(service.getTheme()).toBe('Cosmo');
     expect(service.getUri()).toBe('https://example.com/api');
   });
