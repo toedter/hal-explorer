@@ -22,11 +22,6 @@ export class AppService {
   private customRequestHeaders: RequestHeader[];
 
   private uriParamBackup: string;
-  private themeParamBackup: string;
-  private layoutParamBackup: string;
-  private httpOptionsParamBackup: boolean;
-  private allHttpMethodsForLinksParamBackup: boolean;
-  private scrollableDocumentationParamBackup: boolean;
 
   private readonly uriSubject: Subject<string> = new Subject<string>();
   private readonly _uriObservable: Observable<string> = this.uriSubject.asObservable();
@@ -57,23 +52,18 @@ export class AppService {
     // Load settings from localStorage
     const storedTheme = localStorage.getItem('hal-explorer.theme');
     this.themeParam = storedTheme || 'Default';
-    this.themeParamBackup = this.themeParam;
 
     const storedLayout = localStorage.getItem('hal-explorer.layout');
     this.layoutParam = storedLayout || '2';
-    this.layoutParamBackup = this.layoutParam;
 
     const storedHttpOptions = localStorage.getItem('hal-explorer.httpOptions');
     this.httpOptionsParam = storedHttpOptions === 'true';
-    this.httpOptionsParamBackup = this.httpOptionsParam;
 
     const storedAllHttpMethodsForLinks = localStorage.getItem('hal-explorer.allHttpMethodsForLinks');
     this.allHttpMethodsForLinksParam = storedAllHttpMethodsForLinks === 'true';
-    this.allHttpMethodsForLinksParamBackup = this.allHttpMethodsForLinksParam;
 
     const storedScrollableDocumentation = localStorage.getItem('hal-explorer.scrollableDocumentation');
     this.scrollableDocumentationParam = storedScrollableDocumentation === 'true';
-    this.scrollableDocumentationParamBackup = this.scrollableDocumentationParam;
   }
 
   get uriObservable(): Observable<string> {
@@ -127,7 +117,6 @@ export class AppService {
   }
 
   setTheme(theme: string) {
-    this.themeParamBackup = this.themeParam;
     this.themeParam = theme;
     localStorage.setItem('hal-explorer.theme', theme);
     this.themeSubject.next(this.themeParam);
@@ -139,7 +128,6 @@ export class AppService {
 
   setLayout(layout: string) {
     if (layout === '2' || layout === '3') {
-      this.layoutParamBackup = this.layoutParam;
       this.layoutParam = layout;
       localStorage.setItem('hal-explorer.layout', layout);
       this.layoutSubject.next(this.layoutParam);
@@ -153,7 +141,6 @@ export class AppService {
   }
 
   setHttpOptions(options: boolean) {
-    this.httpOptionsParamBackup = this.httpOptionsParam;
     this.httpOptionsParam = options;
     localStorage.setItem('hal-explorer.httpOptions', String(options));
     this.httpOptionsSubject.next(this.httpOptionsParam);
@@ -165,7 +152,6 @@ export class AppService {
   }
 
   setAllHttpMethodsForLinks(options: boolean) {
-    this.allHttpMethodsForLinksParamBackup = this.allHttpMethodsForLinksParam;
     this.allHttpMethodsForLinksParam = options;
     localStorage.setItem('hal-explorer.allHttpMethodsForLinks', String(options));
     this.allHttpMethodsForLinksSubject.next(this.allHttpMethodsForLinksParam);
@@ -176,7 +162,6 @@ export class AppService {
   }
 
   setScrollableDocumentation(scrollable: boolean) {
-    this.scrollableDocumentationParamBackup = this.scrollableDocumentationParam;
     this.scrollableDocumentationParam = scrollable;
     localStorage.setItem('hal-explorer.scrollableDocumentation', String(scrollable));
     this.scrollableDocumentationSubject.next(this.scrollableDocumentationParam);
