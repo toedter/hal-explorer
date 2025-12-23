@@ -7,21 +7,21 @@ image:https://img.shields.io/badge/license-MIT-blue.svg["MIT", link="http://toed
 
 = HAL Explorer
 
-With HAL Explorer you can browse and explore http://stateless.co/hal_specification.html[HAL]
+HAL Explorer allows you to browse and explore http://stateless.co/hal_specification.html[HAL]
 and https://rwcbook.github.io/hal-forms/[HAL-FORMS] based RESTful Hypermedia APIs.
-HAL Explorer was inspired by Mike Kelly's https://github.com/mikekelly/hal-browser[HAL-Browser].
-HAL Explorer also supports Spring Profiles.
+HAL Explorer was inspired by Mike Kelly's https://github.com/mikekelly/hal-browser[HAL-Browser]
+and also supports Spring Profiles.
 
 == Documentation, Demos & Cloud Deployment
 
-Here you find the documentation for the latest release and the current snapshot,
-as well as a demo (with examples) of the latest release and the current snapshot:
+Here you will find documentation for the latest release and the current snapshot,
+as well as demos (with examples) for both the latest release and the current snapshot:
 |===
 | Release | 1.2.3 | https://toedter.github.io/hal-explorer/release/reference-doc/[Reference Documentation] | https://toedter.github.io/hal-explorer/release/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
 | Snapshot | 2.0.0-SNAPSHOT | https://toedter.github.io/hal-explorer/snapshot/reference-doc/[Reference Documentation] | https://toedter.github.io/hal-explorer/snapshot/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
 |===
 
-You also find current release at https://hal-explorer.com.
+You can also find the current release at https://hal-explorer.com.
 
 == TL;DR
 
@@ -36,12 +36,12 @@ image::./doc/img/hal-explorer.png[HAL Explorer]
 * Available Themes
 ** Bootstrap 5 default theme
 ** https://bootswatch.com/[Bootswatch themes]
-* 2 Column Layouts
+* Column Layouts
 ** _2 column layout_ with optional documentation
-** _3 column layout_ with documentation always visible if available
+** _3 column layout_ with documentation always visible when available
 * API URL and custom request headers stored as URL fragment
-* Settings are stored in local storage
-* Support for Spring Data Rest profiles to populate properties in request editor
+* Settings stored in local storage
+* Support for Spring Data REST profiles to populate properties in the request editor
 * Support for HAL-FORMS templates
 ** Template elements in response explorer (see screenshot)
 ** Template properties in request editor
@@ -53,13 +53,13 @@ image::./doc/img/hal-explorer.png[HAL Explorer]
 
 Run `yarn start` for a dev server. Navigate to http://localhost:4200/.
 The app will automatically reload if you change any of the source files.
-The development server has a build-in proxy configuration
+The development server has a built-in proxy configuration
 so that all calls to `/api` are forwarded to `localhost:8080/api`
 and `/docs` are forwarded to `localhost:8080/docs`.
 This is convenient when you want to test a local server without having to deal with CORS.
 
 If you run `yarn start:fs`, an additional file server is started at port 3000.
-In the test-data directory, you find some JSON examples.
+In the test-data directory, you will find some JSON examples.
 Calls to `/test-data` are forwarded to `localhost:3000/test-data`.
 
 Try it out with the URL
@@ -77,10 +77,10 @@ The Gradle build will install Node.js locally in the project directory.
 Run `./gradlew build` to build the project in production mode.
 The build artifacts will be stored in the `dist/` directory.
 
-== Integration in your Backends
+== Integration in Your Backends
 
 If you want to use a released version of HAL Explorer in a Java-based project,
-you could define a dependency to the HAL Explorer WebJar.
+you can define a dependency to the HAL Explorer WebJar.
 
 Maven:
 [source,xml]
@@ -94,17 +94,17 @@ Gradle:
 [source, Groovy]
 implementation 'org.webjars:hal-explorer:1.2.3'
 
-When you use the WebJar with Spring Boot, you can access the HAL Explorer at `/webjars/hal-explorer/1.2.3/index.html`.
-The easiest way to integrate the upstream version of HAL Explorer into your backend would be to clone this Git repo,
-do a production build and then copy the content of the dist folder to a location accessible by your backend server.
+When you use the WebJar with Spring Boot, you can access HAL Explorer at `/webjars/hal-explorer/1.2.3/index.html`.
+The easiest way to integrate the upstream version of HAL Explorer into your backend is to clone this Git repository,
+do a production build, and then copy the content of the `dist/` folder to a location accessible by your backend server.
 When you use Spring Boot, a good location in your project's source tree would be
-src/main/java/resources/static/hal-explorer.
+`src/main/resources/static/hal-explorer`.
 
 == Running Tests
 
-* `yarn test` to run the unit test suite against your default browser.
-* `yarn test-headless` to run the unit test suite against headless Chrome.
-* `yarn e2e` to run the e2e test suite against default browsers (using Playwright).
+* `yarn test` runs the unit test suite against your default browser.
+* `yarn test:headless` runs the unit test suite against headless Chrome.
+* `yarn e2e` runs the e2e test suite against default browsers (using Playwright).
 
 Take a look at `package.json` for more test options.
 
