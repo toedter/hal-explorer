@@ -43,17 +43,18 @@ jobs:
       - name: Unit tests
         run: yarn test:headless
 
-      - name: Install Playwright Browsers
-        run: yarn playwright install chromium --with-deps
-
-      - name: E2E tests
-        run: yarn e2e:chromium
-
       - name: Upload coverage to codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/vitest/lcov.info
+          verbose: true
+
+      - name: Install Playwright Browsers
+        run: yarn playwright install chromium --with-deps
+
+      - name: E2E tests
+        run: yarn e2e:chromium
 
       - name: Set up JDK 17
         uses: actions/setup-java@v5
