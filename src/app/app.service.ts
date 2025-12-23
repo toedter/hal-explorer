@@ -14,7 +14,7 @@ export class RequestHeader {
 export class AppService {
   private uriParam: string;
   private themeParam: string;
-  private layoutParam: string;
+  private columnLayoutParam: string;
   private httpOptionsParam: boolean;
   private allHttpMethodsForLinksParam: boolean;
   private scrollableDocumentationParam: boolean;
@@ -28,7 +28,7 @@ export class AppService {
   private readonly themeSubject: Subject<string> = new Subject<string>();
   private readonly _themeObservable: Observable<string> = this.themeSubject.asObservable();
   private readonly layoutSubject: Subject<string> = new Subject<string>();
-  private readonly _layoutObservable: Observable<string> = this.layoutSubject.asObservable();
+  private readonly _columnLayoutObservable: Observable<string> = this.layoutSubject.asObservable();
   private readonly httpOptionsSubject: Subject<boolean> = new Subject<boolean>();
   private readonly _httpOptionsObservable: Observable<boolean> = this.httpOptionsSubject.asObservable();
   private readonly allHttpMethodsForLinksSubject: Subject<boolean> = new Subject<boolean>();
@@ -53,8 +53,8 @@ export class AppService {
     const storedTheme = localStorage.getItem('hal-explorer.theme');
     this.themeParam = storedTheme || 'Default';
 
-    const storedLayout = localStorage.getItem('hal-explorer.layout');
-    this.layoutParam = storedLayout || '2';
+    const storedLayout = localStorage.getItem('hal-explorer.columnLayout');
+    this.columnLayoutParam = storedLayout || '2';
 
     const storedHttpOptions = localStorage.getItem('hal-explorer.httpOptions');
     this.httpOptionsParam = storedHttpOptions === 'true';
@@ -74,8 +74,8 @@ export class AppService {
     return this._themeObservable;
   }
 
-  get layoutObservable(): Observable<string> {
-    return this._layoutObservable;
+  get columnLayoutObservable(): Observable<string> {
+    return this._columnLayoutObservable;
   }
 
   get httpOptionsObservable(): Observable<boolean> {
@@ -122,15 +122,15 @@ export class AppService {
     this.themeSubject.next(this.themeParam);
   }
 
-  getLayout(): string {
-    return this.layoutParam;
+  getColumnLayout(): string {
+    return this.columnLayoutParam;
   }
 
-  setLayout(layout: string) {
+  setColumnLayout(layout: string) {
     if (layout === '2' || layout === '3') {
-      this.layoutParam = layout;
-      localStorage.setItem('hal-explorer.layout', layout);
-      this.layoutSubject.next(this.layoutParam);
+      this.columnLayoutParam = layout;
+      localStorage.setItem('hal-explorer.columnLayout', layout);
+      this.layoutSubject.next(this.columnLayoutParam);
     } else {
       console.error('Cannot set unknown layout: ' + layout);
     }

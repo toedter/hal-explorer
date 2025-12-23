@@ -88,8 +88,8 @@ export class AppComponent implements OnInit {
     this.appService.themeObservable.subscribe(theme => this.changeTheme(theme));
     this.changeTheme(this.appService.getTheme());
 
-    this.appService.layoutObservable.subscribe(layout => this.changeLayout(layout));
-    this.changeLayout(this.appService.getLayout());
+    this.appService.columnLayoutObservable.subscribe(layout => this.changeLayout(layout));
+    this.changeLayout(this.appService.getColumnLayout());
 
     this.appService.httpOptionsObservable.subscribe(useHttpOptions => this.changeHttpOptions(useHttpOptions));
     this.changeHttpOptions(this.appService.getHttpOptions());
@@ -116,8 +116,8 @@ export class AppComponent implements OnInit {
   }
 
   changeLayout(layout: string) {
-    this.appService.setLayout(layout.substring(0, 1));
-    this.isTwoColumnLayout = this.appService.getLayout() === '2';
+    this.appService.setColumnLayout(layout.substring(0, 1));
+    this.isTwoColumnLayout = this.appService.getColumnLayout() === '2';
   }
 
   changeHttpOptions(httpOptions: boolean) {
@@ -161,7 +161,7 @@ export class AppComponent implements OnInit {
   getSettingsIconCheckStyle(setting: string): string {
     if (
       (setting.includes('OPTIONS') && this.useHttpOptions) ||
-      setting.includes(this.appService.getLayout()) ||
+      setting.includes(this.appService.getColumnLayout()) ||
       (setting.includes('Links') && this.enableAllHttpMethodsForLinks) ||
       (setting.includes('Scrollable') && this.scrollableDocumentation)
     ) {

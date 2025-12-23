@@ -26,15 +26,15 @@ describe('AppService', () => {
   });
 
   it('should set 2 column layout', () => {
-    service.setLayout('2');
-    expect(service.getLayout()).toBe('2');
-    expect(localStorage.getItem('hal-explorer.layout')).toBe('2');
+    service.setColumnLayout('2');
+    expect(service.getColumnLayout()).toBe('2');
+    expect(localStorage.getItem('hal-explorer.columnLayout')).toBe('2');
   });
 
   it('should set 3 column layout', () => {
-    service.setLayout('3');
-    expect(service.getLayout()).toBe('3');
-    expect(localStorage.getItem('hal-explorer.layout')).toBe('3');
+    service.setColumnLayout('3');
+    expect(service.getColumnLayout()).toBe('3');
+    expect(localStorage.getItem('hal-explorer.columnLayout')).toBe('3');
   });
 
   it('should set HTTP OPTIONS', () => {
@@ -64,9 +64,9 @@ describe('AppService', () => {
   it('should not set invalid layout', () => {
     spyOn(window.console, 'error');
 
-    service.setLayout('4');
+    service.setColumnLayout('4');
 
-    expect(service.getLayout()).toBe('2');
+    expect(service.getColumnLayout()).toBe('2');
     // Layout should remain '2' (the default), but localStorage.getItem might be null if never set
     // The important thing is the service returns the correct default value
     expect(window.console.error).toHaveBeenCalled();
@@ -92,7 +92,7 @@ describe('AppService', () => {
   it('should parse window location hash', () => {
     // Set localStorage values
     localStorage.setItem('hal-explorer.theme', 'Cosmo');
-    localStorage.setItem('hal-explorer.layout', '3');
+    localStorage.setItem('hal-explorer.columnLayout', '3');
     localStorage.setItem('hal-explorer.httpOptions', 'true');
     localStorage.setItem('hal-explorer.allHttpMethodsForLinks', 'true');
     window.location.hash = '#hkey0=accept&hval0=text/plain&uri=https://chatty42.herokuapp.com/api/users';
@@ -100,7 +100,7 @@ describe('AppService', () => {
 
     expect(service.getCustomRequestHeaders()[0].key).toBe('accept');
     expect(service.getCustomRequestHeaders()[0].value).toBe('text/plain');
-    expect(service.getLayout()).toBe('3');
+    expect(service.getColumnLayout()).toBe('3');
     expect(service.getTheme()).toBe('Cosmo');
     expect(service.getHttpOptions()).toBeTrue();
     expect(service.getAllHttpMethodsForLinks()).toBeTrue();
@@ -109,39 +109,39 @@ describe('AppService', () => {
 
   it('should parse window location hash with hval before hkey', () => {
     localStorage.setItem('hal-explorer.theme', 'Cosmo');
-    localStorage.setItem('hal-explorer.layout', '3');
+    localStorage.setItem('hal-explorer.columnLayout', '3');
     window.location.hash = '#hval0=text/plain&hkey0=accept&uri=https://chatty42.herokuapp.com/api/users';
     service = new AppService();
 
     expect(service.getCustomRequestHeaders()[0].key).toBe('accept');
     expect(service.getCustomRequestHeaders()[0].value).toBe('text/plain');
-    expect(service.getLayout()).toBe('3');
+    expect(service.getColumnLayout()).toBe('3');
     expect(service.getTheme()).toBe('Cosmo');
     expect(service.getUri()).toBe('https://chatty42.herokuapp.com/api/users');
   });
 
   it('should parse window location hash with deprecated hkey "url"', () => {
     localStorage.setItem('hal-explorer.theme', 'Cosmo');
-    localStorage.setItem('hal-explorer.layout', '3');
+    localStorage.setItem('hal-explorer.columnLayout', '3');
     window.location.hash = '#hval0=text/plain&hkey0=accept&url=https://chatty42.herokuapp.com/api/users';
     service = new AppService();
 
     expect(service.getCustomRequestHeaders()[0].key).toBe('accept');
     expect(service.getCustomRequestHeaders()[0].value).toBe('text/plain');
-    expect(service.getLayout()).toBe('3');
+    expect(service.getColumnLayout()).toBe('3');
     expect(service.getTheme()).toBe('Cosmo');
     expect(service.getUri()).toBe('https://chatty42.herokuapp.com/api/users');
   });
 
   it('should parse window location hash with unknown hkeys', () => {
     localStorage.setItem('hal-explorer.theme', 'Cosmo');
-    localStorage.setItem('hal-explorer.layout', '3');
+    localStorage.setItem('hal-explorer.columnLayout', '3');
     window.location.hash = '#xxx=7&hval0=text/plain&hkey0=accept&yyy=xxx&url=https://chatty42.herokuapp.com/api/users';
     service = new AppService();
 
     expect(service.getCustomRequestHeaders()[0].key).toBe('accept');
     expect(service.getCustomRequestHeaders()[0].value).toBe('text/plain');
-    expect(service.getLayout()).toBe('3');
+    expect(service.getColumnLayout()).toBe('3');
     expect(service.getTheme()).toBe('Cosmo');
     expect(service.getUri()).toBe('https://chatty42.herokuapp.com/api/users');
   });
@@ -149,7 +149,7 @@ describe('AppService', () => {
   it('should get observables', () => {
     service = new AppService();
 
-    expect(service.layoutObservable).toBeDefined();
+    expect(service.columnLayoutObservable).toBeDefined();
     expect(service.httpOptionsObservable).toBeDefined();
     expect(service.allHttpMethodsForLinksObservable).toBeDefined();
     expect(service.requestHeadersObservable).toBeDefined();

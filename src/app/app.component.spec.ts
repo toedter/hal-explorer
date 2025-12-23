@@ -57,8 +57,8 @@ describe('AppComponent', () => {
         'setCustomRequestHeaders',
         'getTheme',
         'setTheme',
-        'getLayout',
-        'setLayout',
+        'getColumnLayout',
+        'setColumnLayout',
         'getHttpOptions',
         'setHttpOptions',
         'getAllHttpMethodsForLinks',
@@ -68,7 +68,7 @@ describe('AppComponent', () => {
       ],
       {
         themeObservable: themeSubject,
-        layoutObservable: layoutSubject,
+        columnLayoutObservable: layoutSubject,
         httpOptionsObservable: httpOptionsSubject,
         allHttpMethodsForLinksObservable: allHttpMethodsForLinksSubject,
         scrollableDocumentationObservable: scrollableDocumentationSubject,
@@ -81,7 +81,7 @@ describe('AppComponent', () => {
     appServiceMock.getCustomRequestHeaders.and.returnValue([]);
 
     appServiceMock.getTheme.and.returnValue('Default');
-    appServiceMock.getLayout.and.returnValue('2');
+    appServiceMock.getColumnLayout.and.returnValue('2');
     appServiceMock.getHttpOptions.and.returnValue(false);
     appServiceMock.getAllHttpMethodsForLinks.and.returnValue(false);
     appServiceMock.getScrollableDocumentation.and.returnValue(false);
