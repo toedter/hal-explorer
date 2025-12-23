@@ -32,21 +32,45 @@ image::./doc/img/hal-explorer.png[HAL Explorer]
 * Color Modes
 ** Dark
 ** Light
-** Auto
+** Auto (automatically detects system preference)
 * Available Themes
 ** Bootstrap 5 default theme
-** https://bootswatch.com/[Bootswatch themes]
+** https://bootswatch.com/[Bootswatch themes] (25+ themes available)
 * Column Layouts
 ** _2 column layout_ with optional documentation
 ** _3 column layout_ with documentation always visible when available
-* API URL and custom request headers stored as URL fragment
-* Settings stored in local storage
-* Support for Spring Data REST profiles to populate properties in the request editor
-* Support for HAL-FORMS templates
-** Template elements in response explorer (see screenshot)
+* Full HTTP Method Support
+** GET, POST, PUT, PATCH, DELETE operations
+** HTTP OPTIONS method to discover available request options for links
+** Support for both simple and templated URIs
+* Request Features
+** API URL and custom request headers stored as URL fragment
+** Custom request headers editor
+** URI template parameter editor with validation
+** Keyboard shortcuts (Enter to submit, ESC to close dialogs)
+* Settings
+** All settings stored in local storage with `hal-explorer.` namespace
+** Configurable HTTP OPTIONS usage for link discovery
+** Enable all HTTP methods for HAL-FORMS links
+** Scrollable documentation mode for large documentation content
+* Spring Data REST Integration
+** Support for Spring Data REST profiles to populate properties in the request editor
+** Automatic content type detection
+* HAL-FORMS Support
+** Template elements displayed in response explorer (see screenshot)
 ** Template properties in request editor
-** Options support in request editor
-* HAL-FORMS property constraint validation in request editor
+** Options support with inline and linked values
+** Multiple selection support for array properties
+** Property constraint validation in request editor
+* Error Handling
+** Graceful handling of error responses (401, 404, etc.)
+** Display of HAL-FORMS documents even in error responses
+** Links and affordances remain accessible in error scenarios
+* Response Explorer
+** Syntax-highlighted JSON display
+** Expandable/collapsible sections for properties, links, embedded resources
+** Response status, headers, and body information
+** Documentation integration (when available)
 
 
 == Development Server
