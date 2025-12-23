@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DocumentationComponent, getDocHeight } from './documentation.component';
 import { RequestService } from '../request/request.service';
