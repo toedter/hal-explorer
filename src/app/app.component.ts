@@ -66,7 +66,7 @@ export class AppComponent implements OnInit {
   scrollableDocumentation = false;
   activeColorMode: 'light' | 'dark' | 'auto' = 'auto';
 
-  version = '1.2.4-SNAPSHOT';
+  version = '2.0.0-SNAPSHOT';
   isSnapshotVersion = this.version.endsWith('SNAPSHOT');
 
   private readonly appService = inject(AppService);

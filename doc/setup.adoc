@@ -9,7 +9,7 @@ as well as the latest release and the current snapshot of HAL Explorer (both wit
 [cols='1,1,2',stripes=even]
 |===
 | Latest Release | 1.2.3 | https://toedter.github.io/hal-explorer/release/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
-| Current Snapshot | 1.2.4-SNAPSHOT | https://toedter.github.io/hal-explorer/snapshot/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
+| Current Snapshot | 2.0.0-SNAPSHOT | https://toedter.github.io/hal-explorer/snapshot/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
 |===
 
 To explore your services with these HAL Explorer demos, they have to enable CORS.

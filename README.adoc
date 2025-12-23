@@ -18,7 +18,7 @@ Here you find the documentation for the latest release and the current snapshot,
 as well as a demo (with examples) of the latest release and the current snapshot:
 |===
 | Release | 1.2.3 | https://toedter.github.io/hal-explorer/release/reference-doc/[Reference Documentation] | https://toedter.github.io/hal-explorer/release/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
-| Snapshot | 1.2.4-SNAPSHOT | https://toedter.github.io/hal-explorer/snapshot/reference-doc/[Reference Documentation] | https://toedter.github.io/hal-explorer/snapshot/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
+| Snapshot | 2.0.0-SNAPSHOT | https://toedter.github.io/hal-explorer/snapshot/reference-doc/[Reference Documentation] | https://toedter.github.io/hal-explorer/snapshot/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
 |===
 
 You also find current release at https://hal-explorer.com.
