@@ -50,7 +50,7 @@ jobs:
         run: yarn e2e:chromium
 
       - name: Upload coverage to codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/vitest/lcov.info
