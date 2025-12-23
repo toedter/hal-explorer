@@ -59,15 +59,14 @@ export class ResponseExplorerComponent implements OnInit {
   isLoading = false;
 
   command = Command;
-  responseUrl;
-
+  responseUrl: string;
   httpErrorResponse: HttpErrorResponse;
 
   private readonly requestService = inject(RequestService);
   private readonly jsonHighlighterService = inject(JsonHighlighterService);
   private readonly appService = inject(AppService);
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.requestService.getLoadingObservable().subscribe(loading => {
       this.isLoading = loading;
     });
@@ -75,165 +74,175 @@ export class ResponseExplorerComponent implements OnInit {
     if (this.jsonRoot) {
       this.processJsonObject(this.jsonRoot);
     } else {
-      this.requestService.getResponseObservable().subscribe({
-        next: (response: Response) => {
-          const httpResponse = response.httpResponse;
-          this.httpErrorResponse = response.httpErrorResponse;
-
-          // Process successful response
-          if (httpResponse) {
-            this.responseUrl = httpResponse.url;
-            this.isHalFormsMediaType = false;
-            const contentType = httpResponse.headers.get('content-type');
-            if (
-              (contentType?.startsWith('application/prs.hal-forms+json') && httpResponse?.body?._templates) ||
-              (this.responseUrl?.endsWith('.hal-forms.json') && httpResponse?.body?._templates)
-            ) {
-              this.isHalFormsMediaType = true;
-            }
-            if (!(typeof httpResponse.body === 'string' || httpResponse.body instanceof String)) {
-              this.processJsonObject(httpResponse.body);
-            } else {
-              this.processJsonObject({});
-            }
-          }
-          // Process error response - it may still contain valid HAL-FORMS document with links and affordances
-          else if (this.httpErrorResponse) {
-            this.responseUrl = this.httpErrorResponse.url;
-            this.isHalFormsMediaType = false;
-            const contentType = this.httpErrorResponse.headers.get('content-type');
-            if (
-              (contentType?.startsWith('application/prs.hal-forms+json') &&
-                this.httpErrorResponse?.error?._templates) ||
-              (this.responseUrl?.endsWith('.hal-forms.json') && this.httpErrorResponse?.error?._templates)
-            ) {
-              this.isHalFormsMediaType = true;
-            }
-            if (
-              this.httpErrorResponse.error &&
-              !(typeof this.httpErrorResponse.error === 'string' || this.httpErrorResponse.error instanceof String)
-            ) {
-              this.processJsonObject(this.httpErrorResponse.error);
-            } else {
-              this.processJsonObject({});
-            }
-          }
-        },
-        error: error => console.error('Error during HTTP request: ' + JSON.stringify(error)),
-      });
+      this.subscribeToResponses();
     }
   }
 
-  private processJsonObject(json: any) {
-    if (!this.prefix) {
-      this.prefix = '';
-    }
+  private subscribeToResponses(): void {
+    this.requestService.getResponseObservable().subscribe({
+      next: (response: Response) => {
+        this.httpErrorResponse = response.httpErrorResponse;
 
+        if (response.httpResponse) {
+          this.handleSuccessResponse(response.httpResponse);
+        } else if (this.httpErrorResponse) {
+          this.handleErrorResponse(this.httpErrorResponse);
+        }
+      },
+      error: error => console.error('Error during HTTP request: ' + JSON.stringify(error)),
+    });
+  }
+
+  private handleSuccessResponse(httpResponse: any): void {
+    this.responseUrl = httpResponse.url;
+    this.isHalFormsMediaType = this.isHalFormsContent(httpResponse.headers, this.responseUrl, httpResponse.body);
+
+    const body = typeof httpResponse.body === 'string' ? {} : httpResponse.body || {};
+    this.processJsonObject(body);
+  }
+
+  private handleErrorResponse(errorResponse: HttpErrorResponse): void {
+    this.responseUrl = errorResponse.url;
+    this.isHalFormsMediaType = this.isHalFormsContent(errorResponse.headers, this.responseUrl, errorResponse.error);
+
+    const error = typeof errorResponse.error === 'string' ? {} : errorResponse.error || {};
+    this.processJsonObject(error);
+  }
+
+  private isHalFormsContent(headers: any, url: string, body: any): boolean {
+    const contentType = headers.get('content-type');
+    return Boolean(
+      (contentType?.startsWith('application/prs.hal-forms+json') && body?._templates) ||
+      (url?.endsWith('.hal-forms.json') && body?._templates)
+    );
+  }
+
+  private processJsonObject(json: any): void {
+    this.prefix = this.prefix || '';
+    this.resetState();
+
+    this.processProperties(json);
+    this.processLinks(json._links);
+    this.processEmbedded(json._embedded);
+    this.processTemplates(json._templates);
+  }
+
+  private resetState(): void {
     this.showProperties = false;
     this.showLinks = false;
     this.showEmbedded = false;
     this.hasHalFormsTemplates = false;
-
     this.properties = null;
-    this.links = null;
-    this.embedded = null;
+    this.links = [];
+    this.embedded = [];
+  }
 
-    const jsonProperties = Object.assign({}, json);
+  private processProperties(json: any): void {
+    const jsonProperties = { ...json };
     delete jsonProperties._links;
     delete jsonProperties._embedded;
-    delete jsonProperties._templates; // HAL-FORMS
+    delete jsonProperties._templates;
 
     if (Object.keys(jsonProperties).length > 0) {
       this.showProperties = true;
       this.properties = this.jsonHighlighterService.syntaxHighlight(JSON.stringify(jsonProperties, undefined, 2));
     }
+  }
 
-    const links = json._links;
+  private processLinks(linksObj: any): void {
+    if (!linksObj) return;
+
+    this.showLinks = true;
     this.links = [];
     this.selfLink = undefined;
-    if (!this.curieLinks) {
-      this.curieLinks = [];
-    }
-    if (links) {
-      this.showLinks = true;
-      Object.getOwnPropertyNames(links).forEach((val: string) => {
-        if (links[val] instanceof Array) {
-          links[val].forEach((entry: Link, i: number) => {
-            if (val === 'curies') {
-              this.curieLinks.push(entry);
-            }
-            this.links.push(new Link(val + ' [' + i + ']', entry.href, entry.title, entry.name));
-          });
-        } else {
-          const link = new Link(val, links[val].href, links[val].title, links[val].name);
+    this.curieLinks = this.curieLinks || [];
+
+    Object.getOwnPropertyNames(linksObj).forEach((rel: string) => {
+      const linkData = linksObj[rel];
+
+      if (Array.isArray(linkData)) {
+        linkData.forEach((entry: Link, i: number) => {
+          const link = new Link(`${rel} [${i}]`, entry.href, entry.title, entry.name);
           this.links.push(link);
-          if (val === 'self') {
-            this.selfLink = link;
+          if (rel === 'curies') {
+            this.curieLinks.push(entry);
           }
-        }
-      });
-
-      if (this.appService.getHttpOptions()) {
-        this.links.forEach((link: Link) => {
-          this.requestService.getHttpOptions(link);
         });
+      } else {
+        const link = new Link(rel, linkData.href, linkData.title, linkData.name);
+        this.links.push(link);
+        if (rel === 'self') {
+          this.selfLink = link;
+        }
       }
+    });
 
-      this.curieLinks.forEach((curie: Link) => {
-        this.links.forEach((link: Link) => {
-          const curiePrefix = curie.name + ':';
-          if (link.rel !== 'curies' && link.rel.startsWith(curiePrefix)) {
-            link.docUri = curie.href.replace('{rel}', link.rel.replace(curiePrefix, ''));
-          }
-        });
-      });
+    if (this.appService.getHttpOptions()) {
+      this.links.forEach(link => this.requestService.getHttpOptions(link));
     }
 
-    const embedded = json._embedded;
-    this.embedded = new Array(0);
-    if (embedded) {
-      this.showEmbedded = true;
-      let docUri;
-      this.curieLinks.forEach((curie: Link) => {
-        const curiePrefix = curie.name + ':';
-        if (Object.keys(embedded)[0].startsWith(curiePrefix)) {
-          docUri = curie.href.replace('{rel}', Object.keys(embedded)[0].replace(curiePrefix, ''));
+    this.enrichLinksWithDocumentation();
+  }
+
+  private enrichLinksWithDocumentation(): void {
+    this.curieLinks.forEach((curie: Link) => {
+      const curiePrefix = `${curie.name}:`;
+      this.links.forEach((link: Link) => {
+        if (link.rel !== 'curies' && link.rel.startsWith(curiePrefix)) {
+          link.docUri = curie.href.replace('{rel}', link.rel.replace(curiePrefix, ''));
         }
       });
+    });
+  }
 
-      Object.getOwnPropertyNames(embedded).forEach((val: string) => {
-        this.embedded.push(new EmbeddedResource(val, embedded[val], embedded[val] instanceof Array, docUri));
-      });
+  private processEmbedded(embeddedObj: any): void {
+    if (!embeddedObj) return;
+
+    this.showEmbedded = true;
+    this.embedded = [];
+
+    const firstKey = Object.keys(embeddedObj)[0];
+    const docUri = this.findDocUriForKey(firstKey);
+
+    Object.getOwnPropertyNames(embeddedObj).forEach((key: string) => {
+      this.embedded.push(new EmbeddedResource(key, embeddedObj[key], Array.isArray(embeddedObj[key]), docUri));
+    });
+  }
+
+  private findDocUriForKey(key: string): string | undefined {
+    for (const curie of this.curieLinks || []) {
+      const curiePrefix = `${curie.name}:`;
+      if (key.startsWith(curiePrefix)) {
+        return curie.href.replace('{rel}', key.replace(curiePrefix, ''));
+      }
     }
+    return undefined;
+  }
 
-    if (this.isHalFormsMediaType && json._templates) {
+  private processTemplates(templatesObj: any): void {
+    if (this.isHalFormsMediaType && templatesObj) {
       this.hasHalFormsTemplates = true;
-      this.templates = json._templates;
+      this.templates = templatesObj;
     }
   }
 
-  processCommand(command: Command, link: string, template?: any) {
+  processCommand(command: Command, link: string, template?: any): void {
     this.requestService.processCommand(command, link, template);
   }
 
   getLinkButtonClass(command: Command, link?: Link): string {
-    if (link && link.options) {
+    if (link?.options) {
       if (link.options === 'http-options-error') {
         return 'btn-outline-dark';
       }
-
-      const commandString = Command[command].toLowerCase();
-      if (!link.options.toLowerCase().includes(commandString)) {
+      if (!link.options.toLowerCase().includes(Command[command].toLowerCase())) {
         return 'btn-outline-light';
       }
       return '';
     }
 
-    if (
-      !this.isHalFormsMediaType ||
-      Command[command].toLowerCase() === 'get' ||
-      this.appService.getAllHttpMethodsForLinks()
-    ) {
+    const isGetCommand = Command[command].toLowerCase() === 'get';
+    if (!this.isHalFormsMediaType || isGetCommand || this.appService.getAllHttpMethodsForLinks()) {
       return '';
     }
 
@@ -241,12 +250,11 @@ export class ResponseExplorerComponent implements OnInit {
   }
 
   isButtonDisabled(command: Command, link?: Link): boolean {
-    // Disable all buttons when a request is in progress
     if (this.isLoading) {
       return true;
     }
 
-    if (link && link.options) {
+    if (link?.options) {
       if (link.options === 'http-options-error') {
         return false;
       }
@@ -262,61 +270,45 @@ export class ResponseExplorerComponent implements OnInit {
 
   getRelTargetUrl(href: string, command: Command): string {
     let target = href;
-    if (this.isHalFormsMediaType) {
-      if (this.templates) {
-        Object.getOwnPropertyNames(this.templates).forEach((val: string) => {
-          if (this.templates[val].method === Command[command].toLowerCase()) {
-            if (this.templates[val].target) {
-              target = this.templates[val].target;
-              return;
-            }
-          }
-        });
+
+    if (this.isHalFormsMediaType && this.templates) {
+      const commandStr = Command[command].toLowerCase();
+      for (const templateName of Object.keys(this.templates)) {
+        const template = this.templates[templateName];
+        if (template.method === commandStr && template.target) {
+          target = template.target;
+          break;
+        }
       }
     }
 
     if (this.responseUrl) {
-      // fixes #19
-      const absoluteURL = new URL(target, this.responseUrl).href;
-      target = decodeURI(absoluteURL);
+      target = decodeURI(new URL(target, this.responseUrl).href);
     }
 
     return target;
   }
 
-  getRequestButtonClass(command: Command) {
+  getRequestButtonClass(command: Command): string {
     const base = 'ms-1 btn btn-sm nav-button ';
-    if (command === Command.Post) {
-      return base + 'btn-outline-info';
-    } else if (command === Command.Put) {
-      return base + 'btn-outline-warning';
-    } else if (command === Command.Patch) {
-      return base + 'btn-outline-warning';
-    } else if (command === Command.Delete) {
-      return base + 'btn-outline-danger';
-    }
-    return base + 'btn-outline-primary';
+    const variants = {
+      [Command.Post]: 'btn-outline-info',
+      [Command.Put]: 'btn-outline-warning',
+      [Command.Patch]: 'btn-outline-warning',
+      [Command.Delete]: 'btn-outline-danger',
+    };
+    return base + (variants[command] || 'btn-outline-primary');
   }
 
   getCommandForTemplateMethod(method?: string): Command {
     if (!method) {
       return Command.Get;
     }
-    const command = Command[method[0].toUpperCase() + method.substring(1).toLowerCase()];
-    if (command) {
-      return command;
-    }
-    return Command.Get;
+    const normalized = method.charAt(0).toUpperCase() + method.slice(1).toLowerCase();
+    return Command[normalized as keyof typeof Command] || Command.Get;
   }
 
   getUrlForTemplateTarget(target?: string): string {
-    if (target) {
-      return target;
-    } else if (this.selfLink) {
-      return this.selfLink.href;
-    } else if (this.responseUrl) {
-      return this.responseUrl;
-    }
-    return undefined;
+    return target || this.selfLink?.href || this.responseUrl || undefined;
   }
 }

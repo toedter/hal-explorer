@@ -86,6 +86,7 @@ describe('ResponseExplorerComponent', () => {
 
     appServiceMock = jasmine.createSpyObj(['getHttpOptions', 'getAllHttpMethodsForLinks']);
     appServiceMock.getHttpOptions.and.returnValue(true);
+    appServiceMock.getAllHttpMethodsForLinks.and.returnValue(false);
     jsonHighlighterServiceMock = jasmine.createSpyObj(['syntaxHighlight']);
 
     TestBed.configureTestingModule({

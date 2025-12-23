@@ -7,6 +7,49 @@ import { ResponseDetailsComponent } from './response-details/response-details.co
 import { ResponseExplorerComponent } from './response-explorer/response-explorer.component';
 import { RequestComponent } from './request/request.component';
 
+const THEMES = [
+  'Default',
+  'Brite',
+  'Cerulean',
+  'Cosmo',
+  'Cyborg',
+  'Darkly',
+  'Flatly',
+  'Journal',
+  'Litera',
+  'Lumen',
+  'Lux',
+  'Materia',
+  'Minty',
+  'Morph',
+  'Pulse',
+  'Quartz',
+  'Sandstone',
+  'Simplex',
+  'Sketchy',
+  'Slate',
+  'Solar',
+  'Spacelab',
+  'Superhero',
+  'United',
+  'Vapor',
+  'Yeti',
+  'Zephyr',
+];
+
+const SETTINGS = [
+  '2 Column Layout',
+  '3 Column Layout',
+  '---',
+  'Use HTTP OPTIONS',
+  '---',
+  'Enable all HTTP Methods for HAL-FORMS Links',
+  '---',
+  'Scrollable Documentation',
+];
+
+type ColorMode = 'light' | 'dark' | 'auto';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,48 +57,10 @@ import { RequestComponent } from './request/request.component';
   imports: [RequestComponent, ResponseExplorerComponent, ResponseDetailsComponent, DocumentationComponent],
 })
 export class AppComponent implements OnInit {
-  themes: string[] = [
-    'Default',
-    'Brite',
-    'Cerulean',
-    'Cosmo',
-    'Cyborg',
-    'Darkly',
-    'Flatly',
-    'Journal',
-    'Litera',
-    'Lumen',
-    'Lux',
-    'Materia',
-    'Minty',
-    'Morph',
-    'Pulse',
-    'Quartz',
-    'Sandstone',
-    'Simplex',
-    'Sketchy',
-    'Slate',
-    'Solar',
-    'Spacelab',
-    'Superhero',
-    'United',
-    'Vapor',
-    'Yeti',
-    'Zephyr',
-  ];
-
-  layouts: string[] = ['2 Columns', '3 Columns'];
-
-  settings: string[] = [
-    '2 Column Layout',
-    '3 Column Layout',
-    '---',
-    'Use HTTP OPTIONS',
-    '---',
-    'Enable all HTTP Methods for HAL-FORMS Links',
-    '---',
-    'Scrollable Documentation',
-  ];
+  readonly themes = THEMES;
+  readonly settings = SETTINGS;
+  readonly version = '2.0.0-SNAPSHOT';
+  readonly isSnapshotVersion = this.version.endsWith('SNAPSHOT');
 
   isCustomTheme = false;
   selectedThemeUrl: SafeResourceUrl;
@@ -64,19 +69,19 @@ export class AppComponent implements OnInit {
   useHttpOptions = false;
   enableAllHttpMethodsForLinks = false;
   scrollableDocumentation = false;
-  activeColorMode: 'light' | 'dark' | 'auto' = 'auto';
-
-  version = '2.0.0-SNAPSHOT';
-  isSnapshotVersion = this.version.endsWith('SNAPSHOT');
+  activeColorMode: ColorMode = 'auto';
 
   private readonly appService = inject(AppService);
   private readonly requestService = inject(RequestService);
   private readonly sanitizer = inject(DomSanitizer);
 
   ngOnInit(): void {
-    // Initialize color mode from localStorage or default to 'auto'
     this.initializeColorMode();
+    this.subscribeToServices();
+    this.applyCurrentSettings();
+  }
 
+  private subscribeToServices(): void {
     this.requestService.getResponseObservable().subscribe(() => {
       this.showDocumentation = false;
     });
@@ -85,99 +90,96 @@ export class AppComponent implements OnInit {
       this.showDocumentation = true;
     });
 
-    this.appService.themeObservable.subscribe(theme => this.changeTheme(theme));
-    this.changeTheme(this.appService.getTheme());
-
-    this.appService.columnLayoutObservable.subscribe(layout => this.changeLayout(layout));
-    this.changeLayout(this.appService.getColumnLayout());
-
-    this.appService.httpOptionsObservable.subscribe(useHttpOptions => this.changeHttpOptions(useHttpOptions));
-    this.changeHttpOptions(this.appService.getHttpOptions());
-
-    this.appService.allHttpMethodsForLinksObservable.subscribe(allHttpMethodsForLinks =>
-      this.changeAllHttpMethodsForLinks(allHttpMethodsForLinks)
+    this.appService.themeObservable.subscribe(theme => this.applyTheme(theme));
+    this.appService.columnLayoutObservable.subscribe(layout => this.applyLayout(layout));
+    this.appService.httpOptionsObservable.subscribe(options => this.applyHttpOptions(options));
+    this.appService.allHttpMethodsForLinksObservable.subscribe(enabled => this.applyAllHttpMethodsForLinks(enabled));
+    this.appService.scrollableDocumentationObservable.subscribe(scrollable =>
+      this.applyScrollableDocumentation(scrollable)
     );
-    this.changeAllHttpMethodsForLinks(this.appService.getAllHttpMethodsForLinks());
-
-    this.appService.scrollableDocumentationObservable.subscribe(scrollableDocumentation =>
-      this.changeScrollableDocumentation(scrollableDocumentation)
-    );
-    this.changeScrollableDocumentation(this.appService.getScrollableDocumentation());
   }
 
-  changeTheme(theme: string) {
-    this.isCustomTheme = theme !== this.themes[0];
+  private applyCurrentSettings(): void {
+    this.applyTheme(this.appService.getTheme());
+    this.applyLayout(this.appService.getColumnLayout());
+    this.applyHttpOptions(this.appService.getHttpOptions());
+    this.applyAllHttpMethodsForLinks(this.appService.getAllHttpMethodsForLinks());
+    this.applyScrollableDocumentation(this.appService.getScrollableDocumentation());
+  }
+
+  changeTheme(theme: string): void {
+    this.applyTheme(theme);
+  }
+
+  private applyTheme(theme: string): void {
+    this.isCustomTheme = theme !== THEMES[0];
     if (this.isCustomTheme) {
       this.selectedThemeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-        'https://bootswatch.com/5/' + theme.toLowerCase() + '/bootstrap.min.css'
+        `https://bootswatch.com/5/${theme.toLowerCase()}/bootstrap.min.css`
       );
     }
     this.appService.setTheme(theme);
   }
 
-  changeLayout(layout: string) {
+  changeLayout(layout: string): void {
     this.appService.setColumnLayout(layout.substring(0, 1));
-    this.isTwoColumnLayout = this.appService.getColumnLayout() === '2';
   }
 
-  changeHttpOptions(httpOptions: boolean) {
-    this.appService.setHttpOptions(httpOptions);
+  private applyLayout(layout: string): void {
+    this.isTwoColumnLayout = layout === '2';
+  }
+
+  private applyHttpOptions(httpOptions: boolean): void {
     this.useHttpOptions = httpOptions;
   }
 
-  changeAllHttpMethodsForLinks(allHttpMethodsForLinks: boolean) {
-    this.appService.setAllHttpMethodsForLinks(allHttpMethodsForLinks);
-    this.enableAllHttpMethodsForLinks = allHttpMethodsForLinks;
+  private applyAllHttpMethodsForLinks(enabled: boolean): void {
+    this.enableAllHttpMethodsForLinks = enabled;
   }
 
-  changeScrollableDocumentation(scrollableDocumentation: boolean) {
-    this.appService.setScrollableDocumentation(scrollableDocumentation);
-    this.scrollableDocumentation = scrollableDocumentation;
+  private applyScrollableDocumentation(scrollable: boolean): void {
+    this.scrollableDocumentation = scrollable;
   }
 
-  selectSetting(setting: string) {
+  selectSetting(setting: string): void {
     if (setting.includes('OPTIONS')) {
-      this.useHttpOptions = !this.useHttpOptions;
-      this.appService.setHttpOptions(this.useHttpOptions);
+      const newValue = !this.useHttpOptions;
+      this.useHttpOptions = newValue;
+      this.appService.setHttpOptions(newValue);
     } else if (setting.includes('Links')) {
-      this.enableAllHttpMethodsForLinks = !this.enableAllHttpMethodsForLinks;
-      this.appService.setAllHttpMethodsForLinks(this.enableAllHttpMethodsForLinks);
+      const newValue = !this.enableAllHttpMethodsForLinks;
+      this.enableAllHttpMethodsForLinks = newValue;
+      this.appService.setAllHttpMethodsForLinks(newValue);
     } else if (setting.includes('Scrollable')) {
-      this.scrollableDocumentation = !this.scrollableDocumentation;
-      this.appService.setScrollableDocumentation(this.scrollableDocumentation);
+      const newValue = !this.scrollableDocumentation;
+      this.scrollableDocumentation = newValue;
+      this.appService.setScrollableDocumentation(newValue);
     } else {
       this.changeLayout(setting);
     }
   }
 
   getThemeIconCheckStyle(theme: string): string {
-    if (theme === this.appService.getTheme()) {
-      return '';
-    }
-
-    return 'visibility: hidden';
+    return theme === this.appService.getTheme() ? '' : 'visibility: hidden';
   }
 
   getSettingsIconCheckStyle(setting: string): string {
-    if (
+    const isActive =
       (setting.includes('OPTIONS') && this.useHttpOptions) ||
       setting.includes(this.appService.getColumnLayout()) ||
       (setting.includes('Links') && this.enableAllHttpMethodsForLinks) ||
-      (setting.includes('Scrollable') && this.scrollableDocumentation)
-    ) {
-      return '';
-    }
+      (setting.includes('Scrollable') && this.scrollableDocumentation);
 
-    return 'visibility: hidden';
+    return isActive ? '' : 'visibility: hidden';
   }
 
   initializeColorMode(): void {
-    const storedColorMode = localStorage.getItem('hal-explorer.colorMode') as 'light' | 'dark' | 'auto' | null;
+    const storedColorMode = localStorage.getItem('hal-explorer.colorMode') as ColorMode | null;
     this.activeColorMode = storedColorMode || 'auto';
     this.applyColorMode();
   }
 
-  setColorMode(mode: 'light' | 'dark' | 'auto'): void {
+  setColorMode(mode: ColorMode): void {
     this.activeColorMode = mode;
     localStorage.setItem('hal-explorer.colorMode', mode);
     this.applyColorMode();
@@ -186,12 +188,11 @@ export class AppComponent implements OnInit {
   private applyColorMode(): void {
     let effectiveMode = this.activeColorMode;
 
-    // If auto, detect system preference
     if (effectiveMode === 'auto') {
-      effectiveMode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      const prefersDark = globalThis.matchMedia('(prefers-color-scheme: dark)').matches;
+      effectiveMode = prefersDark ? 'dark' : 'light';
     }
 
-    // Apply the theme to the document
-    document.documentElement.setAttribute('data-bs-theme', effectiveMode);
+    document.documentElement.dataset.bsTheme = effectiveMode;
   }
 }

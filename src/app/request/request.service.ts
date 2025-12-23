@@ -1,10 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import utpl from 'uri-templates';
-import { URITemplate } from 'uri-templates';
+import utpl, { URITemplate } from 'uri-templates';
 import { AppService, RequestHeader } from '../app.service';
 import { Link } from '../response-explorer/response-explorer.component';
+
+const DEFAULT_ACCEPT_HEADER = 'application/prs.hal-forms+json, application/hal+json, application/json, */*';
 
 export enum EventType {
   FillHttpRequest,
@@ -47,70 +48,56 @@ export class Response {
   providedIn: 'root',
 })
 export class RequestService {
-  private readonly responseSubject: Subject<Response> = new Subject<Response>();
-  private readonly responseObservable: Observable<Response> = this.responseSubject.asObservable();
+  private readonly responseSubject = new Subject<Response>();
+  private readonly needInfoSubject = new Subject<any>();
+  private readonly documentationSubject = new Subject<string>();
+  private readonly loadingSubject = new Subject<boolean>();
 
-  private readonly needInfoSubject: Subject<any> = new Subject<any>();
-  private readonly needInfoObservable: Observable<any> = this.needInfoSubject.asObservable();
-
-  private readonly documentationSubject: Subject<string> = new Subject<string>();
-  private readonly documentationObservable: Observable<string> = this.documentationSubject.asObservable();
-
-  private readonly loadingSubject: Subject<boolean> = new Subject<boolean>();
-  private readonly loadingObservable: Observable<boolean> = this.loadingSubject.asObservable();
-
-  private requestHeaders: HttpHeaders = new HttpHeaders({
-    Accept: 'application/prs.hal-forms+json, application/hal+json, application/json, */*',
-  });
-  private customRequestHeaders: RequestHeader[];
+  private requestHeaders = new HttpHeaders({ Accept: DEFAULT_ACCEPT_HEADER });
+  private customRequestHeaders: RequestHeader[] = [];
 
   private readonly appService = inject(AppService);
   private readonly http = inject(HttpClient);
 
   getResponseObservable(): Observable<Response> {
-    return this.responseObservable;
+    return this.responseSubject.asObservable();
   }
 
   getNeedInfoObservable(): Observable<any> {
-    return this.needInfoObservable;
+    return this.needInfoSubject.asObservable();
   }
 
   getDocumentationObservable(): Observable<string> {
-    return this.documentationObservable;
+    return this.documentationSubject.asObservable();
   }
 
   getLoadingObservable(): Observable<boolean> {
-    return this.loadingObservable;
+    return this.loadingSubject.asObservable();
   }
 
   private setLoading(loading: boolean): void {
     this.loadingSubject.next(loading);
   }
 
-  getUri(uri: string) {
-    if (!uri || uri.trim().length === 0) {
+  getUri(uri: string): void {
+    if (!uri?.trim()) {
       return;
     }
     this.processCommand(Command.Get, uri);
   }
 
-  requestUri(uri: string, httpMethod: string, body?: string, contentType?: string) {
+  requestUri(uri: string, httpMethod: string, body?: string, contentType?: string): void {
     this.setLoading(true);
     let headers = this.requestHeaders;
-    if (
-      contentType ||
-      httpMethod.toLowerCase() === 'post' ||
-      httpMethod.toLowerCase() === 'put' ||
-      httpMethod.toLowerCase() === 'patch'
-    ) {
-      if (contentType) {
-        headers = headers.set('Content-Type', contentType);
-      } else {
-        headers = headers.set('Content-Type', 'application/json; charset=utf-8');
-      }
+
+    const requiresContentType = contentType || ['post', 'put', 'patch'].includes(httpMethod.toLowerCase());
+
+    if (requiresContentType) {
+      headers = headers.set('Content-Type', contentType || 'application/json; charset=utf-8');
     } else {
       this.appService.setUri(uri, false);
     }
+
     this.http.request(httpMethod, uri, { headers, observe: 'response', body }).subscribe({
       next: (response: HttpResponse<any>) => {
         this.responseSubject.next(new Response(response, null));
@@ -123,15 +110,23 @@ export class RequestService {
     });
   }
 
-  processCommand(command: Command, uri: string, halFormsTemplate?: any) {
+  processCommand(command: Command, uri: string, halFormsTemplate?: any): void {
+    if (command === Command.Document) {
+      this.documentationSubject.next(uri);
+      return;
+    }
+
+    if (command === Command.Delete) {
+      this.requestUri(this.expandUriTemplate(uri), 'DELETE');
+      return;
+    }
+
     if (command === Command.Get && !this.isUriTemplated(uri) && !halFormsTemplate) {
       this.requestUri(uri, 'GET');
-    } else if (
-      command === Command.Get ||
-      command === Command.Post ||
-      command === Command.Put ||
-      command === Command.Patch
-    ) {
+      return;
+    }
+
+    if ([Command.Get, Command.Post, Command.Put, Command.Patch].includes(command)) {
       const event = new HttpRequestEvent(EventType.FillHttpRequest, command, uri);
       if (halFormsTemplate || command === Command.Get) {
         event.halFormsTemplate = halFormsTemplate;
@@ -139,94 +134,19 @@ export class RequestService {
       } else {
         this.getJsonSchema(event);
       }
-      return;
-    } else if (command === Command.Delete) {
-      if (this.isUriTemplated(uri)) {
-        const uriTemplate: URITemplate = utpl(uri);
-        uri = uriTemplate.fill({});
-      }
-      this.requestUri(uri, 'DELETE');
-    } else if (command === Command.Document) {
-      this.documentationSubject.next(uri);
     }
   }
 
-  getJsonSchema(httpRequestEvent: HttpRequestEvent) {
-    let uri = httpRequestEvent.uri;
-    if (this.isUriTemplated(uri)) {
-      const uriTemplate: URITemplate = utpl(uri);
-      uri = uriTemplate.fill({});
-    }
+  getJsonSchema(httpRequestEvent: HttpRequestEvent): void {
+    const uri = this.expandUriTemplate(httpRequestEvent.uri);
+
     this.http.request('HEAD', uri, { headers: this.requestHeaders, observe: 'response' }).subscribe({
       next: (response: HttpResponse<any>) => {
-        let hasProfile = false;
-        const linkHeader = response.headers.get('link');
-        if (linkHeader) {
-          const w3cLinks = linkHeader.split(',');
-          let profileUri;
-          w3cLinks.forEach(w3cLink => {
-            const parts = w3cLink.split(';');
+        const profileUri = this.extractProfileUri(response.headers.get('link'));
 
-            const hrefWrappedWithBrackets = parts[0];
-            const href = hrefWrappedWithBrackets.slice(1, parts[0].length - 1);
-
-            const w3cRel = parts[1];
-            const relWrappedWithQuotes = w3cRel.split('=')[1];
-            const rel = relWrappedWithQuotes.slice(1, relWrappedWithQuotes.length - 1);
-
-            if (rel.toLowerCase() === 'profile') {
-              profileUri = href;
-            }
-          });
-
-          if (profileUri) {
-            hasProfile = true;
-            let headers = new HttpHeaders({
-              Accept: 'application/schema+json',
-            });
-
-            if (this.customRequestHeaders) {
-              for (const requestHeader of this.customRequestHeaders) {
-                headers = headers.append(requestHeader.key, requestHeader.value);
-              }
-            }
-
-            this.http.get(profileUri, { headers, observe: 'response' }).subscribe({
-              next: (httpResponse: HttpResponse<any>) => {
-                const jsonSchema = httpResponse.body;
-
-                // this would be for removing link relations from the POST, PUT and PATCH editor
-                //
-                // Object.keys(jsonSchema.properties).forEach(function (property) {
-                //   if (jsonSchema.properties[property].hasOwnProperty('format') &&
-                //     jsonSchema.properties[property].format === 'uri') {
-                //     delete jsonSchema.properties[property];
-                //   }
-                // });
-
-                // since we use those properties to generate a editor for POST, PUT and PATCH,
-                // "readOnly" properties should not be displayed
-                Object.keys(jsonSchema.properties).forEach(property => {
-                  if (
-                    Object.prototype.hasOwnProperty.call(jsonSchema.properties[property], 'readOnly') &&
-                    jsonSchema.properties[property].readOnly === true
-                  ) {
-                    delete jsonSchema.properties[property];
-                  }
-                });
-
-                httpRequestEvent.jsonSchema = jsonSchema;
-                this.needInfoSubject.next(httpRequestEvent);
-              },
-              error: () => {
-                console.warn('Cannot get JSON schema for: ', profileUri);
-                this.needInfoSubject.next(httpRequestEvent);
-              },
-            });
-          }
-        }
-
-        if (!hasProfile) {
+        if (profileUri) {
+          this.fetchJsonSchema(profileUri, httpRequestEvent);
+        } else {
           this.needInfoSubject.next(httpRequestEvent);
         }
       },
@@ -237,55 +157,105 @@ export class RequestService {
     });
   }
 
-  setCustomHeaders(requestHeaders: RequestHeader[]) {
+  private extractProfileUri(linkHeader: string | null): string | null {
+    if (!linkHeader) return null;
+
+    const w3cLinks = linkHeader.split(',');
+    const relPattern = /rel="([^"]+)"/;
+
+    for (const w3cLink of w3cLinks) {
+      const parts = w3cLink.split(';');
+      const href = parts[0].slice(1, -1); // Remove < and >
+      const relPart = parts[1];
+
+      if (relPart) {
+        const relMatch = relPattern.exec(relPart);
+        if (relMatch && relMatch[1].toLowerCase() === 'profile') {
+          return href;
+        }
+      }
+    }
+    return null;
+  }
+
+  private fetchJsonSchema(profileUri: string, httpRequestEvent: HttpRequestEvent): void {
+    let headers = new HttpHeaders({ Accept: 'application/schema+json' });
+
+    for (const requestHeader of this.customRequestHeaders) {
+      headers = headers.append(requestHeader.key, requestHeader.value);
+    }
+
+    this.http.get(profileUri, { headers, observe: 'response' }).subscribe({
+      next: (httpResponse: HttpResponse<any>) => {
+        const jsonSchema = httpResponse.body;
+        this.removeReadOnlyProperties(jsonSchema);
+        httpRequestEvent.jsonSchema = jsonSchema;
+        this.needInfoSubject.next(httpRequestEvent);
+      },
+      error: () => {
+        console.warn('Cannot get JSON schema for: ', profileUri);
+        this.needInfoSubject.next(httpRequestEvent);
+      },
+    });
+  }
+
+  private removeReadOnlyProperties(jsonSchema: any): void {
+    if (!jsonSchema?.properties) return;
+
+    Object.keys(jsonSchema.properties).forEach(property => {
+      if (jsonSchema.properties[property]?.readOnly === true) {
+        delete jsonSchema.properties[property];
+      }
+    });
+  }
+
+  setCustomHeaders(requestHeaders: RequestHeader[]): void {
     this.customRequestHeaders = requestHeaders;
     this.requestHeaders = new HttpHeaders();
-    let addDefaultAcceptHeader = true;
+
+    let hasAcceptHeader = false;
     for (const requestHeader of requestHeaders) {
       if (requestHeader.key.toLowerCase() === 'accept') {
-        addDefaultAcceptHeader = false;
+        hasAcceptHeader = true;
       }
       this.requestHeaders = this.requestHeaders.append(requestHeader.key, requestHeader.value);
     }
-    if (addDefaultAcceptHeader === true) {
-      this.requestHeaders = this.requestHeaders.append(
-        'Accept',
-        'application/prs.hal-forms+json, application/hal+json, application/json, */*'
-      );
+
+    if (!hasAcceptHeader) {
+      this.requestHeaders = this.requestHeaders.append('Accept', DEFAULT_ACCEPT_HEADER);
     }
   }
 
   getInputType(jsonSchemaType: string, jsonSchemaFormat?: string): string {
-    switch (jsonSchemaType.toLowerCase()) {
-      case 'integer':
-        return 'number';
-      case 'string':
-        if (jsonSchemaFormat) {
-          switch (jsonSchemaFormat.toLowerCase()) {
-            // The following enables the dat time editor in most browsers
-            // I have disabled this because the date time formats
-            // are often very different, so type=text is more flexible
-            //
-            // case 'date-time':
-            //   return 'datetime-local';
-            case 'uri':
-              return 'url';
-          }
-        }
-        return 'text';
-
-      default:
-        return 'text';
+    if (jsonSchemaType.toLowerCase() === 'integer') {
+      return 'number';
     }
+
+    if (jsonSchemaType.toLowerCase() === 'string') {
+      if (jsonSchemaFormat?.toLowerCase() === 'uri') {
+        return 'url';
+      }
+      return 'text';
+    }
+
+    return 'text';
   }
 
-  isUriTemplated(uri: string) {
+  isUriTemplated(uri: string): boolean {
     const uriTemplate = utpl(uri);
     return uriTemplate.varNames.length > 0;
   }
 
-  computeHalFormsOptionsFromLink(property: any) {
-    if (!(property.options && property.options.link && property.options.link.href)) {
+  private expandUriTemplate(uri: string): string {
+    if (!this.isUriTemplated(uri)) {
+      return uri;
+    }
+    const uriTemplate: URITemplate = utpl(uri);
+    return uriTemplate.fill({});
+  }
+
+  computeHalFormsOptionsFromLink(property: any): void {
+    if (!property.options?.link?.href) {
       return;
     }
 
@@ -295,37 +265,27 @@ export class RequestService {
       headers = headers.set('Accept', property.options.link.type);
     }
 
-    if (this.isUriTemplated(property.options.link.href)) {
-      const uriTemplate: URITemplate = utpl(property.options.link.href);
-      property.options.link.href = uriTemplate.fill({});
-    }
+    const href = this.expandUriTemplate(property.options.link.href);
 
-    this.http
-      .get(property.options.link.href, {
-        headers,
-        observe: 'response',
-      })
-      .subscribe((response: HttpResponse<any>) => {
+    this.http.get(href, { headers, observe: 'response' }).subscribe((response: HttpResponse<any>) => {
+      const contentType = response.headers.get('content-type');
+      const isHalContent =
+        contentType &&
+        (contentType.startsWith('application/prs.hal-forms+json') || contentType.startsWith('application/hal+json'));
+
+      if (isHalContent && response.body?._embedded) {
+        const embeddedKey = Object.keys(response.body._embedded)[0];
+        property.options.inline = response.body._embedded[embeddedKey];
+      } else {
         property.options.inline = response.body;
-        const contentType = response.headers.get('content-type');
-        if (
-          contentType &&
-          (contentType.startsWith('application/prs.hal-forms+json') ||
-            contentType.startsWith('application/hal+json')) &&
-          response.body._embedded
-        ) {
-          property.options.inline = response.body._embedded[Object.keys(response.body._embedded)[0]];
-        }
-      });
+      }
+    });
   }
 
   getHttpOptions(link: Link): void {
-    let href = link.href;
-    if (this.isUriTemplated(href)) {
-      const uriTemplate: URITemplate = utpl(href);
-      href = uriTemplate.fill({});
-    }
+    const href = this.expandUriTemplate(link.href);
     const headers = new HttpHeaders().set('Accept', '*/*');
+
     this.http.options(href, { headers, observe: 'response' }).subscribe({
       next: (httpResponse: HttpResponse<any>) => {
         link.options = httpResponse.headers.get('allow');

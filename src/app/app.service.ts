@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
+
+const STORAGE_PREFIX = 'hal-explorer.';
+const DEFAULT_THEME = 'Cosmo';
+const DEFAULT_LAYOUT = '2';
 
 export class RequestHeader {
   constructor(
@@ -12,101 +16,69 @@ export class RequestHeader {
   providedIn: 'root',
 })
 export class AppService {
-  private uriParam: string;
-  private themeParam: string;
-  private columnLayoutParam: string;
-  private httpOptionsParam: boolean;
-  private allHttpMethodsForLinksParam: boolean;
-  private scrollableDocumentationParam: boolean;
-
-  private customRequestHeaders: RequestHeader[];
-
-  private uriParamBackup: string;
-
-  private readonly uriSubject: Subject<string> = new Subject<string>();
-  private readonly _uriObservable: Observable<string> = this.uriSubject.asObservable();
-  private readonly themeSubject: Subject<string> = new Subject<string>();
-  private readonly _themeObservable: Observable<string> = this.themeSubject.asObservable();
-  private readonly layoutSubject: Subject<string> = new Subject<string>();
-  private readonly _columnLayoutObservable: Observable<string> = this.layoutSubject.asObservable();
-  private readonly httpOptionsSubject: Subject<boolean> = new Subject<boolean>();
-  private readonly _httpOptionsObservable: Observable<boolean> = this.httpOptionsSubject.asObservable();
-  private readonly allHttpMethodsForLinksSubject: Subject<boolean> = new Subject<boolean>();
-  private readonly _allHttpMethodsForLinksObservable: Observable<boolean> =
-    this.allHttpMethodsForLinksSubject.asObservable();
-  private readonly scrollableDocumentationSubject: Subject<boolean> = new Subject<boolean>();
-  private readonly _scrollableDocumentationObservable: Observable<boolean> =
-    this.scrollableDocumentationSubject.asObservable();
-  private readonly requestHeadersSubject: Subject<RequestHeader[]> = new Subject<RequestHeader[]>();
-  private readonly _requestHeadersObservable: Observable<RequestHeader[]> = this.requestHeadersSubject.asObservable();
-
+  private uriParam = '';
+  private themeParam = DEFAULT_THEME;
+  private columnLayoutParam = DEFAULT_LAYOUT;
+  private httpOptionsParam = false;
+  private allHttpMethodsForLinksParam = false;
+  private scrollableDocumentationParam = false;
+  private customRequestHeaders: RequestHeader[] = [];
+  private uriParamBackup = '';
   private reactOnLocationHashChange = true;
+
+  private readonly uriSubject = new Subject<string>();
+  private readonly themeSubject = new Subject<string>();
+  private readonly layoutSubject = new Subject<string>();
+  private readonly httpOptionsSubject = new Subject<boolean>();
+  private readonly allHttpMethodsForLinksSubject = new Subject<boolean>();
+  private readonly scrollableDocumentationSubject = new Subject<boolean>();
+  private readonly requestHeadersSubject = new Subject<RequestHeader[]>();
+
+  readonly uriObservable = this.uriSubject.asObservable();
+  readonly themeObservable = this.themeSubject.asObservable();
+  readonly columnLayoutObservable = this.layoutSubject.asObservable();
+  readonly httpOptionsObservable = this.httpOptionsSubject.asObservable();
+  readonly allHttpMethodsForLinksObservable = this.allHttpMethodsForLinksSubject.asObservable();
+  readonly scrollableDocumentationObservable = this.scrollableDocumentationSubject.asObservable();
+  readonly requestHeadersObservable = this.requestHeadersSubject.asObservable();
 
   constructor() {
     this.initializeFromLocalStorage();
     this.handleLocationHash();
-    window.addEventListener('hashchange', () => this.handleLocationHash(), false);
+    globalThis.addEventListener('hashchange', () => this.handleLocationHash(), false);
   }
 
   private initializeFromLocalStorage(): void {
-    // Load settings from localStorage
-    const storedTheme = localStorage.getItem('hal-explorer.theme');
-    this.themeParam = storedTheme || 'Cosmo';
-
-    const storedLayout = localStorage.getItem('hal-explorer.columnLayout');
-    this.columnLayoutParam = storedLayout || '2';
-
-    const storedHttpOptions = localStorage.getItem('hal-explorer.httpOptions');
-    this.httpOptionsParam = storedHttpOptions === 'true';
-
-    const storedAllHttpMethodsForLinks = localStorage.getItem('hal-explorer.allHttpMethodsForLinks');
-    this.allHttpMethodsForLinksParam = storedAllHttpMethodsForLinks === 'true';
-
-    const storedScrollableDocumentation = localStorage.getItem('hal-explorer.scrollableDocumentation');
-    this.scrollableDocumentationParam = storedScrollableDocumentation === 'true';
+    this.themeParam = this.getFromStorage('theme', DEFAULT_THEME);
+    this.columnLayoutParam = this.getFromStorage('columnLayout', DEFAULT_LAYOUT);
+    this.httpOptionsParam = this.getBooleanFromStorage('httpOptions');
+    this.allHttpMethodsForLinksParam = this.getBooleanFromStorage('allHttpMethodsForLinks');
+    this.scrollableDocumentationParam = this.getBooleanFromStorage('scrollableDocumentation');
   }
 
-  get uriObservable(): Observable<string> {
-    return this._uriObservable;
+  private getFromStorage(key: string, defaultValue: string): string {
+    return localStorage.getItem(STORAGE_PREFIX + key) || defaultValue;
   }
 
-  get themeObservable(): Observable<string> {
-    return this._themeObservable;
+  private getBooleanFromStorage(key: string): boolean {
+    return localStorage.getItem(STORAGE_PREFIX + key) === 'true';
   }
 
-  get columnLayoutObservable(): Observable<string> {
-    return this._columnLayoutObservable;
-  }
-
-  get httpOptionsObservable(): Observable<boolean> {
-    return this._httpOptionsObservable;
-  }
-
-  get allHttpMethodsForLinksObservable(): Observable<boolean> {
-    return this._allHttpMethodsForLinksObservable;
-  }
-
-  get scrollableDocumentationObservable(): Observable<boolean> {
-    return this._scrollableDocumentationObservable;
-  }
-
-  get requestHeadersObservable(): Observable<RequestHeader[]> {
-    return this._requestHeadersObservable;
+  private saveToStorage(key: string, value: string | boolean): void {
+    localStorage.setItem(STORAGE_PREFIX + key, String(value));
   }
 
   getUri(): string {
     return this.uriParam;
   }
 
-  setUri(uri: string, reactOnLocationHashChange = true) {
+  setUri(uri: string, reactOnLocationHashChange = true): void {
     this.reactOnLocationHashChange = reactOnLocationHashChange;
     const previousUri = this.uriParam;
     this.uriParamBackup = this.uriParam;
     this.uriParam = uri;
     this.setLocationHash();
 
-    // Emit the URI change immediately if it changed, even when reactOnLocationHashChange is false
-    // This ensures the input field gets updated when clicking links
     if (previousUri !== uri) {
       this.uriSubject.next(this.uriParam);
     }
@@ -116,9 +88,9 @@ export class AppService {
     return this.themeParam;
   }
 
-  setTheme(theme: string) {
+  setTheme(theme: string): void {
     this.themeParam = theme;
-    localStorage.setItem('hal-explorer.theme', theme);
+    this.saveToStorage('theme', theme);
     this.themeSubject.next(this.themeParam);
   }
 
@@ -126,23 +98,23 @@ export class AppService {
     return this.columnLayoutParam;
   }
 
-  setColumnLayout(layout: string) {
-    if (layout === '2' || layout === '3') {
-      this.columnLayoutParam = layout;
-      localStorage.setItem('hal-explorer.columnLayout', layout);
-      this.layoutSubject.next(this.columnLayoutParam);
-    } else {
+  setColumnLayout(layout: string): void {
+    if (layout !== '2' && layout !== '3') {
       console.error('Cannot set unknown layout: ' + layout);
+      return;
     }
+    this.columnLayoutParam = layout;
+    this.saveToStorage('columnLayout', layout);
+    this.layoutSubject.next(this.columnLayoutParam);
   }
 
   getHttpOptions(): boolean {
     return this.httpOptionsParam;
   }
 
-  setHttpOptions(options: boolean) {
+  setHttpOptions(options: boolean): void {
     this.httpOptionsParam = options;
-    localStorage.setItem('hal-explorer.httpOptions', String(options));
+    this.saveToStorage('httpOptions', options);
     this.httpOptionsSubject.next(this.httpOptionsParam);
     this.uriSubject.next(this.uriParam);
   }
@@ -151,9 +123,9 @@ export class AppService {
     return this.allHttpMethodsForLinksParam;
   }
 
-  setAllHttpMethodsForLinks(options: boolean) {
+  setAllHttpMethodsForLinks(options: boolean): void {
     this.allHttpMethodsForLinksParam = options;
-    localStorage.setItem('hal-explorer.allHttpMethodsForLinks', String(options));
+    this.saveToStorage('allHttpMethodsForLinks', options);
     this.allHttpMethodsForLinksSubject.next(this.allHttpMethodsForLinksParam);
   }
 
@@ -161,9 +133,9 @@ export class AppService {
     return this.scrollableDocumentationParam;
   }
 
-  setScrollableDocumentation(scrollable: boolean) {
+  setScrollableDocumentation(scrollable: boolean): void {
     this.scrollableDocumentationParam = scrollable;
-    localStorage.setItem('hal-explorer.scrollableDocumentation', String(scrollable));
+    this.saveToStorage('scrollableDocumentation', scrollable);
     this.scrollableDocumentationSubject.next(this.scrollableDocumentationParam);
   }
 
@@ -171,104 +143,83 @@ export class AppService {
     return this.customRequestHeaders;
   }
 
-  setCustomRequestHeaders(requestHeaders: RequestHeader[]) {
+  setCustomRequestHeaders(requestHeaders: RequestHeader[]): void {
     this.customRequestHeaders = requestHeaders;
     this.setLocationHash();
   }
 
-  private handleLocationHash() {
+  private handleLocationHash(): void {
     if (!this.reactOnLocationHashChange) {
       this.reactOnLocationHashChange = true;
       return;
     }
 
-    if (!this.uriParam) {
-      this.uriParam = '';
-    }
-
-    const tempCustomRequestHeaders: RequestHeader[] = new Array(5);
-
-    const fragment = location.hash.substring(1);
-    const regex = /([^&=]+)=([^&]*)/g;
-    let m = regex.exec(fragment);
-    while (m) {
-      const key = decodeURIComponent(m[1]);
-
-      if (key.startsWith('hkey')) {
-        const headerKeyParam = decodeURIComponent(m[2]);
-        const headerKeyIndex = Number(key.substring(4));
-        const requestHeader = tempCustomRequestHeaders[headerKeyIndex];
-        if (requestHeader) {
-          requestHeader.key = headerKeyParam;
-        } else {
-          tempCustomRequestHeaders[headerKeyIndex] = new RequestHeader(headerKeyParam, undefined);
-        }
-        m = regex.exec(fragment);
-      } else if (key.startsWith('hval')) {
-        const headerValueParam = decodeURIComponent(m[2]);
-        const headerValueIndex = Number(key.substring(4));
-        const requestHeader = tempCustomRequestHeaders[headerValueIndex];
-        if (requestHeader) {
-          requestHeader.value = headerValueParam;
-        } else {
-          tempCustomRequestHeaders[headerValueIndex] = new RequestHeader(undefined, headerValueParam);
-        }
-        m = regex.exec(fragment);
-      } else if (key === 'url') {
-        // keep this for backward compatibility
-        this.uriParam = fragment.substring(fragment.indexOf('url=') + 4);
-        m = null;
-      } else if (key === 'uri') {
-        // uri ist the new parameter that replaced url
-        this.uriParam = fragment.substring(fragment.indexOf('uri=') + 4);
-        m = null;
-      } else {
-        // Skip unknown parameters (for backward compatibility with old URLs that have theme, layout, etc.)
-        m = regex.exec(fragment);
-      }
-    }
+    const tempCustomRequestHeaders = this.parseLocationHashParameters();
 
     if (this.uriParamBackup !== this.uriParam) {
       this.uriSubject.next(this.uriParam);
     }
 
+    this.updateCustomRequestHeaders(tempCustomRequestHeaders);
+  }
+
+  private parseLocationHashParameters(): RequestHeader[] {
+    const tempHeaders: RequestHeader[] = new Array(5);
+    const fragment = location.hash.substring(1);
+    const regex = /([^&=]+)=([^&]*)/g;
+    let match = regex.exec(fragment);
+
+    while (match) {
+      const key = decodeURIComponent(match[1]);
+      const value = decodeURIComponent(match[2]);
+
+      if (key.startsWith('hkey')) {
+        const index = Number(key.substring(4));
+        tempHeaders[index] = tempHeaders[index] || new RequestHeader(undefined, undefined);
+        tempHeaders[index].key = value;
+      } else if (key.startsWith('hval')) {
+        const index = Number(key.substring(4));
+        tempHeaders[index] = tempHeaders[index] || new RequestHeader(undefined, undefined);
+        tempHeaders[index].value = value;
+      } else if (key === 'url' || key === 'uri') {
+        // 'url' kept for backward compatibility, 'uri' is the new parameter
+        this.uriParam = fragment.substring(fragment.indexOf(key + '=') + key.length + 1);
+        break; // uri/url is always the last parameter
+      }
+
+      match = regex.exec(fragment);
+    }
+
+    return tempHeaders;
+  }
+
+  private updateCustomRequestHeaders(tempHeaders: RequestHeader[]): void {
     this.customRequestHeaders = [];
-    let publishRequestHeaders = false;
+    let hasHeaders = false;
+
     for (let i = 0; i < 5; i++) {
-      if (tempCustomRequestHeaders[i] && tempCustomRequestHeaders[i].key && tempCustomRequestHeaders[i].value) {
-        this.customRequestHeaders.push(tempCustomRequestHeaders[i]);
-        publishRequestHeaders = true;
+      if (tempHeaders[i]?.key && tempHeaders[i]?.value) {
+        this.customRequestHeaders.push(tempHeaders[i]);
+        hasHeaders = true;
       }
     }
 
-    if (publishRequestHeaders) {
+    if (hasHeaders) {
       this.requestHeadersSubject.next(this.customRequestHeaders);
     }
   }
 
-  private setLocationHash() {
-    let newLocationHash = '';
-    let andPrefix = '';
+  private setLocationHash(): void {
+    const params: string[] = [];
 
-    for (let i = 0; i < this.customRequestHeaders.length; i++) {
-      newLocationHash +=
-        andPrefix +
-        'hkey' +
-        i +
-        '=' +
-        this.customRequestHeaders[i].key +
-        '&' +
-        'hval' +
-        i +
-        '=' +
-        this.customRequestHeaders[i].value;
-      andPrefix = '&';
+    this.customRequestHeaders.forEach((header, index) => {
+      params.push(`hkey${index}=${header.key}`, `hval${index}=${header.value}`);
+    });
+
+    if (this.uriParam) {
+      params.push(`uri=${this.uriParam}`);
     }
 
-    if (this.uriParam !== '') {
-      newLocationHash += andPrefix + 'uri=' + this.uriParam;
-    }
-
-    globalThis.location.hash = newLocationHash;
+    globalThis.location.hash = params.join('&');
   }
 }
