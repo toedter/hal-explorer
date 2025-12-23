@@ -15,7 +15,7 @@ Since HAL does not provide any affordances what HTTP method you should use to fo
 
 * `<` : HTTP GET
 * `+` : HTTP POST
-* `>` : HTTP PUT
+* `>>` : HTTP PUT
 * `>` : HTTP PATCH
 * `x` : HTTP DELETE
 
@@ -94,14 +94,23 @@ The modal dialog also provides buttons to clear all request headers or to add/mo
 request header for `HAL` or `HAL-FORMS` documents.
 
 
-== Bookmarking
+== Configuration and Bookmarking
 
-The following configuration is transported in HTTP parameters, so HAL Explorer URL can easily be bookmarked:
+The following configuration is stored in the browser's local storage and persists across sessions:
+
+* Color Mode (Light/Dark/Auto, default is Auto)
+* Theme (Default is Bootswatch Cosmo)
+* Column Layout (2 or 3 columns, default is 2)
+* HTTP OPTIONS setting (Default is off)
+* Enable all HTTP Methods for HAL-FORMS Links setting (Default is off)
+* Scrollable Documentation setting (Default is off)
+
+=== Bookmarking
+
+The following configuration is transported in URL parameters, so HAL Explorer URLs can easily be bookmarked and shared:
 
 * URI
 * Request Headers
-* Layout
-* Theme
 
 == HAL-FORMS Options
 

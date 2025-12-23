@@ -22,18 +22,42 @@ For further understanding of this document, please be aware of both
 * Color Modes
 ** Dark
 ** Light
-** Auto
+** Auto (automatically detects system preference)
 * Available Themes
 ** Bootstrap 5 default theme
-** https://bootswatch.com/[Bootswatch themes]
-* 2 layouts
+** https://bootswatch.com/[Bootswatch themes] (25+ themes available, Cosmo is the default)
+* Column Layouts
 ** _2 column layout_ with optional documentation
-** _3 column layout_ with documentation always visible if available
-* API URL and custom request headers stored as URL fragment
-* Settings are stored in local storage
-* Support for Spring Data Rest profiles to populate properties in request editor
-* Support for HAL-FORMS templates
-** Template elements in response explorer (see screenshot)
+** _3 column layout_ with documentation always visible when available
+* Full HTTP Method Support
+** GET, POST, PUT, PATCH, DELETE operations
+** HTTP OPTIONS method to discover available request options for links
+** Support for both simple and templated URIs
+* Request Features
+** API URL and custom request headers stored as URL fragment for easy sharing
+** Custom request headers editor
+** URI template parameter editor with validation
+** Keyboard shortcuts (Enter to submit, ESC to close dialogs)
+* Settings
+** All settings stored in browser's local storage with `hal-explorer.` namespace
+** Configurable HTTP OPTIONS usage for link discovery
+** Enable all HTTP methods for HAL-FORMS links
+** Scrollable documentation mode for large documentation content
+* Spring Data REST Integration
+** Support for Spring Data REST profiles to populate properties in request editor
+** Automatic content type detection
+* HAL-FORMS Support
+** Template elements displayed in response explorer (see screenshot)
 ** Template properties in request editor
-** Options support in request editor
-* HAL-FORMS property constraint validation in request editor
+** Options support with inline and linked values
+** Multiple selection support for array properties
+** Property constraint validation in request editor
+* Error Handling
+** Graceful handling of error responses (401, 404, etc.)
+** Display of HAL-FORMS documents even in error responses
+** Links and affordances remain accessible in error scenarios
+* Response Explorer
+** Syntax-highlighted JSON display
+** Expandable/collapsible sections for properties, links, embedded resources
+** Response status, headers, and body information
+** Documentation integration (when available)
