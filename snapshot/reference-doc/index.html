@@ -69,14 +69,20 @@
 <li><a href="#_hal_forms">3.6. HAL-FORMS</a></li>
 <li><a href="#_updating_rest_resources">3.7. Updating REST Resources</a></li>
 <li><a href="#_adding_request_headers">3.8. Adding Request Headers</a></li>
-<li><a href="#_bookmarking">3.9. Bookmarking</a></li>
+<li><a href="#_configuration_and_bookmarking">3.9. Configuration and Bookmarking</a>
+<ul class="sectlevel3">
+<li><a href="#_bookmarking">3.9.1. Bookmarking</a></li>
+</ul>
+</li>
 <li><a href="#_hal_forms_options">3.10. HAL-FORMS Options</a></li>
 </ul>
 </li>
 <li><a href="#menu">4. Menu</a>
 <ul class="sectlevel2">
-<li><a href="#theming">4.1. Theming</a></li>
-<li><a href="#settings">4.2. Settings</a></li>
+<li><a href="#color-mode">4.1. Color Mode</a></li>
+<li><a href="#theming">4.2. Theming</a></li>
+<li><a href="#settings">4.3. Settings</a></li>
+<li><a href="#about">4.4. About</a></li>
 </ul>
 </li>
 <li><a href="#license">5. License</a></li>
@@ -161,7 +167,7 @@ For further understanding of this document, please be aware of both</p>
 <p>Light</p>
 </li>
 <li>
-<p>Auto</p>
+<p>Auto (automatically detects system preference)</p>
 </li>
 </ul>
 </div>
@@ -174,51 +180,147 @@ For further understanding of this document, please be aware of both</p>
 <p>Bootstrap 5 default theme</p>
 </li>
 <li>
-<p><a href="https://bootswatch.com/">Bootswatch themes</a></p>
+<p><a href="https://bootswatch.com/">Bootswatch themes</a> (25+ themes available, Cosmo is the default)</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>2 layouts</p>
+<p>Column Layouts</p>
 <div class="ulist">
 <ul>
 <li>
 <p><em>2 column layout</em> with optional documentation</p>
 </li>
 <li>
-<p><em>3 column layout</em> with documentation always visible if available</p>
+<p><em>3 column layout</em> with documentation always visible when available</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>API URL and custom request headers stored as URL fragment</p>
-</li>
-<li>
-<p>Settings are stored in local storage</p>
-</li>
-<li>
-<p>Support for Spring Data Rest profiles to populate properties in request editor</p>
-</li>
-<li>
-<p>Support for HAL-FORMS templates</p>
+<p>Full HTTP Method Support</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Template elements in response explorer (see screenshot)</p>
+<p>GET, POST, PUT, PATCH, DELETE operations</p>
+</li>
+<li>
+<p>HTTP OPTIONS method to discover available request options for links</p>
+</li>
+<li>
+<p>Support for both simple and templated URIs</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Request Features</p>
+<div class="ulist">
+<ul>
+<li>
+<p>API URL and custom request headers stored as URL fragment for easy sharing</p>
+</li>
+<li>
+<p>Custom request headers editor</p>
+</li>
+<li>
+<p>URI template parameter editor with validation</p>
+</li>
+<li>
+<p>Keyboard shortcuts (Enter to submit, ESC to close dialogs)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Settings</p>
+<div class="ulist">
+<ul>
+<li>
+<p>All settings stored in browser&#8217;s local storage with <code>hal-explorer.</code> namespace</p>
+</li>
+<li>
+<p>Configurable HTTP OPTIONS usage for link discovery</p>
+</li>
+<li>
+<p>Enable all HTTP methods for HAL-FORMS links</p>
+</li>
+<li>
+<p>Scrollable documentation mode for large documentation content</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Spring Data REST Integration</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Support for Spring Data REST profiles to populate properties in request editor</p>
+</li>
+<li>
+<p>Automatic content type detection</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>HAL-FORMS Support</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Template elements displayed in response explorer (see screenshot)</p>
 </li>
 <li>
 <p>Template properties in request editor</p>
 </li>
 <li>
-<p>Options support in request editor</p>
+<p>Options support with inline and linked values</p>
+</li>
+<li>
+<p>Multiple selection support for array properties</p>
+</li>
+<li>
+<p>Property constraint validation in request editor</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>HAL-FORMS property constraint validation in request editor</p>
+<p>Error Handling</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Graceful handling of error responses (401, 404, etc.)</p>
+</li>
+<li>
+<p>Display of HAL-FORMS documents even in error responses</p>
+</li>
+<li>
+<p>Links and affordances remain accessible in error scenarios</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Response Explorer</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Syntax-highlighted JSON display</p>
+</li>
+<li>
+<p>Expandable/collapsible sections for properties, links, embedded resources</p>
+</li>
+<li>
+<p>Response status, headers, and body information</p>
+</li>
+<li>
+<p>Documentation integration (when available)</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
@@ -439,7 +541,7 @@ Since HAL does not provide any affordances what HTTP method you should use to fo
 <p><code>+</code> : HTTP POST</p>
 </li>
 <li>
-<p><code>&gt;</code> : HTTP PUT</p>
+<p><code>&gt;&gt;</code> : HTTP PUT</p>
 </li>
 <li>
 <p><code>&gt;</code> : HTTP PATCH</p>
@@ -580,9 +682,36 @@ request header for <code>HAL</code> or <code>HAL-FORMS</code> documents.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_bookmarking"><a class="anchor" href="#_bookmarking"></a>3.9. Bookmarking</h3>
+<h3 id="_configuration_and_bookmarking"><a class="anchor" href="#_configuration_and_bookmarking"></a>3.9. Configuration and Bookmarking</h3>
 <div class="paragraph">
-<p>The following configuration is transported in HTTP parameters, so HAL Explorer URL can easily be bookmarked:</p>
+<p>The following configuration is stored in the browser&#8217;s local storage and persists across sessions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Color Mode (Light/Dark/Auto, default is Auto)</p>
+</li>
+<li>
+<p>Theme (Default is Bootswatch Cosmo)</p>
+</li>
+<li>
+<p>Column Layout (2 or 3 columns, default is 2)</p>
+</li>
+<li>
+<p>HTTP OPTIONS setting (Default is off)</p>
+</li>
+<li>
+<p>Enable all HTTP Methods for HAL-FORMS Links setting (Default is off)</p>
+</li>
+<li>
+<p>Scrollable Documentation setting (Default is off)</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_bookmarking"><a class="anchor" href="#_bookmarking"></a>3.9.1. Bookmarking</h4>
+<div class="paragraph">
+<p>The following configuration is transported in URL parameters, so HAL Explorer URLs can easily be bookmarked and shared:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -592,13 +721,8 @@ request header for <code>HAL</code> or <code>HAL-FORMS</code> documents.</p>
 <li>
 <p>Request Headers</p>
 </li>
-<li>
-<p>Layout</p>
-</li>
-<li>
-<p>Theme</p>
-</li>
 </ul>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -650,37 +774,75 @@ A simple example JSON looks like</p>
 <h2 id="menu"><a class="anchor" href="#menu"></a>4. Menu</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the top-level menu you can choose the theme, a few settings, and a small about dialog.</p>
+<p>In the top-level menu you can choose the color mode, theme, settings, and view the 'About' dialog.</p>
 </div>
 <div class="sect2">
-<h3 id="theming"><a class="anchor" href="#theming"></a>4.1. Theming</h3>
+<h3 id="color-mode"><a class="anchor" href="#color-mode"></a>4.1. Color Mode</h3>
 <div class="paragraph">
-<p>HAL Explorer supports all the <a href="https://bootswatch.com/">Bootswatch</a> themes (by Thomas Park).</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="settings"><a class="anchor" href="#settings"></a>4.2. Settings</h3>
-<div class="paragraph">
-<p>In the <em>Settings</em> sub menu, you can choose</p>
+<p>HAL Explorer supports three color modes:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>the layout (see <a href="#_curie_based_documentation">Curie-based Documentation</a>).</p>
+<p><strong>Light</strong> - Light color scheme</p>
+</li>
+<li>
+<p><strong>Dark</strong> - Dark color scheme</p>
+</li>
+<li>
+<p><strong>Auto</strong> - Automatically detects your system&#8217;s preferred color scheme (Default)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The color mode is stored in your browser&#8217;s local storage and persists across sessions.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="theming"><a class="anchor" href="#theming"></a>4.2. Theming</h3>
+<div class="paragraph">
+<p>HAL Explorer supports all the <a href="https://bootswatch.com/">Bootswatch</a> themes (by Thomas Park).
+The default theme is Cosmo. You can select from 25+ different themes including:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Supported layouts are <em>2 Colum Layout</em> and <em>3 Column Layout</em>.</p>
+<p>Default (HAL Explorers default theme)</p>
+</li>
+<li>
+<p>Cosmo, Darkly, Flatly, Materia, and many more</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The selected theme is stored in your browser&#8217;s local storage and persists across sessions.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="settings"><a class="anchor" href="#settings"></a>4.3. Settings</h3>
+<div class="paragraph">
+<p>In the <em>Settings</em> sub menu, you can configure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Layout</strong> - Choose between different column layouts (see <a href="#_curie_based_documentation">Curie-based Documentation</a>)</p>
+<div class="ulist">
+<ul>
+<li>
+<p><em>2 Column Layout</em> - Two columns with optional documentation</p>
+</li>
+<li>
+<p><em>3 Column Layout</em> - Three columns with documentation always visible when available</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>if HAL EXPLORER should automatically do an <em>HTTP OPTIONS</em> request
-to figure out which HTTP methods are supported for a given link URI.</p>
+<p><strong>Use HTTP OPTIONS</strong> - Enable automatic HTTP OPTIONS requests to discover which HTTP methods are supported for a given link URI</p>
 </li>
 <li>
-<p>if you want to enable all HTTP methods for links in an HAL-FORMS document.</p>
+<p><strong>Enable all HTTP Methods for HAL-FORMS Links</strong> - Enable all HTTP methods for links in HAL-FORMS documents</p>
 <div class="ulist">
 <ul>
 <li>
@@ -688,6 +850,34 @@ to figure out which HTTP methods are supported for a given link URI.</p>
 </li>
 </ul>
 </div>
+</li>
+<li>
+<p><strong>Scrollable Documentation</strong> - When enabled, documentation is rendered in a scrollable iframe with a fixed maximum height instead of expanding the main page height</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>All settings are stored in your browser&#8217;s local storage with the <code>hal-explorer.</code> prefix and persist across sessions.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="about"><a class="anchor" href="#about"></a>4.4. About</h3>
+<div class="paragraph">
+<p>The About dialog displays:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Author information</p>
+</li>
+<li>
+<p>Version number</p>
+</li>
+<li>
+<p>GitHub repository link</p>
+</li>
+<li>
+<p>License information (MIT)</p>
 </li>
 </ul>
 </div>
@@ -706,7 +896,7 @@ to figure out which HTTP methods are supported for a given link URI.</p>
 <div id="footer">
 <div id="footer-text">
 Version 2.0.0-SNAPSHOT<br>
-Last updated 2025-12-23 14:15:40 UTC
+Last updated 2025-12-23 14:28:52 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

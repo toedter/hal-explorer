@@ -62,7 +62,7 @@ Since HAL does not provide any affordances what HTTP method you should use to fo
 <p><code>+</code> : HTTP POST</p>
 </li>
 <li>
-<p><code>&gt;</code> : HTTP PUT</p>
+<p><code>&gt;&gt;</code> : HTTP PUT</p>
 </li>
 <li>
 <p><code>&gt;</code> : HTTP PATCH</p>
@@ -216,10 +216,37 @@ request header for <code>HAL</code> or <code>HAL-FORMS</code> documents.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_bookmarking"><a class="anchor" href="#_bookmarking"></a>Bookmarking</h2>
+<h2 id="_configuration_and_bookmarking"><a class="anchor" href="#_configuration_and_bookmarking"></a>Configuration and Bookmarking</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The following configuration is transported in HTTP parameters, so HAL Explorer URL can easily be bookmarked:</p>
+<p>The following configuration is stored in the browser&#8217;s local storage and persists across sessions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Color Mode (Light/Dark/Auto, default is Auto)</p>
+</li>
+<li>
+<p>Theme (Default is Bootswatch Cosmo)</p>
+</li>
+<li>
+<p>Column Layout (2 or 3 columns, default is 2)</p>
+</li>
+<li>
+<p>HTTP OPTIONS setting (Default is off)</p>
+</li>
+<li>
+<p>Enable all HTTP Methods for HAL-FORMS Links setting (Default is off)</p>
+</li>
+<li>
+<p>Scrollable Documentation setting (Default is off)</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_bookmarking"><a class="anchor" href="#_bookmarking"></a>Bookmarking</h3>
+<div class="paragraph">
+<p>The following configuration is transported in URL parameters, so HAL Explorer URLs can easily be bookmarked and shared:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -229,13 +256,8 @@ request header for <code>HAL</code> or <code>HAL-FORMS</code> documents.</p>
 <li>
 <p>Request Headers</p>
 </li>
-<li>
-<p>Layout</p>
-</li>
-<li>
-<p>Theme</p>
-</li>
 </ul>
+</div>
 </div>
 </div>
 </div>
@@ -288,7 +310,7 @@ A simple example JSON looks like</p>
 <div id="footer">
 <div id="footer-text">
 Version 2.0.0-SNAPSHOT<br>
-Last updated 2025-12-23 14:15:40 UTC
+Last updated 2025-12-23 14:28:52 UTC
 </div>
 </div>
 </div>

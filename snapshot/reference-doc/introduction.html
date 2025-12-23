@@ -71,7 +71,7 @@ For further understanding of this document, please be aware of both</p>
 <p>Light</p>
 </li>
 <li>
-<p>Auto</p>
+<p>Auto (automatically detects system preference)</p>
 </li>
 </ul>
 </div>
@@ -84,51 +84,147 @@ For further understanding of this document, please be aware of both</p>
 <p>Bootstrap 5 default theme</p>
 </li>
 <li>
-<p><a href="https://bootswatch.com/">Bootswatch themes</a></p>
+<p><a href="https://bootswatch.com/">Bootswatch themes</a> (25+ themes available, Cosmo is the default)</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>2 layouts</p>
+<p>Column Layouts</p>
 <div class="ulist">
 <ul>
 <li>
 <p><em>2 column layout</em> with optional documentation</p>
 </li>
 <li>
-<p><em>3 column layout</em> with documentation always visible if available</p>
+<p><em>3 column layout</em> with documentation always visible when available</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>API URL and custom request headers stored as URL fragment</p>
-</li>
-<li>
-<p>Settings are stored in local storage</p>
-</li>
-<li>
-<p>Support for Spring Data Rest profiles to populate properties in request editor</p>
-</li>
-<li>
-<p>Support for HAL-FORMS templates</p>
+<p>Full HTTP Method Support</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Template elements in response explorer (see screenshot)</p>
+<p>GET, POST, PUT, PATCH, DELETE operations</p>
+</li>
+<li>
+<p>HTTP OPTIONS method to discover available request options for links</p>
+</li>
+<li>
+<p>Support for both simple and templated URIs</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Request Features</p>
+<div class="ulist">
+<ul>
+<li>
+<p>API URL and custom request headers stored as URL fragment for easy sharing</p>
+</li>
+<li>
+<p>Custom request headers editor</p>
+</li>
+<li>
+<p>URI template parameter editor with validation</p>
+</li>
+<li>
+<p>Keyboard shortcuts (Enter to submit, ESC to close dialogs)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Settings</p>
+<div class="ulist">
+<ul>
+<li>
+<p>All settings stored in browser&#8217;s local storage with <code>hal-explorer.</code> namespace</p>
+</li>
+<li>
+<p>Configurable HTTP OPTIONS usage for link discovery</p>
+</li>
+<li>
+<p>Enable all HTTP methods for HAL-FORMS links</p>
+</li>
+<li>
+<p>Scrollable documentation mode for large documentation content</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Spring Data REST Integration</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Support for Spring Data REST profiles to populate properties in request editor</p>
+</li>
+<li>
+<p>Automatic content type detection</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>HAL-FORMS Support</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Template elements displayed in response explorer (see screenshot)</p>
 </li>
 <li>
 <p>Template properties in request editor</p>
 </li>
 <li>
-<p>Options support in request editor</p>
+<p>Options support with inline and linked values</p>
+</li>
+<li>
+<p>Multiple selection support for array properties</p>
+</li>
+<li>
+<p>Property constraint validation in request editor</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>HAL-FORMS property constraint validation in request editor</p>
+<p>Error Handling</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Graceful handling of error responses (401, 404, etc.)</p>
+</li>
+<li>
+<p>Display of HAL-FORMS documents even in error responses</p>
+</li>
+<li>
+<p>Links and affordances remain accessible in error scenarios</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Response Explorer</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Syntax-highlighted JSON display</p>
+</li>
+<li>
+<p>Expandable/collapsible sections for properties, links, embedded resources</p>
+</li>
+<li>
+<p>Response status, headers, and body information</p>
+</li>
+<li>
+<p>Documentation integration (when available)</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
@@ -138,7 +234,7 @@ For further understanding of this document, please be aware of both</p>
 <div id="footer">
 <div id="footer-text">
 Version 2.0.0-SNAPSHOT<br>
-Last updated 2025-12-23 14:15:40 UTC
+Last updated 2025-12-23 14:28:52 UTC
 </div>
 </div>
 </div>
