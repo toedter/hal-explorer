@@ -1,7 +1,7 @@
 :doctype: book
 
 image:https://github.com/toedter/hal-explorer/workflows/Build/badge.svg["build", link="https://github.com/toedter/hal-explorer/actions"]
-image:https://codecov.io/gh/toedter/hal-explorer/branch/master/graph/badge.svg["coverage", link="https://codecov.io/gh/toedter/hal-explorer"]
+image:https://codecov.io/gh/toedter/hal-explorer/branch/main/graph/badge.svg["coverage", link="https://codecov.io/gh/toedter/hal-explorer"]
 image:https://img.shields.io/maven-central/v/org.webjars/hal-explorer?color=green["maven-central", link="https://search.maven.org/artifact/org.webjars/hal-explorer"]
 image:https://img.shields.io/badge/license-MIT-blue.svg["MIT", link="http://toedter.mit-license.org"]
 

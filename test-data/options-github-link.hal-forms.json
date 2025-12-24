@@ -13,11 +13,9 @@
           "name": "shipping",
           "prompt": "Select Shipping Method",
           "options": {
-            "selectedValues": [
-              "FedEx"
-            ],
+            "selectedValues": ["FedEx"],
             "link": {
-              "href": "https://raw.githubusercontent.com/toedter/hal-explorer/master/test-data/shipping.json",
+              "href": "https://raw.githubusercontent.com/toedter/hal-explorer/main/test-data/shipping.json",
               "templated": "false",
               "type": "application/json"
             },
