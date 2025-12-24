@@ -1,20 +1,27 @@
 codecov:
   require_ci_to_pass: true
+  # Report line coverage as the primary metric
+  # Note: Codecov will still track branch coverage separately
+  notify:
+    require_ci_to_pass: yes
 
 coverage:
   precision: 2
   round: down
   range: "70...100"
+
   status:
     project:
       default:
         target: auto
         threshold: 0.5%
+
     patch:
       default:
         target: auto
         threshold: 0.5%
 
+# Ignore untestable files
 ignore:
   - "**/*.html"
   - "**/*.css"
@@ -26,7 +33,15 @@ ignore:
   - "**/*.spec.ts"
 
 comment:
-  layout: "reach,diff,flags,tree,footer"
+  # Controls what appears in PR comments
+  # Current: condensed (compact) format showing header, files, and footer
+  # Options: header, condensed_header, diff, files, condensed_files,
+  #          tree, reach, flags, footer, condensed_footer, components
+  layout: "condensed_header, condensed_files, condensed_footer"
   behavior: default
   require_changes: false
+
+# GitHub status checks
+github_checks:
+  annotations: true
 
