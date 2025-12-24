@@ -117,8 +117,5 @@
     "@schematics/angular:resolver": {
       "typeSeparator": "."
     }
-  },
-  "test": {
-    "builder": "@angular/build:unit-test"
   }
 }
