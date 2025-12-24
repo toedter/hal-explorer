@@ -23,6 +23,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbar1">
       <ul class="navbar-nav">
+        <!-- Color Mode Dropdown (Light/Dark/Auto) -->
+        <!-- Icon-only button by design - accessible via aria-label. SonarQube S6841 false positive. -->
         <li class="nav-item dropdown">
           <button
             class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center"
@@ -31,27 +33,26 @@
             aria-expanded="false"
             data-bs-toggle="dropdown"
             data-bs-display="static"
-            aria-label="Toggle theme ({{ activeColorMode }})"
+            aria-label="Toggle color mode"
           >
             @if (activeColorMode === 'light') {
-              <i class="bi bi-sun-fill"></i>
+              <i class="bi bi-sun-fill" aria-hidden="true"></i>
             }
             @if (activeColorMode === 'dark') {
-              <i class="bi bi-moon-stars-fill"></i>
+              <i class="bi bi-moon-stars-fill" aria-hidden="true"></i>
             }
             @if (activeColorMode === 'auto') {
-              <i class="bi bi-circle-half"></i>
+              <i class="bi bi-circle-half" aria-hidden="true"></i>
             }
-            <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
           </button>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme">
             <li>
               <button
                 type="button"
                 class="dropdown-item d-flex align-items-center"
                 (click)="setColorMode('light')"
                 [class.active]="activeColorMode === 'light'"
-                aria-pressed="{{ activeColorMode === 'light' }}"
+                [attr.aria-pressed]="activeColorMode === 'light'"
               >
                 <i class="bi bi-sun-fill me-2 opacity-50"></i>
                 Light
@@ -66,7 +67,7 @@
                 class="dropdown-item d-flex align-items-center"
                 (click)="setColorMode('dark')"
                 [class.active]="activeColorMode === 'dark'"
-                aria-pressed="{{ activeColorMode === 'dark' }}"
+                [attr.aria-pressed]="activeColorMode === 'dark'"
               >
                 <i class="bi bi-moon-stars-fill me-2 opacity-50"></i>
                 Dark
@@ -81,7 +82,7 @@
                 class="dropdown-item d-flex align-items-center"
                 (click)="setColorMode('auto')"
                 [class.active]="activeColorMode === 'auto'"
-                aria-pressed="{{ activeColorMode === 'auto' }}"
+                [attr.aria-pressed]="activeColorMode === 'auto'"
               >
                 <i class="bi bi-circle-half me-2 opacity-50"></i>
                 Auto
@@ -92,18 +93,17 @@
             </li>
           </ul>
         </li>
+        <!-- Bootstrap Themes Dropdown (cosmo, darkly, etc.) -->
         <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
+          <button
+            class="btn btn-link nav-link dropdown-toggle"
             id="navbarDropdownTheme"
-            role="button"
+            type="button"
             data-bs-toggle="dropdown"
-            aria-haspopup="true"
             aria-expanded="false"
           >
             Theme
-          </a>
+          </button>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownTheme">
             @for (theme of themes; track theme) {
               <a class="dropdown-item" href="#" (click)="changeTheme(theme)">
@@ -113,17 +113,15 @@
           </div>
         </li>
         <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
+          <button
+            class="btn btn-link nav-link dropdown-toggle"
             id="navbarDropdownLayout"
-            role="button"
+            type="button"
             data-bs-toggle="dropdown"
-            aria-haspopup="true"
             aria-expanded="false"
           >
             Settings
-          </a>
+          </button>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownLayout">
             @for (setting of settings; track $index) {
               <div>
@@ -146,15 +144,8 @@
 </nav>
 
 <!-- Modal About Dialog -->
-<div
-  class="modal fade"
-  id="aboutModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="aboutModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog" role="document">
+<div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="aboutModalLabel">About HAL Explorer</h5>
@@ -163,6 +154,12 @@
       <div class="modal-body">
         <div class="container-fluid">
           <table class="table table-striped table-sm">
+            <thead class="visually-hidden">
+              <tr>
+                <th scope="col">Property</th>
+                <th scope="col">Value</th>
+              </tr>
+            </thead>
             <tbody>
               <tr>
                 <td>Author:</td>

@@ -1,8 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('HAL Explorer App', () => {
-
-  const expectResponseDetailsAreDisplayed = async (page) => {
+  const expectResponseDetailsAreDisplayed = async page => {
     await expect(page.locator('h5:has-text("Response Status")')).toBeVisible();
     await expect(page.locator('h5:has-text("Response Headers")')).toBeVisible();
     await expect(page.locator('h5:has-text("Response Body")')).toBeVisible();
@@ -11,8 +10,8 @@ test.describe('HAL Explorer App', () => {
   test('Visits the initial HAL Explorer page', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('.navbar-brand')).toContainText('HAL Explorer');
-    await expect(page.locator('nav .navbar-nav a.nav-link', { hasText: 'Theme' })).toBeVisible();
-    await expect(page.locator('nav .navbar-nav a.nav-link', { hasText: 'Settings' })).toBeVisible();
+    await expect(page.locator('nav .navbar-nav button.nav-link', { hasText: 'Theme' })).toBeVisible();
+    await expect(page.locator('nav .navbar-nav button.nav-link', { hasText: 'Settings' })).toBeVisible();
     await expect(page.locator('nav .navbar-nav a.nav-link', { hasText: 'About' })).toBeVisible();
     await expect(page.locator('button.btn.btn-secondary', { hasText: 'Edit Headers' })).toBeVisible();
     await expect(page.locator('button.btn.btn-primary', { hasText: 'Go!' })).toBeVisible();
@@ -89,9 +88,12 @@ test.describe('HAL Explorer App', () => {
     await expect(page.locator('h5:has-text("Links")').first()).toBeVisible();
 
     // Ensure Bootstrap is loaded
-    await page.waitForFunction(() => {
-      return typeof (window as any).bootstrap !== 'undefined';
-    }, { timeout: 10000 });
+    await page.waitForFunction(
+      () => {
+        return typeof (window as any).bootstrap !== 'undefined';
+      },
+      { timeout: 10000 }
+    );
 
     // Ensure the POST button is visible and clickable
     const postButton = page.locator('button:has(i.bi-plus-lg)').first();
@@ -135,8 +137,7 @@ test.describe('HAL Explorer App', () => {
     await page.locator('input[id="request-input-completed"]').press('Tab');
 
     // Wait for the URI to update by checking it contains the expected value
-    await expect(page.locator('[id="request-input-expanded-uri"]'))
-      .toContainText('title=myTitle', { timeout: 2000 });
+    await expect(page.locator('[id="request-input-expanded-uri"]')).toContainText('title=myTitle', { timeout: 2000 });
   });
 
   test('should close modal on ESC key', async ({ page }) => {
@@ -257,7 +258,7 @@ test.describe('HAL Explorer App', () => {
     await expect(page).not.toHaveURL(/scrollableDocumentation=true/);
 
     // Open the Settings menu
-    const settingsDropdown = page.locator('a.nav-link', { hasText: 'Settings' });
+    const settingsDropdown = page.locator('button.nav-link', { hasText: 'Settings' });
     await settingsDropdown.click();
     await expect(page.locator('.dropdown-menu[aria-labelledby="navbarDropdownLayout"]')).toBeVisible();
 
@@ -324,6 +325,4 @@ test.describe('HAL Explorer App', () => {
     await expect(page.getByRole('cell', { name: 'Login', exact: true })).toBeVisible();
     await expect(page.getByRole('cell', { name: 'Register', exact: true })).toBeVisible();
   });
-
 });
-
