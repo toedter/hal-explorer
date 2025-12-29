@@ -26,15 +26,6 @@ yarn_build.outputs.dir new File(projectDir, "dist")
 
 yarn_build.dependsOn yarn_install, yarn_lint //, yarn_test
 
-//task clean() {
-//  doFirst {
-//    delete "dist"
-//    delete "build"
-//  }
-//}
-
-// task build
-
 build.dependsOn yarn_build
 
 version = '2.0.0-SNAPSHOT'
@@ -60,16 +51,26 @@ asciidoctor {
 tasks.register('doc') {
   dependsOn asciidoctor
 
+  description = 'creates reference documentation for gh-pages'
+  group = 'documentation'
+
   doLast {
+    def currentVersion = project.version.toString()
+    def isSnapshot = currentVersion.contains('-SNAPSHOT')
+    def versionDir = isSnapshot ? 'snapshot' : 'release'
+
+    println "Generating documentation for ${currentVersion} in ${versionDir} directory"
+
+    // Copy to snapshot or release directory
     copy {
       from "$projectDir/dist/hal-explorer/browser"
-      into "$projectDir/build/docs/gh-pages/snapshot/hal-explorer"
+      into "$projectDir/build/docs/gh-pages/${versionDir}/hal-explorer"
     }
 
     copy {
       from "$projectDir/test-data"
-      into "$projectDir/build/docs/gh-pages/snapshot/hal-explorer/examples"
-      filter { line -> line.replaceAll('http://localhost:3000', 'https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples') }
+      into "$projectDir/build/docs/gh-pages/${versionDir}/hal-explorer/examples"
+      filter { line -> line.replaceAll("http://localhost:3000", "https://toedter.github.io/hal-explorer/${versionDir}/hal-explorer/examples") }
     }
 
     copy {
@@ -79,7 +80,7 @@ tasks.register('doc') {
 
     copy {
       from "$projectDir/build/docs/asciidoc"
-      into "$projectDir/build/docs/gh-pages/snapshot/reference-doc"
+      into "$projectDir/build/docs/gh-pages/${versionDir}/reference-doc"
     }
   }
 }

@@ -81,7 +81,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/docs/gh-pages/snapshot
-          destination_dir: snapshot
+build          publish_dir: ./build/docs/gh-pages
           publish_branch: gh-pages
-          force_orphan: false
+          keep_files: true
