@@ -262,14 +262,14 @@ test.describe('HAL Explorer App', () => {
     await settingsDropdown.click();
     await expect(page.locator('.dropdown-menu[aria-labelledby="navbarDropdownLayout"]')).toBeVisible();
 
-    // Verify the "Scrollable Documentation" setting does NOT initially have a checkmark
+    // Verify the "Scrollable Documentation" setting DOES initially have a checkmark (default is true)
     const scrollableDocSetting = page.locator('.dropdown-item', { hasText: 'Scrollable Documentation' });
     await expect(scrollableDocSetting).toBeVisible();
     const checkIcon = scrollableDocSetting.locator('i.bi-check');
     const iconStyleBefore = await checkIcon.evaluate((el: HTMLElement) => window.getComputedStyle(el).visibility);
-    expect(iconStyleBefore).toBe('hidden');
+    expect(iconStyleBefore).not.toBe('hidden');
 
-    // Click the "Scrollable Documentation" setting to enable it
+    // Click the "Scrollable Documentation" setting to disable it
     await scrollableDocSetting.click();
 
     // Wait a moment for the setting to be applied
@@ -278,15 +278,15 @@ test.describe('HAL Explorer App', () => {
     // Note: Due to a known issue, the URI parameter may be lost when toggling settings
     // We're testing that the setting itself toggles correctly, not the URL persistence
 
-    // Open Settings menu again to verify the checkmark is now shown
+    // Open Settings menu again to verify the checkmark is now hidden
     await settingsDropdown.click();
     await expect(page.locator('.dropdown-menu[aria-labelledby="navbarDropdownLayout"]')).toBeVisible();
 
-    // Verify the checkmark is now visible
+    // Verify the checkmark is now hidden
     const iconStyleAfter = await checkIcon.evaluate((el: HTMLElement) => window.getComputedStyle(el).visibility);
-    expect(iconStyleAfter).not.toBe('hidden');
+    expect(iconStyleAfter).toBe('hidden');
 
-    // Click the setting again to disable it
+    // Click the setting again to enable it
     await scrollableDocSetting.click();
     await page.waitForTimeout(500);
 
@@ -294,9 +294,9 @@ test.describe('HAL Explorer App', () => {
     await settingsDropdown.click();
     await expect(page.locator('.dropdown-menu[aria-labelledby="navbarDropdownLayout"]')).toBeVisible();
 
-    // Verify the checkmark is hidden again
+    // Verify the checkmark is visible again
     const iconStyleFinal = await checkIcon.evaluate((el: HTMLElement) => window.getComputedStyle(el).visibility);
-    expect(iconStyleFinal).toBe('hidden');
+    expect(iconStyleFinal).not.toBe('hidden');
   });
 
   test('should display links and affordances for 401 error with HAL-FORMS content', async ({ page }) => {

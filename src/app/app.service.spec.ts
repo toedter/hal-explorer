@@ -14,6 +14,17 @@ describe('AppService', () => {
     expect(service).toBeTruthy();
   });
 
+  it('should have correct default values for all settings', () => {
+    // Service is already created in beforeEach with cleared localStorage and empty hash
+    expect(service.getTheme()).toBe('Cosmo');
+    expect(service.getColumnLayout()).toBe('2');
+    expect(service.getHttpOptions()).toBe(false);
+    expect(service.getAllHttpMethodsForLinks()).toBe(false);
+    expect(service.getScrollableDocumentation()).toBe(true);
+    expect(service.getUri()).toBe('');
+    expect(service.getCustomRequestHeaders()).toEqual([]);
+  });
+
   it('should set custom theme', () => {
     service.setTheme('Cosmo');
     expect(service.getTheme()).toBe('Cosmo');

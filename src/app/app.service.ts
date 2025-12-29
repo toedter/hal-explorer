@@ -21,7 +21,7 @@ export class AppService {
   private columnLayoutParam = DEFAULT_LAYOUT;
   private httpOptionsParam = false;
   private allHttpMethodsForLinksParam = false;
-  private scrollableDocumentationParam = false;
+  private scrollableDocumentationParam = true;
   private customRequestHeaders: RequestHeader[] = [];
   private uriParamBackup = '';
   private reactOnLocationHashChange = true;
@@ -51,17 +51,21 @@ export class AppService {
   private initializeFromLocalStorage(): void {
     this.themeParam = this.getFromStorage('theme', DEFAULT_THEME);
     this.columnLayoutParam = this.getFromStorage('columnLayout', DEFAULT_LAYOUT);
-    this.httpOptionsParam = this.getBooleanFromStorage('httpOptions');
-    this.allHttpMethodsForLinksParam = this.getBooleanFromStorage('allHttpMethodsForLinks');
-    this.scrollableDocumentationParam = this.getBooleanFromStorage('scrollableDocumentation');
+    this.httpOptionsParam = this.getBooleanFromStorage('httpOptions', false);
+    this.allHttpMethodsForLinksParam = this.getBooleanFromStorage('allHttpMethodsForLinks', false);
+    this.scrollableDocumentationParam = this.getBooleanFromStorage('scrollableDocumentation', true);
   }
 
   private getFromStorage(key: string, defaultValue: string): string {
     return localStorage.getItem(STORAGE_PREFIX + key) || defaultValue;
   }
 
-  private getBooleanFromStorage(key: string): boolean {
-    return localStorage.getItem(STORAGE_PREFIX + key) === 'true';
+  private getBooleanFromStorage(key: string, defaultValue: boolean): boolean {
+    const value = localStorage.getItem(STORAGE_PREFIX + key);
+    if (value === null) {
+      return defaultValue;
+    }
+    return value === 'true';
   }
 
   private saveToStorage(key: string, value: string | boolean): void {
