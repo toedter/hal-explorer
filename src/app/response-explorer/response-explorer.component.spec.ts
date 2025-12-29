@@ -262,7 +262,7 @@ describe('ResponseExplorerComponent', () => {
     });
     responseSubject.next(new Response(new HttpResponse({ headers: responseHeaders, body: halFormsResponse }), null));
 
-    expect(component.getRequestButtonClass(Command.Get)).toBe('ms-1 btn btn-sm nav-button btn-outline-primary');
+    expect(component.getRequestButtonClass(Command.Get)).toBe('ms-1 btn btn-sm nav-button btn-outline-success');
     expect(component.getRequestButtonClass(Command.Post)).toBe('ms-1 btn btn-sm nav-button btn-outline-info');
     expect(component.getRequestButtonClass(Command.Put)).toBe('ms-1 btn btn-sm nav-button btn-outline-warning');
     expect(component.getRequestButtonClass(Command.Patch)).toBe('ms-1 btn btn-sm nav-button btn-outline-warning');
