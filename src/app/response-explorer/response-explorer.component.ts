@@ -292,6 +292,7 @@ export class ResponseExplorerComponent implements OnInit {
   getRequestButtonClass(command: Command): string {
     const base = 'ms-1 btn btn-sm nav-button ';
     const variants = {
+      [Command.Get]: 'btn-outline-success',
       [Command.Post]: 'btn-outline-info',
       [Command.Put]: 'btn-outline-warning',
       [Command.Patch]: 'btn-outline-warning',
