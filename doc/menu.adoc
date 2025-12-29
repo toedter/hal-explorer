@@ -17,7 +17,7 @@ The color mode is stored in your browser's local storage and persists across ses
 [[theming]]
 == Theming
 
-HAL Explorer supports all of the https://bootswatch.com/[Bootswatch] themes (by Thomas Park).
+HAL Explorer supports all the https://bootswatch.com/[Bootswatch] themes (by Thomas Park).
 The default theme is Cosmo. You can select from 25+ different themes, including:
 
 * Default (HAL Explorer's default theme)

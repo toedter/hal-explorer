@@ -25,7 +25,8 @@
     "e2e:webkit": "playwright test --project=webkit",
     "e2e:report": "playwright show-report",
     "test-server": "node test-server.js",
-    "prepare": "husky"
+    "prepare": "husky",
+    "prepare:release": "node prepare-release.js"
   },
   "dependencies": {
     "@angular/animations": "^21.0.6",
