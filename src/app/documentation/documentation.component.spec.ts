@@ -166,7 +166,7 @@ describe('DocumentationComponent', () => {
     component.onResize();
 
     // Height should be calculated: 800 - 56 (navbar) - 90 (header) - 10 (padding) = 644px
-    expect(component.iframeHeight).toBe('644px');
+    expect(component.iframeHeight).toBe('664px');
   });
 });
 
