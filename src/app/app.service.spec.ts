@@ -192,4 +192,96 @@ describe('AppService', () => {
     expect(service.getTheme()).toBe('Cosmo');
     expect(service.getUri()).toBe('https://example.com/api');
   });
+
+  it('should handle browser back/forward navigation correctly on consecutive hash changes', () => {
+    let emittedUri: string | undefined;
+    service.uriObservable.subscribe(uri => {
+      emittedUri = uri;
+    });
+
+    // Simulate first navigation via browser back button
+    window.location.hash = '#uri=https://example.com/api/first';
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+    expect(service.getUri()).toBe('https://example.com/api/first');
+    expect(emittedUri).toBe('https://example.com/api/first');
+
+    // Simulate second navigation via browser forward button (should work, not skip)
+    window.location.hash = '#uri=https://example.com/api/second';
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+    expect(service.getUri()).toBe('https://example.com/api/second');
+    expect(emittedUri).toBe('https://example.com/api/second');
+
+    // Simulate third navigation (should also work)
+    window.location.hash = '#uri=https://example.com/api/third';
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+    expect(service.getUri()).toBe('https://example.com/api/third');
+    expect(emittedUri).toBe('https://example.com/api/third');
+  });
+
+  it('should not emit URI change when setUri is called with reactOnLocationHashChange=false', () => {
+    let emitCount = 0;
+    service.uriObservable.subscribe(() => {
+      emitCount++;
+    });
+
+    // This simulates the app programmatically setting the URI (e.g., after making a request)
+    // It should update the hash but not trigger the observable on the hashchange event
+    service.setUri('https://example.com/api/test');
+
+    // The setUri itself should not emit (since previousUri === uri on first call or it's intentionally skipped)
+    // The subsequent hashchange event should be ignored
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+
+    // Verify the URI was updated
+    expect(service.getUri()).toBe('https://example.com/api/test');
+
+    // But the next manual hash change should work
+    window.location.hash = '#uri=https://example.com/api/manual';
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+    expect(service.getUri()).toBe('https://example.com/api/manual');
+    expect(emitCount).toBeGreaterThanOrEqual(1);
+  });
+
+  it('should handle scenario: start URL, click 2 links, then back button 2 times', async () => {
+    const emittedUris: string[] = [];
+    service.uriObservable.subscribe(uri => {
+      emittedUris.push(uri);
+    });
+
+    // Start with initial URL (browser navigation)
+    window.location.hash = '#uri=http://localhost:3000/examples.hal-forms.json';
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+    expect(service.getUri()).toBe('http://localhost:3000/examples.hal-forms.json');
+    expect(emittedUris).toContain('http://localhost:3000/examples.hal-forms.json');
+
+    // Click first link - setUri will emit and update the hash
+    service.setUri('http://localhost:3000/link1.json');
+    // Wait for any automatic hashchange events to complete
+    await new Promise(resolve => setTimeout(resolve, 10));
+    expect(service.getUri()).toBe('http://localhost:3000/link1.json');
+    expect(emittedUris[emittedUris.length - 1]).toBe('http://localhost:3000/link1.json');
+
+    // Click second link - setUri will emit and update the hash
+    service.setUri('http://localhost:3000/link2.json');
+    // Wait for any automatic hashchange events to complete
+    await new Promise(resolve => setTimeout(resolve, 10));
+    expect(service.getUri()).toBe('http://localhost:3000/link2.json');
+    expect(emittedUris[emittedUris.length - 1]).toBe('http://localhost:3000/link2.json');
+
+    const emitCountBeforeBack = emittedUris.length;
+
+    // First back button - browser changes hash, our code should react
+    window.location.hash = '#uri=http://localhost:3000/link1.json';
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+    expect(service.getUri()).toBe('http://localhost:3000/link1.json');
+    expect(emittedUris[emittedUris.length - 1]).toBe('http://localhost:3000/link1.json');
+    expect(emittedUris.length).toBe(emitCountBeforeBack + 1); // Should have emitted
+
+    // Second back button - browser changes hash, our code should react
+    window.location.hash = '#uri=http://localhost:3000/examples.hal-forms.json';
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+    expect(service.getUri()).toBe('http://localhost:3000/examples.hal-forms.json');
+    expect(emittedUris[emittedUris.length - 1]).toBe('http://localhost:3000/examples.hal-forms.json');
+    expect(emittedUris.length).toBe(emitCountBeforeBack + 2); // Should have emitted again
+  });
 });

@@ -95,7 +95,7 @@ export class RequestService {
     if (requiresContentType) {
       headers = headers.set('Content-Type', contentType || 'application/json; charset=utf-8');
     } else {
-      this.appService.setUri(uri, false);
+      this.appService.setUri(uri);
     }
 
     this.http.request(httpMethod, uri, { headers, observe: 'response', body }).subscribe({

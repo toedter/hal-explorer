@@ -108,7 +108,7 @@ export class AppComponent implements OnInit {
   }
 
   changeTheme(theme: string): void {
-    this.applyTheme(theme);
+    this.appService.setTheme(theme);
   }
 
   private applyTheme(theme: string): void {
@@ -118,7 +118,6 @@ export class AppComponent implements OnInit {
         `https://bootswatch.com/5/${theme.toLowerCase()}/bootstrap.min.css`
       );
     }
-    this.appService.setTheme(theme);
   }
 
   changeLayout(layout: string): void {

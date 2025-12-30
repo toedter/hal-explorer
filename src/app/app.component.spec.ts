@@ -56,7 +56,7 @@ describe('AppComponent', () => {
       getCustomRequestHeaders: vi.fn(),
       setCustomRequestHeaders: vi.fn(),
       getTheme: vi.fn(),
-      setTheme: vi.fn(),
+      setTheme: vi.fn((theme: string) => themeSubject.next(theme)),
       getColumnLayout: vi.fn(),
       setColumnLayout: vi.fn(),
       getHttpOptions: vi.fn(),

@@ -23,8 +23,7 @@ export class AppService {
   private allHttpMethodsForLinksParam = false;
   private scrollableDocumentationParam = true;
   private customRequestHeaders: RequestHeader[] = [];
-  private uriParamBackup = '';
-  private reactOnLocationHashChange = true;
+  private previousUriParam = '';
 
   private readonly uriSubject = new Subject<string>();
   private readonly themeSubject = new Subject<string>();
@@ -76,14 +75,12 @@ export class AppService {
     return this.uriParam;
   }
 
-  setUri(uri: string, reactOnLocationHashChange = true): void {
-    this.reactOnLocationHashChange = reactOnLocationHashChange;
-    const previousUri = this.uriParam;
-    this.uriParamBackup = this.uriParam;
+  setUri(uri: string): void {
+    this.previousUriParam = this.uriParam;
     this.uriParam = uri;
     this.setLocationHash();
 
-    if (previousUri !== uri) {
+    if (this.previousUriParam !== uri) {
       this.uriSubject.next(this.uriParam);
     }
   }
@@ -120,7 +117,6 @@ export class AppService {
     this.httpOptionsParam = options;
     this.saveToStorage('httpOptions', options);
     this.httpOptionsSubject.next(this.httpOptionsParam);
-    this.uriSubject.next(this.uriParam);
   }
 
   getAllHttpMethodsForLinks(): boolean {
@@ -153,18 +149,15 @@ export class AppService {
   }
 
   private handleLocationHash(): void {
-    if (!this.reactOnLocationHashChange) {
-      this.reactOnLocationHashChange = true;
-      return;
-    }
-
+    const previousUri = this.uriParam;
     const tempCustomRequestHeaders = this.parseLocationHashParameters();
 
-    if (this.uriParamBackup !== this.uriParam) {
+    this.updateCustomRequestHeaders(tempCustomRequestHeaders);
+
+    // Emit URI if it changed from browser navigation (back/forward buttons)
+    if (previousUri !== this.uriParam) {
       this.uriSubject.next(this.uriParam);
     }
-
-    this.updateCustomRequestHeaders(tempCustomRequestHeaders);
   }
 
   private parseLocationHashParameters(): RequestHeader[] {
