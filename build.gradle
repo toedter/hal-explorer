@@ -28,7 +28,7 @@ yarn_build.dependsOn yarn_install, yarn_lint //, yarn_test
 
 build.dependsOn yarn_build
 
-version = '2.0.0-SNAPSHOT'
+version = '2.0.0'
 
 configurations {
   docs
