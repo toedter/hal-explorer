@@ -4,16 +4,23 @@
  * Release Preparation Script
  *
  * This script:
- * 1. Reads the current release version from README.adoc
- * 2. Reads the current snapshot version from build.gradle
- * 3. Calculates the next release version (incrementing minor version)
- * 4. Calculates the next snapshot version (incrementing minor version + SNAPSHOT)
+ * 1. Reads the current release version from the last git tag
+ * 2. Calculates the current snapshot version (current release + 1 patch)
+ * 3. Calculates the next release version by analyzing commits since the last tag
+ *    - Uses conventional commits (feat:, fix:, BREAKING CHANGE, etc.)
+ *    - Or accepts a manual version override via command line argument
+ * 4. Calculates the next snapshot version (next release + 1 patch)
  * 5. Replaces all occurrences in:
  *    - README.adoc
  *    - doc/setup.adoc
  *    - build.gradle
  *    - package.json
  *    - src/app/app.component.ts
+ *
+ * Conventional commit rules:
+ * - feat: or feat(scope): → Minor version bump
+ * - fix:, perf:, or similar → Patch version bump
+ * - BREAKING CHANGE or !: → Major version bump
  */
 
 const fs = require('fs');
@@ -83,37 +90,123 @@ function writeFile(filePath, content) {
 }
 
 function extractCurrentReleaseVersion() {
-  const readmePath = path.join(__dirname, 'README.adoc');
-  const content = readFile(readmePath);
+  const { execSync } = require('child_process');
 
-  // Look for the release version in the table: | Release | 1.2.3 |
-  const match = content.match(/\|\s*Release\s*\|\s*(\d+\.\d+\.\d+)\s*\|/);
-  if (!match) {
-    throw new Error('Could not find current release version in README.adoc');
+  try {
+    // Get the last git tag
+    const tagOutput = execSync('git describe --tags --abbrev=0', { encoding: 'utf8' }).trim();
+
+    // Remove 'v' prefix if present (e.g., v1.2.3 -> 1.2.3)
+    const version = tagOutput.replace(/^v/, '');
+
+    // Validate version format
+    const match = version.match(/^(\d+\.\d+\.\d+)$/);
+    if (!match) {
+      throw new Error(`Invalid version format in git tag: ${tagOutput}`);
+    }
+
+    return version;
+  } catch (error) {
+    throw new Error(
+      `Failed to extract version from git tags: ${error.message}. Make sure you have at least one git tag.`
+    );
   }
-
-  return match[1];
 }
 
-function extractCurrentSnapshotVersion() {
-  const gradlePath = path.join(__dirname, 'build.gradle');
-  const content = readFile(gradlePath);
+function calculateCurrentSnapshotVersion(currentRelease) {
+  // Current snapshot = current release + 1 patch
+  const currentReleaseVersion = parseVersion(currentRelease);
+  const currentSnapshotVersion = incrementPatchVersion(currentReleaseVersion);
+  return versionToString(currentSnapshotVersion);
+}
 
-  // Look for: version = '2.0.0-SNAPSHOT'
-  const match = content.match(/version\s*=\s*['"](\d+\.\d+\.\d+)-SNAPSHOT['"]/);
-  if (!match) {
-    throw new Error('Could not find current snapshot version in build.gradle');
+function getCommitsSinceLastTag() {
+  const { execSync } = require('child_process');
+
+  try {
+    // Get the last git tag
+    const lastTag = execSync('git describe --tags --abbrev=0', { encoding: 'utf8' }).trim();
+
+    // Get all commit messages since the last tag
+    const commits = execSync(`git log ${lastTag}..HEAD --pretty=format:%s`, { encoding: 'utf8' }).trim();
+
+    if (!commits) {
+      return [];
+    }
+
+    return commits.split('\n');
+  } catch (error) {
+    throw new Error(`Failed to get commits since last tag: ${error.message}`);
+  }
+}
+
+function calculateNextVersionFromCommits(currentRelease) {
+  const commits = getCommitsSinceLastTag();
+
+  if (commits.length === 0) {
+    log('  No commits since last release, incrementing patch version', colors.yellow);
+    const currentVersion = parseVersion(currentRelease);
+    return versionToString(incrementPatchVersion(currentVersion));
   }
 
-  return match[1];
+  let hasMajorChange = false;
+  let hasMinorChange = false;
+  let hasPatchChange = false;
+
+  commits.forEach(commit => {
+    const commitLower = commit.toLowerCase();
+
+    // Check for breaking changes (major version bump)
+    if (commitLower.includes('breaking change') || commitLower.includes('!:') || commitLower.match(/^[a-z]+!:/)) {
+      hasMajorChange = true;
+      log(`  Breaking change detected: ${commit}`, colors.yellow);
+    }
+    // Check for features (minor version bump)
+    else if (commitLower.startsWith('feat:') || commitLower.startsWith('feat(')) {
+      hasMinorChange = true;
+      log(`  Feature detected: ${commit}`, colors.cyan);
+    }
+    // Check for fixes and other changes (patch version bump)
+    else if (
+      commitLower.startsWith('fix:') ||
+      commitLower.startsWith('fix(') ||
+      commitLower.startsWith('perf:') ||
+      commitLower.startsWith('perf(')
+    ) {
+      hasPatchChange = true;
+    }
+  });
+
+  const currentVersion = parseVersion(currentRelease);
+  let nextVersion;
+
+  if (hasMajorChange) {
+    log(`  Incrementing MAJOR version due to breaking changes`, colors.green);
+    nextVersion = {
+      major: currentVersion.major + 1,
+      minor: 0,
+      patch: 0,
+    };
+  } else if (hasMinorChange) {
+    log(`  Incrementing MINOR version due to new features`, colors.green);
+    nextVersion = incrementMinorVersion(currentVersion);
+  } else if (hasPatchChange || commits.length > 0) {
+    log(`  Incrementing PATCH version due to fixes/changes`, colors.green);
+    nextVersion = incrementPatchVersion(currentVersion);
+  } else {
+    log(`  No significant changes, incrementing PATCH version`, colors.green);
+    nextVersion = incrementPatchVersion(currentVersion);
+  }
+
+  return versionToString(nextVersion);
 }
 
 function replaceInFile(filePath, replacements) {
   let content = readFile(filePath);
   let changeCount = 0;
 
-  replacements.forEach(({ from, to }) => {
-    const regex = new RegExp(escapeRegExp(from), 'g');
+  replacements.forEach(({ from, to, isRegex }) => {
+    const regex = isRegex ? new RegExp(from, 'g') : new RegExp(escapeRegExp(from), 'g');
     const matches = content.match(regex);
     if (matches) {
       changeCount += matches.length;
@@ -159,7 +252,7 @@ function main() {
     // Step 1: Extract current versions
     log('Step 1: Extracting current versions...', colors.blue);
     const currentRelease = extractCurrentReleaseVersion();
-    const currentSnapshot = extractCurrentSnapshotVersion();
+    const currentSnapshot = calculateCurrentSnapshotVersion(currentRelease);
 
     log(`  Current Release:  ${currentRelease}`, colors.cyan);
     log(`  Current Snapshot: ${currentSnapshot}-SNAPSHOT`, colors.cyan);
@@ -180,11 +273,10 @@ function main() {
         throw new Error(`Invalid version format provided: ${specifiedVersion}. Expected format: X.Y.Z`);
       }
     } else {
-      // Auto-increment minor version
-      const currentReleaseVersion = parseVersion(currentRelease);
-      nextReleaseVersion = incrementMinorVersion(currentReleaseVersion);
-      nextRelease = versionToString(nextReleaseVersion);
-      log(`  Auto-incrementing minor version`, colors.green);
+      // Calculate version based on commits since last release
+      log(`  Analyzing commits since last release...`, colors.cyan);
+      nextRelease = calculateNextVersionFromCommits(currentRelease);
+      nextReleaseVersion = parseVersion(nextRelease);
     }
 
     const nextSnapshotVersion = incrementPatchVersion(nextReleaseVersion);
@@ -204,19 +296,19 @@ function main() {
 
       replaceInFile(filePath, [
         { from: currentRelease, to: nextRelease },
-        { from: `${currentSnapshot}-SNAPSHOT`, to: `${nextSnapshot}-SNAPSHOT` },
+        { from: '\\d+\\.\\d+\\.\\d+-SNAPSHOT', to: `${nextSnapshot}-SNAPSHOT`, isRegex: true },
       ]);
     });
 
     // Update build.gradle to use the new release version
     log(`\nUpdating build.gradle...`, colors.yellow);
     const gradlePath = path.join(__dirname, 'build.gradle');
-    replaceInFile(gradlePath, [{ from: `${currentSnapshot}-SNAPSHOT`, to: nextRelease }]);
+    replaceInFile(gradlePath, [{ from: '\\d+\\.\\d+\\.\\d+-SNAPSHOT', to: nextRelease, isRegex: true }]);
 
     // Update app.component.ts to use the next snapshot version
     log(`\nUpdating src/app/app.component.ts...`, colors.yellow);
     const appComponentPath = path.join(__dirname, 'src/app/app.component.ts');
-    replaceInFile(appComponentPath, [{ from: `'${currentSnapshot}-SNAPSHOT'`, to: `'${nextRelease}'` }]);
+    replaceInFile(appComponentPath, [{ from: "'\\d+\\.\\d+\\.\\d+-SNAPSHOT'", to: `'${nextRelease}'`, isRegex: true }]);
 
     // Update package.json to use the new release version
     log(`\nUpdating package.json...`, colors.yellow);
@@ -228,7 +320,7 @@ function main() {
     log('='.repeat(60), colors.bright);
     log('\nSummary of changes:', colors.blue);
     log(`  ${currentRelease} → ${nextRelease}`, colors.cyan);
-    log(`  ${currentSnapshot}-SNAPSHOT → ${nextSnapshot}-SNAPSHOT`, colors.cyan);
+    log(`  *-SNAPSHOT → ${nextSnapshot}-SNAPSHOT`, colors.cyan);
     log('\nVersions set:', colors.blue);
     log(`  build.gradle:          ${nextRelease}`, colors.cyan);
     log(`  package.json:          ${nextRelease}`, colors.cyan);
@@ -242,9 +334,16 @@ function main() {
   } catch (error) {
     log('\n❌ Error: ' + error.message, colors.bright);
     log('\nUsage:', colors.blue);
-    log('  npm run prepare:release           - Auto-increment minor version', colors.cyan);
+    log(
+      '  npm run prepare:release           - Auto-calculate version from commits (conventional commits)',
+      colors.cyan
+    );
     log('  npm run prepare:release 2.0.0     - Use specific version 2.0.0', colors.cyan);
-    log('  npm run prepare:release X.Y.Z     - Use specific version X.Y.Z\n', colors.cyan);
+    log('  npm run prepare:release X.Y.Z     - Use specific version X.Y.Z', colors.cyan);
+    log('\nCommit conventions:', colors.blue);
+    log('  feat:                             - Increments MINOR version', colors.cyan);
+    log('  fix:, perf:                       - Increments PATCH version', colors.cyan);
+    log('  BREAKING CHANGE or !:             - Increments MAJOR version\n', colors.cyan);
     process.exit(1);
   }
 }
