@@ -10,6 +10,10 @@
       "href": "movies.hal.json",
       "name": "HAL movies example"
     },
+    "hal-doc-anchor": {
+      "href": "index-with-doc-anchor.hal.json",
+      "name": "HAL example for documentation anchor in curie"
+    },
     "hal-forms-index": {
       "href": "index.hal-forms.json",
       "name": "HAL-FORMS index example"
@@ -26,6 +30,10 @@
       "href": "movies-templated-target-get.hal-forms.json",
       "name": "HAL-FORMS template with HTTP GET method"
     },
+    "hal-forms-template-http-get-multi-selection": {
+      "href": "options-get-multi-selection.hal-forms.json",
+      "name": "HAL-FORMS template with HTTP GET method (multiple options)"
+    },
     "hal-forms-template-http-post": {
       "href": "movies-templated-target-post.hal-forms.json",
       "name": "HAL-FORMS template with HTTP POST method"
@@ -36,7 +44,11 @@
     },
     "hal-forms-with-options": {
       "href": "options.hal-forms.json",
-      "name": "HAL-FORMS options (inline)"
+      "name": "HAL-FORMS options (single, inline)"
+    },
+    "hal-forms-with-multiple-options": {
+      "href": "options-multiple.hal-forms.json",
+      "name": "HAL-FORMS options (multiple, inline)"
     },
     "hal-forms-with-options-link": {
       "href": "options-link.hal-forms.json",

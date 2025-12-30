@@ -1,0 +1,51 @@
+{
+  "_links": {
+    "self": {
+      "href": "https://toedter.github.io/hal-explorer/release/hal-explorer/examples/options-get-multi-selection.hal-forms.json"
+    }
+  },
+  "_templates": {
+    "search": {
+      "title": "Search Items",
+      "method": "GET",
+      "target": "https://toedter.github.io/hal-explorer/release/hal-explorer/examples/items",
+      "properties": [
+        {
+          "name": "sort",
+          "prompt": "Sort Order",
+          "type": "text",
+          "options": {
+            "promptField": "prompt",
+            "valueField": "value",
+            "minItems": 0,
+            "maxItems": 5,
+            "inline": [
+              {
+                "value": "name,asc",
+                "prompt": "Name (ascending)"
+              },
+              {
+                "value": "name,desc",
+                "prompt": "Name (descending)"
+              },
+              {
+                "value": "date,asc",
+                "prompt": "Date (ascending)"
+              },
+              {
+                "value": "date,desc",
+                "prompt": "Date (descending)"
+              }
+            ]
+          }
+        },
+        {
+          "name": "filter",
+          "prompt": "Filter",
+          "type": "text"
+        }
+      ]
+    }
+  }
+}
+

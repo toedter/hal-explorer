@@ -29,7 +29,7 @@
 <div id="header">
 <h1>Using HAL Explorer</h1>
 <div class="details">
-<span id="revnumber">version 1.2.3</span>
+<span id="revnumber">version 2.0.0</span>
 </div>
 </div>
 <div id="content">
@@ -37,11 +37,11 @@
 <h2 id="_json_properties"><a class="anchor" href="#_json_properties"></a>JSON Properties</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>When you start HAL Explorer, you see an input field in the top left area, where you can input the URI of a REST service, that returns HAL or HAL-FORMS documents. Once you click <code>Go!</code> or hit enter, the response is displayed. A typical response would look like</p>
+<p>When you start HAL Explorer, you will see an input field in the top-left area where you can enter the URI of a REST service that returns HAL or HAL-FORMS documents. Once you click <code>Go!</code> or press Enter, the response is displayed. A typical response looks like:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="img/hal-explorer.png" alt="hal explorer">
+<img src="img/hal-explorer-light.png" alt="hal explorer light">
 </div>
 </div>
 </div>
@@ -50,8 +50,8 @@
 <h2 id="_links"><a class="anchor" href="#_links"></a>Links</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Just below the URI you find the top-level JSON properties. If the response contains links, you find them below.
-Since HAL does not provide any affordances what HTTP method you should use to follow the link, you find colored buttons for each HTTP method:</p>
+<p>Just below the URI, you will find the top-level JSON properties. If the response contains links, they are displayed below.
+Since HAL does not provide affordances indicating which HTTP method you should use to follow a link, you will find colored buttons for each HTTP method:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -62,7 +62,7 @@ Since HAL does not provide any affordances what HTTP method you should use to fo
 <p><code>+</code> : HTTP POST</p>
 </li>
 <li>
-<p><code>&gt;</code> : HTTP PUT</p>
+<p><code>&gt;&gt;</code> : HTTP PUT</p>
 </li>
 <li>
 <p><code>&gt;</code> : HTTP PATCH</p>
@@ -80,11 +80,11 @@ you can click on the book icon to display it.</p>
 <p>If a link relation provides a name or a title, they are displayed in the links table.</p>
 </div>
 <div class="paragraph">
-<p>You can click on a link button to follow the link. If a link is templated, a modal dialog will pop up, where you can fill the template parameters, like</p>
+<p>You can click on a link button to follow the link. If a link is templated, a modal dialog will appear where you can fill in the template parameters, like:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="img/templated-request.png" alt="templated request">
+<img src="img/templated-request.png" alt="templated request" width="70%">
 </div>
 </div>
 <div class="paragraph">
@@ -96,12 +96,12 @@ you can click on the book icon to display it.</p>
 <h2 id="_embedded_resources"><a class="anchor" href="#_embedded_resources"></a>Embedded Resources</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If the response contains embedded resources, you find them in the section "Embedded Resources".
-You can click on an embedded resource to expand it, like</p>
+<p>If the response contains embedded resources, you will find them in the "Embedded Resources" section.
+You can click on an embedded resource to expand it, like:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="img/expanded-embedded-resource.png" alt="expanded embedded resource">
+<img src="img/expanded-embedded-resource.png" alt="expanded embedded resource" width="70%">
 </div>
 </div>
 </div>
@@ -110,18 +110,18 @@ You can click on an embedded resource to expand it, like</p>
 <h2 id="_response_details"><a class="anchor" href="#_response_details"></a>Response Details</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>On the right-hand side of the page you find details about the response:</p>
+<p>On the right-hand side of the page, you will find details about the response:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The Response Status code and text</p>
+<p>Response Status code and text</p>
 </li>
 <li>
 <p>All Response Headers</p>
 </li>
 <li>
-<p>The response body in highlighted JSON</p>
+<p>Response body with syntax-highlighted JSON</p>
 </li>
 </ul>
 </div>
@@ -131,12 +131,12 @@ You can click on an embedded resource to expand it, like</p>
 <h2 id="_curie_based_documentation"><a class="anchor" href="#_curie_based_documentation"></a>Curie-based Documentation</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Whenever you see a book icon, you can click on it, and the documentation is shown.
-Depending on the chosen layout, the documentation will be displayed as a third column on the right (3 column layout)
-or will replace the response details (2 column layout). You can change the layout using the <code>Settings</code> menu at the main toolbar.</p>
+<p>Whenever you see a book icon, you can click on it to display the documentation.
+Depending on the chosen layout, the documentation will be displayed as a third column on the right (3-column layout)
+or will replace the response details (2-column layout). You can change the layout using the <code>Settings</code> menu in the main toolbar.</p>
 </div>
 <div class="paragraph">
-<p>A page with 3 column layout might look like</p>
+<p>A page with a 3-column layout might look like:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -150,7 +150,7 @@ or will replace the response details (2 column layout). You can change the layou
 <div class="sectionbody">
 <div class="paragraph">
 <p>HAL Explorer supports the latest HAL-FORMS specification. Whenever a HAL-FORMS based response contains
-templates (<code>_templates</code>), all template elements will be displayed under the Links section, like</p>
+templates (<code>_templates</code>), all template elements will be displayed in the Links section, like:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -159,7 +159,7 @@ templates (<code>_templates</code>), all template elements will be displayed und
 </div>
 <div class="paragraph">
 <p>Since HAL-FORMS uses affordances to describe which HTTP method should be used for each template element, you can
-only follow links using HTTP GET, but use exactly the HTTP method specified in a template element.</p>
+follow links using HTTP GET, but must use the specific HTTP method defined in each template element.</p>
 </div>
 </div>
 </div>
@@ -167,32 +167,32 @@ only follow links using HTTP GET, but use exactly the HTTP method specified in a
 <h2 id="_updating_rest_resources"><a class="anchor" href="#_updating_rest_resources"></a>Updating REST Resources</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Whenever you click on an HTTP POST button, a modal dialog pops up, where you can enter the body of the post, and the query parameters (only if the URI is templated). In raw HAL based documents, it looks like</p>
+<p>Whenever you click on an HTTP POST button, a modal dialog appears where you can enter the request body and query parameters (only if the URI is templated). For raw HAL-based documents, it looks like:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="img/hal-post-dialog.png" alt="hal post dialog">
+<img src="img/hal-post-dialog.png" alt="hal post dialog" width="70%">
 </div>
 </div>
 <div class="paragraph">
-<p>When your server is implemented using <a href="https://spring.io/projects/spring-data-rest">Spring Data REST</a>, a JSON Schema-based Spring profile is automatically created. HAL Explorer automatically detects Spring Profiles, and instead of just presenting an empty body, form elements for all attributes are displayed, like</p>
+<p>When your server is implemented using <a href="https://spring.io/projects/spring-data-rest">Spring Data REST</a>, a JSON Schema-based Spring profile is automatically created. HAL Explorer automatically detects Spring Profiles, and instead of presenting an empty body, form elements for all attributes are displayed, like:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="img/request-input.png" alt="request input">
+<img src="img/request-input.png" alt="request input" width="70%">
 </div>
 </div>
 <div class="paragraph">
-<p>When your response is based on HAL-FORMS, all the properties of the corresponding template element are shown, like</p>
+<p>When your response is based on HAL-FORMS, all the properties of the corresponding template element are shown, like:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="img/hal-forms-post-dialog.png" alt="hal forms post dialog">
+<img src="img/hal-forms-post-dialog.png" alt="hal forms post dialog" width="70%">
 </div>
 </div>
 <div class="paragraph">
-<p>When HAL-FORMS is used, the fields are also validated and validation errors are displayed below the input area.
-Only for valid forms, the body is displayed, and the HTTP request can be made.</p>
+<p>When HAL-FORMS is used, the fields are also validated, and validation errors are displayed below the input area.
+Only for valid forms is the body displayed, and the HTTP request can be made.</p>
 </div>
 </div>
 </div>
@@ -200,13 +200,13 @@ Only for valid forms, the body is displayed, and the HTTP request can be made.</
 <h2 id="_adding_request_headers"><a class="anchor" href="#_adding_request_headers"></a>Adding Request Headers</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>When want to add certain request headers to all calls, click on <code>Edit Headers</code> in the top-left corner.
-THen, a modal dialog pops up where you can add headers. This is handy when you want to add things like
-bearer tokens for authorization, like</p>
+<p>When you want to add certain request headers to all calls, click on <code>Edit Headers</code> in the top-left corner.
+Then, a modal dialog will appear where you can add headers. This is useful when you want to add items like
+bearer tokens for authorization, like:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="img/request-headers.png" alt="request headers">
+<img src="img/request-headers.png" alt="request headers" width="70%">
 </div>
 </div>
 <div class="paragraph">
@@ -216,10 +216,37 @@ request header for <code>HAL</code> or <code>HAL-FORMS</code> documents.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_bookmarking"><a class="anchor" href="#_bookmarking"></a>Bookmarking</h2>
+<h2 id="_configuration_and_bookmarking"><a class="anchor" href="#_configuration_and_bookmarking"></a>Configuration and Bookmarking</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The following configuration is transported in HTTP parameters, so HAL Explorer URL can easily be bookmarked:</p>
+<p>The following configuration is stored in the browser&#8217;s local storage and persists across sessions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Color Mode (Light/Dark/Auto; default is Auto)</p>
+</li>
+<li>
+<p>Theme (default is Bootswatch Cosmo)</p>
+</li>
+<li>
+<p>Column Layout (2 or 3 columns; default is 2)</p>
+</li>
+<li>
+<p>HTTP OPTIONS setting (default is off)</p>
+</li>
+<li>
+<p>Enable all HTTP Methods for HAL-FORMS Links setting (default is off)</p>
+</li>
+<li>
+<p>Scrollable Documentation setting (default is off)</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_bookmarking"><a class="anchor" href="#_bookmarking"></a>Bookmarking</h3>
+<div class="paragraph">
+<p>The following configuration is included in URL parameters, so HAL Explorer URLs can be easily bookmarked and shared:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -229,13 +256,8 @@ request header for <code>HAL</code> or <code>HAL-FORMS</code> documents.</p>
 <li>
 <p>Request Headers</p>
 </li>
-<li>
-<p>Layout</p>
-</li>
-<li>
-<p>Theme</p>
-</li>
 </ul>
+</div>
 </div>
 </div>
 </div>
@@ -244,7 +266,7 @@ request header for <code>HAL</code> or <code>HAL-FORMS</code> documents.</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p>HAL Explorer supports HAL-FORMS <a href="https://rwcbook.github.io/hal-forms/#options-element">Options</a>.
-A simple example JSON looks like</p>
+A simple example JSON looks like:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -275,11 +297,11 @@ A simple example JSON looks like</p>
 </div>
 </div>
 <div class="paragraph">
-<p>When clicking on the POST request button, the dialog looks like</p>
+<p>When clicking on the POST request button, the dialog looks like:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="img/hal-forms-options.png" alt="hal forms options">
+<img src="img/hal-forms-options.png" alt="hal forms options" width="70%">
 </div>
 </div>
 </div>
@@ -287,8 +309,8 @@ A simple example JSON looks like</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.2.3<br>
-Last updated 2025-03-03 08:14:09 UTC
+Version 2.0.0<br>
+Last updated 2025-12-30 16:46:45 UTC
 </div>
 </div>
 </div>

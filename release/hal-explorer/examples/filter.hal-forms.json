@@ -1,7 +1,7 @@
 {
   "_links": {
     "self": {
-      "href": "https://toedter.github.io/hal-explorer/snapshot/hal-explorer/examples/filter.hal-forms.json"
+      "href": "https://toedter.github.io/hal-explorer/release/hal-explorer/examples/filter.hal-forms.json"
     }
   },
   "_templates": {
