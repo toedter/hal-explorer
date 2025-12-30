@@ -49,7 +49,8 @@ export class DocumentationComponent implements OnInit {
       const navbarHeight = 56;
       const headerHeight = 90;
       const padding = 10; // Reduced padding for better space utilization
-      const availableHeight = window.innerHeight - navbarHeight - headerHeight - padding;
+      const additionalHeight = 20; // Additional height when scrollable
+      const availableHeight = window.innerHeight - navbarHeight - headerHeight - padding + additionalHeight;
       this.iframeHeight = `${Math.max(300, availableHeight)}px`; // Minimum 300px
     } else {
       this.iframeHeight = '0px';
