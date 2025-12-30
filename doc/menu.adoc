@@ -17,31 +17,83 @@ The color mode is stored in your browser's local storage and persists across ses
 [[theming]]
 == Theming
 
-HAL Explorer supports all the https://bootswatch.com/[Bootswatch] themes (by Thomas Park).
-The default theme is Cosmo. You can select from 25+ different themes, including:
+HAL Explorer provides a rich theming experience with support for all https://bootswatch.com/[Bootswatch] themes (by Thomas Park).
+The default theme is *Cosmo*, which offers a clean, modern look that works well with both light and dark color modes.
 
-* Default (HAL Explorer's default theme)
-* Cosmo, Darkly, Flatly, Materia, and many more
+You can select from 25+ professionally designed themes to customize the look and feel of HAL Explorer:
 
-The selected theme is stored in your browser's local storage and persists across sessions.
+* *Default* - HAL Explorer's custom default theme
+* *Cosmo* - Modern, flat design with blue accents (default)
+* *Darkly* - Dark theme with subdued colors
+* *Flatly* - Flat design with green accents
+* *Materia* - Material Design inspired
+* *Lux* - Elegant with gold accents
+* *Minty* - Fresh minty theme
+* *Pulse* - Purple-themed design
+* *Sandstone* - Flat design with orange accents
+* *Sketchy* - Hand-drawn style
+* *And many more...*
+
+Here is an example of HAL Explorer using the Dark Cosmo theme:
+
+image::img/hal-explorer-dark.png[HAL Explorer with Dark Cosmo theme,width=80%]
+
+The selected theme is stored in your browser's local storage with the `hal-explorer.theme` key and persists across sessions. Themes automatically adapt to your selected color mode (light/dark/auto) for an optimal viewing experience.
 
 [[settings]]
 == Settings
 
-In the _Settings_ submenu, you can configure:
+The _Settings_ submenu allows you to customize HAL Explorer's behavior and user interface. All settings are automatically saved to your browser's local storage with the `hal-explorer.` prefix and persist across sessions.
 
-* *Layout* - Choose between different column layouts (see <<Curie-based Documentation>>)
-** _2 Column Layout_ - Two columns with optional documentation
-** _3 Column Layout_ - Three columns with documentation always visible when available
+=== Layout
 
-* *Use HTTP OPTIONS* - Enable automatic HTTP OPTIONS requests to discover which HTTP methods are supported for a given link URI
+Choose between different column layouts to optimize your workspace (see <<Curie-based Documentation>> for more details):
 
-* *Enable all HTTP Methods for HAL-FORMS Links* - Enable all HTTP methods for links in HAL-FORMS documents
-** Usually, HAL-FORMS `_templates` are used to specify affordances with explicit HTTP methods. However, there are some use cases where you might want to make calls using HTTP methods other than GET for certain links.
+* *2 Column Layout* - Default layout with two columns
+** Documentation panel appears only when explicitly toggled
+** Provides more horizontal space for the main content
+** Ideal for smaller screens or when documentation is not frequently needed
 
-* *Scrollable Documentation* - When enabled, documentation is rendered in a scrollable iframe with a fixed maximum height instead of expanding the main page height
+* *3 Column Layout* - Expanded layout with three columns
+** Documentation is always visible when available
+** Provides a comprehensive overview of resources, actions, and documentation simultaneously
+** Best for larger screens and documentation-heavy APIs
 
-All settings are stored in your browser's local storage with the `hal-explorer.` prefix and persist across sessions.
+=== Use HTTP OPTIONS
+
+When enabled, HAL Explorer automatically sends HTTP OPTIONS requests to discover which HTTP methods are supported for a given link URI.
+
+This feature helps you understand the available operations without having to consult external API documentation. The supported methods are then displayed as available actions for that resource.
+
+*Default:* Disabled
+
+=== Enable all HTTP Methods for HAL-FORMS Links
+
+When enabled, all HTTP methods (GET, POST, PUT, PATCH, DELETE, etc.) are available for links in HAL-FORMS documents, even if no explicit template is defined for that method.
+
+Typically, HAL-FORMS `_templates` explicitly specify affordances with their corresponding HTTP methods. However, this setting is useful when:
+
+* You need to test different HTTP methods on the same endpoint
+* Your API supports additional methods not documented in the HAL-FORMS template
+* You want to explore API capabilities beyond the standard template definitions
+
+*Default:* Disabled
+
+*Note:* Use this setting with caution, as it may allow operations that the API doesn't actually support.
+
+=== Scrollable Documentation
+
+When enabled, documentation is rendered in a scrollable iframe with a fixed maximum height instead of expanding the main page height.
+
+*Benefits:*
+
+* Keeps the main interface visible and prevents excessive scrolling
+* Ideal for APIs with extensive documentation
+* Provides better control over the viewing area
+
+*When disabled:* Documentation expands naturally to fit its content, which may extend the page height significantly.
+
+*Default:* Enabled
 
 [[about]]
 == About
