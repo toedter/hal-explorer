@@ -122,7 +122,7 @@ Maven:
 
 Gradle:
 [source, Groovy]
-implementation 'org.webjars:hal-explorer:2.0.0'
+runtimeOnly 'org.webjars:hal-explorer:2.0.0'
 
 When you use the WebJar with Spring Boot, you can access HAL Explorer at `/webjars/hal-explorer/2.0.0/index.html`.
 The easiest way to integrate the upstream version of HAL Explorer into your backend is to clone this Git repository,

@@ -37,7 +37,7 @@ you can define a dependency to the HAL Explorer WebJar.
 [source,groovy,indent=0,role="secondary"]
 .Gradle
 ----
-implementation 'org.webjars:hal-explorer:2.0.0'
+runtimeOnly 'org.webjars:hal-explorer:2.0.0'
 ----
 
 When you use the WebJar with Spring Boot, you can access HAL Explorer
@@ -57,7 +57,7 @@ If you are using Spring Data REST, you can instead add a dependency like
 [source,groovy,indent=0,role="secondary"]
 .Gradle
 ----
-implementation 'org.springframework.data:spring-data-rest-hal-explorer'
+runtimeOnly 'org.springframework.data:spring-data-rest-hal-explorer'
 ----
 
 When you use `spring-data-rest-hal-explorer`, you can access HAL Explorer in a web browser at `/`.
