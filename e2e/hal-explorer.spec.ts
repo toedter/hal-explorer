@@ -275,9 +275,6 @@ test.describe('HAL Explorer App', () => {
     // Wait a moment for the setting to be applied
     await page.waitForTimeout(500);
 
-    // Note: Due to a known issue, the URI parameter may be lost when toggling settings
-    // We're testing that the setting itself toggles correctly, not the URL persistence
-
     // Open Settings menu again to verify the checkmark is now hidden
     await settingsDropdown.click();
     await expect(page.locator('.dropdown-menu[aria-labelledby="navbarDropdownLayout"]')).toBeVisible();
