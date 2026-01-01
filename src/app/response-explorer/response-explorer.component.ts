@@ -71,6 +71,19 @@ export class ResponseExplorerComponent implements OnInit {
       this.isLoading = loading;
     });
 
+    this.appService.httpOptionsObservable.subscribe(useHttpOptions => {
+      if (this.links && this.links.length > 0) {
+        if (useHttpOptions) {
+          this.links.forEach(link => this.requestService.getHttpOptions(link));
+        } else {
+          // Clear options when HTTP OPTIONS is disabled
+          this.links.forEach(link => {
+            link.options = undefined;
+          });
+        }
+      }
+    });
+
     if (this.jsonRoot) {
       this.processJsonObject(this.jsonRoot);
     } else {

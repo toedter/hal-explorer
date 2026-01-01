@@ -88,6 +88,7 @@ describe('ResponseExplorerComponent', () => {
     appServiceMock = {
       getHttpOptions: vi.fn(),
       getAllHttpMethodsForLinks: vi.fn(),
+      httpOptionsObservable: new Subject<boolean>(),
     };
     appServiceMock.getHttpOptions.mockReturnValue(true);
     appServiceMock.getAllHttpMethodsForLinks.mockReturnValue(false);
@@ -477,5 +478,33 @@ describe('ResponseExplorerComponent', () => {
     expect(component.embedded.length).toBe(1);
     // The docUri should be undefined since no curie matched
     expect(component.embedded[0].docUri).toBeUndefined();
+  });
+
+  it('should trigger HTTP OPTIONS calls when httpOptionsObservable emits true', () => {
+    const link1 = new Link('self', 'http://test.com/1', '', '');
+    const link2 = new Link('items', 'http://test.com/items', '', '');
+    component.links = [link1, link2];
+
+    // Emit true to enable HTTP OPTIONS
+    appServiceMock.httpOptionsObservable.next(true);
+
+    expect(requestServiceMock.getHttpOptions).toHaveBeenCalledTimes(2);
+    expect(requestServiceMock.getHttpOptions).toHaveBeenCalledWith(link1);
+    expect(requestServiceMock.getHttpOptions).toHaveBeenCalledWith(link2);
+  });
+
+  it('should clear link options when httpOptionsObservable emits false', () => {
+    const link1 = new Link('self', 'http://test.com/1', '', '', undefined, 'GET, POST, PUT');
+    const link2 = new Link('items', 'http://test.com/items', '', '', undefined, 'GET, DELETE');
+    component.links = [link1, link2];
+
+    expect(link1.options).toBe('GET, POST, PUT');
+    expect(link2.options).toBe('GET, DELETE');
+
+    // Emit false to disable HTTP OPTIONS
+    appServiceMock.httpOptionsObservable.next(false);
+
+    expect(link1.options).toBeUndefined();
+    expect(link2.options).toBeUndefined();
   });
 });
