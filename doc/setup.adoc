@@ -34,7 +34,7 @@ you can define a dependency to the HAL Explorer WebJar.
 </dependency>
 ----
 
-[source,groovy,indent=0,role="secondary"]
+[source,indent=0,role="secondary"]
 .Gradle
 ----
 runtimeOnly 'org.webjars:hal-explorer:2.0.0'
@@ -54,7 +54,7 @@ If you are using Spring Data REST, you can instead add a dependency like
 </dependency>
 ----
 
-[source,groovy,indent=0,role="secondary"]
+[source,indent=0,role="secondary"]
 .Gradle
 ----
 runtimeOnly 'org.springframework.data:spring-data-rest-hal-explorer'
