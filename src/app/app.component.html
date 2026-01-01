@@ -106,9 +106,9 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownTheme">
             @for (theme of themes; track theme) {
-              <a class="dropdown-item" href="#" (click)="changeTheme(theme)">
-                <i class="bi bi-check" [style]="getThemeIconCheckStyle(theme)"></i>{{ theme }}</a
-              >
+              <button type="button" class="dropdown-item" (click)="changeTheme(theme)">
+                <i class="bi bi-check" [style]="getThemeIconCheckStyle(theme)"></i>{{ theme }}
+              </button>
             }
           </div>
         </li>
@@ -129,15 +129,19 @@
                   <hr class="dropdown-divider" />
                 }
                 @if (setting !== '---') {
-                  <a class="dropdown-item" href="#" (click)="selectSetting(setting)">
-                    <i class="bi bi-check" [style]="getSettingsIconCheckStyle(setting)"></i>{{ setting }}</a
-                  >
+                  <button type="button" class="dropdown-item" (click)="selectSetting(setting)">
+                    <i class="bi bi-check" [style]="getSettingsIconCheckStyle(setting)"></i>{{ setting }}
+                  </button>
                 }
               </div>
             }
           </div>
         </li>
-        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#aboutModal">About</a>
+        <li class="nav-item">
+          <button type="button" class="btn btn-link nav-link" data-bs-toggle="modal" data-bs-target="#aboutModal">
+            About
+          </button>
+        </li>
       </ul>
     </div>
   </div>
