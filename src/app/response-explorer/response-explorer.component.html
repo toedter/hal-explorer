@@ -34,7 +34,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @for (link of links; track link.href) {
+                  @for (link of links; track $index) {
                     <tr>
                       <td>{{ link.rel }}</td>
                       <td>{{ link.name }}</td>
@@ -171,7 +171,7 @@
             <h5>Embedded Resources</h5>
           </div>
           <div>
-            @for (embeddedResource of embedded; track embeddedResource.name; let i1 = $index) {
+            @for (embeddedResource of embedded; track $index; let i1 = $index) {
               <div class="card" [attr.id]="prefix + 'item_' + i1">
                 <div class="card-header d-flex">
                   <a
@@ -186,7 +186,7 @@
                 <div class="card-body p-1">
                   @if (embeddedResource.isArray) {
                     <div [attr.id]="prefix + 'embedded_' + i1" class="collapse show">
-                      @for (subEmbeddedResource of embeddedResource.content; track i2; let i2 = $index) {
+                      @for (subEmbeddedResource of embeddedResource.content; track $index; let i2 = $index) {
                         <div class="card m-1" [attr.id]="prefix + 'item_' + i1 + '_' + i2">
                           <div class="card-header d-flex">
                             <a
