@@ -12,7 +12,7 @@ test.describe('HAL Explorer App', () => {
     await expect(page.locator('.navbar-brand')).toContainText('HAL Explorer');
     await expect(page.locator('nav .navbar-nav button.nav-link', { hasText: 'Theme' })).toBeVisible();
     await expect(page.locator('nav .navbar-nav button.nav-link', { hasText: 'Settings' })).toBeVisible();
-    await expect(page.locator('nav .navbar-nav a.nav-link', { hasText: 'About' })).toBeVisible();
+    await expect(page.locator('nav .navbar-nav button.nav-link', { hasText: 'About' })).toBeVisible();
     await expect(page.locator('button.btn.btn-secondary', { hasText: 'Edit Headers' })).toBeVisible();
     await expect(page.locator('button.btn.btn-primary', { hasText: 'Go!' })).toBeVisible();
   });
