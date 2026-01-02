@@ -148,7 +148,16 @@ export class RequestComponent implements OnInit {
       }
     });
 
-    this.appService.uriObservable.subscribe(url => this.goFromHashChange(url));
+    // Subscribe to URI changes to update the input field
+    // Don't make HTTP requests here - only update the display
+    this.appService.uriObservable.subscribe(url => {
+      this.uri = url;
+      // Only make HTTP request if this came from browser navigation (back/forward)
+      // not from programmatic setUri calls during HTTP requests
+      if (this.appService.isFromBrowserNavigation()) {
+        this.requestService.getUri(url);
+      }
+    });
     this.appService.requestHeadersObservable.subscribe(requestHeaders => {
       this.tempRequestHeaders = requestHeaders;
       this.updateRequestHeaders();

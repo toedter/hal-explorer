@@ -303,11 +303,13 @@ describe('RequestComponent', () => {
       getUri: vi.fn(),
       getCustomRequestHeaders: vi.fn(),
       setCustomRequestHeaders: vi.fn(),
+      isFromBrowserNavigation: vi.fn(),
       uriObservable: uriSubject,
       requestHeadersObservable: requestHeaderSubject,
     };
     appServiceMock.getUri.mockReturnValue('http://localhost/api');
     appServiceMock.getCustomRequestHeaders.mockReturnValue([]);
+    appServiceMock.isFromBrowserNavigation.mockReturnValue(true); // Default to true for back/forward navigation
 
     const jsonHighlighterServiceMock = {
       syntaxHighlight: vi.fn(),

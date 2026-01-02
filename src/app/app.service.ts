@@ -24,6 +24,7 @@ export class AppService {
   private scrollableDocumentationParam = true;
   private customRequestHeaders: RequestHeader[] = [];
   private previousUriParam = '';
+  private fromBrowserNavigation = false;
 
   private readonly uriSubject = new Subject<string>();
   private readonly themeSubject = new Subject<string>();
@@ -78,11 +79,18 @@ export class AppService {
   setUri(uri: string): void {
     this.previousUriParam = this.uriParam;
     this.uriParam = uri;
+    this.fromBrowserNavigation = false; // Mark as programmatic
     this.setLocationHash();
 
     if (this.previousUriParam !== uri) {
       this.uriSubject.next(this.uriParam);
     }
+  }
+
+  isFromBrowserNavigation(): boolean {
+    const result = this.fromBrowserNavigation;
+    this.fromBrowserNavigation = false; // Reset after check
+    return result;
   }
 
   getTheme(): string {
@@ -156,6 +164,7 @@ export class AppService {
 
     // Emit URI if it changed from browser navigation (back/forward buttons)
     if (previousUri !== this.uriParam) {
+      this.fromBrowserNavigation = true; // Mark as browser navigation
       this.uriSubject.next(this.uriParam);
     }
   }
