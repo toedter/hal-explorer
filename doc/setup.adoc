@@ -8,8 +8,8 @@ as well as demos of HAL Explorer (with examples):
 
 [cols='1,1,2',stripes=even]
 |===
-| Latest Release | 2.0.0 | https://toedter.github.io/hal-explorer/release/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
-| Current Snapshot | 2.0.1-SNAPSHOT | https://toedter.github.io/hal-explorer/snapshot/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
+| Latest Release | 2.1.0 | https://toedter.github.io/hal-explorer/release/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
+| Current Snapshot | 2.1.1-SNAPSHOT | https://toedter.github.io/hal-explorer/snapshot/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
 |===
 
 To explore your services with these HAL Explorer demos, they must enable CORS.
@@ -30,18 +30,18 @@ you can define a dependency to the HAL Explorer WebJar.
 <dependency>
     <groupId>org.webjars</groupId>
     <artifactId>hal-explorer</artifactId>
-    <version>2.0.0</version>
+    <version>2.1.0</version>
 </dependency>
 ----
 
 [source,indent=0,role="secondary"]
 .Gradle
 ----
-runtimeOnly 'org.webjars:hal-explorer:2.0.0'
+runtimeOnly 'org.webjars:hal-explorer:2.1.0'
 ----
 
 When you use the WebJar with Spring Boot, you can access HAL Explorer
-in a web browser at `/webjars/hal-explorer/2.0.0/index.html`.
+in a web browser at `/webjars/hal-explorer/2.1.0/index.html`.
 
 If you are using Spring Data REST, you can instead add a dependency like
 
@@ -62,7 +62,7 @@ runtimeOnly 'org.springframework.data:spring-data-rest-hal-explorer'
 
 When you use `spring-data-rest-hal-explorer`, you can access HAL Explorer in a web browser at `/`.
 
-You can also download a zip-based https://github.com/toedter/hal-explorer/releases/download/v2.0.0/hal-explorer-2.0.0.zip[distribution] and deploy it on any web server.
+You can also download a zip-based https://github.com/toedter/hal-explorer/releases/download/v2.1.0/hal-explorer-2.1.0.zip[distribution] and deploy it on any web server.
 
 The easiest way to integrate the upstream version of HAL Explorer into your backend is to clone this Git repository,
 do a production build (see below), and then copy the content of the `dist/` folder to a location accessible by your backend server.
