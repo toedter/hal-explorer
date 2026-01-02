@@ -41,7 +41,7 @@ image::./doc/img/hal-explorer-light.png[HAL Explorer Light Mode]
 ** Auto (automatically detects system preference)
 * Available Themes
 ** Bootstrap 5 default theme
-** https://bootswatch.com/[Bootswatch themes] (25+ themes available)
+** All 26 https://bootswatch.com/[Bootswatch themes]
 * Column Layouts
 ** _2 column layout_ with optional documentation
 ** _3 column layout_ with documentation always visible when available
@@ -69,7 +69,6 @@ image::./doc/img/hal-explorer-light.png[HAL Explorer Light Mode]
 ** Multiple selection support for array properties
 ** Property constraint validation in request editor
 * Error Handling
-** Graceful handling of error responses (401, 404, etc.)
 ** Display of HAL-FORMS documents even in error responses
 ** Links and affordances remain accessible in error scenarios
 * Response Explorer
