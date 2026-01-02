@@ -60,7 +60,7 @@ type ColorMode = 'light' | 'dark' | 'auto';
 export class AppComponent implements OnInit {
   readonly themes = THEMES;
   readonly settings = SETTINGS;
-  readonly version = '2.1.0';
+  readonly version = '2.1.1-SNAPSHOT';
   readonly isSnapshotVersion = this.version.endsWith('SNAPSHOT');
 
   isCustomTheme = false;
