@@ -192,6 +192,12 @@ export class RequestComponent implements OnInit {
 
   handleModalKeydown(event: KeyboardEvent, form: any) {
     if (event.key === 'Enter') {
+      // Don't submit if focus is in a textarea (body field) - allow multiline input
+      const target = event.target as HTMLElement;
+      if (target?.tagName === 'TEXTAREA') {
+        return;
+      }
+
       event.preventDefault();
       // Check if the form is valid before submitting
       if (form?.valid) {
