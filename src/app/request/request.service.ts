@@ -151,7 +151,7 @@ export class RequestService {
         }
       },
       error: () => {
-        console.warn('Cannot get JSON schema information for: ', uri);
+        // Silently handle - JSON Schema discovery via HEAD is exploratory
         this.needInfoSubject.next(httpRequestEvent);
       },
     });
@@ -193,7 +193,7 @@ export class RequestService {
         this.needInfoSubject.next(httpRequestEvent);
       },
       error: () => {
-        console.warn('Cannot get JSON schema for: ', profileUri);
+        // Silently handle - JSON Schema discovery is exploratory
         this.needInfoSubject.next(httpRequestEvent);
       },
     });
@@ -291,7 +291,7 @@ export class RequestService {
         link.options = httpResponse.headers.get('allow');
       },
       error: () => {
-        console.warn('Cannot get OPTIONS for: ', link);
+        // Silently handle - OPTIONS is exploratory, 404 is expected for servers that don't support it
         link.options = 'http-options-error';
       },
     });

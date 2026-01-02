@@ -500,11 +500,8 @@ describe('RequestService', () => {
       statusText: 'Not Found',
     };
 
-    vi.spyOn(window.console, 'warn');
-
     profileRequest.flush(null, mockErrorResponse);
 
-    expect(window.console.warn).toHaveBeenCalled();
     expect(profileRequest.request.method).toBe('GET');
 
     const event = await eventPromise;
@@ -523,12 +520,9 @@ describe('RequestService', () => {
       statusText: 'Not Found',
     };
 
-    vi.spyOn(window.console, 'warn');
-
     jsonSchemaRequest.flush(null, mockErrorResponse);
 
     expect(jsonSchemaRequest.request.method).toBe('HEAD');
-    expect(window.console.warn).toHaveBeenCalled();
 
     httpMock.verify();
   });
@@ -717,8 +711,6 @@ describe('RequestService', () => {
   });
 
   it('should handle HTTP OPTIONS request error', () => {
-    vi.spyOn(window.console, 'warn');
-
     const link: Link = new Link('self', 'http://localhost/options', 'title', 'name');
     requestService.getHttpOptions(link);
 
@@ -728,6 +720,7 @@ describe('RequestService', () => {
     };
     httpMock.expectOne('http://localhost/options').flush('', mockErrorResponse);
     httpMock.verify();
-    expect(window.console.warn).toHaveBeenCalled();
+
+    expect(link.options).toBe('http-options-error');
   });
 });
