@@ -32,9 +32,9 @@ describe('AppService', () => {
   });
 
   it('should set default theme', () => {
-    service.setTheme('Default');
-    expect(service.getTheme()).toBe('Default');
-    expect(localStorage.getItem('hal-explorer.theme')).toBe('Default');
+    service.setTheme('Bootstrap Default');
+    expect(service.getTheme()).toBe('Bootstrap Default');
+    expect(localStorage.getItem('hal-explorer.theme')).toBe('Bootstrap Default');
   });
 
   it('should set 2 column layout', () => {

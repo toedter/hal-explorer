@@ -77,7 +77,7 @@ describe('AppComponent', () => {
     appServiceMock.getUri.mockReturnValue('http://localhost/api');
     appServiceMock.getCustomRequestHeaders.mockReturnValue([]);
 
-    appServiceMock.getTheme.mockReturnValue('Default');
+    appServiceMock.getTheme.mockReturnValue('Bootstrap Default');
     appServiceMock.getColumnLayout.mockReturnValue('2');
     appServiceMock.getHttpOptions.mockReturnValue(false);
     appServiceMock.getAllHttpMethodsForLinks.mockReturnValue(false);

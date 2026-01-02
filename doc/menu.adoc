@@ -17,22 +17,38 @@ The color mode is stored in your browser's local storage and persists across ses
 [[theming]]
 == Theming
 
-HAL Explorer provides a rich theming experience with support for all https://bootswatch.com/[Bootswatch] themes (by Thomas Park).
+HAL Explorer provides a rich theming experience with support of the Bootstrap default theme and 26 https://bootswatch.com/[Bootswatch] themes (by Thomas Park).
 The default theme is *Cosmo*, which offers a clean, modern look that works well with both light and dark color modes.
 
-You can select from 25+ professionally designed themes to customize the look and feel of HAL Explorer:
+You can select from 27 professionally designed themes to customize the look and feel of HAL Explorer:
 
-* *Default* - HAL Explorer's custom default theme
-* *Cosmo* - Modern, flat design with blue accents (default)
+* *Bootstrap Default* - Bootstrap's base theme
+* *Brite* - High contrast, colorful theme
+* *Cerulean* - Calm blue theme
+* *Cosmo* - Modern, flat design with blue accents (HAL Explorer default theme)
+* *Cyborg* - Dark theme with slate gray
 * *Darkly* - Dark theme with subdued colors
 * *Flatly* - Flat design with green accents
-* *Materia* - Material Design inspired
+* *Journal* - Newspaper-inspired crisp theme
+* *Litera* - Clean, readable typography
+* *Lumen* - Light theme with soft shadows
 * *Lux* - Elegant with gold accents
+* *Materia* - Material Design inspired
 * *Minty* - Fresh minty theme
+* *Morph* - Modern with gradients
 * *Pulse* - Purple-themed design
+* *Quartz* - Dark professional theme
 * *Sandstone* - Flat design with orange accents
+* *Simplex* - Minimalist white theme
 * *Sketchy* - Hand-drawn style
-* *And many more...*
+* *Slate* - Dark theme with blue highlights
+* *Solar* - Dark theme with yellow highlights
+* *Spacelab* - Modern flat blue theme
+* *Superhero* - Dark comic book style
+* *United* - Ubuntu-inspired design
+* *Vapor* - Retro synthwave theme
+* *Yeti* - Clean, snowy white theme
+* *Zephyr* - Light, airy design
 
 Here is an example of HAL Explorer using the Dark Cosmo theme:
 

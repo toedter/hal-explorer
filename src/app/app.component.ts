@@ -8,7 +8,7 @@ import { ResponseExplorerComponent } from './response-explorer/response-explorer
 import { RequestComponent } from './request/request.component';
 
 const THEMES = [
-  'Default',
+  'Bootstrap Default',
   'Brite',
   'Cerulean',
   'Cosmo',
