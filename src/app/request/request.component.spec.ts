@@ -1100,4 +1100,31 @@ describe('RequestComponent', () => {
 
     expect(component.halFormsProperties).toBeUndefined();
   });
+
+  it('should blur active element when blurActiveElement is called', () => {
+    // Create a button and focus it
+    const button = document.createElement('button');
+    document.body.appendChild(button);
+    button.focus();
+
+    // Verify button has focus
+    expect(document.activeElement).toBe(button);
+
+    // Call blurActiveElement
+    component.blurActiveElement();
+
+    // Verify button no longer has focus
+    expect(document.activeElement).not.toBe(button);
+
+    // Cleanup
+    document.body.removeChild(button);
+  });
+
+  it('should handle blurActiveElement when no element has focus', () => {
+    // Ensure body has focus (or no specific element)
+    document.body.focus();
+
+    // Should not throw error
+    expect(() => component.blurActiveElement()).not.toThrow();
+  });
 });

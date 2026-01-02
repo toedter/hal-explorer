@@ -167,6 +167,12 @@ export class RequestComponent implements OnInit {
   }
 
   makeHttpRequest() {
+    // Blur the active element to prevent aria-hidden accessibility violation
+    // when Bootstrap closes the modal
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+
     this.requestService.requestUri(
       this.newRequestUri,
       Command[this.selectedHttpMethod],
@@ -186,6 +192,14 @@ export class RequestComponent implements OnInit {
           goButton.click();
         }
       }
+    }
+  }
+
+  blurActiveElement() {
+    // Blur the active element to prevent aria-hidden accessibility violation
+    // when Bootstrap closes the modal
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
     }
   }
 
@@ -310,6 +324,12 @@ export class RequestComponent implements OnInit {
   }
 
   updateRequestHeaders() {
+    // Blur the active element to prevent aria-hidden accessibility violation
+    // when Bootstrap closes the modal
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+
     this.requestHeaders = [];
     for (const requestHeader of this.tempRequestHeaders) {
       const key: string = requestHeader.key.trim();

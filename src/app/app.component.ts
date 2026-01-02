@@ -173,6 +173,14 @@ export class AppComponent implements OnInit {
     return isActive ? '' : 'visibility: hidden';
   }
 
+  blurActiveElement() {
+    // Blur the active element to prevent aria-hidden accessibility violation
+    // when Bootstrap closes the modal
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  }
+
   initializeColorMode(): void {
     const storedColorMode = localStorage.getItem('hal-explorer.colorMode') as ColorMode | null;
     this.activeColorMode = storedColorMode || 'auto';

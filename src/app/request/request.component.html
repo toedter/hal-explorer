@@ -61,7 +61,13 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">HTTP Request Input</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="blurActiveElement()"
+        ></button>
       </div>
       <div class="modal-body me-2">
         <form #myForm="ngForm">
@@ -306,7 +312,13 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="requestHeadersModalLabel">Custom Request Headers</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="blurActiveElement()"
+        ></button>
       </div>
       <div class="modal-body">
         <form>
