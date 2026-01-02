@@ -121,12 +121,12 @@ Maven:
 </dependency>
 
 Gradle:
-[source, Groovy]
+[source,groovy]
 runtimeOnly 'org.webjars:hal-explorer:2.0.0'
 
 When you use the WebJar with Spring Boot, you can access HAL Explorer at `/webjars/hal-explorer/2.0.0/index.html`.
 The easiest way to integrate the upstream version of HAL Explorer into your backend is to clone this Git repository,
-do a production build, and then copy the content of the `dist/` folder to a location accessible by your backend server.
+do a production build, and then copy the content of the `dist/` folder to a location accessible by your backend.
 When you use Spring Boot, a good location in your project's source tree would be
 `src/main/resources/static/hal-explorer`.
 
@@ -155,11 +155,12 @@ The format is: `type(scope): subject`
 Valid types are: `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refactor`, `revert`, `style`, `test`
 
 Examples:
-```
+[source]
+----
 feat: add dark mode support
 fix: resolve navigation bug in sidebar
 docs: update installation instructions
-```
+----
 
 The commit message will be automatically validated when you commit.
 
