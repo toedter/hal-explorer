@@ -9,6 +9,7 @@ import { RequestComponent } from './request/request.component';
 
 const THEMES = [
   'Bootstrap Default',
+  '---',
   'Brite',
   'Cerulean',
   'Cosmo',

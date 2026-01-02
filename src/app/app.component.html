@@ -106,9 +106,13 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownTheme">
             @for (theme of themes; track theme) {
-              <button type="button" class="dropdown-item" (click)="changeTheme(theme)">
-                <i class="bi bi-check" [style]="getThemeIconCheckStyle(theme)"></i>{{ theme }}
-              </button>
+              @if (theme === '---') {
+                <div class="dropdown-divider"></div>
+              } @else {
+                <button type="button" class="dropdown-item" (click)="changeTheme(theme)">
+                  <i class="bi bi-check" [style]="getThemeIconCheckStyle(theme)"></i>{{ theme }}
+                </button>
+              }
             }
           </div>
         </li>
