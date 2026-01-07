@@ -295,4 +295,204 @@ describe('AppComponent', () => {
     // Should not throw error
     expect(() => component.blurActiveElement()).not.toThrow();
   });
+
+  describe('Resizable Columns', () => {
+    it('should initialize with default column widths in 3-column layout', () => {
+      // Create a new component with 3-column layout
+      const appServiceMock = TestBed.inject(AppService);
+      (appServiceMock as any).getColumnLayout.mockReturnValue('3');
+
+      const newFixture = TestBed.createComponent(AppComponent);
+      const newComponent = newFixture.componentInstance;
+      newComponent.isTwoColumnLayout = false;
+      newFixture.detectChanges();
+
+      expect(newComponent.column1Width()).toBeCloseTo(33.33, 1);
+      expect(newComponent.column2Width()).toBeCloseTo(33.33, 1);
+      expect(newComponent.column3Width()).toBeCloseTo(33.34, 1);
+    });
+
+    it('should initialize with default column widths in 2-column layout', () => {
+      component.isTwoColumnLayout = true;
+      expect(component.column1Width()).toBeCloseTo(33.33, 1);
+      // In 2-column layout, column2 is 100% - column1
+      expect(component.column2Width()).toBeCloseTo(66.67, 1);
+    });
+
+    it('should start resize operation on mousedown', () => {
+      const mouseEvent = new MouseEvent('mousedown', { clientX: 100, cancelable: true });
+      component.startResize(mouseEvent, 1);
+
+      // After starting resize, preventDefault should have been called
+      expect(mouseEvent.defaultPrevented).toBe(true);
+    });
+
+    it('should resize columns in 2-column layout', () => {
+      component.isTwoColumnLayout = true;
+      const initialWidth = component.column1Width();
+
+      // Start resize
+      const startEvent = new MouseEvent('mousedown', { clientX: 100 });
+      component.startResize(startEvent, 1);
+
+      // Simulate mouse move (creating a mock container)
+      const mockContainer = document.createElement('div');
+      mockContainer.className = 'resizable-layout';
+      Object.defineProperty(mockContainer, 'clientWidth', { value: 1000 });
+      document.body.appendChild(mockContainer);
+
+      const moveEvent = new MouseEvent('mousemove', { clientX: 200 });
+      document.dispatchEvent(moveEvent);
+
+      // Width should have changed
+      expect(component.column1Width()).not.toBe(initialWidth);
+
+      // Cleanup
+      document.body.removeChild(mockContainer);
+      document.dispatchEvent(new MouseEvent('mouseup'));
+    });
+
+    it('should resize columns in 3-column layout', () => {
+      component.isTwoColumnLayout = false;
+      const initialColumn1Width = component.column1Width();
+      const initialColumn2Width = component.column2Width();
+
+      // Start resize
+      const startEvent = new MouseEvent('mousedown', { clientX: 100 });
+      component.startResize(startEvent, 1);
+
+      // Simulate mouse move (creating a mock container)
+      const mockContainer = document.createElement('div');
+      mockContainer.className = 'resizable-layout';
+      Object.defineProperty(mockContainer, 'clientWidth', { value: 1000 });
+      document.body.appendChild(mockContainer);
+
+      const moveEvent = new MouseEvent('mousemove', { clientX: 200 });
+      document.dispatchEvent(moveEvent);
+
+      // Widths should have changed
+      expect(component.column1Width()).not.toBe(initialColumn1Width);
+      expect(component.column2Width()).not.toBe(initialColumn2Width);
+
+      // Cleanup
+      document.body.removeChild(mockContainer);
+      document.dispatchEvent(new MouseEvent('mouseup'));
+    });
+
+    it('should enforce minimum column width', () => {
+      component.isTwoColumnLayout = true;
+
+      // Start resize
+      const startEvent = new MouseEvent('mousedown', { clientX: 100 });
+      component.startResize(startEvent, 1);
+
+      // Simulate extreme drag (creating a mock container)
+      const mockContainer = document.createElement('div');
+      mockContainer.className = 'resizable-layout';
+      Object.defineProperty(mockContainer, 'clientWidth', { value: 1000 });
+      document.body.appendChild(mockContainer);
+
+      const moveEvent = new MouseEvent('mousemove', { clientX: -1000 });
+      document.dispatchEvent(moveEvent);
+
+      // Column width should not go below minimum (10%)
+      expect(component.column1Width()).toBeGreaterThanOrEqual(10);
+
+      // Cleanup
+      document.body.removeChild(mockContainer);
+      document.dispatchEvent(new MouseEvent('mouseup'));
+    });
+
+    it('should resize columns 2 and 3 when using handle index 2', () => {
+      // Clear localStorage and create a fresh component instance
+      localStorage.removeItem('hal-explorer.columnWidths');
+
+      // Set up 3-column layout in the service mock
+      const appServiceMock = TestBed.inject(AppService);
+      (appServiceMock as any).getColumnLayout.mockReturnValue('3');
+
+      // Create fresh component instance
+      const newFixture = TestBed.createComponent(AppComponent);
+      const newComponent = newFixture.componentInstance;
+      newComponent.isTwoColumnLayout = false;
+      newComponent['column1WidthSignal'].set(33.33);
+      newComponent['column2WidthSignal'].set(33.33);
+      newComponent['column3WidthSignal'].set(33.34);
+      newFixture.detectChanges();
+
+      const initialColumn1Width = newComponent.column1Width();
+      const initialColumn2Width = newComponent.column2Width();
+      const initialColumn3Width = newComponent.column3Width();
+
+      // Verify initial state is correct
+      expect(initialColumn1Width).toBeCloseTo(33.33, 1);
+      expect(initialColumn2Width).toBeCloseTo(33.33, 1);
+      expect(initialColumn3Width).toBeCloseTo(33.34, 1);
+
+      // Start resize on handle 2 (between column 2 and 3)
+      const startEvent = new MouseEvent('mousedown', { clientX: 100 });
+      newComponent.startResize(startEvent, 2);
+
+      // Simulate mouse move (creating a mock container)
+      const mockContainer = document.createElement('div');
+      mockContainer.className = 'resizable-layout';
+      Object.defineProperty(mockContainer, 'clientWidth', { value: 1000 });
+      document.body.appendChild(mockContainer);
+
+      // Move mouse to the right (increase column 2, decrease column 3)
+      const moveEvent = new MouseEvent('mousemove', { clientX: 200 });
+      document.dispatchEvent(moveEvent);
+
+      // Column 2 should increase, column 3 should decrease
+      expect(newComponent.column2Width()).toBeGreaterThan(initialColumn2Width);
+      expect(newComponent.column3Width()).toBeLessThan(initialColumn3Width);
+
+      // Column 1 should remain unchanged
+      expect(newComponent.column1Width()).toBeCloseTo(initialColumn1Width, 1);
+
+      // Cleanup
+      document.body.removeChild(mockContainer);
+      document.dispatchEvent(new MouseEvent('mouseup'));
+    });
+
+    it('should enforce minimum width when resizing columns 2 and 3', () => {
+      component.isTwoColumnLayout = false;
+
+      // Start resize on handle 2
+      const startEvent = new MouseEvent('mousedown', { clientX: 100 });
+      component.startResize(startEvent, 2);
+
+      // Simulate mouse move (creating a mock container)
+      const mockContainer = document.createElement('div');
+      mockContainer.className = 'resizable-layout';
+      Object.defineProperty(mockContainer, 'clientWidth', { value: 1000 });
+      document.body.appendChild(mockContainer);
+
+      // Try to drag extremely to the left (attempt to make column 2 very small)
+      const moveEvent = new MouseEvent('mousemove', { clientX: -1000 });
+      document.dispatchEvent(moveEvent);
+
+      // Both columns should respect minimum width of 10%
+      expect(component.column2Width()).toBeGreaterThanOrEqual(10);
+      expect(component.column3Width()).toBeGreaterThanOrEqual(10);
+
+      // Cleanup
+      document.body.removeChild(mockContainer);
+      document.dispatchEvent(new MouseEvent('mouseup'));
+    });
+
+    it('should save column widths to localStorage', () => {
+      const setItemSpy = vi.fn();
+      Storage.prototype.setItem = setItemSpy;
+
+      // Trigger a column width change
+      component['column1WidthSignal'].set(40);
+
+      // Wait for effect to run
+      fixture.detectChanges();
+
+      // Verify localStorage was updated (effect should have been triggered)
+      expect(setItemSpy).toHaveBeenCalledWith('hal-explorer.columnWidths', expect.stringContaining('"column1":40'));
+    });
+  });
 });

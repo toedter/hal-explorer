@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal, computed, effect } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RequestService } from './request/request.service';
 import { AppService } from './app.service';
@@ -75,6 +75,57 @@ export class AppComponent implements OnInit {
   private readonly appService = inject(AppService);
   private readonly requestService = inject(RequestService);
   private readonly sanitizer = inject(DomSanitizer);
+
+  // Resizable columns state
+  private readonly column1WidthSignal = signal(33.33);
+  private readonly column2WidthSignal = signal(33.33);
+  private readonly column3WidthSignal = signal(33.34);
+  private resizingHandle: number | null = null;
+  private startX = 0;
+  private startWidths: number[] = [];
+
+  readonly column1Width = computed(() => {
+    if (this.isTwoColumnLayout) {
+      return this.column1WidthSignal();
+    }
+    return this.column1WidthSignal();
+  });
+
+  readonly column2Width = computed(() => {
+    if (this.isTwoColumnLayout) {
+      return 100 - this.column1WidthSignal();
+    }
+    return this.column2WidthSignal();
+  });
+
+  readonly column3Width = computed(() => {
+    return this.column3WidthSignal();
+  });
+
+  constructor() {
+    // Load saved column widths from localStorage
+    const savedWidths = localStorage.getItem('hal-explorer.columnWidths');
+    if (savedWidths) {
+      try {
+        const widths = JSON.parse(savedWidths);
+        if (widths.column1) this.column1WidthSignal.set(widths.column1);
+        if (widths.column2) this.column2WidthSignal.set(widths.column2);
+        if (widths.column3) this.column3WidthSignal.set(widths.column3);
+      } catch {
+        // Ignore invalid JSON
+      }
+    }
+
+    // Save column widths when they change
+    effect(() => {
+      const widths = {
+        column1: this.column1WidthSignal(),
+        column2: this.column2WidthSignal(),
+        column3: this.column3WidthSignal(),
+      };
+      localStorage.setItem('hal-explorer.columnWidths', JSON.stringify(widths));
+    });
+  }
 
   ngOnInit(): void {
     this.initializeColorMode();
@@ -202,5 +253,63 @@ export class AppComponent implements OnInit {
     }
 
     document.documentElement.dataset.bsTheme = effectiveMode;
+  }
+
+  startResize(event: MouseEvent, handleIndex: number): void {
+    event.preventDefault();
+    this.resizingHandle = handleIndex;
+    this.startX = event.clientX;
+
+    if (this.isTwoColumnLayout) {
+      this.startWidths = [this.column1WidthSignal()];
+    } else {
+      this.startWidths = [this.column1WidthSignal(), this.column2WidthSignal(), this.column3WidthSignal()];
+    }
+
+    const onMouseMove = (e: MouseEvent) => this.onResize(e);
+    const onMouseUp = () => {
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+      this.resizingHandle = null;
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+  }
+
+  private onResize(event: MouseEvent): void {
+    if (this.resizingHandle === null) return;
+
+    const containerWidth = document.querySelector('.resizable-layout')?.clientWidth || 1;
+    const deltaX = event.clientX - this.startX;
+    const deltaPercent = (deltaX / containerWidth) * 100;
+
+    if (this.isTwoColumnLayout) {
+      // 2 column layout: only handle 1 exists
+      const newColumn1Width = Math.max(10, Math.min(90, this.startWidths[0] + deltaPercent));
+      this.column1WidthSignal.set(newColumn1Width);
+    } else if (this.resizingHandle === 1) {
+      // Resizing between column 1 and 2
+      const newColumn1Width = Math.max(10, Math.min(80, this.startWidths[0] + deltaPercent));
+      const newColumn2Width = Math.max(10, this.startWidths[1] - deltaPercent);
+
+      if (newColumn1Width >= 10 && newColumn2Width >= 10) {
+        this.column1WidthSignal.set(newColumn1Width);
+        this.column2WidthSignal.set(newColumn2Width);
+      }
+    } else if (this.resizingHandle === 2) {
+      // Resizing between column 2 and 3
+      const newColumn2Width = Math.max(10, Math.min(80, this.startWidths[1] + deltaPercent));
+      const newColumn3Width = Math.max(10, this.startWidths[2] - deltaPercent);
+
+      if (newColumn2Width >= 10 && newColumn3Width >= 10) {
+        this.column2WidthSignal.set(newColumn2Width);
+        this.column3WidthSignal.set(newColumn3Width);
+      }
+    }
   }
 }

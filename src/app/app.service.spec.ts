@@ -284,4 +284,86 @@ describe('AppService', () => {
     expect(emittedUris[emittedUris.length - 1]).toBe('http://localhost:3000/examples.hal-forms.json');
     expect(emittedUris.length).toBe(emitCountBeforeBack + 2); // Should have emitted again
   });
+
+  it('should return false for isFromBrowserNavigation() after programmatic setUri()', () => {
+    // Programmatic URI change via setUri
+    service.setUri('http://localhost:3000/test.json');
+
+    // Should return false because it was a programmatic change
+    expect(service.isFromBrowserNavigation()).toBe(false);
+
+    // Calling it again should also return false (flag is reset after first check)
+    expect(service.isFromBrowserNavigation()).toBe(false);
+  });
+
+  it('should return true for isFromBrowserNavigation() after browser navigation', () => {
+    // Simulate browser navigation via hash change
+    window.location.hash = '#uri=http://localhost:3000/test.json';
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+
+    // Should return true because it was browser navigation
+    expect(service.isFromBrowserNavigation()).toBe(true);
+
+    // Calling it again should return false (flag is reset after first check)
+    expect(service.isFromBrowserNavigation()).toBe(false);
+  });
+
+  it('should distinguish between setUri() and browser back button', () => {
+    const navigationFlags: boolean[] = [];
+
+    service.uriObservable.subscribe(() => {
+      navigationFlags.push(service.isFromBrowserNavigation());
+    });
+
+    // Programmatic navigation
+    service.setUri('http://localhost:3000/page1.json');
+    expect(navigationFlags[navigationFlags.length - 1]).toBe(false);
+
+    // Another programmatic navigation
+    service.setUri('http://localhost:3000/page2.json');
+    expect(navigationFlags[navigationFlags.length - 1]).toBe(false);
+
+    // Browser back button (simulated)
+    window.location.hash = '#uri=http://localhost:3000/page1.json';
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+    expect(navigationFlags[navigationFlags.length - 1]).toBe(true);
+
+    // Browser forward button (simulated)
+    window.location.hash = '#uri=http://localhost:3000/page2.json';
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+    expect(navigationFlags[navigationFlags.length - 1]).toBe(true);
+  });
+
+  it('should reset isFromBrowserNavigation flag after being checked', () => {
+    // Set up browser navigation
+    window.location.hash = '#uri=http://localhost:3000/test.json';
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+
+    // First check - should be true
+    expect(service.isFromBrowserNavigation()).toBe(true);
+
+    // Second check - should be false (flag was reset)
+    expect(service.isFromBrowserNavigation()).toBe(false);
+
+    // Third check - still false
+    expect(service.isFromBrowserNavigation()).toBe(false);
+  });
+
+  it('should handle multiple browser navigations correctly', () => {
+    // First browser navigation
+    window.location.hash = '#uri=http://localhost:3000/page1.json';
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+    expect(service.isFromBrowserNavigation()).toBe(true);
+    expect(service.isFromBrowserNavigation()).toBe(false); // Reset
+
+    // Programmatic navigation
+    service.setUri('http://localhost:3000/page2.json');
+    expect(service.isFromBrowserNavigation()).toBe(false);
+
+    // Second browser navigation
+    window.location.hash = '#uri=http://localhost:3000/page3.json';
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+    expect(service.isFromBrowserNavigation()).toBe(true);
+    expect(service.isFromBrowserNavigation()).toBe(false); // Reset
+  });
 });

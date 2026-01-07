@@ -227,16 +227,34 @@
 
 @if (!isTwoColumnLayout) {
   <div class="container-fluid">
-    <div class="row gx-2">
-      <div class="form-group col-xl">
+    <div class="resizable-layout">
+      <div class="resizable-column" [style.width.%]="column1Width()">
         <app-uri-input></app-uri-input>
         <br />
         <app-response-explorer></app-response-explorer>
       </div>
-      <div class="form-group col-xl">
+      <div
+        class="resize-handle"
+        (mousedown)="startResize($event, 1)"
+        role="separator"
+        aria-orientation="vertical"
+        aria-label="Resize columns"
+      >
+        <div class="resize-handle-line"></div>
+      </div>
+      <div class="resizable-column" [style.width.%]="column2Width()">
         <app-response-details></app-response-details>
       </div>
-      <div class="form-group col-xl">
+      <div
+        class="resize-handle"
+        (mousedown)="startResize($event, 2)"
+        role="separator"
+        aria-orientation="vertical"
+        aria-label="Resize columns"
+      >
+        <div class="resize-handle-line"></div>
+      </div>
+      <div class="resizable-column" [style.width.%]="column3Width()">
         <app-documentation></app-documentation>
       </div>
     </div>
@@ -245,13 +263,22 @@
 
 @if (isTwoColumnLayout) {
   <div class="container-fluid">
-    <div class="row gx-2">
-      <div class="form-group col-xl">
+    <div class="resizable-layout">
+      <div class="resizable-column" [style.width.%]="column1Width()">
         <app-uri-input></app-uri-input>
         <br />
         <app-response-explorer></app-response-explorer>
       </div>
-      <div class="form-group col-xl">
+      <div
+        class="resize-handle"
+        (mousedown)="startResize($event, 1)"
+        role="separator"
+        aria-orientation="vertical"
+        aria-label="Resize columns"
+      >
+        <div class="resize-handle-line"></div>
+      </div>
+      <div class="resizable-column" [style.width.%]="column2Width()">
         <app-response-details [hidden]="showDocumentation"></app-response-details>
         <app-documentation></app-documentation>
       </div>
