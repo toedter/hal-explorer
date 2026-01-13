@@ -83,7 +83,7 @@
 }
 
 .resize-handle:hover {
-  background-color: rgba(0, 123, 255, 0.1);
+  background-color: var(--bs-primary-bg-subtle);
 }
 
 .resize-handle-line {
@@ -98,13 +98,13 @@
 }
 
 .resize-handle:hover .resize-handle-line {
-  background-color: rgba(0, 123, 255, 0.5);
+  background-color: var(--bs-primary);
 }
 
 [data-bs-theme='dark'] .resize-handle:hover {
-  background-color: rgba(0, 123, 255, 0.2);
+  background-color: var(--bs-primary-bg-subtle);
 }
 
 [data-bs-theme='dark'] .resize-handle:hover .resize-handle-line {
-  background-color: rgba(0, 123, 255, 0.7);
+  background-color: var(--bs-primary);
 }
