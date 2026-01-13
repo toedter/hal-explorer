@@ -235,7 +235,9 @@
       </div>
       <div
         class="resize-handle"
+        [class.active]="resizingHandle() === 1"
         (mousedown)="startResize($event, 1)"
+        (touchstart)="startResize($event, 1)"
         role="separator"
         aria-orientation="vertical"
         aria-label="Resize columns"
@@ -247,7 +249,9 @@
       </div>
       <div
         class="resize-handle"
+        [class.active]="resizingHandle() === 2"
         (mousedown)="startResize($event, 2)"
+        (touchstart)="startResize($event, 2)"
         role="separator"
         aria-orientation="vertical"
         aria-label="Resize columns"
@@ -271,7 +275,9 @@
       </div>
       <div
         class="resize-handle"
+        [class.active]="resizingHandle() === 1"
         (mousedown)="startResize($event, 1)"
+        (touchstart)="startResize($event, 1)"
         role="separator"
         aria-orientation="vertical"
         aria-label="Resize columns"

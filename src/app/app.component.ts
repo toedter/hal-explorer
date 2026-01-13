@@ -80,7 +80,7 @@ export class AppComponent implements OnInit {
   private readonly column1WidthSignal = signal(33.33);
   private readonly column2WidthSignal = signal(33.33);
   private readonly column3WidthSignal = signal(33.34);
-  private resizingHandle: number | null = null;
+  readonly resizingHandle = signal<number | null>(null);
   private startX = 0;
   private startWidths: number[] = [];
 
@@ -255,10 +255,12 @@ export class AppComponent implements OnInit {
     document.documentElement.dataset.bsTheme = effectiveMode;
   }
 
-  startResize(event: MouseEvent, handleIndex: number): void {
+  startResize(event: MouseEvent | TouchEvent, handleIndex: number): void {
     event.preventDefault();
-    this.resizingHandle = handleIndex;
-    this.startX = event.clientX;
+    this.resizingHandle.set(handleIndex);
+
+    // Get the starting X position from either mouse or touch event
+    this.startX = event instanceof MouseEvent ? event.clientX : event.touches[0].clientX;
 
     if (this.isTwoColumnLayout) {
       this.startWidths = [this.column1WidthSignal()];
@@ -266,33 +268,44 @@ export class AppComponent implements OnInit {
       this.startWidths = [this.column1WidthSignal(), this.column2WidthSignal(), this.column3WidthSignal()];
     }
 
-    const onMouseMove = (e: MouseEvent) => this.onResize(e);
-    const onMouseUp = () => {
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
-      this.resizingHandle = null;
+    const onMove = (e: MouseEvent | TouchEvent) => this.onResize(e);
+    const onEnd = () => {
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onEnd);
+      document.removeEventListener('touchmove', onMove);
+      document.removeEventListener('touchend', onEnd);
+      this.resizingHandle.set(null);
       document.body.style.cursor = '';
       document.body.style.userSelect = '';
     };
 
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onEnd);
+    document.addEventListener('touchmove', onMove, { passive: false });
+    document.addEventListener('touchend', onEnd);
     document.body.style.cursor = 'col-resize';
     document.body.style.userSelect = 'none';
   }
 
-  private onResize(event: MouseEvent): void {
-    if (this.resizingHandle === null) return;
+  private onResize(event: MouseEvent | TouchEvent): void {
+    const handleIndex = this.resizingHandle();
+    if (handleIndex === null) return;
+
+    // Prevent scrolling on touch devices
+    if (event instanceof TouchEvent) {
+      event.preventDefault();
+    }
 
     const containerWidth = document.querySelector('.resizable-layout')?.clientWidth || 1;
-    const deltaX = event.clientX - this.startX;
+    const clientX = event instanceof MouseEvent ? event.clientX : event.touches[0].clientX;
+    const deltaX = clientX - this.startX;
     const deltaPercent = (deltaX / containerWidth) * 100;
 
     if (this.isTwoColumnLayout) {
       // 2 column layout: only handle 1 exists
       const newColumn1Width = Math.max(10, Math.min(90, this.startWidths[0] + deltaPercent));
       this.column1WidthSignal.set(newColumn1Width);
-    } else if (this.resizingHandle === 1) {
+    } else if (handleIndex === 1) {
       // Resizing between column 1 and 2
       const newColumn1Width = Math.max(10, Math.min(80, this.startWidths[0] + deltaPercent));
       const newColumn2Width = Math.max(10, this.startWidths[1] - deltaPercent);
@@ -301,7 +314,7 @@ export class AppComponent implements OnInit {
         this.column1WidthSignal.set(newColumn1Width);
         this.column2WidthSignal.set(newColumn2Width);
       }
-    } else if (this.resizingHandle === 2) {
+    } else if (handleIndex === 2) {
       // Resizing between column 2 and 3
       const newColumn2Width = Math.max(10, Math.min(80, this.startWidths[1] + deltaPercent));
       const newColumn3Width = Math.max(10, this.startWidths[2] - deltaPercent);

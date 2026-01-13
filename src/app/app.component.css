@@ -80,9 +80,19 @@
   align-items: center;
   justify-content: center;
   transition: background-color 0.2s;
+  touch-action: none; /* Prevent browser touch gestures */
 }
 
-.resize-handle:hover {
+/* Make the resize handle wider on touch devices for better usability */
+@media (hover: none) and (pointer: coarse) {
+  .resize-handle {
+    width: 16px;
+    padding: 0 4px;
+  }
+}
+
+.resize-handle:hover,
+.resize-handle.active {
   background-color: var(--bs-primary-bg-subtle);
 }
 
@@ -97,14 +107,17 @@
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-.resize-handle:hover .resize-handle-line {
+.resize-handle:hover .resize-handle-line,
+.resize-handle.active .resize-handle-line {
   background-color: var(--bs-primary);
 }
 
-[data-bs-theme='dark'] .resize-handle:hover {
+[data-bs-theme='dark'] .resize-handle:hover,
+[data-bs-theme='dark'] .resize-handle.active {
   background-color: var(--bs-primary-bg-subtle);
 }
 
-[data-bs-theme='dark'] .resize-handle:hover .resize-handle-line {
+[data-bs-theme='dark'] .resize-handle:hover .resize-handle-line,
+[data-bs-theme='dark'] .resize-handle.active .resize-handle-line {
   background-color: var(--bs-primary);
 }
