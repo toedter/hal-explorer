@@ -142,9 +142,9 @@
     "@jridgewell/trace-mapping" "^0.3.24"
 
 "@analogjs/vite-plugin-angular@^2.2.0":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@analogjs/vite-plugin-angular/-/vite-plugin-angular-2.2.1.tgz#a46c82e9794c186f87f0095b07131272381cfc92"
-  integrity sha512-SYtaWKPHE+BtywbSOQl5r31bIDuph7SCzCbRMsrS7H3MvS1SDc9bsTdn+RewYKqKUJzReRwNe9CDLdVCY8eLFg==
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@analogjs/vite-plugin-angular/-/vite-plugin-angular-2.2.2.tgz#6b352b8b460442ad466e6faabb10e152b0de78f7"
+  integrity sha512-lZ+v/RXQw2stVWdN02h0d5ruynz67rA4VLu2g5Wn8hh4YF/4MhfREKi8ILeSSyRtg3XlhvfYpau2vCyaSDhpww==
   dependencies:
     ts-morph "^21.0.0"
 
