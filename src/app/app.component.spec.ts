@@ -494,5 +494,217 @@ describe('AppComponent', () => {
       // Verify localStorage was updated (effect should have been triggered)
       expect(setItemSpy).toHaveBeenCalledWith('hal-explorer.columnWidths', expect.stringContaining('"column1":40'));
     });
+
+    it('should start resize operation on touchstart', () => {
+      const touch = { clientX: 100 };
+      const touchEvent = new TouchEvent('touchstart', {
+        touches: [touch as Touch],
+        cancelable: true,
+      });
+      component.startResize(touchEvent, 1);
+
+      // After starting resize, preventDefault should have been called
+      expect(touchEvent.defaultPrevented).toBe(true);
+      expect(component.resizingHandle()).toBe(1);
+    });
+
+    it('should resize columns in 2-column layout with touch events', () => {
+      component.isTwoColumnLayout = true;
+      const initialWidth = component.column1Width();
+
+      // Start resize with touch
+      const startTouch = { clientX: 100 };
+      const startEvent = new TouchEvent('touchstart', {
+        touches: [startTouch as Touch],
+        cancelable: true,
+      });
+      component.startResize(startEvent, 1);
+
+      // Simulate touch move (creating a mock container)
+      const mockContainer = document.createElement('div');
+      mockContainer.className = 'resizable-layout';
+      Object.defineProperty(mockContainer, 'clientWidth', { value: 1000 });
+      document.body.appendChild(mockContainer);
+
+      const moveTouch = { clientX: 200 };
+      const moveEvent = new TouchEvent('touchmove', {
+        touches: [moveTouch as Touch],
+        cancelable: true,
+      });
+      document.dispatchEvent(moveEvent);
+
+      // Width should have changed
+      expect(component.column1Width()).not.toBe(initialWidth);
+
+      // Cleanup
+      document.body.removeChild(mockContainer);
+      document.dispatchEvent(new TouchEvent('touchend'));
+    });
+
+    it('should prevent default behavior on touch move during resize', () => {
+      component.isTwoColumnLayout = true;
+
+      // Start resize with touch
+      const startTouch = { clientX: 100 };
+      const startEvent = new TouchEvent('touchstart', {
+        touches: [startTouch as Touch],
+        cancelable: true,
+      });
+      component.startResize(startEvent, 1);
+
+      // Create mock container
+      const mockContainer = document.createElement('div');
+      mockContainer.className = 'resizable-layout';
+      Object.defineProperty(mockContainer, 'clientWidth', { value: 1000 });
+      document.body.appendChild(mockContainer);
+
+      // Create a touch move event
+      const moveTouch = { clientX: 150 };
+      const moveEvent = new TouchEvent('touchmove', {
+        touches: [moveTouch as Touch],
+        cancelable: true,
+      });
+
+      // Dispatch the event
+      document.dispatchEvent(moveEvent);
+
+      // preventDefault should have been called to prevent scrolling
+      expect(moveEvent.defaultPrevented).toBe(true);
+
+      // Cleanup
+      document.body.removeChild(mockContainer);
+      document.dispatchEvent(new TouchEvent('touchend'));
+    });
+
+    it('should handle touchcancel event during resize', () => {
+      component.isTwoColumnLayout = true;
+
+      // Start resize with touch
+      const startTouch = { clientX: 100 };
+      const startEvent = new TouchEvent('touchstart', {
+        touches: [startTouch as Touch],
+        cancelable: true,
+      });
+      component.startResize(startEvent, 1);
+
+      expect(component.resizingHandle()).toBe(1);
+
+      // Trigger touchcancel
+      document.dispatchEvent(new TouchEvent('touchcancel'));
+
+      // Resizing should be cancelled
+      expect(component.resizingHandle()).toBeNull();
+    });
+
+    it('should resize columns 2 and 3 with touch events', () => {
+      // Clear localStorage and create a fresh component with 3-column layout
+      localStorage.removeItem('hal-explorer.columnWidths');
+
+      const appServiceMock = TestBed.inject(AppService);
+      (appServiceMock as any).getColumnLayout.mockReturnValue('3');
+
+      const newFixture = TestBed.createComponent(AppComponent);
+      const newComponent = newFixture.componentInstance;
+      newComponent.isTwoColumnLayout = false;
+      newComponent['column1WidthSignal'].set(33.33);
+      newComponent['column2WidthSignal'].set(33.33);
+      newComponent['column3WidthSignal'].set(33.34);
+      newFixture.detectChanges();
+
+      const initialColumn2Width = newComponent['column2WidthSignal']();
+      const initialColumn3Width = newComponent['column3WidthSignal']();
+
+      // Start resize on handle 2 with touch
+      const startTouch = { clientX: 100 };
+      const startEvent = new TouchEvent('touchstart', {
+        touches: [startTouch as Touch],
+        cancelable: true,
+      });
+      newComponent.startResize(startEvent, 2);
+
+      // Simulate touch move
+      const mockContainer = document.createElement('div');
+      mockContainer.className = 'resizable-layout';
+      Object.defineProperty(mockContainer, 'clientWidth', { value: 1000 });
+      document.body.appendChild(mockContainer);
+
+      const moveTouch = { clientX: 200 };
+      const moveEvent = new TouchEvent('touchmove', {
+        touches: [moveTouch as Touch],
+        cancelable: true,
+      });
+      document.dispatchEvent(moveEvent);
+
+      // Column 2 signal should increase, column 3 signal should decrease
+      expect(newComponent['column2WidthSignal']()).toBeGreaterThan(initialColumn2Width);
+      expect(newComponent['column3WidthSignal']()).toBeLessThan(initialColumn3Width);
+
+      // Cleanup
+      document.body.removeChild(mockContainer);
+      document.dispatchEvent(new TouchEvent('touchend'));
+    });
+
+    it('should load saved column widths from localStorage', () => {
+      const savedWidths = {
+        column1: 40,
+        column2: 35,
+        column3: 25,
+      };
+
+      // Store original getItem
+      const originalGetItem = Storage.prototype.getItem;
+
+      // Mock getItem to return saved widths
+      Storage.prototype.getItem = vi.fn((key: string) => {
+        if (key === 'hal-explorer.columnWidths') {
+          return JSON.stringify(savedWidths);
+        }
+        return null;
+      });
+
+      // Create new component instance
+      const newFixture = TestBed.createComponent(AppComponent);
+      const newComponent = newFixture.componentInstance;
+      newFixture.detectChanges();
+
+      // Verify saved widths were loaded
+      expect(newComponent['column1WidthSignal']()).toBe(40);
+      expect(newComponent['column2WidthSignal']()).toBe(35);
+      expect(newComponent['column3WidthSignal']()).toBe(25);
+
+      // Restore original
+      Storage.prototype.getItem = originalGetItem;
+    });
+
+    it('should handle invalid JSON in localStorage for column widths', () => {
+      // Store original getItem
+      const originalGetItem = Storage.prototype.getItem;
+
+      // Mock getItem to return invalid JSON
+      Storage.prototype.getItem = vi.fn((key: string) => {
+        if (key === 'hal-explorer.columnWidths') {
+          return 'invalid-json{]';
+        }
+        return null;
+      });
+
+      // Should not throw error
+      expect(() => {
+        const newFixture = TestBed.createComponent(AppComponent);
+        newFixture.detectChanges();
+      }).not.toThrow();
+
+      // Restore original
+      Storage.prototype.getItem = originalGetItem;
+    });
+
+    it('should stop propagation of events during resize', () => {
+      const mouseEvent = new MouseEvent('mousedown', { clientX: 100, cancelable: true, bubbles: true });
+      const stopPropagationSpy = vi.spyOn(mouseEvent, 'stopPropagation');
+
+      component.startResize(mouseEvent, 1);
+
+      expect(stopPropagationSpy).toHaveBeenCalled();
+    });
   });
 });

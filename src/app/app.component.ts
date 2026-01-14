@@ -257,6 +257,7 @@ export class AppComponent implements OnInit {
 
   startResize(event: MouseEvent | TouchEvent, handleIndex: number): void {
     event.preventDefault();
+    event.stopPropagation();
     this.resizingHandle.set(handleIndex);
 
     // Get the starting X position from either mouse or touch event
@@ -274,6 +275,7 @@ export class AppComponent implements OnInit {
       document.removeEventListener('mouseup', onEnd);
       document.removeEventListener('touchmove', onMove);
       document.removeEventListener('touchend', onEnd);
+      document.removeEventListener('touchcancel', onEnd);
       this.resizingHandle.set(null);
       document.body.style.cursor = '';
       document.body.style.userSelect = '';
@@ -283,6 +285,7 @@ export class AppComponent implements OnInit {
     document.addEventListener('mouseup', onEnd);
     document.addEventListener('touchmove', onMove, { passive: false });
     document.addEventListener('touchend', onEnd);
+    document.addEventListener('touchcancel', onEnd);
     document.body.style.cursor = 'col-resize';
     document.body.style.userSelect = 'none';
   }

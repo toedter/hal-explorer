@@ -659,6 +659,30 @@ describe('RequestComponent', () => {
     expect(event.preventDefault).not.toHaveBeenCalled();
   });
 
+  it('should not submit modal on Enter key when focus is in TEXTAREA', () => {
+    const mockButton = { click: vi.fn() };
+    vi.spyOn(document, 'getElementById').mockReturnValue(mockButton as any);
+
+    // Create a mock textarea element
+    const textarea = document.createElement('textarea');
+    document.body.appendChild(textarea);
+
+    // Create event with textarea as target
+    const event = new KeyboardEvent('keydown', { key: 'Enter' });
+    Object.defineProperty(event, 'target', { value: textarea, configurable: true });
+
+    const form = { valid: true };
+    const preventDefaultSpy = vi.spyOn(event, 'preventDefault');
+
+    component.handleModalKeydown(event, form);
+
+    // Should return early without preventing default or clicking button
+    expect(preventDefaultSpy).not.toHaveBeenCalled();
+    expect(mockButton.click).not.toHaveBeenCalled();
+
+    document.body.removeChild(textarea);
+  });
+
   it('should subscribe to loading observable', () => {
     const loadingSubject = new Subject<boolean>();
     requestServiceMock.getLoadingObservable.mockReturnValue(loadingSubject);

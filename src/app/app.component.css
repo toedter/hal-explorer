@@ -81,6 +81,9 @@
   justify-content: center;
   transition: background-color 0.2s;
   touch-action: none; /* Prevent browser touch gestures */
+  user-select: none; /* Prevent text selection */
+  -webkit-user-select: none; /* Safari */
+  -webkit-touch-callout: none; /* iOS Safari - prevent callout */
 }
 
 /* Make the resize handle wider on touch devices for better usability */
