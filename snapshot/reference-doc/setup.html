@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<title>Setup</title>
+<title>Setup and Installation</title>
 <link rel="stylesheet" href="css/site.css">
 <script src="js/setup.js"></script><script defer src="js/site.js"></script>
 
@@ -27,55 +27,117 @@
   <div id="main" class="contained">
     <div id="doc" class="doc">
 <div id="header">
-<h1>Setup</h1>
+<h1>Setup and Installation</h1>
 <div class="details">
 <span id="revnumber">version 2.2.2-SNAPSHOT</span>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="_releases_and_demos"><a class="anchor" href="#_releases_and_demos"></a>Releases and Demos</h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Here you will find documentation for the latest release and the current snapshot,
-as well as demos of HAL Explorer (with examples):</p>
+<p>This section covers different ways to use HAL Explorer, from quick online demos to full integration with your backend services.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quick_start_online_demos"><a class="anchor" href="#_quick_start_online_demos"></a>Quick Start: Online Demos</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The fastest way to try HAL Explorer is through our hosted demos:</p>
 </div>
 <table class="tableblock frame-all grid-all stripes-even stretch">
 <colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 50%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3335%;">
 </colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Version</th>
+<th class="tableblock halign-left valign-top">Number</th>
+<th class="tableblock halign-left valign-top">Demo</th>
+<th class="tableblock halign-left valign-top">Documentation</th>
+</tr>
+</thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Latest Release</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2.2.1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://toedter.github.io/hal-explorer/release/hal-explorer/#theme=Cosmo&amp;uri=examples/examples.hal-forms.json">HAL Explorer Demo</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://toedter.github.io/hal-explorer/release/reference-doc/">Reference Docs</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Current Snapshot</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2.2.2-SNAPSHOT</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://toedter.github.io/hal-explorer/snapshot/hal-explorer/#theme=Cosmo&amp;uri=examples/examples.hal-forms.json">HAL Explorer Demo</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://toedter.github.io/hal-explorer/snapshot/reference-doc/">Reference Docs</a></p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>To explore your services with these HAL Explorer demos, they must enable CORS.
-When you want to explore a Spring-based service (e.g., running on localhost), you can (temporarily) add a simple
-<a href="https://gist.github.com/toedter/72d62b4bb4a25d229dc1f1342ae429ad">CORS Filter</a> to your service. For more options, see
-the <a href="#_development_server">Development Server</a> section.</p>
+<p>You can also access the latest release at <a href="https://hal-explorer.com">hal-explorer.com</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="_using_online_demos_with_your_api"><a class="anchor" href="#_using_online_demos_with_your_api"></a>Using Online Demos with Your API</h3>
+<div class="paragraph">
+<p>To explore your own API using a <a href="https://hal-explorer.com">hosted HAL Explorer</a>, your service must enable CORS (Cross-Origin Resource Sharing).</p>
 </div>
 <div class="paragraph">
-<p>You can also experiment with the latest snapshot version of HAL Explorer.</p>
+<p><strong>Quick CORS Setup for Spring Boot:</strong></p>
+</div>
+<div class="paragraph">
+<p>Add this simple CORS Filter to your Spring application:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Component
+public class CorsFilter implements Filter {
+    @Override
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+            throws IOException, ServletException {
+        HttpServletResponse response = (HttpServletResponse) res;
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "*");
+        chain.doFilter(req, res);
+    }
+}
+</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+This CORS configuration allows access from any origin. Use it only for development and testing. For production, restrict the <code>Access-Control-Allow-Origin</code> to specific domains.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For alternative approaches without CORS, see the <a href="#dev-server">Development Server</a> section below.</p>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_integration_with_your_backends"><a class="anchor" href="#_integration_with_your_backends"></a>Integration with Your Backends</h2>
+<h2 id="_backend_integration"><a class="anchor" href="#_backend_integration"></a>Backend Integration</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If you want to use a released version of HAL Explorer in a Java-based project,
-you can define a dependency to the HAL Explorer WebJar.</p>
+<p>HAL Explorer can be integrated into your application in several ways, depending on your technology stack and deployment preferences.</p>
+</div>
+<div class="sect2">
+<h3 id="_option_1_webjar_java_projects"><a class="anchor" href="#_option_1_webjar_java_projects"></a>Option 1: WebJar (Java Projects)</h3>
+<div class="paragraph">
+<p>The simplest way to integrate HAL Explorer into a Java-based project is using the WebJar dependency.</p>
+</div>
+<div class="paragraph">
+<p><strong>Add the Dependency:</strong></p>
 </div>
 <div class="listingblock primary">
 <div class="title">Maven</div>
@@ -88,17 +150,63 @@ you can define a dependency to the HAL Explorer WebJar.</p>
 </div>
 </div>
 <div class="listingblock secondary">
-<div class="title">Gradle</div>
+<div class="title">Gradle (Groovy)</div>
 <div class="content">
 <pre class="highlight"><code>runtimeOnly 'org.webjars:hal-explorer:2.2.1'</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>When you use the WebJar with Spring Boot, you can access HAL Explorer
-in a web browser at <code>/webjars/hal-explorer/2.2.1/index.html</code>.</p>
+<div class="listingblock secondary">
+<div class="title">Gradle (Kotlin)</div>
+<div class="content">
+<pre class="highlight"><code>runtimeOnly("org.webjars:hal-explorer:2.2.1")</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>If you are using Spring Data REST, you can instead add a dependency like</p>
+<p><strong>Access HAL Explorer:</strong></p>
+</div>
+<div class="paragraph">
+<p>Once the dependency is added, HAL Explorer is available at:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>http://localhost:8080/webjars/hal-explorer/2.2.1/index.html</pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can create a redirect or custom controller to serve HAL Explorer at a more convenient path like <code>/explorer</code> or <code>/api/explorer</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Example Spring Boot Controller:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Controller
+public class ExplorerController {
+    @GetMapping("/explorer")
+    public String explorer() {
+        return "redirect:/webjars/hal-explorer/2.2.1/index.html";
+    }
+}
+</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_option_2_spring_data_rest_integration"><a class="anchor" href="#_option_2_spring_data_rest_integration"></a>Option 2: Spring Data REST Integration</h3>
+<div class="paragraph">
+<p>If you&#8217;re using Spring Data REST, there&#8217;s a dedicated integration package that makes HAL Explorer the default UI for your API root.</p>
+</div>
+<div class="paragraph">
+<p><strong>Add the Dependency:</strong></p>
 </div>
 <div class="listingblock primary">
 <div class="title">Maven</div>
@@ -110,106 +218,124 @@ in a web browser at <code>/webjars/hal-explorer/2.2.1/index.html</code>.</p>
 </div>
 </div>
 <div class="listingblock secondary">
-<div class="title">Gradle</div>
+<div class="title">Gradle (Groovy)</div>
 <div class="content">
 <pre class="highlight"><code>runtimeOnly 'org.springframework.data:spring-data-rest-hal-explorer'</code></pre>
 </div>
 </div>
+<div class="listingblock secondary">
+<div class="title">Gradle (Kotlin)</div>
+<div class="content">
+<pre class="highlight"><code>runtimeOnly("org.springframework.data:spring-data-rest-hal-explorer")</code></pre>
+</div>
+</div>
 <div class="paragraph">
-<p>When you use <code>spring-data-rest-hal-explorer</code>, you can access HAL Explorer in a web browser at <code>/</code>.</p>
+<p><strong>Access HAL Explorer:</strong></p>
 </div>
 <div class="paragraph">
-<p>You can also download a zip-based <a href="https://github.com/toedter/hal-explorer/releases/download/v2.2.1/hal-explorer-2.2.1.zip">distribution</a> and deploy it on any web server.</p>
+<p>With Spring Data REST integration, HAL Explorer is automatically available at your application root:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>http://localhost:8080/</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>The easiest way to integrate the upstream version of HAL Explorer into your backend is to clone this Git repository,
-do a production build (see below), and then copy the content of the <code>dist/</code> folder to a location accessible by your backend server.
-When you use Spring Boot, a good location in your project&#8217;s source tree would be
-<code>src/main/resources/static/hal-explorer</code>.</p>
+<p>The integration automatically configures HAL Explorer to point to your Spring Data REST API.</p>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_build"><a class="anchor" href="#_build"></a>Build</h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="_node_js"><a class="anchor" href="#_node_js"></a>node.js</h3>
-<div class="ulist">
-<ul>
+<h3 id="_option_3_static_distribution"><a class="anchor" href="#_option_3_static_distribution"></a>Option 3: Static Distribution</h3>
+<div class="paragraph">
+<p>For non-Java backends or custom deployment scenarios, you can use the standalone distribution.</p>
+</div>
+<div class="paragraph">
+<p><strong>Download and Extract:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>Install the latest version of <a href="https://nodejs.org">node.js</a> and yarn (<code>npm i -g yarn</code>).</p>
+<p>Download the <a href="https://github.com/toedter/hal-explorer/releases/download/v2.2.1/hal-explorer-2.2.1.zip">distribution ZIP file</a> (v2.2.1)</p>
 </li>
 <li>
-<p>Run <code>yarn build</code> to build the project in production mode.</p>
+<p>Extract the contents to your web server&#8217;s static file directory</p>
 </li>
-<li>
-<p>The build artifacts will be stored in the <code>dist/</code> directory.</p>
-</li>
-</ul>
+</ol>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_development_server"><a class="anchor" href="#_development_server"></a>Development Server</h3>
 <div class="paragraph">
-<p>Run <code>yarn start</code> for a dev server. Navigate to <a href="http://localhost:4200/" class="bare">http://localhost:4200/</a>.
-The app will automatically reload if you change any of the source files.
-The development server has a built-in proxy configuration
-so that all calls to <code>/api</code> are forwarded to <code>localhost:8080/api</code>.
-This is convenient when you want to test a local server without having to deal with CORS.
-If you run <code>yarn start:fs</code>, an additional file server is started on port 3000.
-In the test-data directory, you will find some JSON examples. Try it out with the URL
-<a href="http://localhost:4200/#uri=http://localhost:3000/movies.hal-forms.json" class="bare">http://localhost:4200/#uri=http://localhost:3000/movies.hal-forms.json</a>.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_gradlejava_build_support"><a class="anchor" href="#_gradlejava_build_support"></a>Gradle/Java Build Support</h3>
-<div class="paragraph">
-<p>If you have Java installed, you can also build the project with Gradle.
-The Gradle build will install Node.js locally in the project directory.
-Run <code>./gradlew build</code> (or just <code>gradlew build</code> under Windows) to build the project in production mode.
-The build artifacts will be stored in the <code>dist/</code> directory.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_building_the_docs"><a class="anchor" href="#_building_the_docs"></a>Building the docs</h3>
-<div class="paragraph">
-<p>You can build this documentation</p>
+<p><strong>Example Deployment Locations:</strong></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Windows: <code>gradlew doc</code></p>
-<div class="ulist">
-<ul>
-<li>
-<p>If you see errors regarding file encoding, try <code>gradlew doc -Dfile.encoding=UTF-8</code></p>
-</li>
-</ul>
-</div>
+<p><strong>Nginx</strong>: <code>/usr/share/nginx/html/hal-explorer/</code></p>
 </li>
 <li>
-<p>Linux: <code>./gradlew doc</code></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_running_tests"><a class="anchor" href="#_running_tests"></a>Running Tests</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><code>yarn test</code> runs the unit test suite against your default browser.</p>
+<p><strong>Apache</strong>: <code>/var/www/html/hal-explorer/</code></p>
 </li>
 <li>
-<p><code>yarn test:headless</code> runs the unit test suite against headless Chrome.</p>
+<p><strong>Express.js</strong>: <code>public/hal-explorer/</code></p>
 </li>
 <li>
-<p><code>yarn e2e</code> runs the e2e test suite against default browsers (using Playwright).</p>
+<p><strong>Spring Boot</strong>: <code>src/main/resources/static/hal-explorer/</code></p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Take a look at <code>package.json</code> for more test options.</p>
+<p><strong>Configure Your Web Server:</strong></p>
+</div>
+<div class="paragraph">
+<p>For single-page application routing, configure your web server to serve <code>index.html</code> for all routes under the HAL Explorer path.</p>
+</div>
+<div class="paragraph">
+<p><strong>Example Nginx Configuration:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-nginx" data-lang="nginx">location /hal-explorer/ {
+    alias /usr/share/nginx/html/hal-explorer/;
+    try_files $uri $uri/ /hal-explorer/index.html;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_option_4_build_from_source"><a class="anchor" href="#_option_4_build_from_source"></a>Option 4: Build from Source</h3>
+<div class="paragraph">
+<p>For the latest features or custom modifications, build HAL Explorer from source.</p>
+</div>
+<div class="paragraph">
+<p><strong>Steps:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Clone the repository:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">git clone https://github.com/toedter/hal-explorer.git
+cd hal-explorer</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Build the project (see <a href="#build">Build</a> section below)</p>
+</li>
+<li>
+<p>Copy the <code>dist/hal-explorer/browser</code> directory contents to your backend&#8217;s static file location</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Recommended Spring Boot Location:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>src/main/resources/static/hal-explorer/</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This makes HAL Explorer available at <code><a href="http://localhost:8080/hal-explorer/" class="bare">http://localhost:8080/hal-explorer/</a></code>.</p>
 </div>
 </div>
 </div>
@@ -218,7 +344,7 @@ The build artifacts will be stored in the <code>dist/</code> directory.</p>
 <div id="footer">
 <div id="footer-text">
 Version 2.2.2-SNAPSHOT<br>
-Last updated 2026-01-16 07:21:11 UTC
+Last updated 2026-01-16 09:06:31 UTC
 </div>
 </div>
 </div>

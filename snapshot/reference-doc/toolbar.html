@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.18">
+<title>Toolbar</title>
+<link rel="stylesheet" href="css/site.css">
+<script src="js/setup.js"></script><script defer src="js/site.js"></script>
+
+</head>
+<body id="toolbar" class="article"><div id="banner-container" class="container" role="banner">
+  <div id="banner" class="contained" role="banner">
+    <div id="switch-theme">
+      <input type="checkbox" id="switch-theme-checkbox" />
+      <label for="switch-theme-checkbox">Dark Theme</label>
+    </div>
+  </div>
+</div>
+<div id="tocbar-container" class="container" role="navigation">
+  <div id="tocbar" class="contained" role="navigation">
+    <button id="toggle-toc"></button>
+  </div>
+</div>
+<div id="main-container" class="container">
+  <div id="main" class="contained">
+    <div id="doc" class="doc">
+<div id="header">
+<h1>Toolbar</h1>
+<div class="details">
+<span id="revnumber">version 2.2.2-SNAPSHOT</span>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the top-level toolbar, you can choose the color mode, theme, and settings, and view the About dialog.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="color-mode"><a class="anchor" href="#color-mode"></a>Color Mode</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>HAL Explorer supports three color modes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Light</strong> - Light color scheme</p>
+</li>
+<li>
+<p><strong>Dark</strong> - Dark color scheme</p>
+</li>
+<li>
+<p><strong>Auto</strong> - Automatically detects your system&#8217;s preferred color scheme (default)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The color mode is stored in your browser&#8217;s local storage and persists across sessions.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="theming"><a class="anchor" href="#theming"></a>Theming</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>HAL Explorer provides a rich theming experience with support of the Bootstrap default theme and 26 <a href="https://bootswatch.com/">Bootswatch</a> themes (by Thomas Park).
+The default theme is <strong>Cosmo</strong>, which offers a clean, modern look that works well with both light and dark color modes.</p>
+</div>
+<div class="paragraph">
+<p>You can select from 27 professionally designed themes to customize the look and feel of HAL Explorer:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Bootstrap Default</strong> - Bootstrap&#8217;s base theme</p>
+</li>
+<li>
+<p><strong>Brite</strong> - High contrast, colorful theme</p>
+</li>
+<li>
+<p><strong>Cerulean</strong> - Calm blue theme</p>
+</li>
+<li>
+<p><strong>Cosmo</strong> - Modern, flat design with blue accents (HAL Explorer default theme)</p>
+</li>
+<li>
+<p><strong>Cyborg</strong> - Dark theme with slate gray</p>
+</li>
+<li>
+<p><strong>Darkly</strong> - Dark theme with subdued colors</p>
+</li>
+<li>
+<p><strong>Flatly</strong> - Flat design with green accents</p>
+</li>
+<li>
+<p><strong>Journal</strong> - Newspaper-inspired crisp theme</p>
+</li>
+<li>
+<p><strong>Litera</strong> - Clean, readable typography</p>
+</li>
+<li>
+<p><strong>Lumen</strong> - Light theme with soft shadows</p>
+</li>
+<li>
+<p><strong>Lux</strong> - Elegant with gold accents</p>
+</li>
+<li>
+<p><strong>Materia</strong> - Material Design inspired</p>
+</li>
+<li>
+<p><strong>Minty</strong> - Fresh minty theme</p>
+</li>
+<li>
+<p><strong>Morph</strong> - Modern with gradients</p>
+</li>
+<li>
+<p><strong>Pulse</strong> - Purple-themed design</p>
+</li>
+<li>
+<p><strong>Quartz</strong> - Dark professional theme</p>
+</li>
+<li>
+<p><strong>Sandstone</strong> - Flat design with orange accents</p>
+</li>
+<li>
+<p><strong>Simplex</strong> - Minimalist white theme</p>
+</li>
+<li>
+<p><strong>Sketchy</strong> - Hand-drawn style</p>
+</li>
+<li>
+<p><strong>Slate</strong> - Dark theme with blue highlights</p>
+</li>
+<li>
+<p><strong>Solar</strong> - Dark theme with yellow highlights</p>
+</li>
+<li>
+<p><strong>Spacelab</strong> - Modern flat blue theme</p>
+</li>
+<li>
+<p><strong>Superhero</strong> - Dark comic book style</p>
+</li>
+<li>
+<p><strong>United</strong> - Ubuntu-inspired design</p>
+</li>
+<li>
+<p><strong>Vapor</strong> - Retro synthwave theme</p>
+</li>
+<li>
+<p><strong>Yeti</strong> - Clean, snowy white theme</p>
+</li>
+<li>
+<p><strong>Zephyr</strong> - Light, airy design</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Here is an example of HAL Explorer using the Dark Cosmo theme:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/hal-explorer-dark.png" alt="HAL Explorer with Dark Cosmo theme" width="80%">
+</div>
+</div>
+<div class="paragraph">
+<p>The selected theme is stored in your browser&#8217;s local storage with the <code>hal-explorer.theme</code> key and persists across sessions. Themes automatically adapt to your selected color mode (light/dark/auto) for an optimal viewing experience.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="settings"><a class="anchor" href="#settings"></a>Settings</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <em>Settings</em> menu helps you to customize HAL Explorer&#8217;s behavior and user interface. All settings are automatically saved to your browser&#8217;s local storage with the <code>hal-explorer.</code> prefix and persist across sessions.</p>
+</div>
+<div class="sect2">
+<h3 id="_layout"><a class="anchor" href="#_layout"></a>Layout</h3>
+<div class="paragraph">
+<p>Choose between different column layouts to optimize your workspace (see <a href="#Curie-based Documentation">[Curie-based Documentation]</a> for more details):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>2 Column Layout</strong> - Default layout with two columns</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Documentation panel appears only when explicitly toggled</p>
+</li>
+<li>
+<p>Provides more horizontal space for the main content</p>
+</li>
+<li>
+<p>Ideal for smaller screens or when documentation is not frequently needed</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>3 Column Layout</strong> - Expanded layout with three columns</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Documentation is always visible when available</p>
+</li>
+<li>
+<p>Provides a comprehensive overview of resources, actions, and documentation simultaneously</p>
+</li>
+<li>
+<p>Best for larger screens and documentation-heavy APIs</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_use_http_options"><a class="anchor" href="#_use_http_options"></a>Use HTTP OPTIONS</h3>
+<div class="paragraph">
+<p>When enabled, HAL Explorer automatically sends HTTP OPTIONS requests to discover which HTTP methods are supported for a given link URI.</p>
+</div>
+<div class="paragraph">
+<p>This feature helps you understand the available operations without having to consult external API documentation. The supported methods are then displayed as available actions for that resource.</p>
+</div>
+<div class="paragraph">
+<p><strong>Default:</strong> Disabled</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_enable_all_http_methods_for_hal_forms_links"><a class="anchor" href="#_enable_all_http_methods_for_hal_forms_links"></a>Enable all HTTP Methods for HAL-FORMS Links</h3>
+<div class="paragraph">
+<p>When enabled, all HTTP methods (GET, POST, PUT, PATCH, DELETE, etc.) are available for links in HAL-FORMS documents, even if no explicit template is defined for that method.</p>
+</div>
+<div class="paragraph">
+<p>Typically, HAL-FORMS <code>_templates</code> explicitly specify affordances with their corresponding HTTP methods. However, this setting is useful when:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You need to test different HTTP methods on the same endpoint</p>
+</li>
+<li>
+<p>Your API supports additional methods not documented in the HAL-FORMS template</p>
+</li>
+<li>
+<p>You want to explore API capabilities beyond the standard template definitions</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Default:</strong> Disabled</p>
+</div>
+<div class="paragraph">
+<p><strong>Note:</strong> Use this setting with caution, as it may allow operations that the API doesn&#8217;t actually support.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="about"><a class="anchor" href="#about"></a>About</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The About dialog displays:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Author information</p>
+</li>
+<li>
+<p>Version number</p>
+</li>
+<li>
+<p>GitHub repository link</p>
+</li>
+<li>
+<p>License information (MIT)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 2.2.2-SNAPSHOT<br>
+Last updated 2026-01-16 09:06:31 UTC
+</div>
+</div>
+</div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.18">
+<title>Troubleshooting</title>
+<link rel="stylesheet" href="css/site.css">
+<script src="js/setup.js"></script><script defer src="js/site.js"></script>
+
+</head>
+<body id="troubleshooting" class="article"><div id="banner-container" class="container" role="banner">
+  <div id="banner" class="contained" role="banner">
+    <div id="switch-theme">
+      <input type="checkbox" id="switch-theme-checkbox" />
+      <label for="switch-theme-checkbox">Dark Theme</label>
+    </div>
+  </div>
+</div>
+<div id="tocbar-container" class="container" role="navigation">
+  <div id="tocbar" class="contained" role="navigation">
+    <button id="toggle-toc"></button>
+  </div>
+</div>
+<div id="main-container" class="container">
+  <div id="main" class="contained">
+    <div id="doc" class="doc">
+<div id="header">
+<h1>Troubleshooting</h1>
+<div class="details">
+<span id="revnumber">version 2.2.2-SNAPSHOT</span>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter helps you resolve common issues when using HAL Explorer.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_issues"><a class="anchor" href="#_connection_issues"></a>Connection Issues</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_cors_errors"><a class="anchor" href="#_cors_errors"></a>CORS Errors</h3>
+<div class="paragraph">
+<p><strong>Problem:</strong> Browser console shows CORS (Cross-Origin Resource Sharing) errors when trying to access your API.</p>
+</div>
+<div class="paragraph">
+<p><strong>Error Message:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Access to fetch at 'http://api.example.com/' from origin 'https://hal-explorer.com'
+has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present
+on the requested resource.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Solutions:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Enable CORS on Your Server</strong> (Recommended for development):</p>
+<div class="paragraph">
+<p>Add CORS headers to your API responses. See the <a href="setup.html#_using_online_demos_with_your_api">CORS Setup</a> section for Spring Boot examples.</p>
+</div>
+</li>
+<li>
+<p><strong>Use the Development Server</strong>:</p>
+<div class="paragraph">
+<p>Clone HAL Explorer and run it locally with <code>yarn start</code>. The development server includes proxy configuration that avoids CORS issues. See <a href="setup.html#dev-server">Development Server</a>.</p>
+</div>
+</li>
+<li>
+<p><strong>Integrate HAL Explorer into Your Backend</strong>:</p>
+<div class="paragraph">
+<p>Deploy HAL Explorer as part of your application. See <a href="setup.html#_backend_integration">Backend Integration</a> options.</p>
+</div>
+</li>
+<li>
+<p><strong>Browser Extension</strong> (Development only):</p>
+<div class="paragraph">
+<p>Install a browser extension like "CORS Unblock" or "Allow CORS".</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Only use CORS browser extensions for development. They disable important security features.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_getting_help"><a class="anchor" href="#_getting_help"></a>Getting Help</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you can&#8217;t resolve your issue:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Check Browser Console</strong>:</p>
+<div class="paragraph">
+<p>Open DevTools (F12) and look for errors in the Console and Network tabs.</p>
+</div>
+</li>
+<li>
+<p><strong>Test with curl</strong>:</p>
+<div class="paragraph">
+<p>Verify your API works outside HAL Explorer:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">curl -H "Accept: application/hal+json" http://your-api.com/endpoint</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Report an Issue</strong>:</p>
+<div class="paragraph">
+<p>If you&#8217;ve found a bug in HAL Explorer, report it at: <a href="https://github.com/toedter/hal-explorer/issues" class="bare">https://github.com/toedter/hal-explorer/issues</a></p>
+</div>
+<div class="paragraph">
+<p>Include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>HAL Explorer version</p>
+</li>
+<li>
+<p>Browser and version</p>
+</li>
+<li>
+<p>Steps to reproduce</p>
+</li>
+<li>
+<p>Error messages from console</p>
+</li>
+<li>
+<p>Example API response (if possible)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Ask the Community</strong>:</p>
+<div class="paragraph">
+<p>Check existing GitHub issues for similar problems and solutions.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 2.2.2-SNAPSHOT<br>
+Last updated 2026-01-16 09:06:31 UTC
+</div>
+</div>
+</div>
+  </div>
+</div>
+</body>
+</html>

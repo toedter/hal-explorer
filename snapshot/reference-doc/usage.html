@@ -33,54 +33,520 @@
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="_json_properties"><a class="anchor" href="#_json_properties"></a>JSON Properties</h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>When you start HAL Explorer, you will see an input field in the top-left area where you can enter the URI of a REST service that returns HAL or HAL-FORMS documents. Once you click <code>Go!</code> or press Enter, the response is displayed. A typical response looks like:</p>
+<p>This chapter guides you through common workflows and features in HAL Explorer.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_getting_started"><a class="anchor" href="#_getting_started"></a>Getting Started</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_your_first_request"><a class="anchor" href="#_your_first_request"></a>Your First Request</h3>
+<div class="paragraph">
+<p>When you open HAL Explorer, you&#8217;ll see a simple interface with a URI input field at the top:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Enter a URI</strong>: Type or paste the URL of your HAL or HAL-FORMS API endpoint</p>
+</li>
+<li>
+<p><strong>Click Go!</strong> or press <code>Enter</code>: HAL Explorer will fetch and display the response</p>
+</li>
+<li>
+<p><strong>Explore the Response</strong>: Navigate through properties, links, and embedded resources</p>
+</li>
+</ol>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="img/hal-explorer-light.png" alt="hal explorer light">
 </div>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Try the built-in examples first: <a href="https://toedter.github.io/hal-explorer/release/hal-explorer/#uri=examples/examples.hal-forms.json">Demo with Example Data</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_links"><a class="anchor" href="#_links"></a>Links</h2>
+<h2 id="toolbar"><a class="anchor" href="#toolbar"></a>Toolbar</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Just below the URI, you will find the top-level JSON properties. If the response contains links, they are displayed below.
-Since HAL does not provide affordances indicating which HTTP method you should use to follow a link, you will find colored buttons for each HTTP method:</p>
+<p>In the top-level toolbar, you can choose the color mode, theme, and settings, and view the About dialog.</p>
+</div>
+<div class="sect2">
+<h3 id="color-mode"><a class="anchor" href="#color-mode"></a>Color Mode</h3>
+<div class="paragraph">
+<p>HAL Explorer supports three color modes:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>&lt;</code> : HTTP GET</p>
+<p><strong>Light</strong> - Light color scheme</p>
 </li>
 <li>
-<p><code>+</code> : HTTP POST</p>
+<p><strong>Dark</strong> - Dark color scheme</p>
 </li>
 <li>
-<p><code>&gt;&gt;</code> : HTTP PUT</p>
-</li>
-<li>
-<p><code>&gt;</code> : HTTP PATCH</p>
-</li>
-<li>
-<p><code>x</code> : HTTP DELETE</p>
+<p><strong>Auto</strong> - Automatically detects your system&#8217;s preferred color scheme (default)</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>If a link relation provides <a href="#_curie_based_documentation">Curie-based Documentation</a>,
-you can click on the book icon to display it.</p>
+<p>The color mode is stored in your browser&#8217;s local storage and persists across sessions.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="theming"><a class="anchor" href="#theming"></a>Theming</h3>
+<div class="paragraph">
+<p>HAL Explorer provides a rich theming experience with support of the Bootstrap default theme and 26 <a href="https://bootswatch.com/">Bootswatch</a> themes (by Thomas Park).
+The default theme is <strong>Cosmo</strong>, which offers a clean, modern look that works well with both light and dark color modes.</p>
 </div>
 <div class="paragraph">
-<p>If a link relation provides a name or a title, they are displayed in the links table.</p>
+<p>You can select from 27 professionally designed themes to customize the look and feel of HAL Explorer:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Bootstrap Default</strong> - Bootstrap&#8217;s base theme</p>
+</li>
+<li>
+<p><strong>Brite</strong> - High contrast, colorful theme</p>
+</li>
+<li>
+<p><strong>Cerulean</strong> - Calm blue theme</p>
+</li>
+<li>
+<p><strong>Cosmo</strong> - Modern, flat design with blue accents (HAL Explorer default theme)</p>
+</li>
+<li>
+<p><strong>Cyborg</strong> - Dark theme with slate gray</p>
+</li>
+<li>
+<p><strong>Darkly</strong> - Dark theme with subdued colors</p>
+</li>
+<li>
+<p><strong>Flatly</strong> - Flat design with green accents</p>
+</li>
+<li>
+<p><strong>Journal</strong> - Newspaper-inspired crisp theme</p>
+</li>
+<li>
+<p><strong>Litera</strong> - Clean, readable typography</p>
+</li>
+<li>
+<p><strong>Lumen</strong> - Light theme with soft shadows</p>
+</li>
+<li>
+<p><strong>Lux</strong> - Elegant with gold accents</p>
+</li>
+<li>
+<p><strong>Materia</strong> - Material Design inspired</p>
+</li>
+<li>
+<p><strong>Minty</strong> - Fresh minty theme</p>
+</li>
+<li>
+<p><strong>Morph</strong> - Modern with gradients</p>
+</li>
+<li>
+<p><strong>Pulse</strong> - Purple-themed design</p>
+</li>
+<li>
+<p><strong>Quartz</strong> - Dark professional theme</p>
+</li>
+<li>
+<p><strong>Sandstone</strong> - Flat design with orange accents</p>
+</li>
+<li>
+<p><strong>Simplex</strong> - Minimalist white theme</p>
+</li>
+<li>
+<p><strong>Sketchy</strong> - Hand-drawn style</p>
+</li>
+<li>
+<p><strong>Slate</strong> - Dark theme with blue highlights</p>
+</li>
+<li>
+<p><strong>Solar</strong> - Dark theme with yellow highlights</p>
+</li>
+<li>
+<p><strong>Spacelab</strong> - Modern flat blue theme</p>
+</li>
+<li>
+<p><strong>Superhero</strong> - Dark comic book style</p>
+</li>
+<li>
+<p><strong>United</strong> - Ubuntu-inspired design</p>
+</li>
+<li>
+<p><strong>Vapor</strong> - Retro synthwave theme</p>
+</li>
+<li>
+<p><strong>Yeti</strong> - Clean, snowy white theme</p>
+</li>
+<li>
+<p><strong>Zephyr</strong> - Light, airy design</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>You can click on a link button to follow the link. If a link is templated, a modal dialog will appear where you can fill in the template parameters, like:</p>
+<p>Here is an example of HAL Explorer using the Dark Cosmo theme:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/hal-explorer-dark.png" alt="HAL Explorer with Dark Cosmo theme" width="80%">
+</div>
+</div>
+<div class="paragraph">
+<p>The selected theme is stored in your browser&#8217;s local storage with the <code>hal-explorer.theme</code> key and persists across sessions. Themes automatically adapt to your selected color mode (light/dark/auto) for an optimal viewing experience.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="settings"><a class="anchor" href="#settings"></a>Settings</h3>
+<div class="paragraph">
+<p>The <em>Settings</em> menu helps you to customize HAL Explorer&#8217;s behavior and user interface. All settings are automatically saved to your browser&#8217;s local storage with the <code>hal-explorer.</code> prefix and persist across sessions.</p>
+</div>
+<div class="sect3">
+<h4 id="_layout"><a class="anchor" href="#_layout"></a>Layout</h4>
+<div class="paragraph">
+<p>Choose between different column layouts to optimize your workspace (see <a href="#_curie_based_documentation">Curie-based Documentation</a> for more details):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>2 Column Layout</strong> - Default layout with two columns</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Documentation panel appears only when explicitly toggled</p>
+</li>
+<li>
+<p>Provides more horizontal space for the main content</p>
+</li>
+<li>
+<p>Ideal for smaller screens or when documentation is not frequently needed</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>3 Column Layout</strong> - Expanded layout with three columns</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Documentation is always visible when available</p>
+</li>
+<li>
+<p>Provides a comprehensive overview of resources, actions, and documentation simultaneously</p>
+</li>
+<li>
+<p>Best for larger screens and documentation-heavy APIs</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_use_http_options"><a class="anchor" href="#_use_http_options"></a>Use HTTP OPTIONS</h4>
+<div class="paragraph">
+<p>When enabled, HAL Explorer automatically sends HTTP OPTIONS requests to discover which HTTP methods are supported for a given link URI.</p>
+</div>
+<div class="paragraph">
+<p>This feature helps you understand the available operations without having to consult external API documentation. The supported methods are then displayed as available actions for that resource.</p>
+</div>
+<div class="paragraph">
+<p><strong>Default:</strong> Disabled</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_enable_all_http_methods_for_hal_forms_links"><a class="anchor" href="#_enable_all_http_methods_for_hal_forms_links"></a>Enable all HTTP Methods for HAL-FORMS Links</h4>
+<div class="paragraph">
+<p>When enabled, all HTTP methods (GET, POST, PUT, PATCH, DELETE, etc.) are available for links in HAL-FORMS documents, even if no explicit template is defined for that method.</p>
+</div>
+<div class="paragraph">
+<p>Typically, HAL-FORMS <code>_templates</code> explicitly specify affordances with their corresponding HTTP methods. However, this setting is useful when:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You need to test different HTTP methods on the same endpoint</p>
+</li>
+<li>
+<p>Your API supports additional methods not documented in the HAL-FORMS template</p>
+</li>
+<li>
+<p>You want to explore API capabilities beyond the standard template definitions</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Default:</strong> Disabled</p>
+</div>
+<div class="paragraph">
+<p><strong>Note:</strong> Use this setting with caution, as it may allow operations that the API doesn&#8217;t actually support.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="about"><a class="anchor" href="#about"></a>About</h3>
+<div class="paragraph">
+<p>The About dialog displays:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Author information</p>
+</li>
+<li>
+<p>Version number</p>
+</li>
+<li>
+<p>GitHub repository link</p>
+</li>
+<li>
+<p>License information (MIT)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_understanding_the_interface"><a class="anchor" href="#_understanding_the_interface"></a>Understanding the Interface</h3>
+<div class="paragraph">
+<p>The HAL Explorer interface is divided into main sections:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Top Bar</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>URI input field and Go! button</p>
+</li>
+<li>
+<p>Edit Headers button for custom HTTP headers</p>
+</li>
+<li>
+<p>Color mode, theme, and settings menu</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Left Panel</strong> (Main Content)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Top-level JSON properties</p>
+</li>
+<li>
+<p>Links section with HTTP method buttons</p>
+</li>
+<li>
+<p>Embedded resources (expandable)</p>
+</li>
+<li>
+<p>Templates section (for HAL-FORMS)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Right Panel</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Response status and headers</p>
+</li>
+<li>
+<p>Syntax-highlighted response body</p>
+</li>
+<li>
+<p>Documentation panel (in 3-column mode or when toggled)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_working_with_properties"><a class="anchor" href="#_working_with_properties"></a>Working with Properties</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When a response is displayed, top-level JSON properties appear at the top of the left panel.</p>
+</div>
+<div class="paragraph">
+<p><strong>Example Response:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">{
+  "id": 1,
+  "title": "The Matrix",
+  "year": 1999,
+  "director": "Wachowski Sisters"
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These properties are displayed in a clean, readable format with syntax highlighting.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_navigating_links"><a class="anchor" href="#_navigating_links"></a>Navigating Links</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Links are the heart of hypermedia APIs. HAL Explorer makes it easy to discover and follow links in your API.</p>
+</div>
+<div class="sect2">
+<h3 id="_link_display"><a class="anchor" href="#_link_display"></a>Link Display</h3>
+<div class="paragraph">
+<p>Links appear in a dedicated section below the properties. Each link relation shows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Relation name</strong> - The link relation type (e.g., <code>self</code>, <code>items</code>, <code>next</code>)</p>
+</li>
+<li>
+<p><strong>Name/Title</strong> - Optional descriptive text (if provided by the API)</p>
+</li>
+<li>
+<p><strong>HTTP method buttons</strong> - Actions you can perform on the link</p>
+</li>
+<li>
+<p><strong>Documentation icon</strong> - Book icon (if CURIE documentation is available)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_http_method_buttons"><a class="anchor" href="#_http_method_buttons"></a>HTTP Method Buttons</h3>
+<div class="paragraph">
+<p>Since HAL doesn&#8217;t specify which HTTP methods are valid for each link, HAL Explorer provides buttons for all standard methods:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 33.3333%;">
+<col style="width: 50.0001%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Button</th>
+<th class="tableblock halign-left valign-top">HTTP Method</th>
+<th class="tableblock halign-left valign-top">Typical Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GET</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Retrieve a resource</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>+</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create a new resource or perform an action</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&gt;&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PUT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Replace an existing resource completely</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PATCH</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Partially update an existing resource</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>x</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DELETE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Remove a resource</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Enable the "Use HTTP OPTIONS" setting (see <a href="#settings">Settings</a>) to automatically discover which methods are actually supported for each link.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_following_simple_links"><a class="anchor" href="#_following_simple_links"></a>Following Simple Links</h3>
+<div class="paragraph">
+<p>To follow a link:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Click the appropriate HTTP method button (usually <code>&lt;</code> for GET)</p>
+</li>
+<li>
+<p>HAL Explorer fetches the linked resource</p>
+</li>
+<li>
+<p>The new response appears in the interface</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Example Workflow:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Start at API root: <code>GET <a href="http://api.example.com/" class="bare">http://api.example.com/</a></code></p>
+</li>
+<li>
+<p>See a link to <code>"customers"</code> collection</p>
+</li>
+<li>
+<p>Click <code>&lt;</code> (GET) button on the <code>customers</code> link</p>
+</li>
+<li>
+<p>View the list of customers</p>
+</li>
+<li>
+<p>Click <code>&lt;</code> (GET) on a specific customer link</p>
+</li>
+<li>
+<p>View individual customer details</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_working_with_templated_links"><a class="anchor" href="#_working_with_templated_links"></a>Working with Templated Links</h3>
+<div class="paragraph">
+<p>Some links include URI templates with parameters. When you click a method button for a templated link, HAL Explorer opens a dialog to collect parameter values.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -88,16 +554,143 @@ you can click on the book icon to display it.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>When you click on <code>Go!</code>, an HTTP call to the <code>Expanded URI</code> will be made.</p>
+<p><strong>Templated Link Example:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">{
+  "_links": {
+    "search": {
+      "href": "/customers{?name,city}",
+      "templated": true
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Using the Template Dialog:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Click the HTTP method button for the templated link</p>
+</li>
+<li>
+<p>Enter values for each template parameter:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>name</code>: "Smith"</p>
+</li>
+<li>
+<p><code>city</code>: "Portland"</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Review the expanded URI: <code>/customers?name=Smith&amp;city=Portland</code></p>
+</li>
+<li>
+<p>Click <code>Go!</code> to execute the request</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Features:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Validation</strong>: Required parameters are marked</p>
+</li>
+<li>
+<p><strong>Preview</strong>: See the expanded URI before sending</p>
+</li>
+<li>
+<p><strong>Keyboard Shortcut</strong>: Press <code>Enter</code> to submit, <code>ESC</code> to cancel</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_link_names_and_titles"><a class="anchor" href="#_link_names_and_titles"></a>Link Names and Titles</h3>
+<div class="paragraph">
+<p>APIs can provide additional context for links through <code>name</code> or <code>title</code> attributes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">{
+  "_links": {
+    "author": [
+      {"href": "/users/1", "title": "John Smith"},
+      {"href": "/users/2", "title": "Jane Doe"}
+    ]
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>HAL Explorer displays these in the links table, making it easy to choose the right link when multiple links share the same relation.</p>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_embedded_resources"><a class="anchor" href="#_embedded_resources"></a>Embedded Resources</h2>
+<h2 id="_exploring_embedded_resources"><a class="anchor" href="#_exploring_embedded_resources"></a>Exploring Embedded Resources</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If the response contains embedded resources, you will find them in the "Embedded Resources" section.
-You can click on an embedded resource to expand it, like:</p>
+<p>HAL allows resources to embed related resources directly in the response, reducing the need for additional HTTP requests.</p>
+</div>
+<div class="sect2">
+<h3 id="_what_are_embedded_resources"><a class="anchor" href="#_what_are_embedded_resources"></a>What Are Embedded Resources?</h3>
+<div class="paragraph">
+<p>Embedded resources appear in the <code>_embedded</code> section of a HAL response:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">{
+  "total": 2,
+  "_embedded": {
+    "customers": [
+      {
+        "id": 1,
+        "name": "John Smith",
+        "_links": {
+          "self": {"href": "/customers/1"}
+        }
+      },
+      {
+        "id": 2,
+        "name": "Jane Doe",
+        "_links": {
+          "self": {"href": "/customers/2"}
+        }
+      }
+    ]
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_viewing_embedded_resources"><a class="anchor" href="#_viewing_embedded_resources"></a>Viewing Embedded Resources</h3>
+<div class="paragraph">
+<p>HAL Explorer displays embedded resources in an expandable section:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Look for the "Embedded Resources" section</p>
+</li>
+<li>
+<p>Click on an embedded resource relation to expand it</p>
+</li>
+<li>
+<p>View the full resource details, including its own links and properties</p>
+</li>
+</ol>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -105,25 +698,161 @@ You can click on an embedded resource to expand it, like:</p>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_response_details"><a class="anchor" href="#_response_details"></a>Response Details</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_navigating_embedded_resources"><a class="anchor" href="#_navigating_embedded_resources"></a>Navigating Embedded Resources</h3>
 <div class="paragraph">
-<p>On the right-hand side of the page, you will find details about the response:</p>
+<p>Each embedded resource is fully interactive:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Response Status code and text</p>
+<p><strong>Follow links</strong> - Click HTTP method buttons on embedded resource links</p>
 </li>
 <li>
-<p>All Response Headers</p>
+<p><strong>Expand nested embeds</strong> - If an embedded resource contains its own embedded resources</p>
 </li>
 <li>
-<p>Response body with syntax-highlighted JSON</p>
+<p><strong>View properties</strong> - See all attributes of the embedded resource</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p><strong>Example Workflow:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Fetch customer list: <code>GET /customers</code></p>
+</li>
+<li>
+<p>Expand embedded <code>customers</code> collection</p>
+</li>
+<li>
+<p>View individual customer details inline</p>
+</li>
+<li>
+<p>Click <code>&lt;</code> (GET) on a customer&#8217;s <code>self</code> link to view full details</p>
+</li>
+<li>
+<p>Follow <code>orders</code> link from customer to see their orders</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This reduces navigation time while maintaining full API exploration capabilities.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_inspecting_response_details"><a class="anchor" href="#_inspecting_response_details"></a>Inspecting Response Details</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The right panel provides comprehensive information about each API response.</p>
+</div>
+<div class="sect2">
+<h3 id="_response_status"><a class="anchor" href="#_response_status"></a>Response Status</h3>
+<div class="paragraph">
+<p>At the top of the right panel, you&#8217;ll see:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>HTTP Status Code</strong> - e.g., 200, 201, 404, 500</p>
+</li>
+<li>
+<p><strong>Status Text</strong> - e.g., "OK", "Created", "Not Found", "Internal Server Error"</p>
+</li>
+<li>
+<p><strong>Status Color</strong> - Green for success (2xx), yellow for redirects (3xx), red for errors (4xx, 5xx)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_response_headers"><a class="anchor" href="#_response_headers"></a>Response Headers</h3>
+<div class="paragraph">
+<p>All HTTP response headers are displayed in a collapsible section:</p>
+</div>
+<div class="paragraph">
+<p><strong>Common Headers:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Content-Type</code> - Media type of the response (e.g., <code>application/hal+json</code>)</p>
+</li>
+<li>
+<p><code>Content-Length</code> - Size of the response body</p>
+</li>
+<li>
+<p><code>Cache-Control</code> - Caching directives</p>
+</li>
+<li>
+<p><code>ETag</code> - Version identifier for the resource</p>
+</li>
+<li>
+<p><code>Last-Modified</code> - When the resource was last changed</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These headers are useful for:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Debugging caching issues</p>
+</li>
+<li>
+<p>Understanding content negotiation</p>
+</li>
+<li>
+<p>Implementing optimistic concurrency control</p>
+</li>
+<li>
+<p>Analyzing API behavior</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_response_body"><a class="anchor" href="#_response_body"></a>Response Body</h3>
+<div class="paragraph">
+<p>The complete JSON response appears with:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Syntax Highlighting</strong> - Different colors for keys, values, strings, numbers</p>
+</li>
+<li>
+<p><strong>Collapsible Sections</strong> - Expand/collapse nested objects and arrays</p>
+</li>
+<li>
+<p><strong>Raw JSON</strong> - Exact server response, formatted for readability</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Uses:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Compare left panel (structured view) with right panel (raw JSON)</p>
+</li>
+<li>
+<p>Copy/paste JSON for testing or documentation</p>
+</li>
+<li>
+<p>Inspect complex nested structures</p>
+</li>
+<li>
+<p>Debug unexpected API responses</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -197,21 +926,145 @@ Only for valid forms is the body displayed, and the HTTP request can be made.</p
 </div>
 </div>
 <div class="sect1">
-<h2 id="_adding_request_headers"><a class="anchor" href="#_adding_request_headers"></a>Adding Request Headers</h2>
+<h2 id="_customizing_request_headers"><a class="anchor" href="#_customizing_request_headers"></a>Customizing Request Headers</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>When you want to add certain request headers to all calls, click on <code>Edit Headers</code> in the top-left corner.
-Then, a modal dialog will appear where you can add headers. This is useful when you want to add items like
-bearer tokens for authorization, like:</p>
+<p>Custom HTTP headers allow you to authenticate with your API, control content negotiation, and configure other request behaviors.</p>
+</div>
+<div class="sect2">
+<h3 id="_opening_the_headers_editor"><a class="anchor" href="#_opening_the_headers_editor"></a>Opening the Headers Editor</h3>
+<div class="paragraph">
+<p>Click the <strong>Edit Headers</strong> button in the top-left corner to open the request headers dialog.</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="img/request-headers.png" alt="request headers" width="70%">
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_adding_custom_headers"><a class="anchor" href="#_adding_custom_headers"></a>Adding Custom Headers</h3>
 <div class="paragraph">
-<p>The modal dialog also provides buttons to clear all request headers or to add/modify an <code>Accept</code>
-request header for <code>HAL</code> or <code>HAL-FORMS</code> documents.</p>
+<p><strong>Step-by-Step:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Click <strong>Edit Headers</strong></p>
+</li>
+<li>
+<p>Enter header name (e.g., <code>Authorization</code>)</p>
+</li>
+<li>
+<p>Enter header value (e.g., <code>Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&#8230;&#8203;</code>)</p>
+</li>
+<li>
+<p>Click <strong>Add</strong> or press <code>Enter</code></p>
+</li>
+<li>
+<p>Click <strong>Done</strong> to close the dialog</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>All subsequent requests will include these headers.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_common_use_cases"><a class="anchor" href="#_common_use_cases"></a>Common Use Cases</h3>
+<div class="sect3">
+<h4 id="_authentication"><a class="anchor" href="#_authentication"></a>Authentication</h4>
+<div class="paragraph">
+<p><strong>Bearer Token (JWT):</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Basic Authentication:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>API Key:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>X-API-Key: your-api-key-here</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_content_negotiation"><a class="anchor" href="#_content_negotiation"></a>Content Negotiation</h4>
+<div class="paragraph">
+<p><strong>Request HAL format:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Accept: application/hal+json</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Request HAL-FORMS format:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Accept: application/prs.hal-forms+json</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The headers dialog includes quick buttons to set these <code>Accept</code> headers.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_custom_headers"><a class="anchor" href="#_custom_headers"></a>Custom Headers</h4>
+<div class="paragraph">
+<p>Add any custom headers required by your API:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>X-Tenant-ID: tenant-123
+X-Request-ID: abc-def-ghi
+X-Correlation-ID: correlation-xyz</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_managing_headers"><a class="anchor" href="#_managing_headers"></a>Managing Headers</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>View All Headers</strong> - All configured headers are listed in the dialog</p>
+</li>
+<li>
+<p><strong>Remove Headers</strong> - Click the delete icon next to any header</p>
+</li>
+<li>
+<p><strong>Clear All</strong> - Use the "Clear All" button to remove all custom headers</p>
+</li>
+<li>
+<p><strong>Persistence</strong> - Headers are stored in the URL fragment for bookmarking</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Be careful sharing URLs that contain sensitive headers like authorization tokens. The headers are visible in the URL fragment.
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -310,7 +1163,7 @@ A simple example JSON looks like:</p>
 <div id="footer">
 <div id="footer-text">
 Version 2.2.2-SNAPSHOT<br>
-Last updated 2026-01-16 07:21:11 UTC
+Last updated 2026-01-16 09:06:31 UTC
 </div>
 </div>
 </div>

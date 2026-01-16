@@ -40,59 +40,234 @@
 <li><a href="#_project_metadata">Project Metadata</a></li>
 <li><a href="#introduction">1. Introduction</a>
 <ul class="sectlevel2">
-<li><a href="#fundamentals">1.1. Fundamentals</a></li>
-<li><a href="#features">1.2. Features</a></li>
+<li><a href="#what-is-hal-explorer">1.1. What is HAL Explorer?</a></li>
+<li><a href="#why-hal-explorer">1.2. Why Use HAL Explorer?</a></li>
+<li><a href="#fundamentals">1.3. Fundamentals</a>
+<ul class="sectlevel3">
+<li><a href="#_prerequisites">1.3.1. Prerequisites</a></li>
+<li><a href="#_supported_media_types">1.3.2. Supported Media Types</a></li>
 </ul>
 </li>
-<li><a href="#setup">2. Setup</a>
-<ul class="sectlevel2">
-<li><a href="#_releases_and_demos">2.1. Releases and Demos</a></li>
-<li><a href="#_integration_with_your_backends">2.2. Integration with Your Backends</a></li>
-<li><a href="#_build">2.3. Build</a>
+<li><a href="#features">1.4. Features Overview</a>
 <ul class="sectlevel3">
-<li><a href="#_node_js">2.3.1. node.js</a></li>
-<li><a href="#_development_server">2.3.2. Development Server</a></li>
-<li><a href="#_gradlejava_build_support">2.3.3. Gradle/Java Build Support</a></li>
-<li><a href="#_building_the_docs">2.3.4. Building the docs</a></li>
-<li><a href="#_running_tests">2.3.5. Running Tests</a></li>
+<li><a href="#_user_interface">1.4.1. User Interface</a>
+<ul class="sectlevel4">
+<li><a href="#_theming_and_appearance">Theming and Appearance</a></li>
+<li><a href="#_layout_options">Layout Options</a></li>
+</ul>
+</li>
+<li><a href="#_api_interaction">1.4.2. API Interaction</a>
+<ul class="sectlevel4">
+<li><a href="#_http_method_support">HTTP Method Support</a></li>
+<li><a href="#_request_customization">Request Customization</a></li>
+</ul>
+</li>
+<li><a href="#_advanced_features">1.4.3. Advanced Features</a>
+<ul class="sectlevel4">
+<li><a href="#_spring_data_rest_integration">Spring Data REST Integration</a></li>
+<li><a href="#_hal_forms_support">HAL-FORMS Support</a></li>
+<li><a href="#_documentation_integration">Documentation Integration</a></li>
+<li><a href="#_error_handling">Error Handling</a></li>
+</ul>
+</li>
+<li><a href="#_data_management">1.4.4. Data Management</a>
+<ul class="sectlevel4">
+<li><a href="#_browser_storage">Browser Storage</a></li>
+<li><a href="#_bookmarking_and_sharing">Bookmarking and Sharing</a></li>
+</ul>
+</li>
+<li><a href="#_response_exploration">1.4.5. Response Exploration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#setup">2. Setup and Installation</a>
+<ul class="sectlevel2">
+<li><a href="#_quick_start_online_demos">2.1. Quick Start: Online Demos</a>
+<ul class="sectlevel3">
+<li><a href="#_using_online_demos_with_your_api">2.1.1. Using Online Demos with Your API</a></li>
+</ul>
+</li>
+<li><a href="#_backend_integration">2.2. Backend Integration</a>
+<ul class="sectlevel3">
+<li><a href="#_option_1_webjar_java_projects">2.2.1. Option 1: WebJar (Java Projects)</a></li>
+<li><a href="#_option_2_spring_data_rest_integration">2.2.2. Option 2: Spring Data REST Integration</a></li>
+<li><a href="#_option_3_static_distribution">2.2.3. Option 3: Static Distribution</a></li>
+<li><a href="#_option_4_build_from_source">2.2.4. Option 4: Build from Source</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a href="#usage">3. Using HAL Explorer</a>
 <ul class="sectlevel2">
-<li><a href="#_json_properties">3.1. JSON Properties</a></li>
-<li><a href="#_links">3.2. Links</a></li>
-<li><a href="#_embedded_resources">3.3. Embedded Resources</a></li>
-<li><a href="#_response_details">3.4. Response Details</a></li>
-<li><a href="#_curie_based_documentation">3.5. Curie-based Documentation</a></li>
-<li><a href="#_hal_forms">3.6. HAL-FORMS</a></li>
-<li><a href="#_updating_rest_resources">3.7. Updating REST Resources</a></li>
-<li><a href="#_adding_request_headers">3.8. Adding Request Headers</a></li>
-<li><a href="#_configuration_and_bookmarking">3.9. Configuration and Bookmarking</a>
+<li><a href="#_getting_started">3.1. Getting Started</a>
 <ul class="sectlevel3">
-<li><a href="#_bookmarking">3.9.1. Bookmarking</a></li>
+<li><a href="#_your_first_request">3.1.1. Your First Request</a></li>
 </ul>
 </li>
-<li><a href="#_hal_forms_options">3.10. HAL-FORMS Options</a></li>
+<li><a href="#toolbar">3.2. Toolbar</a>
+<ul class="sectlevel3">
+<li><a href="#color-mode">3.2.1. Color Mode</a></li>
+<li><a href="#theming">3.2.2. Theming</a></li>
+<li><a href="#settings">3.2.3. Settings</a>
+<ul class="sectlevel4">
+<li><a href="#_layout">Layout</a></li>
+<li><a href="#_use_http_options">Use HTTP OPTIONS</a></li>
+<li><a href="#_enable_all_http_methods_for_hal_forms_links">Enable all HTTP Methods for HAL-FORMS Links</a></li>
 </ul>
 </li>
-<li><a href="#menu">4. Menu</a>
+<li><a href="#about">3.2.4. About</a></li>
+<li><a href="#_understanding_the_interface">3.2.5. Understanding the Interface</a></li>
+</ul>
+</li>
+<li><a href="#_working_with_properties">3.3. Working with Properties</a></li>
+<li><a href="#_navigating_links">3.4. Navigating Links</a>
+<ul class="sectlevel3">
+<li><a href="#_link_display">3.4.1. Link Display</a></li>
+<li><a href="#_http_method_buttons">3.4.2. HTTP Method Buttons</a></li>
+<li><a href="#_following_simple_links">3.4.3. Following Simple Links</a></li>
+<li><a href="#_working_with_templated_links">3.4.4. Working with Templated Links</a></li>
+<li><a href="#_link_names_and_titles">3.4.5. Link Names and Titles</a></li>
+</ul>
+</li>
+<li><a href="#_exploring_embedded_resources">3.5. Exploring Embedded Resources</a>
+<ul class="sectlevel3">
+<li><a href="#_what_are_embedded_resources">3.5.1. What Are Embedded Resources?</a></li>
+<li><a href="#_viewing_embedded_resources">3.5.2. Viewing Embedded Resources</a></li>
+<li><a href="#_navigating_embedded_resources">3.5.3. Navigating Embedded Resources</a></li>
+</ul>
+</li>
+<li><a href="#_inspecting_response_details">3.6. Inspecting Response Details</a>
+<ul class="sectlevel3">
+<li><a href="#_response_status">3.6.1. Response Status</a></li>
+<li><a href="#_response_headers">3.6.2. Response Headers</a></li>
+<li><a href="#_response_body">3.6.3. Response Body</a></li>
+</ul>
+</li>
+<li><a href="#_curie_based_documentation">3.7. Curie-based Documentation</a></li>
+<li><a href="#_hal_forms">3.8. HAL-FORMS</a></li>
+<li><a href="#_updating_rest_resources">3.9. Updating REST Resources</a></li>
+<li><a href="#_customizing_request_headers">3.10. Customizing Request Headers</a>
+<ul class="sectlevel3">
+<li><a href="#_opening_the_headers_editor">3.10.1. Opening the Headers Editor</a></li>
+<li><a href="#_adding_custom_headers">3.10.2. Adding Custom Headers</a></li>
+<li><a href="#_common_use_cases">3.10.3. Common Use Cases</a>
+<ul class="sectlevel4">
+<li><a href="#_authentication">Authentication</a></li>
+<li><a href="#_content_negotiation">Content Negotiation</a></li>
+<li><a href="#_custom_headers">Custom Headers</a></li>
+</ul>
+</li>
+<li><a href="#_managing_headers">3.10.4. Managing Headers</a></li>
+</ul>
+</li>
+<li><a href="#_configuration_and_bookmarking">3.11. Configuration and Bookmarking</a>
+<ul class="sectlevel3">
+<li><a href="#_bookmarking">3.11.1. Bookmarking</a></li>
+</ul>
+</li>
+<li><a href="#_hal_forms_options">3.12. HAL-FORMS Options</a></li>
+</ul>
+</li>
+<li><a href="#build">4. Development Setup</a>
 <ul class="sectlevel2">
-<li><a href="#color-mode">4.1. Color Mode</a></li>
-<li><a href="#theming">4.2. Theming</a></li>
-<li><a href="#settings">4.3. Settings</a>
+<li><a href="#_prerequisites_2">4.1. Prerequisites</a></li>
+<li><a href="#_building_for_production">4.2. Building for Production</a></li>
+<li><a href="#_using_node_jsyarn">4.3. Using Node.js/Yarn</a></li>
+<li><a href="#_using_gradle">4.4. Using Gradle</a></li>
+<li><a href="#dev-server">4.5. Development Server</a></li>
+<li><a href="#_basic_development_server">4.6. Basic Development Server</a></li>
+<li><a href="#_development_server_with_test_data">4.7. Development Server with Test Data</a></li>
+<li><a href="#_testing">4.8. Testing</a></li>
+<li><a href="#_unit_tests">4.9. Unit Tests</a></li>
+<li><a href="#_end_to_end_tests">4.10. End-to-End Tests</a></li>
+<li><a href="#_building_documentation">4.11. Building Documentation</a></li>
+</ul>
+</li>
+<li><a href="#faq">5. Frequently Asked Questions</a>
+<ul class="sectlevel2">
+<li><a href="#_general_questions">5.1. General Questions</a>
 <ul class="sectlevel3">
-<li><a href="#_layout">4.3.1. Layout</a></li>
-<li><a href="#_use_http_options">4.3.2. Use HTTP OPTIONS</a></li>
-<li><a href="#_enable_all_http_methods_for_hal_forms_links">4.3.3. Enable all HTTP Methods for HAL-FORMS Links</a></li>
-<li><a href="#_scrollable_documentation">4.3.4. Scrollable Documentation</a></li>
+<li><a href="#_what_is_hal_explorer">5.1.1. What is HAL Explorer?</a></li>
+<li><a href="#_do_i_need_to_install_anything">5.1.2. Do I need to install anything?</a></li>
+<li><a href="#_is_hal_explorer_free_to_use">5.1.3. Is HAL Explorer free to use?</a></li>
+<li><a href="#_which_browsers_are_supported">5.1.4. Which browsers are supported?</a></li>
+<li><a href="#_can_i_use_hal_explorer_offline">5.1.5. Can I use HAL Explorer offline?</a></li>
 </ul>
 </li>
-<li><a href="#about">4.4. About</a></li>
+<li><a href="#_api_compatibility">5.2. API Compatibility</a>
+<ul class="sectlevel3">
+<li><a href="#_does_my_api_need_to_support_hal_or_hal_forms">5.2.1. Does my API need to support HAL or HAL-FORMS?</a></li>
+<li><a href="#_what_media_types_are_supported">5.2.2. What media types are supported?</a></li>
+<li><a href="#_do_i_need_to_modify_my_existing_hal_api">5.2.3. Do I need to modify my existing HAL API?</a></li>
+<li><a href="#_can_hal_explorer_work_with_non_hal_apis">5.2.4. Can HAL Explorer work with non-HAL APIs?</a></li>
+<li><a href="#_does_hal_explorer_support_other_hypermedia_formats">5.2.5. Does HAL Explorer support other hypermedia formats?</a></li>
 </ul>
 </li>
-<li><a href="#license">5. License</a></li>
+<li><a href="#_features_and_functionality">5.3. Features and Functionality</a>
+<ul class="sectlevel3">
+<li><a href="#_how_do_i_authenticate_with_my_api">5.3.1. How do I authenticate with my API?</a></li>
+<li><a href="#_can_i_test_post_put_patch_and_delete_methods">5.3.2. Can I test POST, PUT, PATCH, and DELETE methods?</a></li>
+<li><a href="#_how_do_i_share_my_api_exploration_with_colleagues">5.3.3. How do I share my API exploration with colleagues?</a></li>
+<li><a href="#_can_i_use_hal_explorer_with_apis_behind_a_vpn">5.3.4. Can I use HAL Explorer with APIs behind a VPN?</a></li>
+<li><a href="#_does_hal_explorer_support_pagination">5.3.5. Does HAL Explorer support pagination?</a></li>
+<li><a href="#_can_i_view_api_documentation_in_hal_explorer">5.3.6. Can I view API documentation in HAL Explorer?</a></li>
+</ul>
+</li>
+<li><a href="#_hal_forms_specific">5.4. HAL-FORMS Specific</a>
+<ul class="sectlevel3">
+<li><a href="#_what_is_hal_forms">5.4.1. What is HAL-FORMS?</a></li>
+<li><a href="#_how_do_i_know_if_my_api_supports_hal_forms">5.4.2. How do I know if my API supports HAL-FORMS?</a></li>
+<li><a href="#_do_i_need_to_request_hal_forms_explicitly">5.4.3. Do I need to request HAL-FORMS explicitly?</a></li>
+<li><a href="#_what_are_the_benefits_of_hal_forms_over_plain_hal">5.4.4. What are the benefits of HAL-FORMS over plain HAL?</a></li>
+</ul>
+</li>
+<li><a href="#_technical_questions">5.5. Technical Questions</a>
+<ul class="sectlevel3">
+<li><a href="#_does_hal_explorer_store_my_api_data">5.5.1. Does HAL Explorer store my API data?</a></li>
+<li><a href="#_how_does_hal_explorer_handle_cors">5.5.2. How does HAL Explorer handle CORS?</a></li>
+<li><a href="#_can_i_customize_the_appearance">5.5.3. Can I customize the appearance?</a></li>
+<li><a href="#_is_my_authentication_token_secure">5.5.4. Is my authentication token secure?</a></li>
+<li><a href="#_can_i_modify_or_extend_hal_explorer">5.5.5. Can I modify or extend HAL Explorer?</a></li>
+<li><a href="#_how_do_i_report_bugs_or_request_features">5.5.6. How do I report bugs or request features?</a></li>
+</ul>
+</li>
+<li><a href="#_integration_questions">5.6. Integration Questions</a>
+<ul class="sectlevel3">
+<li><a href="#_can_i_integrate_hal_explorer_into_my_spring_boot_app">5.6.1. Can I integrate HAL Explorer into my Spring Boot app?</a></li>
+<li><a href="#_can_i_use_hal_explorer_with_non_java_backends">5.6.2. Can I use HAL Explorer with non-Java backends?</a></li>
+<li><a href="#_can_i_embed_hal_explorer_in_an_iframe">5.6.3. Can I embed HAL Explorer in an iframe?</a></li>
+<li><a href="#_can_i_use_hal_explorer_in_my_cicd_pipeline">5.6.4. Can I use HAL Explorer in my CI/CD pipeline?</a></li>
+<li><a href="#_how_do_i_deploy_hal_explorer_to_my_own_server">5.6.5. How do I deploy HAL Explorer to my own server?</a></li>
+</ul>
+</li>
+<li><a href="#_performance_and_limitations">5.7. Performance and Limitations</a>
+<ul class="sectlevel3">
+<li><a href="#_whats_the_maximum_response_size_hal_explorer_can_handle">5.7.1. What&#8217;s the maximum response size HAL Explorer can handle?</a></li>
+<li><a href="#_how_many_simultaneous_requests_can_hal_explorer_make">5.7.2. How many simultaneous requests can HAL Explorer make?</a></li>
+<li><a href="#_does_hal_explorer_support_websockets_or_server_sent_events">5.7.3. Does HAL Explorer support WebSockets or Server-Sent Events?</a></li>
+<li><a href="#_can_hal_explorer_handle_binary_data">5.7.4. Can HAL Explorer handle binary data?</a></li>
+</ul>
+</li>
+<li><a href="#_getting_started_2">5.8. Getting Started</a>
+<ul class="sectlevel3">
+<li><a href="#_im_new_to_hal_where_should_i_start">5.8.1. I&#8217;m new to HAL - where should I start?</a></li>
+<li><a href="#_where_can_i_learn_more_about_hypermedia_apis">5.8.2. Where can I learn more about hypermedia APIs?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#troubleshooting">6. Troubleshooting</a>
+<ul class="sectlevel2">
+<li><a href="#_connection_issues">6.1. Connection Issues</a>
+<ul class="sectlevel3">
+<li><a href="#_cors_errors">6.1.1. CORS Errors</a></li>
+</ul>
+</li>
+<li><a href="#_getting_help">6.2. Getting Help</a></li>
+</ul>
+</li>
+<li><a href="#license">7. License</a></li>
 </ul>
 </div>
 </div>
@@ -100,7 +275,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>HAL Explorer allows you to explore HAL and HAL-FORMS based RESTful Hypermedia APIs.</p>
+<p>HAL Explorer helps you explore HAL- and HAL-FORMS-based RESTful Hypermedia APIs.</p>
 </div>
 <div class="paragraph">
 <p>&#169; 2026 The original authors.</p>
@@ -140,243 +315,619 @@ whether distributed in print or electronically.
 <h2 id="introduction"><a class="anchor" href="#introduction"></a>1. Introduction</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="fundamentals"><a class="anchor" href="#fundamentals"></a>1.1. Fundamentals</h3>
+<h3 id="what-is-hal-explorer"><a class="anchor" href="#what-is-hal-explorer"></a>1.1. What is HAL Explorer?</h3>
 <div class="paragraph">
-<p>HAL Explorer allows you to browse and explore HAL
-and HAL-FORMS-based RESTful Hypermedia APIs.
-HAL Explorer was inspired by Mike Kelly&#8217;s <a href="https://github.com/mikekelly/hal-browser">HAL-Browser</a>
-and also supports Spring Profiles.
-For a complete understanding of this documentation, please familiarize yourself with:</p>
+<p>HAL Explorer is a web-based tool for browsing and exploring RESTful Hypermedia APIs that use the HAL (Hypertext Application Language) and HAL-FORMS specifications. It provides an intuitive interface for developers and API consumers to navigate hypermedia-driven APIs, discover available resources, and interact with them using various HTTP methods.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="why-hal-explorer"><a class="anchor" href="#why-hal-explorer"></a>1.2. Why Use HAL Explorer?</h3>
+<div class="paragraph">
+<p>Traditional API exploration tools focus on endpoint documentation and testing. HAL Explorer takes a different approach by embracing the hypermedia-driven nature of REST APIs:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>the <a href="http://stateless.co/hal_specification.html">HAL</a> Specification</p>
+<p><strong>Self-Discovery</strong>: Navigate APIs by following links, just as intended by REST and HATEOAS principles</p>
 </li>
 <li>
-<p>the <a href="https://rwcbook.github.io/hal-forms/">HAL-FORMS</a> Specification</p>
+<p><strong>Visual Exploration</strong>: See the structure of your API responses with syntax highlighting and collapsible sections</p>
+</li>
+<li>
+<p><strong>Built-in Documentation</strong>: View inline documentation through CURIE links without leaving the interface</p>
+</li>
+<li>
+<p><strong>Developer-Friendly</strong>: Test POST, PUT, PATCH, and DELETE operations with guided form inputs</p>
+</li>
+<li>
+<p><strong>Framework Support</strong>: First-class support for Spring Data REST profiles and HAL-FORMS affordances</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="features"><a class="anchor" href="#features"></a>1.2. Features</h3>
+<h3 id="fundamentals"><a class="anchor" href="#fundamentals"></a>1.3. Fundamentals</h3>
+<div class="paragraph">
+<p>HAL Explorer was inspired by Mike Kelly&#8217;s <a href="https://github.com/mikekelly/hal-browser">HAL-Browser</a> and extends it with modern features including dark mode, multiple themes, HAL-FORMS support, and Spring Data REST integration.</p>
+</div>
+<div class="sect3">
+<h4 id="_prerequisites"><a class="anchor" href="#_prerequisites"></a>1.3.1. Prerequisites</h4>
+<div class="paragraph">
+<p>To get the most out of HAL Explorer and this documentation, you should be familiar with:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Color Modes</p>
+<p><strong>REST API Concepts</strong>: Basic understanding of HTTP methods, status codes, and RESTful design</p>
+</li>
+<li>
+<p><strong>HAL Specification</strong>: The <a href="http://stateless.co/hal_specification.html">HAL</a> standard for representing resources with links and embedded resources</p>
+</li>
+<li>
+<p><strong>HAL-FORMS Specification</strong>: The <a href="https://rwcbook.github.io/hal-forms/">HAL-FORMS</a> extension for describing affordances and form templates</p>
+</li>
+<li>
+<p><strong>JSON Format</strong>: Basic knowledge of JSON syntax and structure</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_supported_media_types"><a class="anchor" href="#_supported_media_types"></a>1.3.2. Supported Media Types</h4>
+<div class="paragraph">
+<p>HAL Explorer can consume and display the following media types:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Dark</p>
+<p><code>application/hal+json</code> - Standard HAL format</p>
 </li>
 <li>
-<p>Light</p>
+<p><code>application/prs.hal-forms+json</code> - HAL-FORMS format with affordances</p>
 </li>
 <li>
-<p>Auto (automatically detects system preference)</p>
+<p><code>application/json</code> - Plain JSON (limited functionality)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features"><a class="anchor" href="#features"></a>1.4. Features Overview</h3>
+<div class="paragraph">
+<p>HAL Explorer provides a comprehensive set of features for exploring and interacting with HAL and HAL-FORMS APIs.</p>
+</div>
+<div class="sect3">
+<h4 id="_user_interface"><a class="anchor" href="#_user_interface"></a>1.4.1. User Interface</h4>
+<div class="sect4">
+<h5 id="_theming_and_appearance"><a class="anchor" href="#_theming_and_appearance"></a>Theming and Appearance</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Color Modes</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Dark Mode</strong> - Optimized for low-light environments</p>
+</li>
+<li>
+<p><strong>Light Mode</strong> - Traditional bright interface</p>
+</li>
+<li>
+<p><strong>Auto Mode</strong> - Automatically detects and adapts to system preference (default)</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>Available Themes</p>
+<p><strong>Customizable Themes</strong></p>
 <div class="ulist">
 <ul>
 <li>
 <p>Bootstrap 5 default theme</p>
 </li>
 <li>
-<p><a href="https://bootswatch.com/">Bootswatch themes</a> (25+ themes available; Cosmo is the default)</p>
+<p>26+ professionally designed <a href="https://bootswatch.com/">Bootswatch themes</a></p>
+</li>
+<li>
+<p>Cosmo theme is the default (clean, modern flat design)</p>
+</li>
+<li>
+<p>All themes adapt to your selected color mode</p>
 </li>
 </ul>
 </div>
 </li>
-<li>
-<p>Column Layouts</p>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_layout_options"><a class="anchor" href="#_layout_options"></a>Layout Options</h5>
 <div class="ulist">
 <ul>
 <li>
-<p><em>2 column layout</em> with optional documentation</p>
-</li>
-<li>
-<p><em>3 column layout</em> with documentation always visible when available</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Full HTTP Method Support</p>
+<p><strong>2 Column Layout</strong> (Default)</p>
 <div class="ulist">
 <ul>
 <li>
-<p>GET, POST, PUT, PATCH, DELETE operations</p>
+<p>Resource explorer on the left</p>
 </li>
 <li>
-<p>HTTP OPTIONS method to discover available request options for links</p>
+<p>Response details on the right</p>
 </li>
 <li>
-<p>Support for both simple and templated URIs</p>
+<p>Documentation panel toggles on demand</p>
+</li>
+<li>
+<p>Ideal for smaller screens or focused work</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>Request Features</p>
+<p><strong>3 Column Layout</strong></p>
 <div class="ulist">
 <ul>
 <li>
-<p>API URL and custom request headers stored as URL fragment for easy sharing</p>
+<p>Resource explorer on the left</p>
 </li>
 <li>
-<p>Custom request headers editor</p>
+<p>Response details in the middle</p>
 </li>
 <li>
-<p>URI template parameter editor with validation</p>
+<p>Documentation always visible on the right</p>
 </li>
 <li>
-<p>Keyboard shortcuts (Enter to submit, ESC to close dialogs)</p>
+<p>Best for larger screens and documentation-heavy APIs</p>
 </li>
 </ul>
 </div>
 </li>
-<li>
-<p>Settings</p>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_api_interaction"><a class="anchor" href="#_api_interaction"></a>1.4.2. API Interaction</h4>
+<div class="sect4">
+<h5 id="_http_method_support"><a class="anchor" href="#_http_method_support"></a>HTTP Method Support</h5>
 <div class="ulist">
 <ul>
 <li>
-<p>All settings stored in the browser&#8217;s local storage with <code>hal-explorer.</code> namespace</p>
-</li>
-<li>
-<p>Configurable HTTP OPTIONS usage for link discovery</p>
-</li>
-<li>
-<p>Option to enable all HTTP methods for HAL-FORMS links</p>
-</li>
-<li>
-<p>Scrollable documentation mode for large documentation content</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Spring Data REST Integration</p>
+<p><strong>Full REST Method Support</strong></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Support for Spring Data REST profiles to populate properties in request editor</p>
+<p>GET - Retrieve resources</p>
 </li>
 <li>
-<p>Automatic content type detection</p>
+<p>POST - Create new resources</p>
+</li>
+<li>
+<p>PUT - Replace existing resources</p>
+</li>
+<li>
+<p>PATCH - Partially update resources</p>
+</li>
+<li>
+<p>DELETE - Remove resources</p>
+</li>
+<li>
+<p>OPTIONS - Discover available operations (optional, configurable)</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>HAL-FORMS Support</p>
+<p><strong>URI Handling</strong></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Template elements displayed in response explorer (see screenshot)</p>
+<p>Simple URIs - Direct resource access</p>
 </li>
 <li>
-<p>Template properties in request editor</p>
+<p>Templated URIs - Interactive parameter editor with validation</p>
 </li>
 <li>
-<p>Options support with inline and linked values</p>
-</li>
-<li>
-<p>Multiple selection support for array properties</p>
-</li>
-<li>
-<p>Property constraint validation in request editor</p>
+<p>Automatic template parameter detection</p>
 </li>
 </ul>
 </div>
 </li>
-<li>
-<p>Error Handling</p>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_request_customization"><a class="anchor" href="#_request_customization"></a>Request Customization</h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Graceful handling of error responses (401, 404, etc.)</p>
-</li>
-<li>
-<p>Display of HAL-FORMS documents even in error responses</p>
-</li>
-<li>
-<p>Links and affordances remain accessible in error scenarios</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Response Explorer</p>
+<p><strong>Custom Headers</strong></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Syntax-highlighted JSON display</p>
+<p>Add authorization tokens (Bearer, Basic Auth, etc.)</p>
 </li>
 <li>
-<p>Expandable/collapsible sections for properties, links, embedded resources</p>
+<p>Set custom Accept headers for HAL or HAL-FORMS</p>
 </li>
 <li>
-<p>Response status, headers, and body information</p>
+<p>Configure any HTTP header needed by your API</p>
 </li>
 <li>
-<p>Documentation integration (when available)</p>
+<p>Headers stored in URL fragment for sharing</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Request Editor</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Form-based input for HAL-FORMS and Spring profiles</p>
+</li>
+<li>
+<p>Real-time validation with error messages</p>
+</li>
+<li>
+<p>Query parameter support for templated URIs</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Keyboard Shortcuts</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Enter</code> - Submit requests</p>
+</li>
+<li>
+<p><code>ESC</code> - Close dialogs</p>
+</li>
+<li>
+<p>Streamlined workflow for rapid exploration</p>
 </li>
 </ul>
 </div>
 </li>
 </ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_advanced_features"><a class="anchor" href="#_advanced_features"></a>1.4.3. Advanced Features</h4>
+<div class="sect4">
+<h5 id="_spring_data_rest_integration"><a class="anchor" href="#_spring_data_rest_integration"></a>Spring Data REST Integration</h5>
+<div class="paragraph">
+<p>HAL Explorer provides first-class support for Spring Data REST APIs:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Automatic detection of Spring Data REST profiles</p>
+</li>
+<li>
+<p>JSON Schema-based property discovery</p>
+</li>
+<li>
+<p>Auto-populated form fields based on entity definitions</p>
+</li>
+<li>
+<p>Content-type negotiation and detection</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_hal_forms_support"><a class="anchor" href="#_hal_forms_support"></a>HAL-FORMS Support</h5>
+<div class="paragraph">
+<p>Full implementation of the HAL-FORMS specification:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Template elements displayed inline with links</p>
+</li>
+<li>
+<p>Property definitions with type information</p>
+</li>
+<li>
+<p>Options support (inline values and external links)</p>
+</li>
+<li>
+<p>Multiple selection for array properties</p>
+</li>
+<li>
+<p>Comprehensive validation (required fields, regex patterns, min/max values)</p>
+</li>
+<li>
+<p>Prompt text and placeholder support</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_documentation_integration"><a class="anchor" href="#_documentation_integration"></a>Documentation Integration</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>CURIE-based Documentation</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Click book icons to view inline documentation</p>
+</li>
+<li>
+<p>Documentation appears in dedicated panel</p>
+</li>
+<li>
+<p>No need to leave the interface or consult external docs</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Scrollable Documentation Mode</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Keep documentation visible without excessive page scrolling</p>
+</li>
+<li>
+<p>Fixed-height iframe for large documentation sets</p>
+</li>
+<li>
+<p>Configurable through settings</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_error_handling"><a class="anchor" href="#_error_handling"></a>Error Handling</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Graceful handling of HTTP error responses (4xx, 5xx)</p>
+</li>
+<li>
+<p>HAL-FORMS documents displayed even in error scenarios</p>
+</li>
+<li>
+<p>Links and affordances remain accessible for recovery</p>
+</li>
+<li>
+<p>Clear display of error status codes and messages</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_data_management"><a class="anchor" href="#_data_management"></a>1.4.4. Data Management</h4>
+<div class="sect4">
+<h5 id="_browser_storage"><a class="anchor" href="#_browser_storage"></a>Browser Storage</h5>
+<div class="paragraph">
+<p>All settings and preferences persist across sessions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Color mode preference</p>
+</li>
+<li>
+<p>Selected theme</p>
+</li>
+<li>
+<p>Column layout choice</p>
+</li>
+<li>
+<p>HTTP OPTIONS setting</p>
+</li>
+<li>
+<p>HAL-FORMS method enablement</p>
+</li>
+<li>
+<p>Documentation scrolling mode</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Storage uses the <code>hal-explorer.</code> namespace to avoid conflicts.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_bookmarking_and_sharing"><a class="anchor" href="#_bookmarking_and_sharing"></a>Bookmarking and Sharing</h5>
+<div class="paragraph">
+<p>Configuration embedded in URLs for easy sharing:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Current API URI</p>
+</li>
+<li>
+<p>Custom request headers</p>
+</li>
+<li>
+<p>Share exact API state with colleagues</p>
+</li>
+<li>
+<p>Bookmark frequently accessed endpoints</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_response_exploration"><a class="anchor" href="#_response_exploration"></a>1.4.5. Response Exploration</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Syntax-Highlighted Display</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Color-coded JSON for easy reading</p>
+</li>
+<li>
+<p>Expandable/collapsible sections</p>
+</li>
+<li>
+<p>Navigate complex nested structures</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Organized Sections</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Properties - Top-level resource attributes</p>
+</li>
+<li>
+<p>Links - Available hypermedia links with affordances</p>
+</li>
+<li>
+<p>Embedded Resources - Nested resources with full link support</p>
+</li>
+<li>
+<p>Templates - HAL-FORMS affordances (when available)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Response Metadata</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>HTTP status code and status text</p>
+</li>
+<li>
+<p>All response headers</p>
+</li>
+<li>
+<p>Full response body</p>
+</li>
+<li>
+<p>Response timing information</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="setup"><a class="anchor" href="#setup"></a>2. Setup</h2>
+<h2 id="setup"><a class="anchor" href="#setup"></a>2. Setup and Installation</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_releases_and_demos"><a class="anchor" href="#_releases_and_demos"></a>2.1. Releases and Demos</h3>
 <div class="paragraph">
-<p>Here you will find documentation for the latest release and the current snapshot,
-as well as demos of HAL Explorer (with examples):</p>
+<p>This section covers different ways to use HAL Explorer, from quick online demos to full integration with your backend services.</p>
+</div>
+<div class="sect2">
+<h3 id="_quick_start_online_demos"><a class="anchor" href="#_quick_start_online_demos"></a>2.1. Quick Start: Online Demos</h3>
+<div class="paragraph">
+<p>The fastest way to try HAL Explorer is through our hosted demos:</p>
 </div>
 <table class="tableblock frame-all grid-all stripes-even stretch">
 <colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 50%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3335%;">
 </colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Version</th>
+<th class="tableblock halign-left valign-top">Number</th>
+<th class="tableblock halign-left valign-top">Demo</th>
+<th class="tableblock halign-left valign-top">Documentation</th>
+</tr>
+</thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Latest Release</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2.2.1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://toedter.github.io/hal-explorer/release/hal-explorer/#theme=Cosmo&amp;uri=examples/examples.hal-forms.json">HAL Explorer Demo</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://toedter.github.io/hal-explorer/release/reference-doc/">Reference Docs</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Current Snapshot</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2.2.2-SNAPSHOT</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://toedter.github.io/hal-explorer/snapshot/hal-explorer/#theme=Cosmo&amp;uri=examples/examples.hal-forms.json">HAL Explorer Demo</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://toedter.github.io/hal-explorer/snapshot/reference-doc/">Reference Docs</a></p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>To explore your services with these HAL Explorer demos, they must enable CORS.
-When you want to explore a Spring-based service (e.g., running on localhost), you can (temporarily) add a simple
-<a href="https://gist.github.com/toedter/72d62b4bb4a25d229dc1f1342ae429ad">CORS Filter</a> to your service. For more options, see
-the <a href="#_development_server">Development Server</a> section.</p>
+<p>You can also access the latest release at <a href="https://hal-explorer.com">hal-explorer.com</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="_using_online_demos_with_your_api"><a class="anchor" href="#_using_online_demos_with_your_api"></a>2.1.1. Using Online Demos with Your API</h4>
+<div class="paragraph">
+<p>To explore your own API using a <a href="https://hal-explorer.com">hosted HAL Explorer</a>, your service must enable CORS (Cross-Origin Resource Sharing).</p>
 </div>
 <div class="paragraph">
-<p>You can also experiment with the latest snapshot version of HAL Explorer.</p>
+<p><strong>Quick CORS Setup for Spring Boot:</strong></p>
+</div>
+<div class="paragraph">
+<p>Add this simple CORS Filter to your Spring application:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Component
+public class CorsFilter implements Filter {
+    @Override
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+            throws IOException, ServletException {
+        HttpServletResponse response = (HttpServletResponse) res;
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "*");
+        chain.doFilter(req, res);
+    }
+}
+</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+This CORS configuration allows access from any origin. Use it only for development and testing. For production, restrict the <code>Access-Control-Allow-Origin</code> to specific domains.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For alternative approaches without CORS, see the <a href="#dev-server">Development Server</a> section below.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_integration_with_your_backends"><a class="anchor" href="#_integration_with_your_backends"></a>2.2. Integration with Your Backends</h3>
+<h3 id="_backend_integration"><a class="anchor" href="#_backend_integration"></a>2.2. Backend Integration</h3>
 <div class="paragraph">
-<p>If you want to use a released version of HAL Explorer in a Java-based project,
-you can define a dependency to the HAL Explorer WebJar.</p>
+<p>HAL Explorer can be integrated into your application in several ways, depending on your technology stack and deployment preferences.</p>
+</div>
+<div class="sect3">
+<h4 id="_option_1_webjar_java_projects"><a class="anchor" href="#_option_1_webjar_java_projects"></a>2.2.1. Option 1: WebJar (Java Projects)</h4>
+<div class="paragraph">
+<p>The simplest way to integrate HAL Explorer into a Java-based project is using the WebJar dependency.</p>
+</div>
+<div class="paragraph">
+<p><strong>Add the Dependency:</strong></p>
 </div>
 <div class="listingblock primary">
 <div class="title">Maven</div>
@@ -389,17 +940,63 @@ you can define a dependency to the HAL Explorer WebJar.</p>
 </div>
 </div>
 <div class="listingblock secondary">
-<div class="title">Gradle</div>
+<div class="title">Gradle (Groovy)</div>
 <div class="content">
 <pre class="highlight"><code>runtimeOnly 'org.webjars:hal-explorer:2.2.1'</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>When you use the WebJar with Spring Boot, you can access HAL Explorer
-in a web browser at <code>/webjars/hal-explorer/2.2.1/index.html</code>.</p>
+<div class="listingblock secondary">
+<div class="title">Gradle (Kotlin)</div>
+<div class="content">
+<pre class="highlight"><code>runtimeOnly("org.webjars:hal-explorer:2.2.1")</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>If you are using Spring Data REST, you can instead add a dependency like</p>
+<p><strong>Access HAL Explorer:</strong></p>
+</div>
+<div class="paragraph">
+<p>Once the dependency is added, HAL Explorer is available at:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>http://localhost:8080/webjars/hal-explorer/2.2.1/index.html</pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can create a redirect or custom controller to serve HAL Explorer at a more convenient path like <code>/explorer</code> or <code>/api/explorer</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Example Spring Boot Controller:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Controller
+public class ExplorerController {
+    @GetMapping("/explorer")
+    public String explorer() {
+        return "redirect:/webjars/hal-explorer/2.2.1/index.html";
+    }
+}
+</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_option_2_spring_data_rest_integration"><a class="anchor" href="#_option_2_spring_data_rest_integration"></a>2.2.2. Option 2: Spring Data REST Integration</h4>
+<div class="paragraph">
+<p>If you&#8217;re using Spring Data REST, there&#8217;s a dedicated integration package that makes HAL Explorer the default UI for your API root.</p>
+</div>
+<div class="paragraph">
+<p><strong>Add the Dependency:</strong></p>
 </div>
 <div class="listingblock primary">
 <div class="title">Maven</div>
@@ -411,104 +1008,124 @@ in a web browser at <code>/webjars/hal-explorer/2.2.1/index.html</code>.</p>
 </div>
 </div>
 <div class="listingblock secondary">
-<div class="title">Gradle</div>
+<div class="title">Gradle (Groovy)</div>
 <div class="content">
 <pre class="highlight"><code>runtimeOnly 'org.springframework.data:spring-data-rest-hal-explorer'</code></pre>
 </div>
 </div>
+<div class="listingblock secondary">
+<div class="title">Gradle (Kotlin)</div>
+<div class="content">
+<pre class="highlight"><code>runtimeOnly("org.springframework.data:spring-data-rest-hal-explorer")</code></pre>
+</div>
+</div>
 <div class="paragraph">
-<p>When you use <code>spring-data-rest-hal-explorer</code>, you can access HAL Explorer in a web browser at <code>/</code>.</p>
+<p><strong>Access HAL Explorer:</strong></p>
 </div>
 <div class="paragraph">
-<p>You can also download a zip-based <a href="https://github.com/toedter/hal-explorer/releases/download/v2.2.1/hal-explorer-2.2.1.zip">distribution</a> and deploy it on any web server.</p>
+<p>With Spring Data REST integration, HAL Explorer is automatically available at your application root:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>http://localhost:8080/</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>The easiest way to integrate the upstream version of HAL Explorer into your backend is to clone this Git repository,
-do a production build (see below), and then copy the content of the <code>dist/</code> folder to a location accessible by your backend server.
-When you use Spring Boot, a good location in your project&#8217;s source tree would be
-<code>src/main/resources/static/hal-explorer</code>.</p>
+<p>The integration automatically configures HAL Explorer to point to your Spring Data REST API.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_build"><a class="anchor" href="#_build"></a>2.3. Build</h3>
 <div class="sect3">
-<h4 id="_node_js"><a class="anchor" href="#_node_js"></a>2.3.1. node.js</h4>
-<div class="ulist">
-<ul>
+<h4 id="_option_3_static_distribution"><a class="anchor" href="#_option_3_static_distribution"></a>2.2.3. Option 3: Static Distribution</h4>
+<div class="paragraph">
+<p>For non-Java backends or custom deployment scenarios, you can use the standalone distribution.</p>
+</div>
+<div class="paragraph">
+<p><strong>Download and Extract:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>Install the latest version of <a href="https://nodejs.org">node.js</a> and yarn (<code>npm i -g yarn</code>).</p>
+<p>Download the <a href="https://github.com/toedter/hal-explorer/releases/download/v2.2.1/hal-explorer-2.2.1.zip">distribution ZIP file</a> (v2.2.1)</p>
 </li>
 <li>
-<p>Run <code>yarn build</code> to build the project in production mode.</p>
+<p>Extract the contents to your web server&#8217;s static file directory</p>
 </li>
-<li>
-<p>The build artifacts will be stored in the <code>dist/</code> directory.</p>
-</li>
-</ul>
+</ol>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_development_server"><a class="anchor" href="#_development_server"></a>2.3.2. Development Server</h4>
 <div class="paragraph">
-<p>Run <code>yarn start</code> for a dev server. Navigate to <a href="http://localhost:4200/" class="bare">http://localhost:4200/</a>.
-The app will automatically reload if you change any of the source files.
-The development server has a built-in proxy configuration
-so that all calls to <code>/api</code> are forwarded to <code>localhost:8080/api</code>.
-This is convenient when you want to test a local server without having to deal with CORS.
-If you run <code>yarn start:fs</code>, an additional file server is started on port 3000.
-In the test-data directory, you will find some JSON examples. Try it out with the URL
-<a href="http://localhost:4200/#uri=http://localhost:3000/movies.hal-forms.json" class="bare">http://localhost:4200/#uri=http://localhost:3000/movies.hal-forms.json</a>.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_gradlejava_build_support"><a class="anchor" href="#_gradlejava_build_support"></a>2.3.3. Gradle/Java Build Support</h4>
-<div class="paragraph">
-<p>If you have Java installed, you can also build the project with Gradle.
-The Gradle build will install Node.js locally in the project directory.
-Run <code>./gradlew build</code> (or just <code>gradlew build</code> under Windows) to build the project in production mode.
-The build artifacts will be stored in the <code>dist/</code> directory.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_building_the_docs"><a class="anchor" href="#_building_the_docs"></a>2.3.4. Building the docs</h4>
-<div class="paragraph">
-<p>You can build this documentation</p>
+<p><strong>Example Deployment Locations:</strong></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Windows: <code>gradlew doc</code></p>
-<div class="ulist">
-<ul>
-<li>
-<p>If you see errors regarding file encoding, try <code>gradlew doc -Dfile.encoding=UTF-8</code></p>
-</li>
-</ul>
-</div>
+<p><strong>Nginx</strong>: <code>/usr/share/nginx/html/hal-explorer/</code></p>
 </li>
 <li>
-<p>Linux: <code>./gradlew doc</code></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_running_tests"><a class="anchor" href="#_running_tests"></a>2.3.5. Running Tests</h4>
-<div class="ulist">
-<ul>
-<li>
-<p><code>yarn test</code> runs the unit test suite against your default browser.</p>
+<p><strong>Apache</strong>: <code>/var/www/html/hal-explorer/</code></p>
 </li>
 <li>
-<p><code>yarn test:headless</code> runs the unit test suite against headless Chrome.</p>
+<p><strong>Express.js</strong>: <code>public/hal-explorer/</code></p>
 </li>
 <li>
-<p><code>yarn e2e</code> runs the e2e test suite against default browsers (using Playwright).</p>
+<p><strong>Spring Boot</strong>: <code>src/main/resources/static/hal-explorer/</code></p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Take a look at <code>package.json</code> for more test options.</p>
+<p><strong>Configure Your Web Server:</strong></p>
+</div>
+<div class="paragraph">
+<p>For single-page application routing, configure your web server to serve <code>index.html</code> for all routes under the HAL Explorer path.</p>
+</div>
+<div class="paragraph">
+<p><strong>Example Nginx Configuration:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-nginx" data-lang="nginx">location /hal-explorer/ {
+    alias /usr/share/nginx/html/hal-explorer/;
+    try_files $uri $uri/ /hal-explorer/index.html;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_option_4_build_from_source"><a class="anchor" href="#_option_4_build_from_source"></a>2.2.4. Option 4: Build from Source</h4>
+<div class="paragraph">
+<p>For the latest features or custom modifications, build HAL Explorer from source.</p>
+</div>
+<div class="paragraph">
+<p><strong>Steps:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Clone the repository:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">git clone https://github.com/toedter/hal-explorer.git
+cd hal-explorer</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Build the project (see <a href="#build">Build</a> section below)</p>
+</li>
+<li>
+<p>Copy the <code>dist/hal-explorer/browser</code> directory contents to your backend&#8217;s static file location</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Recommended Spring Boot Location:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>src/main/resources/static/hal-explorer/</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This makes HAL Explorer available at <code><a href="http://localhost:8080/hal-explorer/" class="bare">http://localhost:8080/hal-explorer/</a></code>.</p>
 </div>
 </div>
 </div>
@@ -517,269 +1134,55 @@ The build artifacts will be stored in the <code>dist/</code> directory.</p>
 <div class="sect1">
 <h2 id="usage"><a class="anchor" href="#usage"></a>3. Using HAL Explorer</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_json_properties"><a class="anchor" href="#_json_properties"></a>3.1. JSON Properties</h3>
 <div class="paragraph">
-<p>When you start HAL Explorer, you will see an input field in the top-left area where you can enter the URI of a REST service that returns HAL or HAL-FORMS documents. Once you click <code>Go!</code> or press Enter, the response is displayed. A typical response looks like:</p>
+<p>This chapter guides you through common workflows and features in HAL Explorer.</p>
+</div>
+<div class="sect2">
+<h3 id="_getting_started"><a class="anchor" href="#_getting_started"></a>3.1. Getting Started</h3>
+<div class="sect3">
+<h4 id="_your_first_request"><a class="anchor" href="#_your_first_request"></a>3.1.1. Your First Request</h4>
+<div class="paragraph">
+<p>When you open HAL Explorer, you&#8217;ll see a simple interface with a URI input field at the top:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Enter a URI</strong>: Type or paste the URL of your HAL or HAL-FORMS API endpoint</p>
+</li>
+<li>
+<p><strong>Click Go!</strong> or press <code>Enter</code>: HAL Explorer will fetch and display the response</p>
+</li>
+<li>
+<p><strong>Explore the Response</strong>: Navigate through properties, links, and embedded resources</p>
+</li>
+</ol>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="img/hal-explorer-light.png" alt="hal explorer light">
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_links"><a class="anchor" href="#_links"></a>3.2. Links</h3>
-<div class="paragraph">
-<p>Just below the URI, you will find the top-level JSON properties. If the response contains links, they are displayed below.
-Since HAL does not provide affordances indicating which HTTP method you should use to follow a link, you will find colored buttons for each HTTP method:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>&lt;</code> : HTTP GET</p>
-</li>
-<li>
-<p><code>+</code> : HTTP POST</p>
-</li>
-<li>
-<p><code>&gt;&gt;</code> : HTTP PUT</p>
-</li>
-<li>
-<p><code>&gt;</code> : HTTP PATCH</p>
-</li>
-<li>
-<p><code>x</code> : HTTP DELETE</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>If a link relation provides <a href="#_curie_based_documentation">Curie-based Documentation</a>,
-you can click on the book icon to display it.</p>
-</div>
-<div class="paragraph">
-<p>If a link relation provides a name or a title, they are displayed in the links table.</p>
-</div>
-<div class="paragraph">
-<p>You can click on a link button to follow the link. If a link is templated, a modal dialog will appear where you can fill in the template parameters, like:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="img/templated-request.png" alt="templated request" width="70%">
-</div>
-</div>
-<div class="paragraph">
-<p>When you click on <code>Go!</code>, an HTTP call to the <code>Expanded URI</code> will be made.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_embedded_resources"><a class="anchor" href="#_embedded_resources"></a>3.3. Embedded Resources</h3>
-<div class="paragraph">
-<p>If the response contains embedded resources, you will find them in the "Embedded Resources" section.
-You can click on an embedded resource to expand it, like:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="img/expanded-embedded-resource.png" alt="expanded embedded resource" width="70%">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Try the built-in examples first: <a href="https://toedter.github.io/hal-explorer/release/hal-explorer/#uri=examples/examples.hal-forms.json">Demo with Example Data</a>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_response_details"><a class="anchor" href="#_response_details"></a>3.4. Response Details</h3>
+<h3 id="toolbar"><a class="anchor" href="#toolbar"></a>3.2. Toolbar</h3>
 <div class="paragraph">
-<p>On the right-hand side of the page, you will find details about the response:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Response Status code and text</p>
-</li>
-<li>
-<p>All Response Headers</p>
-</li>
-<li>
-<p>Response body with syntax-highlighted JSON</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_curie_based_documentation"><a class="anchor" href="#_curie_based_documentation"></a>3.5. Curie-based Documentation</h3>
-<div class="paragraph">
-<p>Whenever you see a book icon, you can click on it to display the documentation.
-Depending on the chosen layout, the documentation will be displayed as a third column on the right (3-column layout)
-or will replace the response details (2-column layout). You can change the layout using the <code>Settings</code> menu in the main toolbar.</p>
-</div>
-<div class="paragraph">
-<p>A page with a 3-column layout might look like:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="img/3-column-layout.png" alt="3 column layout">
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_hal_forms"><a class="anchor" href="#_hal_forms"></a>3.6. HAL-FORMS</h3>
-<div class="paragraph">
-<p>HAL Explorer supports the latest HAL-FORMS specification. Whenever a HAL-FORMS based response contains
-templates (<code>_templates</code>), all template elements will be displayed in the Links section, like:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="img/hal-explorer-templates.png" alt="hal explorer templates">
-</div>
-</div>
-<div class="paragraph">
-<p>Since HAL-FORMS uses affordances to describe which HTTP method should be used for each template element, you can
-follow links using HTTP GET, but must use the specific HTTP method defined in each template element.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_updating_rest_resources"><a class="anchor" href="#_updating_rest_resources"></a>3.7. Updating REST Resources</h3>
-<div class="paragraph">
-<p>Whenever you click on an HTTP POST button, a modal dialog appears where you can enter the request body and query parameters (only if the URI is templated). For raw HAL-based documents, it looks like:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="img/hal-post-dialog.png" alt="hal post dialog" width="70%">
-</div>
-</div>
-<div class="paragraph">
-<p>When your server is implemented using <a href="https://spring.io/projects/spring-data-rest">Spring Data REST</a>, a JSON Schema-based Spring profile is automatically created. HAL Explorer automatically detects Spring Profiles, and instead of presenting an empty body, form elements for all attributes are displayed, like:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="img/request-input.png" alt="request input" width="70%">
-</div>
-</div>
-<div class="paragraph">
-<p>When your response is based on HAL-FORMS, all the properties of the corresponding template element are shown, like:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="img/hal-forms-post-dialog.png" alt="hal forms post dialog" width="70%">
-</div>
-</div>
-<div class="paragraph">
-<p>When HAL-FORMS is used, the fields are also validated, and validation errors are displayed below the input area.
-Only for valid forms is the body displayed, and the HTTP request can be made.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_adding_request_headers"><a class="anchor" href="#_adding_request_headers"></a>3.8. Adding Request Headers</h3>
-<div class="paragraph">
-<p>When you want to add certain request headers to all calls, click on <code>Edit Headers</code> in the top-left corner.
-Then, a modal dialog will appear where you can add headers. This is useful when you want to add items like
-bearer tokens for authorization, like:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="img/request-headers.png" alt="request headers" width="70%">
-</div>
-</div>
-<div class="paragraph">
-<p>The modal dialog also provides buttons to clear all request headers or to add/modify an <code>Accept</code>
-request header for <code>HAL</code> or <code>HAL-FORMS</code> documents.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_configuration_and_bookmarking"><a class="anchor" href="#_configuration_and_bookmarking"></a>3.9. Configuration and Bookmarking</h3>
-<div class="paragraph">
-<p>The following configuration is stored in the browser&#8217;s local storage and persists across sessions:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Color Mode (Light/Dark/Auto; default is Auto)</p>
-</li>
-<li>
-<p>Theme (default is Bootswatch Cosmo)</p>
-</li>
-<li>
-<p>Column Layout (2 or 3 columns; default is 2)</p>
-</li>
-<li>
-<p>HTTP OPTIONS setting (default is off)</p>
-</li>
-<li>
-<p>Enable all HTTP Methods for HAL-FORMS Links setting (default is off)</p>
-</li>
-<li>
-<p>Scrollable Documentation setting (default is off)</p>
-</li>
-</ul>
+<p>In the top-level toolbar, you can choose the color mode, theme, and settings, and view the About dialog.</p>
 </div>
 <div class="sect3">
-<h4 id="_bookmarking"><a class="anchor" href="#_bookmarking"></a>3.9.1. Bookmarking</h4>
-<div class="paragraph">
-<p>The following configuration is included in URL parameters, so HAL Explorer URLs can be easily bookmarked and shared:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>URI</p>
-</li>
-<li>
-<p>Request Headers</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_hal_forms_options"><a class="anchor" href="#_hal_forms_options"></a>3.10. HAL-FORMS Options</h3>
-<div class="paragraph">
-<p>HAL Explorer supports HAL-FORMS <a href="https://rwcbook.github.io/hal-forms/#options-element">Options</a>.
-A simple example JSON looks like:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-json" data-lang="json">{
-  "_links": {
-    "self": {
-      "href": "http://localhost:3000/options.hal-forms.json"
-    }
-  },
-  "_templates" : {
-    "default" : {
-      "title": "Shipping",
-      "method": "POST",
-      "properties" : [
-        {
-          "name" : "shipping",
-          "prompt" : "Select Shipping Method",
-          "options" : {
-            "selectedValues" : ["FedEx"],
-            "inline" : ["FedEx","UPS","DHL"],
-            "maxItems": 1
-          }
-        }
-      ]
-    }
-  }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>When clicking on the POST request button, the dialog looks like:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="img/hal-forms-options.png" alt="hal forms options" width="70%">
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="menu"><a class="anchor" href="#menu"></a>4. Menu</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In the top-level menu, you can choose the color mode, theme, and settings, and view the About dialog.</p>
-</div>
-<div class="sect2">
-<h3 id="color-mode"><a class="anchor" href="#color-mode"></a>4.1. Color Mode</h3>
+<h4 id="color-mode"><a class="anchor" href="#color-mode"></a>3.2.1. Color Mode</h4>
 <div class="paragraph">
 <p>HAL Explorer supports three color modes:</p>
 </div>
@@ -800,8 +1203,8 @@ A simple example JSON looks like:</p>
 <p>The color mode is stored in your browser&#8217;s local storage and persists across sessions.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="theming"><a class="anchor" href="#theming"></a>4.2. Theming</h3>
+<div class="sect3">
+<h4 id="theming"><a class="anchor" href="#theming"></a>3.2.2. Theming</h4>
 <div class="paragraph">
 <p>HAL Explorer provides a rich theming experience with support of the Bootstrap default theme and 26 <a href="https://bootswatch.com/">Bootswatch</a> themes (by Thomas Park).
 The default theme is <strong>Cosmo</strong>, which offers a clean, modern look that works well with both light and dark color modes.</p>
@@ -906,13 +1309,13 @@ The default theme is <strong>Cosmo</strong>, which offers a clean, modern look t
 <p>The selected theme is stored in your browser&#8217;s local storage with the <code>hal-explorer.theme</code> key and persists across sessions. Themes automatically adapt to your selected color mode (light/dark/auto) for an optimal viewing experience.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="settings"><a class="anchor" href="#settings"></a>4.3. Settings</h3>
-<div class="paragraph">
-<p>The <em>Settings</em> submenu allows you to customize HAL Explorer&#8217;s behavior and user interface. All settings are automatically saved to your browser&#8217;s local storage with the <code>hal-explorer.</code> prefix and persist across sessions.</p>
-</div>
 <div class="sect3">
-<h4 id="_layout"><a class="anchor" href="#_layout"></a>4.3.1. Layout</h4>
+<h4 id="settings"><a class="anchor" href="#settings"></a>3.2.3. Settings</h4>
+<div class="paragraph">
+<p>The <em>Settings</em> menu helps you to customize HAL Explorer&#8217;s behavior and user interface. All settings are automatically saved to your browser&#8217;s local storage with the <code>hal-explorer.</code> prefix and persist across sessions.</p>
+</div>
+<div class="sect4">
+<h5 id="_layout"><a class="anchor" href="#_layout"></a>Layout</h5>
 <div class="paragraph">
 <p>Choose between different column layouts to optimize your workspace (see <a href="#_curie_based_documentation">Curie-based Documentation</a> for more details):</p>
 </div>
@@ -953,8 +1356,8 @@ The default theme is <strong>Cosmo</strong>, which offers a clean, modern look t
 </ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_use_http_options"><a class="anchor" href="#_use_http_options"></a>4.3.2. Use HTTP OPTIONS</h4>
+<div class="sect4">
+<h5 id="_use_http_options"><a class="anchor" href="#_use_http_options"></a>Use HTTP OPTIONS</h5>
 <div class="paragraph">
 <p>When enabled, HAL Explorer automatically sends HTTP OPTIONS requests to discover which HTTP methods are supported for a given link URI.</p>
 </div>
@@ -965,8 +1368,8 @@ The default theme is <strong>Cosmo</strong>, which offers a clean, modern look t
 <p><strong>Default:</strong> Disabled</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_enable_all_http_methods_for_hal_forms_links"><a class="anchor" href="#_enable_all_http_methods_for_hal_forms_links"></a>4.3.3. Enable all HTTP Methods for HAL-FORMS Links</h4>
+<div class="sect4">
+<h5 id="_enable_all_http_methods_for_hal_forms_links"><a class="anchor" href="#_enable_all_http_methods_for_hal_forms_links"></a>Enable all HTTP Methods for HAL-FORMS Links</h5>
 <div class="paragraph">
 <p>When enabled, all HTTP methods (GET, POST, PUT, PATCH, DELETE, etc.) are available for links in HAL-FORMS documents, even if no explicit template is defined for that method.</p>
 </div>
@@ -993,37 +1396,9 @@ The default theme is <strong>Cosmo</strong>, which offers a clean, modern look t
 <p><strong>Note:</strong> Use this setting with caution, as it may allow operations that the API doesn&#8217;t actually support.</p>
 </div>
 </div>
+</div>
 <div class="sect3">
-<h4 id="_scrollable_documentation"><a class="anchor" href="#_scrollable_documentation"></a>4.3.4. Scrollable Documentation</h4>
-<div class="paragraph">
-<p>When enabled, documentation is rendered in a scrollable iframe with a fixed maximum height instead of expanding the main page height.</p>
-</div>
-<div class="paragraph">
-<p><strong>Benefits:</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Keeps the main interface visible and prevents excessive scrolling</p>
-</li>
-<li>
-<p>Ideal for APIs with extensive documentation</p>
-</li>
-<li>
-<p>Provides better control over the viewing area</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><strong>When disabled:</strong> Documentation expands naturally to fit its content, which may extend the page height significantly.</p>
-</div>
-<div class="paragraph">
-<p><strong>Default:</strong> Enabled</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="about"><a class="anchor" href="#about"></a>4.4. About</h3>
+<h4 id="about"><a class="anchor" href="#about"></a>3.2.4. About</h4>
 <div class="paragraph">
 <p>The About dialog displays:</p>
 </div>
@@ -1044,10 +1419,1924 @@ The default theme is <strong>Cosmo</strong>, which offers a clean, modern look t
 </ul>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_understanding_the_interface"><a class="anchor" href="#_understanding_the_interface"></a>3.2.5. Understanding the Interface</h4>
+<div class="paragraph">
+<p>The HAL Explorer interface is divided into main sections:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Top Bar</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>URI input field and Go! button</p>
+</li>
+<li>
+<p>Edit Headers button for custom HTTP headers</p>
+</li>
+<li>
+<p>Color mode, theme, and settings menu</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Left Panel</strong> (Main Content)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Top-level JSON properties</p>
+</li>
+<li>
+<p>Links section with HTTP method buttons</p>
+</li>
+<li>
+<p>Embedded resources (expandable)</p>
+</li>
+<li>
+<p>Templates section (for HAL-FORMS)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Right Panel</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Response status and headers</p>
+</li>
+<li>
+<p>Syntax-highlighted response body</p>
+</li>
+<li>
+<p>Documentation panel (in 3-column mode or when toggled)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_working_with_properties"><a class="anchor" href="#_working_with_properties"></a>3.3. Working with Properties</h3>
+<div class="paragraph">
+<p>When a response is displayed, top-level JSON properties appear at the top of the left panel.</p>
+</div>
+<div class="paragraph">
+<p><strong>Example Response:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">{
+  "id": 1,
+  "title": "The Matrix",
+  "year": 1999,
+  "director": "Wachowski Sisters"
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These properties are displayed in a clean, readable format with syntax highlighting.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_navigating_links"><a class="anchor" href="#_navigating_links"></a>3.4. Navigating Links</h3>
+<div class="paragraph">
+<p>Links are the heart of hypermedia APIs. HAL Explorer makes it easy to discover and follow links in your API.</p>
+</div>
+<div class="sect3">
+<h4 id="_link_display"><a class="anchor" href="#_link_display"></a>3.4.1. Link Display</h4>
+<div class="paragraph">
+<p>Links appear in a dedicated section below the properties. Each link relation shows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Relation name</strong> - The link relation type (e.g., <code>self</code>, <code>items</code>, <code>next</code>)</p>
+</li>
+<li>
+<p><strong>Name/Title</strong> - Optional descriptive text (if provided by the API)</p>
+</li>
+<li>
+<p><strong>HTTP method buttons</strong> - Actions you can perform on the link</p>
+</li>
+<li>
+<p><strong>Documentation icon</strong> - Book icon (if CURIE documentation is available)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_http_method_buttons"><a class="anchor" href="#_http_method_buttons"></a>3.4.2. HTTP Method Buttons</h4>
+<div class="paragraph">
+<p>Since HAL doesn&#8217;t specify which HTTP methods are valid for each link, HAL Explorer provides buttons for all standard methods:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 33.3333%;">
+<col style="width: 50.0001%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Button</th>
+<th class="tableblock halign-left valign-top">HTTP Method</th>
+<th class="tableblock halign-left valign-top">Typical Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GET</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Retrieve a resource</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>+</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create a new resource or perform an action</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&gt;&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PUT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Replace an existing resource completely</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PATCH</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Partially update an existing resource</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>x</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DELETE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Remove a resource</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Enable the "Use HTTP OPTIONS" setting (see <a href="#settings">Settings</a>) to automatically discover which methods are actually supported for each link.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_following_simple_links"><a class="anchor" href="#_following_simple_links"></a>3.4.3. Following Simple Links</h4>
+<div class="paragraph">
+<p>To follow a link:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Click the appropriate HTTP method button (usually <code>&lt;</code> for GET)</p>
+</li>
+<li>
+<p>HAL Explorer fetches the linked resource</p>
+</li>
+<li>
+<p>The new response appears in the interface</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Example Workflow:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Start at API root: <code>GET <a href="http://api.example.com/" class="bare">http://api.example.com/</a></code></p>
+</li>
+<li>
+<p>See a link to <code>"customers"</code> collection</p>
+</li>
+<li>
+<p>Click <code>&lt;</code> (GET) button on the <code>customers</code> link</p>
+</li>
+<li>
+<p>View the list of customers</p>
+</li>
+<li>
+<p>Click <code>&lt;</code> (GET) on a specific customer link</p>
+</li>
+<li>
+<p>View individual customer details</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_working_with_templated_links"><a class="anchor" href="#_working_with_templated_links"></a>3.4.4. Working with Templated Links</h4>
+<div class="paragraph">
+<p>Some links include URI templates with parameters. When you click a method button for a templated link, HAL Explorer opens a dialog to collect parameter values.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/templated-request.png" alt="templated request" width="70%">
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Templated Link Example:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">{
+  "_links": {
+    "search": {
+      "href": "/customers{?name,city}",
+      "templated": true
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Using the Template Dialog:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Click the HTTP method button for the templated link</p>
+</li>
+<li>
+<p>Enter values for each template parameter:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>name</code>: "Smith"</p>
+</li>
+<li>
+<p><code>city</code>: "Portland"</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Review the expanded URI: <code>/customers?name=Smith&amp;city=Portland</code></p>
+</li>
+<li>
+<p>Click <code>Go!</code> to execute the request</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Features:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Validation</strong>: Required parameters are marked</p>
+</li>
+<li>
+<p><strong>Preview</strong>: See the expanded URI before sending</p>
+</li>
+<li>
+<p><strong>Keyboard Shortcut</strong>: Press <code>Enter</code> to submit, <code>ESC</code> to cancel</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_link_names_and_titles"><a class="anchor" href="#_link_names_and_titles"></a>3.4.5. Link Names and Titles</h4>
+<div class="paragraph">
+<p>APIs can provide additional context for links through <code>name</code> or <code>title</code> attributes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">{
+  "_links": {
+    "author": [
+      {"href": "/users/1", "title": "John Smith"},
+      {"href": "/users/2", "title": "Jane Doe"}
+    ]
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>HAL Explorer displays these in the links table, making it easy to choose the right link when multiple links share the same relation.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exploring_embedded_resources"><a class="anchor" href="#_exploring_embedded_resources"></a>3.5. Exploring Embedded Resources</h3>
+<div class="paragraph">
+<p>HAL allows resources to embed related resources directly in the response, reducing the need for additional HTTP requests.</p>
+</div>
+<div class="sect3">
+<h4 id="_what_are_embedded_resources"><a class="anchor" href="#_what_are_embedded_resources"></a>3.5.1. What Are Embedded Resources?</h4>
+<div class="paragraph">
+<p>Embedded resources appear in the <code>_embedded</code> section of a HAL response:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">{
+  "total": 2,
+  "_embedded": {
+    "customers": [
+      {
+        "id": 1,
+        "name": "John Smith",
+        "_links": {
+          "self": {"href": "/customers/1"}
+        }
+      },
+      {
+        "id": 2,
+        "name": "Jane Doe",
+        "_links": {
+          "self": {"href": "/customers/2"}
+        }
+      }
+    ]
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_viewing_embedded_resources"><a class="anchor" href="#_viewing_embedded_resources"></a>3.5.2. Viewing Embedded Resources</h4>
+<div class="paragraph">
+<p>HAL Explorer displays embedded resources in an expandable section:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Look for the "Embedded Resources" section</p>
+</li>
+<li>
+<p>Click on an embedded resource relation to expand it</p>
+</li>
+<li>
+<p>View the full resource details, including its own links and properties</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/expanded-embedded-resource.png" alt="expanded embedded resource" width="70%">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_navigating_embedded_resources"><a class="anchor" href="#_navigating_embedded_resources"></a>3.5.3. Navigating Embedded Resources</h4>
+<div class="paragraph">
+<p>Each embedded resource is fully interactive:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Follow links</strong> - Click HTTP method buttons on embedded resource links</p>
+</li>
+<li>
+<p><strong>Expand nested embeds</strong> - If an embedded resource contains its own embedded resources</p>
+</li>
+<li>
+<p><strong>View properties</strong> - See all attributes of the embedded resource</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Example Workflow:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Fetch customer list: <code>GET /customers</code></p>
+</li>
+<li>
+<p>Expand embedded <code>customers</code> collection</p>
+</li>
+<li>
+<p>View individual customer details inline</p>
+</li>
+<li>
+<p>Click <code>&lt;</code> (GET) on a customer&#8217;s <code>self</code> link to view full details</p>
+</li>
+<li>
+<p>Follow <code>orders</code> link from customer to see their orders</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This reduces navigation time while maintaining full API exploration capabilities.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_inspecting_response_details"><a class="anchor" href="#_inspecting_response_details"></a>3.6. Inspecting Response Details</h3>
+<div class="paragraph">
+<p>The right panel provides comprehensive information about each API response.</p>
+</div>
+<div class="sect3">
+<h4 id="_response_status"><a class="anchor" href="#_response_status"></a>3.6.1. Response Status</h4>
+<div class="paragraph">
+<p>At the top of the right panel, you&#8217;ll see:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>HTTP Status Code</strong> - e.g., 200, 201, 404, 500</p>
+</li>
+<li>
+<p><strong>Status Text</strong> - e.g., "OK", "Created", "Not Found", "Internal Server Error"</p>
+</li>
+<li>
+<p><strong>Status Color</strong> - Green for success (2xx), yellow for redirects (3xx), red for errors (4xx, 5xx)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_response_headers"><a class="anchor" href="#_response_headers"></a>3.6.2. Response Headers</h4>
+<div class="paragraph">
+<p>All HTTP response headers are displayed in a collapsible section:</p>
+</div>
+<div class="paragraph">
+<p><strong>Common Headers:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Content-Type</code> - Media type of the response (e.g., <code>application/hal+json</code>)</p>
+</li>
+<li>
+<p><code>Content-Length</code> - Size of the response body</p>
+</li>
+<li>
+<p><code>Cache-Control</code> - Caching directives</p>
+</li>
+<li>
+<p><code>ETag</code> - Version identifier for the resource</p>
+</li>
+<li>
+<p><code>Last-Modified</code> - When the resource was last changed</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These headers are useful for:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Debugging caching issues</p>
+</li>
+<li>
+<p>Understanding content negotiation</p>
+</li>
+<li>
+<p>Implementing optimistic concurrency control</p>
+</li>
+<li>
+<p>Analyzing API behavior</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_response_body"><a class="anchor" href="#_response_body"></a>3.6.3. Response Body</h4>
+<div class="paragraph">
+<p>The complete JSON response appears with:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Syntax Highlighting</strong> - Different colors for keys, values, strings, numbers</p>
+</li>
+<li>
+<p><strong>Collapsible Sections</strong> - Expand/collapse nested objects and arrays</p>
+</li>
+<li>
+<p><strong>Raw JSON</strong> - Exact server response, formatted for readability</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Uses:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Compare left panel (structured view) with right panel (raw JSON)</p>
+</li>
+<li>
+<p>Copy/paste JSON for testing or documentation</p>
+</li>
+<li>
+<p>Inspect complex nested structures</p>
+</li>
+<li>
+<p>Debug unexpected API responses</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_curie_based_documentation"><a class="anchor" href="#_curie_based_documentation"></a>3.7. Curie-based Documentation</h3>
+<div class="paragraph">
+<p>Whenever you see a book icon, you can click on it to display the documentation.
+Depending on the chosen layout, the documentation will be displayed as a third column on the right (3-column layout)
+or will replace the response details (2-column layout). You can change the layout using the <code>Settings</code> menu in the main toolbar.</p>
+</div>
+<div class="paragraph">
+<p>A page with a 3-column layout might look like:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/3-column-layout.png" alt="3 column layout">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_hal_forms"><a class="anchor" href="#_hal_forms"></a>3.8. HAL-FORMS</h3>
+<div class="paragraph">
+<p>HAL Explorer supports the latest HAL-FORMS specification. Whenever a HAL-FORMS based response contains
+templates (<code>_templates</code>), all template elements will be displayed in the Links section, like:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/hal-explorer-templates.png" alt="hal explorer templates">
+</div>
+</div>
+<div class="paragraph">
+<p>Since HAL-FORMS uses affordances to describe which HTTP method should be used for each template element, you can
+follow links using HTTP GET, but must use the specific HTTP method defined in each template element.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updating_rest_resources"><a class="anchor" href="#_updating_rest_resources"></a>3.9. Updating REST Resources</h3>
+<div class="paragraph">
+<p>Whenever you click on an HTTP POST button, a modal dialog appears where you can enter the request body and query parameters (only if the URI is templated). For raw HAL-based documents, it looks like:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/hal-post-dialog.png" alt="hal post dialog" width="70%">
+</div>
+</div>
+<div class="paragraph">
+<p>When your server is implemented using <a href="https://spring.io/projects/spring-data-rest">Spring Data REST</a>, a JSON Schema-based Spring profile is automatically created. HAL Explorer automatically detects Spring Profiles, and instead of presenting an empty body, form elements for all attributes are displayed, like:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/request-input.png" alt="request input" width="70%">
+</div>
+</div>
+<div class="paragraph">
+<p>When your response is based on HAL-FORMS, all the properties of the corresponding template element are shown, like:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/hal-forms-post-dialog.png" alt="hal forms post dialog" width="70%">
+</div>
+</div>
+<div class="paragraph">
+<p>When HAL-FORMS is used, the fields are also validated, and validation errors are displayed below the input area.
+Only for valid forms is the body displayed, and the HTTP request can be made.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_customizing_request_headers"><a class="anchor" href="#_customizing_request_headers"></a>3.10. Customizing Request Headers</h3>
+<div class="paragraph">
+<p>Custom HTTP headers allow you to authenticate with your API, control content negotiation, and configure other request behaviors.</p>
+</div>
+<div class="sect3">
+<h4 id="_opening_the_headers_editor"><a class="anchor" href="#_opening_the_headers_editor"></a>3.10.1. Opening the Headers Editor</h4>
+<div class="paragraph">
+<p>Click the <strong>Edit Headers</strong> button in the top-left corner to open the request headers dialog.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/request-headers.png" alt="request headers" width="70%">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_custom_headers"><a class="anchor" href="#_adding_custom_headers"></a>3.10.2. Adding Custom Headers</h4>
+<div class="paragraph">
+<p><strong>Step-by-Step:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Click <strong>Edit Headers</strong></p>
+</li>
+<li>
+<p>Enter header name (e.g., <code>Authorization</code>)</p>
+</li>
+<li>
+<p>Enter header value (e.g., <code>Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&#8230;&#8203;</code>)</p>
+</li>
+<li>
+<p>Click <strong>Add</strong> or press <code>Enter</code></p>
+</li>
+<li>
+<p>Click <strong>Done</strong> to close the dialog</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>All subsequent requests will include these headers.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_common_use_cases"><a class="anchor" href="#_common_use_cases"></a>3.10.3. Common Use Cases</h4>
+<div class="sect4">
+<h5 id="_authentication"><a class="anchor" href="#_authentication"></a>Authentication</h5>
+<div class="paragraph">
+<p><strong>Bearer Token (JWT):</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Basic Authentication:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>API Key:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>X-API-Key: your-api-key-here</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_content_negotiation"><a class="anchor" href="#_content_negotiation"></a>Content Negotiation</h5>
+<div class="paragraph">
+<p><strong>Request HAL format:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Accept: application/hal+json</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Request HAL-FORMS format:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Accept: application/prs.hal-forms+json</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The headers dialog includes quick buttons to set these <code>Accept</code> headers.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_custom_headers"><a class="anchor" href="#_custom_headers"></a>Custom Headers</h5>
+<div class="paragraph">
+<p>Add any custom headers required by your API:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>X-Tenant-ID: tenant-123
+X-Request-ID: abc-def-ghi
+X-Correlation-ID: correlation-xyz</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_managing_headers"><a class="anchor" href="#_managing_headers"></a>3.10.4. Managing Headers</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>View All Headers</strong> - All configured headers are listed in the dialog</p>
+</li>
+<li>
+<p><strong>Remove Headers</strong> - Click the delete icon next to any header</p>
+</li>
+<li>
+<p><strong>Clear All</strong> - Use the "Clear All" button to remove all custom headers</p>
+</li>
+<li>
+<p><strong>Persistence</strong> - Headers are stored in the URL fragment for bookmarking</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Be careful sharing URLs that contain sensitive headers like authorization tokens. The headers are visible in the URL fragment.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration_and_bookmarking"><a class="anchor" href="#_configuration_and_bookmarking"></a>3.11. Configuration and Bookmarking</h3>
+<div class="paragraph">
+<p>The following configuration is stored in the browser&#8217;s local storage and persists across sessions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Color Mode (Light/Dark/Auto; default is Auto)</p>
+</li>
+<li>
+<p>Theme (default is Bootswatch Cosmo)</p>
+</li>
+<li>
+<p>Column Layout (2 or 3 columns; default is 2)</p>
+</li>
+<li>
+<p>HTTP OPTIONS setting (default is off)</p>
+</li>
+<li>
+<p>Enable all HTTP Methods for HAL-FORMS Links setting (default is off)</p>
+</li>
+<li>
+<p>Scrollable Documentation setting (default is off)</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_bookmarking"><a class="anchor" href="#_bookmarking"></a>3.11.1. Bookmarking</h4>
+<div class="paragraph">
+<p>The following configuration is included in URL parameters, so HAL Explorer URLs can be easily bookmarked and shared:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>URI</p>
+</li>
+<li>
+<p>Request Headers</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_hal_forms_options"><a class="anchor" href="#_hal_forms_options"></a>3.12. HAL-FORMS Options</h3>
+<div class="paragraph">
+<p>HAL Explorer supports HAL-FORMS <a href="https://rwcbook.github.io/hal-forms/#options-element">Options</a>.
+A simple example JSON looks like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">{
+  "_links": {
+    "self": {
+      "href": "http://localhost:3000/options.hal-forms.json"
+    }
+  },
+  "_templates" : {
+    "default" : {
+      "title": "Shipping",
+      "method": "POST",
+      "properties" : [
+        {
+          "name" : "shipping",
+          "prompt" : "Select Shipping Method",
+          "options" : {
+            "selectedValues" : ["FedEx"],
+            "inline" : ["FedEx","UPS","DHL"],
+            "maxItems": 1
+          }
+        }
+      ]
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When clicking on the POST request button, the dialog looks like:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/hal-forms-options.png" alt="hal forms options" width="70%">
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="license"><a class="anchor" href="#license"></a>5. License</h2>
+<h2 id="build"><a class="anchor" href="#build"></a>4. Development Setup</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section covers building HAL Explorer from source, running the development server, and testing.</p>
+</div>
+<div class="sect2">
+<h3 id="_prerequisites_2"><a class="anchor" href="#_prerequisites_2"></a>4.1. Prerequisites</h3>
+<div class="paragraph">
+<p><strong>Required:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Node.js</strong>: Version 18.x or higher (<a href="https://nodejs.org">Download</a>)</p>
+</li>
+<li>
+<p><strong>Yarn</strong>: Package manager (<code>npm install -g yarn</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Optional (for Gradle build):</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Java</strong>: JDK 17 or higher</p>
+</li>
+<li>
+<p><strong>Gradle</strong>: Included via Gradle Wrapper</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_building_for_production"><a class="anchor" href="#_building_for_production"></a>4.2. Building for Production</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_using_node_jsyarn"><a class="anchor" href="#_using_node_jsyarn"></a>4.3. Using Node.js/Yarn</h3>
+<div class="paragraph">
+<p>This is the recommended build method for most users.</p>
+</div>
+<div class="paragraph">
+<p><strong>Steps:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash"># Install dependencies
+yarn install
+
+# Build for production
+yarn build</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The build artifacts will be stored in the <code>dist/</code> directory, optimized and minified for production deployment.</p>
+</div>
+<div class="paragraph">
+<p><strong>Build Output:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>dist/hal-explorer/</code> - Complete application ready for deployment</p>
+</li>
+<li>
+<p>Minified JavaScript and CSS</p>
+</li>
+<li>
+<p>Optimized assets and images</p>
+</li>
+<li>
+<p>Generated source maps (for debugging)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_gradle"><a class="anchor" href="#_using_gradle"></a>4.4. Using Gradle</h3>
+<div class="paragraph">
+<p>If you prefer using Gradle or don&#8217;t have Node.js installed globally, use the Gradle wrapper.</p>
+</div>
+<div class="paragraph">
+<p><strong>Steps:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash"># Unix/Linux/macOS
+./gradlew build
+
+# Windows
+gradlew.bat build</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The Gradle build automatically:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Downloads and installs Node.js locally in the project directory</p>
+</li>
+<li>
+<p>Installs dependencies via Yarn</p>
+</li>
+<li>
+<p>Runs the production build</p>
+</li>
+<li>
+<p>Stores artifacts in the <code>dist/</code> directory</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This approach is useful for CI/CD pipelines and Java-centric development environments.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="dev-server"><a class="anchor" href="#dev-server"></a>4.5. Development Server</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_basic_development_server"><a class="anchor" href="#_basic_development_server"></a>4.6. Basic Development Server</h3>
+<div class="paragraph">
+<p>Start the development server with hot reload:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">yarn start</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Features:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>URL</strong>: <a href="http://localhost:4200/" class="bare">http://localhost:4200/</a></p>
+</li>
+<li>
+<p><strong>Hot Reload</strong>: Automatically reloads when source files change</p>
+</li>
+<li>
+<p><strong>Source Maps</strong>: Full debugging support</p>
+</li>
+<li>
+<p><strong>Proxy Configuration</strong>: Built-in proxy to avoid CORS issues</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Proxy Rules:</strong></p>
+</div>
+<div class="paragraph">
+<p>The development server automatically proxies certain paths:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>/api/<strong></code> → <code><a href="http://localhost:8080/api/" class="bare">http://localhost:8080/api/</a></strong></code> - Your backend API</p>
+</li>
+<li>
+<p><code>/docs/<strong></code> → <code><a href="http://localhost:8080/docs/" class="bare">http://localhost:8080/docs/</a></strong></code> - API documentation</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This allows you to develop against a local backend without CORS configuration.</p>
+</div>
+<div class="paragraph">
+<p><strong>Example Usage:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Start your backend API on port 8080</p>
+</li>
+<li>
+<p>Run <code>yarn start</code></p>
+</li>
+<li>
+<p>Navigate to <a href="http://localhost:4200/#uri=/api" class="bare">http://localhost:4200/#uri=/api</a></p>
+</li>
+<li>
+<p>HAL Explorer will fetch data from <code>localhost:8080/api</code> without CORS issues</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_server_with_test_data"><a class="anchor" href="#_development_server_with_test_data"></a>4.7. Development Server with Test Data</h3>
+<div class="paragraph">
+<p>For frontend-only development, start the server with built-in test data:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">yarn start:fs</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Features:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>All features of the basic development server</p>
+</li>
+<li>
+<p>Built-in file server on port 3000</p>
+</li>
+<li>
+<p>Example HAL and HAL-FORMS documents in <code>test-data/</code> directory</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Proxy Rules:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>/test-data/<strong></code> → <code><a href="http://localhost:3000/test-data/" class="bare">http://localhost:3000/test-data/</a></strong></code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Try It Out:</strong></p>
+</div>
+<div class="paragraph">
+<p>Navigate to <a href="http://localhost:4200/#uri=/test-data/movies.hal-forms.json" class="bare">http://localhost:4200/#uri=/test-data/movies.hal-forms.json</a> to explore example HAL-FORMS data.</p>
+</div>
+<div class="paragraph">
+<p><strong>Available Test Files:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>movies.hal-forms.json</code> - HAL-FORMS with templates</p>
+</li>
+<li>
+<p><code>options.hal-forms.json</code> - HAL-FORMS with options</p>
+</li>
+<li>
+<p>Various other example documents</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_testing"><a class="anchor" href="#_testing"></a>4.8. Testing</h3>
+<div class="paragraph">
+<p>HAL Explorer includes comprehensive unit and end-to-end tests.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unit_tests"><a class="anchor" href="#_unit_tests"></a>4.9. Unit Tests</h3>
+<div class="paragraph">
+<p><strong>Interactive Mode (Default):</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">yarn test</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Opens your default browser with the Karma test runner. Tests re-run automatically when files change.</p>
+</div>
+<div class="paragraph">
+<p><strong>Headless Mode (CI/CD):</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">yarn test:headless</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Runs tests once in headless Chrome and exits. Perfect for continuous integration pipelines.</p>
+</div>
+<div class="paragraph">
+<p><strong>Additional Test Commands:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash"># Run tests with code coverage
+yarn test:coverage
+
+# Run specific test file
+yarn test --include='**/app.component.spec.ts'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_end_to_end_tests"><a class="anchor" href="#_end_to_end_tests"></a>4.10. End-to-End Tests</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">yarn e2e</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Runs the full E2E test suite using Playwright across multiple browsers (Chromium, Firefox, WebKit).</p>
+</div>
+<div class="paragraph">
+<p><strong>Requirements:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Playwright browsers installed (<code>npx playwright install</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Additional E2E Commands:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash"># Run in headed mode (see the browser)
+yarn e2e:headed
+
+# Run only in Chromium
+yarn e2e --project=chromium
+
+# Debug mode with Playwright Inspector
+yarn e2e:debug</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See <code>package.json</code> for all available test options.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_building_documentation"><a class="anchor" href="#_building_documentation"></a>4.11. Building Documentation</h3>
+<div class="paragraph">
+<p>Generate the complete reference documentation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash"># Unix/Linux/macOS
+./gradlew doc
+
+# Windows
+gradlew.bat doc</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Troubleshooting (Windows):</strong></p>
+</div>
+<div class="paragraph">
+<p>If you encounter file encoding errors on Windows, use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">gradlew doc -Dfile.encoding=UTF-8</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Output:</strong></p>
+</div>
+<div class="paragraph">
+<p>Documentation is generated in <code>build/asciidoc/html5/</code> and includes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Complete reference documentation</p>
+</li>
+<li>
+<p>All included images and examples</p>
+</li>
+<li>
+<p>Ready for deployment or local browsing</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="faq"><a class="anchor" href="#faq"></a>5. Frequently Asked Questions</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_general_questions"><a class="anchor" href="#_general_questions"></a>5.1. General Questions</h3>
+<div class="sect3">
+<h4 id="_what_is_hal_explorer"><a class="anchor" href="#_what_is_hal_explorer"></a>5.1.1. What is HAL Explorer?</h4>
+<div class="paragraph">
+<p>HAL Explorer is a web-based tool for browsing and exploring RESTful Hypermedia APIs that use the HAL (Hypertext Application Language) and HAL-FORMS specifications. It provides an intuitive interface for navigating APIs by following links, viewing documentation, and testing different HTTP methods.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_do_i_need_to_install_anything"><a class="anchor" href="#_do_i_need_to_install_anything"></a>5.1.2. Do I need to install anything?</h4>
+<div class="paragraph">
+<p>No installation required! You can use the hosted version at <a href="https://hal-explorer.com" class="bare">https://hal-explorer.com</a> or <a href="https://toedter.github.io/hal-explorer/release/hal-explorer/">GitHub Pages</a>.</p>
+</div>
+<div class="paragraph">
+<p>For backend integration, you can add HAL Explorer as a WebJar dependency or deploy the static files. See <a href="#_backend_integration">Backend Integration</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_is_hal_explorer_free_to_use"><a class="anchor" href="#_is_hal_explorer_free_to_use"></a>5.1.3. Is HAL Explorer free to use?</h4>
+<div class="paragraph">
+<p>Yes, HAL Explorer is open source software licensed under the MIT License. You can use it freely for commercial and non-commercial projects. See <a href="#license">License</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_which_browsers_are_supported"><a class="anchor" href="#_which_browsers_are_supported"></a>5.1.4. Which browsers are supported?</h4>
+<div class="paragraph">
+<p>HAL Explorer works in all modern browsers:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Chrome/Chromium (recommended)</p>
+</li>
+<li>
+<p>Firefox</p>
+</li>
+<li>
+<p>Edge</p>
+</li>
+<li>
+<p>Safari</p>
+</li>
+<li>
+<p>Opera</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Requires a browser with ES6 support and local storage capabilities.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_can_i_use_hal_explorer_offline"><a class="anchor" href="#_can_i_use_hal_explorer_offline"></a>5.1.5. Can I use HAL Explorer offline?</h4>
+<div class="paragraph">
+<p>Yes, if you deploy HAL Explorer locally or integrate it into your backend. The hosted version requires internet access.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_api_compatibility"><a class="anchor" href="#_api_compatibility"></a>5.2. API Compatibility</h3>
+<div class="sect3">
+<h4 id="_does_my_api_need_to_support_hal_or_hal_forms"><a class="anchor" href="#_does_my_api_need_to_support_hal_or_hal_forms"></a>5.2.1. Does my API need to support HAL or HAL-FORMS?</h4>
+<div class="paragraph">
+<p>Yes, HAL Explorer is specifically designed for HAL and HAL-FORMS APIs. While it can display plain JSON, you won&#8217;t get the full functionality without proper HAL <code>_links</code> and <code>_embedded</code> structures.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_what_media_types_are_supported"><a class="anchor" href="#_what_media_types_are_supported"></a>5.2.2. What media types are supported?</h4>
+<div class="paragraph">
+<p>HAL Explorer supports:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/hal+json</code> - Standard HAL</p>
+</li>
+<li>
+<p><code>application/prs.hal-forms+json</code> - HAL-FORMS</p>
+</li>
+<li>
+<p><code>application/json</code> - Plain JSON (limited functionality)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_do_i_need_to_modify_my_existing_hal_api"><a class="anchor" href="#_do_i_need_to_modify_my_existing_hal_api"></a>5.2.3. Do I need to modify my existing HAL API?</h4>
+<div class="paragraph">
+<p>No modifications needed if your API already follows the HAL specification. HAL Explorer works with any compliant HAL API.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_can_hal_explorer_work_with_non_hal_apis"><a class="anchor" href="#_can_hal_explorer_work_with_non_hal_apis"></a>5.2.4. Can HAL Explorer work with non-HAL APIs?</h4>
+<div class="paragraph">
+<p>HAL Explorer can display any JSON response, but without HAL&#8217;s <code>_links</code> structure, you won&#8217;t be able to navigate between resources or use hypermedia features. For non-HAL APIs, consider tools like Swagger UI or Postman.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_does_hal_explorer_support_other_hypermedia_formats"><a class="anchor" href="#_does_hal_explorer_support_other_hypermedia_formats"></a>5.2.5. Does HAL Explorer support other hypermedia formats?</h4>
+<div class="paragraph">
+<p>No, HAL Explorer is specifically designed for HAL and HAL-FORMS</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_features_and_functionality"><a class="anchor" href="#_features_and_functionality"></a>5.3. Features and Functionality</h3>
+<div class="sect3">
+<h4 id="_how_do_i_authenticate_with_my_api"><a class="anchor" href="#_how_do_i_authenticate_with_my_api"></a>5.3.1. How do I authenticate with my API?</h4>
+<div class="paragraph">
+<p>Click "Edit Headers" and add authentication headers:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Bearer tokens: <code>Authorization: Bearer &lt;token&gt;</code></p>
+</li>
+<li>
+<p>Basic auth: <code>Authorization: Basic &lt;credentials&gt;</code></p>
+</li>
+<li>
+<p>API keys: <code>X-API-Key: &lt;key&gt;</code> (or your API&#8217;s custom header)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>See <a href="#_customizing_request_headers">Customizing Request Headers</a> for details.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_can_i_test_post_put_patch_and_delete_methods"><a class="anchor" href="#_can_i_test_post_put_patch_and_delete_methods"></a>5.3.2. Can I test POST, PUT, PATCH, and DELETE methods?</h4>
+<div class="paragraph">
+<p>Yes! HAL Explorer supports all HTTP methods. Click the appropriate button next to any link:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>&lt;</code> = GET</p>
+</li>
+<li>
+<p><code>+</code> = POST</p>
+</li>
+<li>
+<p><code>&gt;&gt;</code> = PUT</p>
+</li>
+<li>
+<p><code>&gt;</code> = PATCH</p>
+</li>
+<li>
+<p><code>x</code> = DELETE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For HAL-FORMS APIs, templates specify which methods are available.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_how_do_i_share_my_api_exploration_with_colleagues"><a class="anchor" href="#_how_do_i_share_my_api_exploration_with_colleagues"></a>5.3.3. How do I share my API exploration with colleagues?</h4>
+<div class="paragraph">
+<p>HAL Explorer stores the current URI and custom headers in the URL fragment. Simply copy the URL from your browser&#8217;s address bar and share it. When opened, HAL Explorer will restore the same state.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>https://hal-explorer.com/#uri=/api/customers&amp;headers=...</pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Be careful sharing URLs with sensitive authentication tokens in headers.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_can_i_use_hal_explorer_with_apis_behind_a_vpn"><a class="anchor" href="#_can_i_use_hal_explorer_with_apis_behind_a_vpn"></a>5.3.4. Can I use HAL Explorer with APIs behind a VPN?</h4>
+<div class="paragraph">
+<p>Yes, if you deploy HAL Explorer locally or integrate it into your backend that&#8217;s accessible within the VPN. The public hosted version cannot access VPN-protected resources.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_does_hal_explorer_support_pagination"><a class="anchor" href="#_does_hal_explorer_support_pagination"></a>5.3.5. Does HAL Explorer support pagination?</h4>
+<div class="paragraph">
+<p>HAL Explorer can follow pagination links like <code>next</code>, <code>prev</code>, <code>first</code>, <code>last</code> if your API provides them in the <code>_links</code> section. Simply click the GET button next to the pagination link.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_can_i_view_api_documentation_in_hal_explorer"><a class="anchor" href="#_can_i_view_api_documentation_in_hal_explorer"></a>5.3.6. Can I view API documentation in HAL Explorer?</h4>
+<div class="paragraph">
+<p>Yes! HAL Explorer supports CURIE-based documentation. If your API provides documentation links (via CURIEs), click the book icon next to any link relation to view inline documentation.</p>
+</div>
+<div class="paragraph">
+<p>See <a href="#_curie_based_documentation">CURIE-based Documentation</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_hal_forms_specific"><a class="anchor" href="#_hal_forms_specific"></a>5.4. HAL-FORMS Specific</h3>
+<div class="sect3">
+<h4 id="_what_is_hal_forms"><a class="anchor" href="#_what_is_hal_forms"></a>5.4.1. What is HAL-FORMS?</h4>
+<div class="paragraph">
+<p>HAL-FORMS is an extension to HAL that adds affordances (form templates) to describe how to interact with resources. It tells clients which HTTP methods, properties, and validations to use for operations like creating or updating resources.</p>
+</div>
+<div class="paragraph">
+<p>Specification: <a href="https://rwcbook.github.io/hal-forms/" class="bare">https://rwcbook.github.io/hal-forms/</a></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_how_do_i_know_if_my_api_supports_hal_forms"><a class="anchor" href="#_how_do_i_know_if_my_api_supports_hal_forms"></a>5.4.2. How do I know if my API supports HAL-FORMS?</h4>
+<div class="paragraph">
+<p>Check if your API:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Returns <code>Content-Type: application/prs.hal-forms+json</code></p>
+</li>
+<li>
+<p>Includes a <code>_templates</code> object in responses</p>
+</li>
+<li>
+<p>Documents support for HAL-FORMS</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_do_i_need_to_request_hal_forms_explicitly"><a class="anchor" href="#_do_i_need_to_request_hal_forms_explicitly"></a>5.4.3. Do I need to request HAL-FORMS explicitly?</h4>
+<div class="paragraph">
+<p>Some APIs automatically return HAL-FORMS. Others require you to request it via the <code>Accept</code> header:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Accept: application/prs.hal-forms+json</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Add this in the "Edit Headers" dialog.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_what_are_the_benefits_of_hal_forms_over_plain_hal"><a class="anchor" href="#_what_are_the_benefits_of_hal_forms_over_plain_hal"></a>5.4.4. What are the benefits of HAL-FORMS over plain HAL?</h4>
+<div class="paragraph">
+<p>HAL-FORMS provides:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Explicit affordances</strong> - Know exactly which HTTP methods are allowed</p>
+</li>
+<li>
+<p><strong>Property definitions</strong> - Type information, validation rules, constraints</p>
+</li>
+<li>
+<p><strong>Form generation</strong> - Auto-generated form fields in HAL Explorer</p>
+</li>
+<li>
+<p><strong>Options/enums</strong> - Dropdown menus for fields with predefined values</p>
+</li>
+<li>
+<p><strong>Better error messages</strong> - Client-side validation before sending requests</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_technical_questions"><a class="anchor" href="#_technical_questions"></a>5.5. Technical Questions</h3>
+<div class="sect3">
+<h4 id="_does_hal_explorer_store_my_api_data"><a class="anchor" href="#_does_hal_explorer_store_my_api_data"></a>5.5.1. Does HAL Explorer store my API data?</h4>
+<div class="paragraph">
+<p>No. HAL Explorer is a client-side application. All API communication happens directly between your browser and your API server. No data passes through HAL Explorer&#8217;s servers (when using the hosted version).</p>
+</div>
+<div class="paragraph">
+<p>Settings (theme, color mode, etc.) are stored in your browser&#8217;s local storage only.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_how_does_hal_explorer_handle_cors"><a class="anchor" href="#_how_does_hal_explorer_handle_cors"></a>5.5.2. How does HAL Explorer handle CORS?</h4>
+<div class="paragraph">
+<p>HAL Explorer is a browser-based application and is subject to browser CORS policies. Your API must return appropriate CORS headers to allow access from HAL Explorer&#8217;s origin.</p>
+</div>
+<div class="paragraph">
+<p>See <a href="#_cors_errors">CORS Troubleshooting</a> for solutions.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_can_i_customize_the_appearance"><a class="anchor" href="#_can_i_customize_the_appearance"></a>5.5.3. Can I customize the appearance?</h4>
+<div class="paragraph">
+<p>Yes! HAL Explorer offers:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Color modes</strong> - Light, Dark, or Auto (system preference)</p>
+</li>
+<li>
+<p><strong>27 themes</strong> - Bootstrap default plus 26 Bootswatch themes</p>
+</li>
+<li>
+<p><strong>Layout options</strong> - 2-column or 3-column layout</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>All settings persist across sessions.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_is_my_authentication_token_secure"><a class="anchor" href="#_is_my_authentication_token_secure"></a>5.5.4. Is my authentication token secure?</h4>
+<div class="paragraph">
+<p>When using the hosted version:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>They&#8217;re transmitted only to your API server</p>
+</li>
+<li>
+<p>They appear in the URL fragment (be careful when sharing URLs)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For maximum security:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Use the hosted version only with development/test APIs</p>
+</li>
+<li>
+<p>Deploy HAL Explorer within your own infrastructure for production use</p>
+</li>
+<li>
+<p>Use short-lived tokens that expire quickly</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_can_i_modify_or_extend_hal_explorer"><a class="anchor" href="#_can_i_modify_or_extend_hal_explorer"></a>5.5.5. Can I modify or extend HAL Explorer?</h4>
+<div class="paragraph">
+<p>Yes! HAL Explorer is open source. You can:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Fork the repository</p>
+</li>
+<li>
+<p>Make modifications</p>
+</li>
+<li>
+<p>Build custom versions</p>
+</li>
+<li>
+<p>Contribute improvements back</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Repository: <a href="https://github.com/toedter/hal-explorer" class="bare">https://github.com/toedter/hal-explorer</a></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_how_do_i_report_bugs_or_request_features"><a class="anchor" href="#_how_do_i_report_bugs_or_request_features"></a>5.5.6. How do I report bugs or request features?</h4>
+<div class="paragraph">
+<p>Visit the GitHub issue tracker: <a href="https://github.com/toedter/hal-explorer/issues" class="bare">https://github.com/toedter/hal-explorer/issues</a></p>
+</div>
+<div class="paragraph">
+<p>Before creating a new issue:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Search existing issues</p>
+</li>
+<li>
+<p>Check the <a href="#troubleshooting">Troubleshooting</a> guide</p>
+</li>
+<li>
+<p>Verify it&#8217;s a HAL Explorer issue (not an API issue)</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_integration_questions"><a class="anchor" href="#_integration_questions"></a>5.6. Integration Questions</h3>
+<div class="sect3">
+<h4 id="_can_i_integrate_hal_explorer_into_my_spring_boot_app"><a class="anchor" href="#_can_i_integrate_hal_explorer_into_my_spring_boot_app"></a>5.6.1. Can I integrate HAL Explorer into my Spring Boot app?</h4>
+<div class="paragraph">
+<p>Yes! Multiple options:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>WebJar</strong> - Add as a Maven/Gradle dependency</p>
+</li>
+<li>
+<p><strong>Spring Data REST Integration</strong> - Dedicated integration package</p>
+</li>
+<li>
+<p><strong>Static files</strong> - Copy built files to <code>src/main/resources/static/</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>See <a href="#_backend_integration">Backend Integration</a> for detailed instructions.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_can_i_use_hal_explorer_with_non_java_backends"><a class="anchor" href="#_can_i_use_hal_explorer_with_non_java_backends"></a>5.6.2. Can I use HAL Explorer with non-Java backends?</h4>
+<div class="paragraph">
+<p>Absolutely! HAL Explorer is a pure client-side application. It works with any backend technology (Node.js, Python, Ruby, Go, .NET, etc.) as long as your API returns HAL-formatted responses.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_can_i_embed_hal_explorer_in_an_iframe"><a class="anchor" href="#_can_i_embed_hal_explorer_in_an_iframe"></a>5.6.3. Can I embed HAL Explorer in an iframe?</h4>
+<div class="paragraph">
+<p>Yes, HAL Explorer can be embedded in an iframe. However:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ensure your CSP (Content Security Policy) allows it</p>
+</li>
+<li>
+<p>Configure appropriate CORS headers</p>
+</li>
+<li>
+<p>Consider security implications of cross-origin embedding</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_can_i_use_hal_explorer_in_my_cicd_pipeline"><a class="anchor" href="#_can_i_use_hal_explorer_in_my_cicd_pipeline"></a>5.6.4. Can I use HAL Explorer in my CI/CD pipeline?</h4>
+<div class="paragraph">
+<p>HAL Explorer is primarily an interactive exploration tool. For automated API testing in CI/CD, consider:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>REST Assured (Java)</p>
+</li>
+<li>
+<p>SuperTest (Node.js)</p>
+</li>
+<li>
+<p>pytest with requests (Python)</p>
+</li>
+<li>
+<p>Other programmatic testing frameworks</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>HAL Explorer is best for manual testing, debugging, and API discovery.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_how_do_i_deploy_hal_explorer_to_my_own_server"><a class="anchor" href="#_how_do_i_deploy_hal_explorer_to_my_own_server"></a>5.6.5. How do I deploy HAL Explorer to my own server?</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Download the distribution ZIP or build from source</p>
+</li>
+<li>
+<p>Extract/copy files to your web server</p>
+</li>
+<li>
+<p>Configure your web server to serve the files</p>
+</li>
+<li>
+<p>Ensure proper routing for single-page application</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>See <a href="#_option_3_static_distribution">Static Distribution</a> for examples.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_performance_and_limitations"><a class="anchor" href="#_performance_and_limitations"></a>5.7. Performance and Limitations</h3>
+<div class="sect3">
+<h4 id="_whats_the_maximum_response_size_hal_explorer_can_handle"><a class="anchor" href="#_whats_the_maximum_response_size_hal_explorer_can_handle"></a>5.7.1. What&#8217;s the maximum response size HAL Explorer can handle?</h4>
+<div class="paragraph">
+<p>HAL Explorer can handle large responses, but browser performance may degrade with:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Responses over 10MB</p>
+</li>
+<li>
+<p>Thousands of embedded resources</p>
+</li>
+<li>
+<p>Deeply nested structures (10+ levels)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For very large collections, implement pagination in your API.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_how_many_simultaneous_requests_can_hal_explorer_make"><a class="anchor" href="#_how_many_simultaneous_requests_can_hal_explorer_make"></a>5.7.2. How many simultaneous requests can HAL Explorer make?</h4>
+<div class="paragraph">
+<p>HAL Explorer makes requests sequentially (one at a time) through the user interface. Browser limits on simultaneous connections to the same domain apply (typically 6-8 connections).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_does_hal_explorer_support_websockets_or_server_sent_events"><a class="anchor" href="#_does_hal_explorer_support_websockets_or_server_sent_events"></a>5.7.3. Does HAL Explorer support WebSockets or Server-Sent Events?</h4>
+<div class="paragraph">
+<p>No, HAL Explorer only supports traditional HTTP request/response. For real-time features, use appropriate tools or libraries for your use case.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_can_hal_explorer_handle_binary_data"><a class="anchor" href="#_can_hal_explorer_handle_binary_data"></a>5.7.4. Can HAL Explorer handle binary data?</h4>
+<div class="paragraph">
+<p>HAL Explorer is designed for JSON responses. It cannot display or handle binary data like images, PDFs, or file downloads. Binary data should be referenced via links rather than embedded in HAL responses.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_getting_started_2"><a class="anchor" href="#_getting_started_2"></a>5.8. Getting Started</h3>
+<div class="sect3">
+<h4 id="_im_new_to_hal_where_should_i_start"><a class="anchor" href="#_im_new_to_hal_where_should_i_start"></a>5.8.1. I&#8217;m new to HAL - where should I start?</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Read the <a href="http://stateless.co/hal_specification.html">HAL Specification</a></p>
+</li>
+<li>
+<p>Try the <a href="https://toedter.github.io/hal-explorer/release/hal-explorer/#theme=Cosmo&amp;uri=examples/examples.hal-forms.json">demo with examples</a></p>
+</li>
+<li>
+<p>Explore the included test data</p>
+</li>
+<li>
+<p>Build a simple HAL API following tutorials</p>
+</li>
+<li>
+<p>Explore your API with HAL Explorer</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_where_can_i_learn_more_about_hypermedia_apis"><a class="anchor" href="#_where_can_i_learn_more_about_hypermedia_apis"></a>5.8.2. Where can I learn more about hypermedia APIs?</h4>
+<div class="paragraph">
+<p>Resources:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Book</strong>: "RESTful Web APIs" by Richardson, Amundsen, and Ruby</p>
+</li>
+<li>
+<p><strong>Book</strong>: "Building Hypermedia APIs with HTML5 and Node" by Mike Amundsen</p>
+</li>
+<li>
+<p><strong>Website</strong>: <a href="https://restfulapi.net/hateoas/">HATEOAS Introduction</a></p>
+</li>
+<li>
+<p><strong>Course</strong>: Various REST and hypermedia courses on Udemy, Pluralsight</p>
+</li>
+<li>
+<p><strong>Specification</strong>: <a href="http://stateless.co/hal_specification.html">HAL Specification</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="troubleshooting"><a class="anchor" href="#troubleshooting"></a>6. Troubleshooting</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter helps you resolve common issues when using HAL Explorer.</p>
+</div>
+<div class="sect2">
+<h3 id="_connection_issues"><a class="anchor" href="#_connection_issues"></a>6.1. Connection Issues</h3>
+<div class="sect3">
+<h4 id="_cors_errors"><a class="anchor" href="#_cors_errors"></a>6.1.1. CORS Errors</h4>
+<div class="paragraph">
+<p><strong>Problem:</strong> Browser console shows CORS (Cross-Origin Resource Sharing) errors when trying to access your API.</p>
+</div>
+<div class="paragraph">
+<p><strong>Error Message:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Access to fetch at 'http://api.example.com/' from origin 'https://hal-explorer.com'
+has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present
+on the requested resource.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Solutions:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Enable CORS on Your Server</strong> (Recommended for development):</p>
+<div class="paragraph">
+<p>Add CORS headers to your API responses. See the <a href="#_using_online_demos_with_your_api">CORS Setup</a> section for Spring Boot examples.</p>
+</div>
+</li>
+<li>
+<p><strong>Use the Development Server</strong>:</p>
+<div class="paragraph">
+<p>Clone HAL Explorer and run it locally with <code>yarn start</code>. The development server includes proxy configuration that avoids CORS issues. See <a href="#dev-server">Development Server</a>.</p>
+</div>
+</li>
+<li>
+<p><strong>Integrate HAL Explorer into Your Backend</strong>:</p>
+<div class="paragraph">
+<p>Deploy HAL Explorer as part of your application. See <a href="#_backend_integration">Backend Integration</a> options.</p>
+</div>
+</li>
+<li>
+<p><strong>Browser Extension</strong> (Development only):</p>
+<div class="paragraph">
+<p>Install a browser extension like "CORS Unblock" or "Allow CORS".</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Only use CORS browser extensions for development. They disable important security features.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_getting_help"><a class="anchor" href="#_getting_help"></a>6.2. Getting Help</h3>
+<div class="paragraph">
+<p>If you can&#8217;t resolve your issue:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Check Browser Console</strong>:</p>
+<div class="paragraph">
+<p>Open DevTools (F12) and look for errors in the Console and Network tabs.</p>
+</div>
+</li>
+<li>
+<p><strong>Test with curl</strong>:</p>
+<div class="paragraph">
+<p>Verify your API works outside HAL Explorer:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">curl -H "Accept: application/hal+json" http://your-api.com/endpoint</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Report an Issue</strong>:</p>
+<div class="paragraph">
+<p>If you&#8217;ve found a bug in HAL Explorer, report it at: <a href="https://github.com/toedter/hal-explorer/issues" class="bare">https://github.com/toedter/hal-explorer/issues</a></p>
+</div>
+<div class="paragraph">
+<p>Include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>HAL Explorer version</p>
+</li>
+<li>
+<p>Browser and version</p>
+</li>
+<li>
+<p>Steps to reproduce</p>
+</li>
+<li>
+<p>Error messages from console</p>
+</li>
+<li>
+<p>Example API response (if possible)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Ask the Community</strong>:</p>
+<div class="paragraph">
+<p>Check existing GitHub issues for similar problems and solutions.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="license"><a class="anchor" href="#license"></a>7. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>HAL Explorer is licensed under MIT, see <a href="http://toedter.mit-license.org" class="bare">http://toedter.mit-license.org</a></p>
@@ -1058,7 +3347,7 @@ The default theme is <strong>Cosmo</strong>, which offers a clean, modern look t
 <div id="footer">
 <div id="footer-text">
 Version 2.2.2-SNAPSHOT<br>
-Last updated 2026-01-16 07:21:11 UTC
+Last updated 2026-01-16 09:06:31 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

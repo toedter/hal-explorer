@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.18">
+<title>Development Setup</title>
+<link rel="stylesheet" href="css/site.css">
+<script src="js/setup.js"></script><script defer src="js/site.js"></script>
+
+</head>
+<body id="build" class="article"><div id="banner-container" class="container" role="banner">
+  <div id="banner" class="contained" role="banner">
+    <div id="switch-theme">
+      <input type="checkbox" id="switch-theme-checkbox" />
+      <label for="switch-theme-checkbox">Dark Theme</label>
+    </div>
+  </div>
+</div>
+<div id="tocbar-container" class="container" role="navigation">
+  <div id="tocbar" class="contained" role="navigation">
+    <button id="toggle-toc"></button>
+  </div>
+</div>
+<div id="main-container" class="container">
+  <div id="main" class="contained">
+    <div id="doc" class="doc">
+<div id="header">
+<h1>Development Setup</h1>
+<div class="details">
+<span id="revnumber">version 2.2.2-SNAPSHOT</span>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section covers building HAL Explorer from source, running the development server, and testing.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_prerequisites"><a class="anchor" href="#_prerequisites"></a>Prerequisites</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Required:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Node.js</strong>: Version 18.x or higher (<a href="https://nodejs.org">Download</a>)</p>
+</li>
+<li>
+<p><strong>Yarn</strong>: Package manager (<code>npm install -g yarn</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Optional (for Gradle build):</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Java</strong>: JDK 17 or higher</p>
+</li>
+<li>
+<p><strong>Gradle</strong>: Included via Gradle Wrapper</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_building_for_production"><a class="anchor" href="#_building_for_production"></a>Building for Production</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_using_node_jsyarn"><a class="anchor" href="#_using_node_jsyarn"></a>Using Node.js/Yarn</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This is the recommended build method for most users.</p>
+</div>
+<div class="paragraph">
+<p><strong>Steps:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash"># Install dependencies
+yarn install
+
+# Build for production
+yarn build</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The build artifacts will be stored in the <code>dist/</code> directory, optimized and minified for production deployment.</p>
+</div>
+<div class="paragraph">
+<p><strong>Build Output:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>dist/hal-explorer/</code> - Complete application ready for deployment</p>
+</li>
+<li>
+<p>Minified JavaScript and CSS</p>
+</li>
+<li>
+<p>Optimized assets and images</p>
+</li>
+<li>
+<p>Generated source maps (for debugging)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_using_gradle"><a class="anchor" href="#_using_gradle"></a>Using Gradle</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you prefer using Gradle or don&#8217;t have Node.js installed globally, use the Gradle wrapper.</p>
+</div>
+<div class="paragraph">
+<p><strong>Steps:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash"># Unix/Linux/macOS
+./gradlew build
+
+# Windows
+gradlew.bat build</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The Gradle build automatically:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Downloads and installs Node.js locally in the project directory</p>
+</li>
+<li>
+<p>Installs dependencies via Yarn</p>
+</li>
+<li>
+<p>Runs the production build</p>
+</li>
+<li>
+<p>Stores artifacts in the <code>dist/</code> directory</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This approach is useful for CI/CD pipelines and Java-centric development environments.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="dev-server"><a class="anchor" href="#dev-server"></a>Development Server</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_basic_development_server"><a class="anchor" href="#_basic_development_server"></a>Basic Development Server</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Start the development server with hot reload:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">yarn start</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Features:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>URL</strong>: <a href="http://localhost:4200/" class="bare">http://localhost:4200/</a></p>
+</li>
+<li>
+<p><strong>Hot Reload</strong>: Automatically reloads when source files change</p>
+</li>
+<li>
+<p><strong>Source Maps</strong>: Full debugging support</p>
+</li>
+<li>
+<p><strong>Proxy Configuration</strong>: Built-in proxy to avoid CORS issues</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Proxy Rules:</strong></p>
+</div>
+<div class="paragraph">
+<p>The development server automatically proxies certain paths:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>/api/<strong></code> → <code><a href="http://localhost:8080/api/" class="bare">http://localhost:8080/api/</a></strong></code> - Your backend API</p>
+</li>
+<li>
+<p><code>/docs/<strong></code> → <code><a href="http://localhost:8080/docs/" class="bare">http://localhost:8080/docs/</a></strong></code> - API documentation</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This allows you to develop against a local backend without CORS configuration.</p>
+</div>
+<div class="paragraph">
+<p><strong>Example Usage:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Start your backend API on port 8080</p>
+</li>
+<li>
+<p>Run <code>yarn start</code></p>
+</li>
+<li>
+<p>Navigate to <a href="http://localhost:4200/#uri=/api" class="bare">http://localhost:4200/#uri=/api</a></p>
+</li>
+<li>
+<p>HAL Explorer will fetch data from <code>localhost:8080/api</code> without CORS issues</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_development_server_with_test_data"><a class="anchor" href="#_development_server_with_test_data"></a>Development Server with Test Data</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For frontend-only development, start the server with built-in test data:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">yarn start:fs</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Features:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>All features of the basic development server</p>
+</li>
+<li>
+<p>Built-in file server on port 3000</p>
+</li>
+<li>
+<p>Example HAL and HAL-FORMS documents in <code>test-data/</code> directory</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Proxy Rules:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>/test-data/<strong></code> → <code><a href="http://localhost:3000/test-data/" class="bare">http://localhost:3000/test-data/</a></strong></code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Try It Out:</strong></p>
+</div>
+<div class="paragraph">
+<p>Navigate to <a href="http://localhost:4200/#uri=/test-data/movies.hal-forms.json" class="bare">http://localhost:4200/#uri=/test-data/movies.hal-forms.json</a> to explore example HAL-FORMS data.</p>
+</div>
+<div class="paragraph">
+<p><strong>Available Test Files:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>movies.hal-forms.json</code> - HAL-FORMS with templates</p>
+</li>
+<li>
+<p><code>options.hal-forms.json</code> - HAL-FORMS with options</p>
+</li>
+<li>
+<p>Various other example documents</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_testing"><a class="anchor" href="#_testing"></a>Testing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>HAL Explorer includes comprehensive unit and end-to-end tests.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_unit_tests"><a class="anchor" href="#_unit_tests"></a>Unit Tests</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Interactive Mode (Default):</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">yarn test</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Opens your default browser with the Karma test runner. Tests re-run automatically when files change.</p>
+</div>
+<div class="paragraph">
+<p><strong>Headless Mode (CI/CD):</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">yarn test:headless</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Runs tests once in headless Chrome and exits. Perfect for continuous integration pipelines.</p>
+</div>
+<div class="paragraph">
+<p><strong>Additional Test Commands:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash"># Run tests with code coverage
+yarn test:coverage
+
+# Run specific test file
+yarn test --include='**/app.component.spec.ts'</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_end_to_end_tests"><a class="anchor" href="#_end_to_end_tests"></a>End-to-End Tests</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">yarn e2e</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Runs the full E2E test suite using Playwright across multiple browsers (Chromium, Firefox, WebKit).</p>
+</div>
+<div class="paragraph">
+<p><strong>Requirements:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Playwright browsers installed (<code>npx playwright install</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Additional E2E Commands:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash"># Run in headed mode (see the browser)
+yarn e2e:headed
+
+# Run only in Chromium
+yarn e2e --project=chromium
+
+# Debug mode with Playwright Inspector
+yarn e2e:debug</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See <code>package.json</code> for all available test options.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_building_documentation"><a class="anchor" href="#_building_documentation"></a>Building Documentation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Generate the complete reference documentation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash"># Unix/Linux/macOS
+./gradlew doc
+
+# Windows
+gradlew.bat doc</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Troubleshooting (Windows):</strong></p>
+</div>
+<div class="paragraph">
+<p>If you encounter file encoding errors on Windows, use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">gradlew doc -Dfile.encoding=UTF-8</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Output:</strong></p>
+</div>
+<div class="paragraph">
+<p>Documentation is generated in <code>build/asciidoc/html5/</code> and includes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Complete reference documentation</p>
+</li>
+<li>
+<p>All included images and examples</p>
+</li>
+<li>
+<p>Ready for deployment or local browsing</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 2.2.2-SNAPSHOT<br>
+Last updated 2026-01-16 09:06:31 UTC
+</div>
+</div>
+</div>
+  </div>
+</div>
+</body>
+</html>
