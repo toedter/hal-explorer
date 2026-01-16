@@ -7,169 +7,99 @@ image:https://img.shields.io/badge/license-MIT-blue.svg["MIT", link="http://toed
 
 = HAL Explorer
 
-HAL Explorer allows you to browse and explore http://stateless.co/hal_specification.html[HAL]
-and https://rwcbook.github.io/hal-forms/[HAL-FORMS] based RESTful Hypermedia APIs.
-HAL Explorer was inspired by Mike Kelly's https://github.com/mikekelly/hal-browser[HAL-Browser]
-and also supports Spring Profiles.
+HAL Explorer helps you explore http://stateless.co/hal_specification.html[HAL]- and https://rwcbook.github.io/hal-forms/[HAL-FORMS]-based RESTful Hypermedia APIs.
 
-== Documentation, Demos & Cloud Deployment
+== Reference Docs and Demos
 
-Here you will find documentation for the latest release and the current snapshot,
-as well as demos (with examples) for both the latest release and the current snapshot:
 |===
 | Release | 2.2.1 | https://toedter.github.io/hal-explorer/release/reference-doc/[Reference Documentation] | https://toedter.github.io/hal-explorer/release/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
 | Snapshot | 2.2.2-SNAPSHOT | https://toedter.github.io/hal-explorer/snapshot/reference-doc/[Reference Documentation] | https://toedter.github.io/hal-explorer/snapshot/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
 |===
 
-You can also find the current release at https://hal-explorer.com.
+You can also try HAL Explorer online at https://hal-explorer.com.
 
-== TL;DR
+== Screenshots
 
-HAL Explorer (Dark Mode with Cosmo Theme):
+Dark Mode with Default Theme:
 
 image::./doc/img/hal-explorer-dark.png[HAL Explorer Dark Mode]
 
-HAL Explorer (Light Mode with Cosmo Theme):
+Light Mode with Default Theme:
 
 image::./doc/img/hal-explorer-light.png[HAL Explorer Light Mode]
 
 == Features
 
-* Color Modes
-** Dark
-** Light
-** Auto (automatically detects system preference)
-* Available Themes
-** Bootstrap 5 default theme
-** All 26 https://bootswatch.com/[Bootswatch themes]
-* Column Layouts
-** _2 column layout_ with optional documentation
-** _3 column layout_ with documentation always visible when available
-* Full HTTP Method Support
-** GET, POST, PUT, PATCH, DELETE operations
-** HTTP OPTIONS method to discover available request options for links
-** Support for both simple and templated URIs
-* Request Features
-** API URL and custom request headers stored as URL fragment
-** Custom request headers editor
-** URI template parameter editor with validation
-** Keyboard shortcuts (Enter to submit, ESC to close dialogs)
-* Settings
-** All settings stored in local storage with `hal-explorer.` namespace
-** Configurable HTTP OPTIONS usage for link discovery
-** Enable all HTTP methods for HAL-FORMS links
-** Scrollable documentation mode for large documentation content
-* Spring Data REST Integration
-** Support for Spring Data REST profiles to populate properties in the request editor
-** Automatic content type detection
-* HAL-FORMS Support
-** Template elements displayed in response explorer (see screenshot)
-** Template properties in request editor
-** Options support with inline and linked values
-** Multiple selection support for array properties
-** Property constraint validation in request editor
-* Error Handling
-** Display of HAL-FORMS documents even in error responses
-** Links and affordances remain accessible in error scenarios
-* Response Explorer
-** Syntax-highlighted JSON display
-** Expandable/collapsible sections for properties, links, embedded resources
-** Response status, headers, and body information
-** Documentation integration (when available)
+* Dark/Light/Auto color modes with 26+ Bootstrap themes
+* Full HTTP method support (GET, POST, PUT, PATCH, DELETE, OPTIONS)
+* HAL-FORMS support with property validation
+* Spring Data REST integration with profile detection
+* URI template parameter editor
+* Custom request headers
+* CURIE-based documentation
+* Syntax-highlighted JSON responses
 
+See the https://toedter.github.io/hal-explorer/release/reference-doc/#features[complete feature list] in the documentation.
 
-== Development Server
+== Backend Integration
 
-Run `yarn start` for a dev server. Navigate to http://localhost:4200/.
-The app will automatically reload if you change any of the source files.
-The development server has a built-in proxy configuration
-so that all calls to `/api` are forwarded to `localhost:8080/api`
-and `/docs` are forwarded to `localhost:8080/docs`.
-This is convenient when you want to test a local server without having to deal with CORS.
-
-If you run `yarn start:fs`, an additional file server is started at port 3000.
-In the test-data directory, you will find some JSON examples.
-Calls to `/test-data` are forwarded to `localhost:3000/test-data`.
-
-Try it out with the URL
-http://localhost:4200/#uri=/test-data/movies.hal-forms.json.
-
-== Build
-
-Run `yarn build` to build the project in production mode.
-The build artifacts will be stored in the `dist/` directory.
-
-== Gradle/Java Build Support
-
-If you have Java installed, you can also build the project with Gradle.
-The Gradle build will install Node.js locally in the project directory.
-Run `./gradlew build` to build the project in production mode.
-The build artifacts will be stored in the `dist/` directory.
-
-== Integration in Your Backends
-
-If you want to use a released version of HAL Explorer in a Java-based project,
-you can define a dependency to the HAL Explorer WebJar.
+**WebJar (Java/Spring Boot):**
 
 Maven:
 [source,xml]
+----
 <dependency>
     <groupId>org.webjars</groupId>
     <artifactId>hal-explorer</artifactId>
     <version>2.2.1</version>
 </dependency>
+----
 
-Gradle:
+Gradle (Groovy):
 [source,groovy]
+----
 runtimeOnly 'org.webjars:hal-explorer:2.2.1'
+----
 
-When you use the WebJar with Spring Boot, you can access HAL Explorer at `/webjars/hal-explorer/2.2.1/index.html`.
-The easiest way to integrate the upstream version of HAL Explorer into your backend is to clone this Git repository,
-do a production build, and then copy the content of the `dist/` folder to a location accessible by your backend.
-When you use Spring Boot, a good location in your project's source tree would be
-`src/main/resources/static/hal-explorer`.
+Gradle (Kotlin):
+[source,kotlin]
+----
+runtimeOnly("org.webjars:hal-explorer:2.2.1")
+----
 
-== Running Tests
+Access at: `/webjars/hal-explorer/2.2.1/index.html`
 
-* `yarn test` runs the unit test suite against your default browser.
-* `yarn test:headless` runs the unit test suite against headless Chrome.
-* `yarn e2e` runs the e2e test suite against default browsers (using Playwright).
-
-Take a look at `package.json` for more test options.
+For Spring Data REST integration, see the https://toedter.github.io/hal-explorer/release/reference-doc/#setup[Setup Guide].
 
 == Development
 
-=== Git Hooks
-
-This project uses https://typicode.github.io/husky/[Husky] to manage Git hooks:
-
-* **Pre-commit hook**: Automatically formats staged files using Prettier via lint-staged
-* **Commit-msg hook**: Validates commit messages against conventional commit standards
-
-=== Commit Message Convention
-
-Commit messages must follow the https://www.conventionalcommits.org/[Conventional Commits] specification.
-The format is: `type(scope): subject`
-
-Valid types are: `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refactor`, `revert`, `style`, `test`
-
-Examples:
-[source]
+**Dev Server:**
+[source,bash]
 ----
-feat: add dark mode support
-fix: resolve navigation bug in sidebar
-docs: update installation instructions
+yarn start
+----
+Navigate to http://localhost:4200/. The dev server proxies `/api` and `/docs` to `localhost:8080` (no CORS needed).
+
+**Build:**
+[source,bash]
+----
+yarn build
+----
+Build artifacts are in `dist/` directory.
+
+**Tests:**
+[source,bash]
+----
+yarn test           # unit tests
+yarn test:headless  # headless unit tests
+yarn e2e            # e2e tests (Playwright)
 ----
 
-The commit message will be automatically validated when you commit.
+**Code Quality:**
 
-=== Code Formatting
-
-This project uses https://prettier.io/[Prettier] for code formatting.
-Files are automatically formatted on commit, but you can also run formatting manually:
-
-* `yarn format` - Format all source files
-* `yarn format:check` - Check if files are formatted correctly
+* https://prettier.io/[Prettier] formatting (auto-format on commit)
+* https://www.conventionalcommits.org/[Conventional Commits] enforced
+* Managed by https://typicode.github.io/husky/[Husky] Git hooks
 
 [[license]]
 == License
