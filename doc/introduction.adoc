@@ -3,61 +3,194 @@
 [[introduction]]
 = Introduction
 
+[[what-is-hal-explorer]]
+== What is HAL Explorer?
+
+HAL Explorer is a web-based tool for browsing and exploring RESTful Hypermedia APIs that use the HAL (Hypertext Application Language) and HAL-FORMS specifications. It provides an intuitive interface for developers and API consumers to navigate hypermedia-driven APIs, discover available resources, and interact with them using various HTTP methods.
+
+[[why-hal-explorer]]
+== Why Use HAL Explorer?
+
+Traditional API exploration tools focus on endpoint documentation and testing. HAL Explorer takes a different approach by embracing the hypermedia-driven nature of REST APIs:
+
+* *Self-Discovery*: Navigate APIs by following links, just as intended by REST and HATEOAS principles
+* *Visual Exploration*: See the structure of your API responses with syntax highlighting and collapsible sections
+* *Built-in Documentation*: View inline documentation through CURIE links without leaving the interface
+* *Developer-Friendly*: Test POST, PUT, PATCH, and DELETE operations with guided form inputs
+* *Framework Support*: First-class support for Spring Data REST profiles and HAL-FORMS affordances
+
 [[fundamentals]]
 == Fundamentals
 
-HAL Explorer allows you to browse and explore HAL
-and HAL-FORMS-based RESTful Hypermedia APIs.
-HAL Explorer was inspired by Mike Kelly's https://github.com/mikekelly/hal-browser[HAL-Browser]
-and also supports Spring Profiles.
-For a complete understanding of this documentation, please familiarize yourself with:
+HAL Explorer was inspired by Mike Kelly's https://github.com/mikekelly/hal-browser[HAL-Browser] and extends it with modern features including dark mode, multiple themes, HAL-FORMS support, and Spring Data REST integration.
 
-* the http://stateless.co/hal_specification.html[HAL] Specification
-* the https://rwcbook.github.io/hal-forms/[HAL-FORMS] Specification
+=== Prerequisites
+
+To get the most out of HAL Explorer and this documentation, you should be familiar with:
+
+* *REST API Concepts*: Basic understanding of HTTP methods, status codes, and RESTful design
+* *HAL Specification*: The http://stateless.co/hal_specification.html[HAL] standard for representing resources with links and embedded resources
+* *HAL-FORMS Specification*: The https://rwcbook.github.io/hal-forms/[HAL-FORMS] extension for describing affordances and form templates
+* *JSON Format*: Basic knowledge of JSON syntax and structure
+
+=== Supported Media Types
+
+HAL Explorer can consume and display the following media types:
+
+* `application/hal+json` - Standard HAL format
+* `application/prs.hal-forms+json` - HAL-FORMS format with affordances
+* `application/json` - Plain JSON (limited functionality)
 
 
 [[features]]
-== Features
+== Features Overview
 
-* Color Modes
-** Dark
-** Light
-** Auto (automatically detects system preference)
-* Available Themes
+HAL Explorer provides a comprehensive set of features for exploring and interacting with HAL and HAL-FORMS APIs.
+
+=== User Interface
+
+==== Theming and Appearance
+
+* *Color Modes*
+** *Dark Mode* - Optimized for low-light environments
+** *Light Mode* - Traditional bright interface
+** *Auto Mode* - Automatically detects and adapts to system preference (default)
+
+* *Customizable Themes*
 ** Bootstrap 5 default theme
-** https://bootswatch.com/[Bootswatch themes] (25+ themes available; Cosmo is the default)
-* Column Layouts
-** _2 column layout_ with optional documentation
-** _3 column layout_ with documentation always visible when available
-* Full HTTP Method Support
-** GET, POST, PUT, PATCH, DELETE operations
-** HTTP OPTIONS method to discover available request options for links
-** Support for both simple and templated URIs
-* Request Features
-** API URL and custom request headers stored as URL fragment for easy sharing
-** Custom request headers editor
-** URI template parameter editor with validation
-** Keyboard shortcuts (Enter to submit, ESC to close dialogs)
-* Settings
-** All settings stored in the browser's local storage with `hal-explorer.` namespace
-** Configurable HTTP OPTIONS usage for link discovery
-** Option to enable all HTTP methods for HAL-FORMS links
-** Scrollable documentation mode for large documentation content
-* Spring Data REST Integration
-** Support for Spring Data REST profiles to populate properties in request editor
-** Automatic content type detection
-* HAL-FORMS Support
-** Template elements displayed in response explorer (see screenshot)
-** Template properties in request editor
-** Options support with inline and linked values
-** Multiple selection support for array properties
-** Property constraint validation in request editor
-* Error Handling
-** Graceful handling of error responses (401, 404, etc.)
-** Display of HAL-FORMS documents even in error responses
-** Links and affordances remain accessible in error scenarios
-* Response Explorer
-** Syntax-highlighted JSON display
-** Expandable/collapsible sections for properties, links, embedded resources
-** Response status, headers, and body information
-** Documentation integration (when available)
+** 26+ professionally designed https://bootswatch.com/[Bootswatch themes]
+** Cosmo theme is the default (clean, modern flat design)
+** All themes adapt to your selected color mode
+
+==== Layout Options
+
+* *2 Column Layout* (Default)
+** Resource explorer on the left
+** Response details on the right
+** Documentation panel toggles on demand
+** Ideal for smaller screens or focused work
+
+* *3 Column Layout*
+** Resource explorer on the left
+** Response details in the middle
+** Documentation always visible on the right
+** Best for larger screens and documentation-heavy APIs
+
+=== API Interaction
+
+==== HTTP Method Support
+
+* *Full REST Method Support*
+** GET - Retrieve resources
+** POST - Create new resources
+** PUT - Replace existing resources
+** PATCH - Partially update resources
+** DELETE - Remove resources
+** OPTIONS - Discover available operations (optional, configurable)
+
+* *URI Handling*
+** Simple URIs - Direct resource access
+** Templated URIs - Interactive parameter editor with validation
+** Automatic template parameter detection
+
+==== Request Customization
+
+* *Custom Headers*
+** Add authorization tokens (Bearer, Basic Auth, etc.)
+** Set custom Accept headers for HAL or HAL-FORMS
+** Configure any HTTP header needed by your API
+** Headers stored in URL fragment for sharing
+
+* *Request Editor*
+** Form-based input for HAL-FORMS and Spring profiles
+** Real-time validation with error messages
+** Query parameter support for templated URIs
+
+* *Keyboard Shortcuts*
+** `Enter` - Submit requests
+** `ESC` - Close dialogs
+** Streamlined workflow for rapid exploration
+
+=== Advanced Features
+
+==== Spring Data REST Integration
+
+HAL Explorer provides first-class support for Spring Data REST APIs:
+
+* Automatic detection of Spring Data REST profiles
+* JSON Schema-based property discovery
+* Auto-populated form fields based on entity definitions
+* Content-type negotiation and detection
+
+==== HAL-FORMS Support
+
+Full implementation of the HAL-FORMS specification:
+
+* Template elements displayed inline with links
+* Property definitions with type information
+* Options support (inline values and external links)
+* Multiple selection for array properties
+* Comprehensive validation (required fields, regex patterns, min/max values)
+* Prompt text and placeholder support
+
+==== Documentation Integration
+
+* *CURIE-based Documentation*
+** Click book icons to view inline documentation
+** Documentation appears in dedicated panel
+** No need to leave the interface or consult external docs
+
+* *Scrollable Documentation Mode*
+** Keep documentation visible without excessive page scrolling
+** Fixed-height iframe for large documentation sets
+** Configurable through settings
+
+==== Error Handling
+
+* Graceful handling of HTTP error responses (4xx, 5xx)
+* HAL-FORMS documents displayed even in error scenarios
+* Links and affordances remain accessible for recovery
+* Clear display of error status codes and messages
+
+=== Data Management
+
+==== Browser Storage
+
+All settings and preferences persist across sessions:
+
+* Color mode preference
+* Selected theme
+* Column layout choice
+* HTTP OPTIONS setting
+* HAL-FORMS method enablement
+* Documentation scrolling mode
+
+Storage uses the `hal-explorer.` namespace to avoid conflicts.
+
+==== Bookmarking and Sharing
+
+Configuration embedded in URLs for easy sharing:
+
+* Current API URI
+* Custom request headers
+* Share exact API state with colleagues
+* Bookmark frequently accessed endpoints
+
+=== Response Exploration
+
+* *Syntax-Highlighted Display*
+** Color-coded JSON for easy reading
+** Expandable/collapsible sections
+** Navigate complex nested structures
+
+* *Organized Sections*
+** Properties - Top-level resource attributes
+** Links - Available hypermedia links with affordances
+** Embedded Resources - Nested resources with full link support
+** Templates - HAL-FORMS affordances (when available)
+
+* *Response Metadata*
+** HTTP status code and status text
+** All response headers
+** Full response body
+** Response timing information

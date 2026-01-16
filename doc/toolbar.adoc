@@ -1,7 +1,7 @@
-[[menu]]
-= Menu
+[[toolbar]]
+= Toolbar
 
-In the top-level menu, you can choose the color mode, theme, and settings, and view the About dialog.
+In the top-level toolbar, you can choose the color mode, theme, and settings, and view the About dialog.
 
 [[color-mode]]
 == Color Mode
@@ -59,7 +59,7 @@ The selected theme is stored in your browser's local storage with the `hal-explo
 [[settings]]
 == Settings
 
-The _Settings_ submenu allows you to customize HAL Explorer's behavior and user interface. All settings are automatically saved to your browser's local storage with the `hal-explorer.` prefix and persist across sessions.
+The _Settings_ menu helps you to customize HAL Explorer's behavior and user interface. All settings are automatically saved to your browser's local storage with the `hal-explorer.` prefix and persist across sessions.
 
 === Layout
 
@@ -96,20 +96,6 @@ Typically, HAL-FORMS `_templates` explicitly specify affordances with their corr
 *Default:* Disabled
 
 *Note:* Use this setting with caution, as it may allow operations that the API doesn't actually support.
-
-=== Scrollable Documentation
-
-When enabled, documentation is rendered in a scrollable iframe with a fixed maximum height instead of expanding the main page height.
-
-*Benefits:*
-
-* Keeps the main interface visible and prevents excessive scrolling
-* Ideal for APIs with extensive documentation
-* Provides better control over the viewing area
-
-*When disabled:* Documentation expands naturally to fit its content, which may extend the page height significantly.
-
-*Default:* Enabled
 
 [[about]]
 == About

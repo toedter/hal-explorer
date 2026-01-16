@@ -10,7 +10,7 @@ Kai Tödter
 :toclevels: 5
 :fold: all
 
-HAL Explorer allows you to explore HAL and HAL-FORMS based RESTful Hypermedia APIs.
+HAL Explorer helps you explore HAL- and HAL-FORMS-based RESTful Hypermedia APIs.
 
 (C) 2026 The original authors.
 
@@ -27,6 +27,8 @@ whether distributed in print or electronically.
 include::introduction.adoc[leveloffset=+1]
 include::setup.adoc[leveloffset=+1]
 include::usage.adoc[leveloffset=+1]
-include::menu.adoc[leveloffset=+1]
+include::development.adoc[leveloffset=+1]
+include::faq.adoc[leveloffset=+1]
+include::troubleshooting.adoc[leveloffset=+1]
 include::license.adoc[leveloffset=+1]
 

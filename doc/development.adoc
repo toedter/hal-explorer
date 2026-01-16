@@ -1,0 +1,224 @@
+[[build]]
+= Development Setup
+
+This section covers building HAL Explorer from source, running the development server, and testing.
+
+== Prerequisites
+
+*Required:*
+
+* *Node.js*: Version 18.x or higher (https://nodejs.org[Download])
+* *Yarn*: Package manager (`npm install -g yarn`)
+
+*Optional (for Gradle build):*
+
+* *Java*: JDK 17 or higher
+* *Gradle*: Included via Gradle Wrapper
+
+== Building for Production
+
+== Using Node.js/Yarn
+
+This is the recommended build method for most users.
+
+*Steps:*
+
+[source,bash]
+----
+# Install dependencies
+yarn install
+
+# Build for production
+yarn build
+----
+
+The build artifacts will be stored in the `dist/` directory, optimized and minified for production deployment.
+
+*Build Output:*
+
+* `dist/hal-explorer/` - Complete application ready for deployment
+* Minified JavaScript and CSS
+* Optimized assets and images
+* Generated source maps (for debugging)
+
+== Using Gradle
+
+If you prefer using Gradle or don't have Node.js installed globally, use the Gradle wrapper.
+
+*Steps:*
+
+[source,bash]
+----
+# Unix/Linux/macOS
+./gradlew build
+
+# Windows
+gradlew.bat build
+----
+
+The Gradle build automatically:
+
+* Downloads and installs Node.js locally in the project directory
+* Installs dependencies via Yarn
+* Runs the production build
+* Stores artifacts in the `dist/` directory
+
+This approach is useful for CI/CD pipelines and Java-centric development environments.
+
+[[dev-server]]
+== Development Server
+
+== Basic Development Server
+
+Start the development server with hot reload:
+
+[source,bash]
+----
+yarn start
+----
+
+*Features:*
+
+* *URL*: http://localhost:4200/
+* *Hot Reload*: Automatically reloads when source files change
+* *Source Maps*: Full debugging support
+* *Proxy Configuration*: Built-in proxy to avoid CORS issues
+
+*Proxy Rules:*
+
+The development server automatically proxies certain paths:
+
+* `/api/*` → `http://localhost:8080/api/*` - Your backend API
+* `/docs/*` → `http://localhost:8080/docs/*` - API documentation
+
+This allows you to develop against a local backend without CORS configuration.
+
+*Example Usage:*
+
+1. Start your backend API on port 8080
+2. Run `yarn start`
+3. Navigate to http://localhost:4200/#uri=/api
+4. HAL Explorer will fetch data from `localhost:8080/api` without CORS issues
+
+== Development Server with Test Data
+
+For frontend-only development, start the server with built-in test data:
+
+[source,bash]
+----
+yarn start:fs
+----
+
+*Features:*
+
+* All features of the basic development server
+* Built-in file server on port 3000
+* Example HAL and HAL-FORMS documents in `test-data/` directory
+
+*Proxy Rules:*
+
+* `/test-data/*` → `http://localhost:3000/test-data/*`
+
+*Try It Out:*
+
+Navigate to http://localhost:4200/#uri=/test-data/movies.hal-forms.json to explore example HAL-FORMS data.
+
+*Available Test Files:*
+
+* `movies.hal-forms.json` - HAL-FORMS with templates
+* `options.hal-forms.json` - HAL-FORMS with options
+* Various other example documents
+
+== Testing
+
+HAL Explorer includes comprehensive unit and end-to-end tests.
+
+== Unit Tests
+
+*Interactive Mode (Default):*
+
+[source,bash]
+----
+yarn test
+----
+
+Opens your default browser with the Karma test runner. Tests re-run automatically when files change.
+
+*Headless Mode (CI/CD):*
+
+[source,bash]
+----
+yarn test:headless
+----
+
+Runs tests once in headless Chrome and exits. Perfect for continuous integration pipelines.
+
+*Additional Test Commands:*
+
+[source,bash]
+----
+# Run tests with code coverage
+yarn test:coverage
+
+# Run specific test file
+yarn test --include='**/app.component.spec.ts'
+----
+
+== End-to-End Tests
+
+[source,bash]
+----
+yarn e2e
+----
+
+Runs the full E2E test suite using Playwright across multiple browsers (Chromium, Firefox, WebKit).
+
+*Requirements:*
+
+* Playwright browsers installed (`npx playwright install`)
+
+*Additional E2E Commands:*
+
+[source,bash]
+----
+# Run in headed mode (see the browser)
+yarn e2e:headed
+
+# Run only in Chromium
+yarn e2e --project=chromium
+
+# Debug mode with Playwright Inspector
+yarn e2e:debug
+----
+
+See `package.json` for all available test options.
+
+== Building Documentation
+
+Generate the complete reference documentation:
+
+[source,bash]
+----
+# Unix/Linux/macOS
+./gradlew doc
+
+# Windows
+gradlew.bat doc
+----
+
+*Troubleshooting (Windows):*
+
+If you encounter file encoding errors on Windows, use:
+
+[source,bash]
+----
+gradlew doc -Dfile.encoding=UTF-8
+----
+
+*Output:*
+
+Documentation is generated in `build/asciidoc/html5/` and includes:
+
+* Complete reference documentation
+* All included images and examples
+* Ready for deployment or local browsing

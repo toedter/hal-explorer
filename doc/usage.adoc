@@ -1,49 +1,282 @@
 [[usage]]
 = Using HAL Explorer
 
-== JSON Properties
+This chapter guides you through common workflows and features in HAL Explorer.
 
-When you start HAL Explorer, you will see an input field in the top-left area where you can enter the URI of a REST service that returns HAL or HAL-FORMS documents. Once you click `Go!` or press Enter, the response is displayed. A typical response looks like:
+== Getting Started
 
+=== Your First Request
+
+When you open HAL Explorer, you'll see a simple interface with a URI input field at the top:
+
+1. *Enter a URI*: Type or paste the URL of your HAL or HAL-FORMS API endpoint
+2. *Click Go!* or press `Enter`: HAL Explorer will fetch and display the response
+3. *Explore the Response*: Navigate through properties, links, and embedded resources
 
 image::img/hal-explorer-light.png[]
 
-== Links
+TIP: Try the built-in examples first: https://toedter.github.io/hal-explorer/release/hal-explorer/#uri=examples/examples.hal-forms.json[Demo with Example Data]
 
-Just below the URI, you will find the top-level JSON properties. If the response contains links, they are displayed below.
-Since HAL does not provide affordances indicating which HTTP method you should use to follow a link, you will find colored buttons for each HTTP method:
+include::toolbar.adoc[leveloffset=+1]
 
-* `<` : HTTP GET
-* `+` : HTTP POST
-* `>>` : HTTP PUT
-* `>` : HTTP PATCH
-* `x` : HTTP DELETE
+=== Understanding the Interface
 
-If a link relation provides <<Curie-based Documentation>>,
-you can click on the book icon to display it.
+The HAL Explorer interface is divided into main sections:
 
-If a link relation provides a name or a title, they are displayed in the links table.
+* *Top Bar*
+** URI input field and Go! button
+** Edit Headers button for custom HTTP headers
+** Color mode, theme, and settings menu
 
-You can click on a link button to follow the link. If a link is templated, a modal dialog will appear where you can fill in the template parameters, like:
+* *Left Panel* (Main Content)
+** Top-level JSON properties
+** Links section with HTTP method buttons
+** Embedded resources (expandable)
+** Templates section (for HAL-FORMS)
+
+* *Right Panel*
+** Response status and headers
+** Syntax-highlighted response body
+** Documentation panel (in 3-column mode or when toggled)
+
+== Working with Properties
+
+When a response is displayed, top-level JSON properties appear at the top of the left panel.
+
+*Example Response:*
+
+[source,json]
+----
+{
+  "id": 1,
+  "title": "The Matrix",
+  "year": 1999,
+  "director": "Wachowski Sisters"
+}
+----
+
+These properties are displayed in a clean, readable format with syntax highlighting.
+
+== Navigating Links
+
+Links are the heart of hypermedia APIs. HAL Explorer makes it easy to discover and follow links in your API.
+
+=== Link Display
+
+Links appear in a dedicated section below the properties. Each link relation shows:
+
+* *Relation name* - The link relation type (e.g., `self`, `items`, `next`)
+* *Name/Title* - Optional descriptive text (if provided by the API)
+* *HTTP method buttons* - Actions you can perform on the link
+* *Documentation icon* - Book icon (if CURIE documentation is available)
+
+=== HTTP Method Buttons
+
+Since HAL doesn't specify which HTTP methods are valid for each link, HAL Explorer provides buttons for all standard methods:
+
+[cols="1,2,3"]
+|===
+| Button | HTTP Method | Typical Use
+
+| `<`
+| GET
+| Retrieve a resource
+
+| `+`
+| POST
+| Create a new resource or perform an action
+
+| `>>`
+| PUT
+| Replace an existing resource completely
+
+| `>`
+| PATCH
+| Partially update an existing resource
+
+| `x`
+| DELETE
+| Remove a resource
+|===
+
+TIP: Enable the "Use HTTP OPTIONS" setting (see <<toolbar.adoc#settings,Settings>>) to automatically discover which methods are actually supported for each link.
+
+=== Following Simple Links
+
+To follow a link:
+
+1. Click the appropriate HTTP method button (usually `<` for GET)
+2. HAL Explorer fetches the linked resource
+3. The new response appears in the interface
+
+*Example Workflow:*
+
+. Start at API root: `GET http://api.example.com/`
+. See a link to `"customers"` collection
+. Click `<` (GET) button on the `customers` link
+. View the list of customers
+. Click `<` (GET) on a specific customer link
+. View individual customer details
+
+=== Working with Templated Links
+
+Some links include URI templates with parameters. When you click a method button for a templated link, HAL Explorer opens a dialog to collect parameter values.
 
 image::img/templated-request.png[width=70%]
 
-When you click on `Go!`, an HTTP call to the `Expanded URI` will be made.
+*Templated Link Example:*
 
-== Embedded Resources
+[source,json]
+----
+{
+  "_links": {
+    "search": {
+      "href": "/customers{?name,city}",
+      "templated": true
+    }
+  }
+}
+----
 
-If the response contains embedded resources, you will find them in the "Embedded Resources" section.
-You can click on an embedded resource to expand it, like:
+*Using the Template Dialog:*
+
+1. Click the HTTP method button for the templated link
+2. Enter values for each template parameter:
+** `name`: "Smith"
+** `city`: "Portland"
+3. Review the expanded URI: `/customers?name=Smith&city=Portland`
+4. Click `Go!` to execute the request
+
+*Features:*
+
+* *Validation*: Required parameters are marked
+* *Preview*: See the expanded URI before sending
+* *Keyboard Shortcut*: Press `Enter` to submit, `ESC` to cancel
+
+=== Link Names and Titles
+
+APIs can provide additional context for links through `name` or `title` attributes:
+
+[source,json]
+----
+{
+  "_links": {
+    "author": [
+      {"href": "/users/1", "title": "John Smith"},
+      {"href": "/users/2", "title": "Jane Doe"}
+    ]
+  }
+}
+----
+
+HAL Explorer displays these in the links table, making it easy to choose the right link when multiple links share the same relation.
+
+== Exploring Embedded Resources
+
+HAL allows resources to embed related resources directly in the response, reducing the need for additional HTTP requests.
+
+=== What Are Embedded Resources?
+
+Embedded resources appear in the `_embedded` section of a HAL response:
+
+[source,json]
+----
+{
+  "total": 2,
+  "_embedded": {
+    "customers": [
+      {
+        "id": 1,
+        "name": "John Smith",
+        "_links": {
+          "self": {"href": "/customers/1"}
+        }
+      },
+      {
+        "id": 2,
+        "name": "Jane Doe",
+        "_links": {
+          "self": {"href": "/customers/2"}
+        }
+      }
+    ]
+  }
+}
+----
+
+=== Viewing Embedded Resources
+
+HAL Explorer displays embedded resources in an expandable section:
+
+1. Look for the "Embedded Resources" section
+2. Click on an embedded resource relation to expand it
+3. View the full resource details, including its own links and properties
 
 image::img/expanded-embedded-resource.png[width=70%]
 
-== Response Details
+=== Navigating Embedded Resources
 
-On the right-hand side of the page, you will find details about the response:
+Each embedded resource is fully interactive:
 
-* Response Status code and text
-* All Response Headers
-* Response body with syntax-highlighted JSON
+* *Follow links* - Click HTTP method buttons on embedded resource links
+* *Expand nested embeds* - If an embedded resource contains its own embedded resources
+* *View properties* - See all attributes of the embedded resource
+
+*Example Workflow:*
+
+. Fetch customer list: `GET /customers`
+. Expand embedded `customers` collection
+. View individual customer details inline
+. Click `<` (GET) on a customer's `self` link to view full details
+. Follow `orders` link from customer to see their orders
+
+This reduces navigation time while maintaining full API exploration capabilities.
+
+== Inspecting Response Details
+
+The right panel provides comprehensive information about each API response.
+
+=== Response Status
+
+At the top of the right panel, you'll see:
+
+* *HTTP Status Code* - e.g., 200, 201, 404, 500
+* *Status Text* - e.g., "OK", "Created", "Not Found", "Internal Server Error"
+* *Status Color* - Green for success (2xx), yellow for redirects (3xx), red for errors (4xx, 5xx)
+
+=== Response Headers
+
+All HTTP response headers are displayed in a collapsible section:
+
+*Common Headers:*
+
+* `Content-Type` - Media type of the response (e.g., `application/hal+json`)
+* `Content-Length` - Size of the response body
+* `Cache-Control` - Caching directives
+* `ETag` - Version identifier for the resource
+* `Last-Modified` - When the resource was last changed
+
+These headers are useful for:
+
+* Debugging caching issues
+* Understanding content negotiation
+* Implementing optimistic concurrency control
+* Analyzing API behavior
+
+=== Response Body
+
+The complete JSON response appears with:
+
+* *Syntax Highlighting* - Different colors for keys, values, strings, numbers
+* *Collapsible Sections* - Expand/collapse nested objects and arrays
+* *Raw JSON* - Exact server response, formatted for readability
+
+*Uses:*
+
+* Compare left panel (structured view) with right panel (raw JSON)
+* Copy/paste JSON for testing or documentation
+* Inspect complex nested structures
+* Debug unexpected API responses
 
 == Curie-based Documentation
 
@@ -82,16 +315,90 @@ image::img/hal-forms-post-dialog.png[width=70%]
 When HAL-FORMS is used, the fields are also validated, and validation errors are displayed below the input area.
 Only for valid forms is the body displayed, and the HTTP request can be made.
 
-== Adding Request Headers
+== Customizing Request Headers
 
-When you want to add certain request headers to all calls, click on `Edit Headers` in the top-left corner.
-Then, a modal dialog will appear where you can add headers. This is useful when you want to add items like
-bearer tokens for authorization, like:
+Custom HTTP headers allow you to authenticate with your API, control content negotiation, and configure other request behaviors.
+
+=== Opening the Headers Editor
+
+Click the *Edit Headers* button in the top-left corner to open the request headers dialog.
 
 image::img/request-headers.png[width=70%]
 
-The modal dialog also provides buttons to clear all request headers or to add/modify an `Accept`
-request header for `HAL` or `HAL-FORMS` documents.
+=== Adding Custom Headers
+
+*Step-by-Step:*
+
+1. Click *Edit Headers*
+2. Enter header name (e.g., `Authorization`)
+3. Enter header value (e.g., `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...`)
+4. Click *Add* or press `Enter`
+5. Click *Done* to close the dialog
+
+All subsequent requests will include these headers.
+
+=== Common Use Cases
+
+==== Authentication
+
+*Bearer Token (JWT):*
+
+[source]
+----
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+----
+
+*Basic Authentication:*
+
+[source]
+----
+Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+----
+
+*API Key:*
+
+[source]
+----
+X-API-Key: your-api-key-here
+----
+
+==== Content Negotiation
+
+*Request HAL format:*
+
+[source]
+----
+Accept: application/hal+json
+----
+
+*Request HAL-FORMS format:*
+
+[source]
+----
+Accept: application/prs.hal-forms+json
+----
+
+The headers dialog includes quick buttons to set these `Accept` headers.
+
+==== Custom Headers
+
+Add any custom headers required by your API:
+
+[source]
+----
+X-Tenant-ID: tenant-123
+X-Request-ID: abc-def-ghi
+X-Correlation-ID: correlation-xyz
+----
+
+=== Managing Headers
+
+* *View All Headers* - All configured headers are listed in the dialog
+* *Remove Headers* - Click the delete icon next to any header
+* *Clear All* - Use the "Clear All" button to remove all custom headers
+* *Persistence* - Headers are stored in the URL fragment for bookmarking
+
+WARNING: Be careful sharing URLs that contain sensitive headers like authorization tokens. The headers are visible in the URL fragment.
 
 
 == Configuration and Bookmarking
@@ -125,3 +432,4 @@ include::../test-data/options.hal-forms.json[]
 When clicking on the POST request button, the dialog looks like:
 
 image::img/hal-forms-options.png[width=70%]
+

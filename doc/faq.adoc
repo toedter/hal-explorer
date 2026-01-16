@@ -1,0 +1,292 @@
+[[faq]]
+= Frequently Asked Questions
+
+== General Questions
+
+=== What is HAL Explorer?
+
+HAL Explorer is a web-based tool for browsing and exploring RESTful Hypermedia APIs that use the HAL (Hypertext Application Language) and HAL-FORMS specifications. It provides an intuitive interface for navigating APIs by following links, viewing documentation, and testing different HTTP methods.
+
+=== Do I need to install anything?
+
+No installation required! You can use the hosted version at https://hal-explorer.com or https://toedter.github.io/hal-explorer/release/hal-explorer/[GitHub Pages].
+
+For backend integration, you can add HAL Explorer as a WebJar dependency or deploy the static files. See <<setup.adoc#_backend_integration,Backend Integration>>.
+
+=== Is HAL Explorer free to use?
+
+Yes, HAL Explorer is open source software licensed under the MIT License. You can use it freely for commercial and non-commercial projects. See <<license.adoc#license,License>>.
+
+=== Which browsers are supported?
+
+HAL Explorer works in all modern browsers:
+
+* Chrome/Chromium (recommended)
+* Firefox
+* Edge
+* Safari
+* Opera
+
+Requires a browser with ES6 support and local storage capabilities.
+
+=== Can I use HAL Explorer offline?
+
+Yes, if you deploy HAL Explorer locally or integrate it into your backend. The hosted version requires internet access.
+
+== API Compatibility
+
+=== Does my API need to support HAL or HAL-FORMS?
+
+Yes, HAL Explorer is specifically designed for HAL and HAL-FORMS APIs. While it can display plain JSON, you won't get the full functionality without proper HAL `_links` and `_embedded` structures.
+
+=== What media types are supported?
+
+HAL Explorer supports:
+
+* `application/hal+json` - Standard HAL
+* `application/prs.hal-forms+json` - HAL-FORMS
+* `application/json` - Plain JSON (limited functionality)
+
+=== Do I need to modify my existing HAL API?
+
+No modifications needed if your API already follows the HAL specification. HAL Explorer works with any compliant HAL API.
+
+=== Can HAL Explorer work with non-HAL APIs?
+
+HAL Explorer can display any JSON response, but without HAL's `_links` structure, you won't be able to navigate between resources or use hypermedia features. For non-HAL APIs, consider tools like Swagger UI or Postman.
+
+=== Does HAL Explorer support other hypermedia formats?
+
+No, HAL Explorer is specifically designed for HAL and HAL-FORMS
+
+== Features and Functionality
+
+=== How do I authenticate with my API?
+
+Click "Edit Headers" and add authentication headers:
+
+* Bearer tokens: `Authorization: Bearer <token>`
+* Basic auth: `Authorization: Basic <credentials>`
+* API keys: `X-API-Key: <key>` (or your API's custom header)
+
+See <<usage.adoc#_customizing_request_headers,Customizing Request Headers>> for details.
+
+=== Can I test POST, PUT, PATCH, and DELETE methods?
+
+Yes! HAL Explorer supports all HTTP methods. Click the appropriate button next to any link:
+
+* `<` = GET
+* `+` = POST
+* `>>` = PUT
+* `>` = PATCH
+* `x` = DELETE
+
+For HAL-FORMS APIs, templates specify which methods are available.
+
+=== How do I share my API exploration with colleagues?
+
+HAL Explorer stores the current URI and custom headers in the URL fragment. Simply copy the URL from your browser's address bar and share it. When opened, HAL Explorer will restore the same state.
+
+Example:
+----
+https://hal-explorer.com/#uri=/api/customers&headers=...
+----
+
+WARNING: Be careful sharing URLs with sensitive authentication tokens in headers.
+
+=== Can I use HAL Explorer with APIs behind a VPN?
+
+Yes, if you deploy HAL Explorer locally or integrate it into your backend that's accessible within the VPN. The public hosted version cannot access VPN-protected resources.
+
+=== Does HAL Explorer support pagination?
+
+HAL Explorer can follow pagination links like `next`, `prev`, `first`, `last` if your API provides them in the `_links` section. Simply click the GET button next to the pagination link.
+
+=== Can I view API documentation in HAL Explorer?
+
+Yes! HAL Explorer supports CURIE-based documentation. If your API provides documentation links (via CURIEs), click the book icon next to any link relation to view inline documentation.
+
+See <<usage.adoc#_curie_based_documentation,CURIE-based Documentation>>.
+
+== HAL-FORMS Specific
+
+=== What is HAL-FORMS?
+
+HAL-FORMS is an extension to HAL that adds affordances (form templates) to describe how to interact with resources. It tells clients which HTTP methods, properties, and validations to use for operations like creating or updating resources.
+
+Specification: https://rwcbook.github.io/hal-forms/
+
+=== How do I know if my API supports HAL-FORMS?
+
+Check if your API:
+
+1. Returns `Content-Type: application/prs.hal-forms+json`
+2. Includes a `_templates` object in responses
+3. Documents support for HAL-FORMS
+
+=== Do I need to request HAL-FORMS explicitly?
+
+Some APIs automatically return HAL-FORMS. Others require you to request it via the `Accept` header:
+
+[source]
+----
+Accept: application/prs.hal-forms+json
+----
+
+Add this in the "Edit Headers" dialog.
+
+=== What are the benefits of HAL-FORMS over plain HAL?
+
+HAL-FORMS provides:
+
+* *Explicit affordances* - Know exactly which HTTP methods are allowed
+* *Property definitions* - Type information, validation rules, constraints
+* *Form generation* - Auto-generated form fields in HAL Explorer
+* *Options/enums* - Dropdown menus for fields with predefined values
+* *Better error messages* - Client-side validation before sending requests
+
+== Technical Questions
+
+=== Does HAL Explorer store my API data?
+
+No. HAL Explorer is a client-side application. All API communication happens directly between your browser and your API server. No data passes through HAL Explorer's servers (when using the hosted version).
+
+Settings (theme, color mode, etc.) are stored in your browser's local storage only.
+
+=== How does HAL Explorer handle CORS?
+
+HAL Explorer is a browser-based application and is subject to browser CORS policies. Your API must return appropriate CORS headers to allow access from HAL Explorer's origin.
+
+See <<troubleshooting.adoc#_cors_errors,CORS Troubleshooting>> for solutions.
+
+=== Can I customize the appearance?
+
+Yes! HAL Explorer offers:
+
+* *Color modes* - Light, Dark, or Auto (system preference)
+* *27 themes* - Bootstrap default plus 26 Bootswatch themes
+* *Layout options* - 2-column or 3-column layout
+
+All settings persist across sessions.
+
+=== Is my authentication token secure?
+
+When using the hosted version:
+
+* They're transmitted only to your API server
+* They appear in the URL fragment (be careful when sharing URLs)
+
+For maximum security:
+
+* Use the hosted version only with development/test APIs
+* Deploy HAL Explorer within your own infrastructure for production use
+* Use short-lived tokens that expire quickly
+
+=== Can I modify or extend HAL Explorer?
+
+Yes! HAL Explorer is open source. You can:
+
+* Fork the repository
+* Make modifications
+* Build custom versions
+* Contribute improvements back
+
+Repository: https://github.com/toedter/hal-explorer
+
+=== How do I report bugs or request features?
+
+Visit the GitHub issue tracker: https://github.com/toedter/hal-explorer/issues
+
+Before creating a new issue:
+
+1. Search existing issues
+2. Check the <<troubleshooting.adoc#troubleshooting,Troubleshooting>> guide
+3. Verify it's a HAL Explorer issue (not an API issue)
+
+== Integration Questions
+
+=== Can I integrate HAL Explorer into my Spring Boot app?
+
+Yes! Multiple options:
+
+1. *WebJar* - Add as a Maven/Gradle dependency
+2. *Spring Data REST Integration* - Dedicated integration package
+3. *Static files* - Copy built files to `src/main/resources/static/`
+
+See <<setup.adoc#_backend_integration,Backend Integration>> for detailed instructions.
+
+=== Can I use HAL Explorer with non-Java backends?
+
+Absolutely! HAL Explorer is a pure client-side application. It works with any backend technology (Node.js, Python, Ruby, Go, .NET, etc.) as long as your API returns HAL-formatted responses.
+
+=== Can I embed HAL Explorer in an iframe?
+
+Yes, HAL Explorer can be embedded in an iframe. However:
+
+* Ensure your CSP (Content Security Policy) allows it
+* Configure appropriate CORS headers
+* Consider security implications of cross-origin embedding
+
+=== Can I use HAL Explorer in my CI/CD pipeline?
+
+HAL Explorer is primarily an interactive exploration tool. For automated API testing in CI/CD, consider:
+
+* REST Assured (Java)
+* SuperTest (Node.js)
+* pytest with requests (Python)
+* Other programmatic testing frameworks
+
+HAL Explorer is best for manual testing, debugging, and API discovery.
+
+=== How do I deploy HAL Explorer to my own server?
+
+1. Download the distribution ZIP or build from source
+2. Extract/copy files to your web server
+3. Configure your web server to serve the files
+4. Ensure proper routing for single-page application
+
+See <<setup.adoc#_option_3_static_distribution,Static Distribution>> for examples.
+
+== Performance and Limitations
+
+=== What's the maximum response size HAL Explorer can handle?
+
+HAL Explorer can handle large responses, but browser performance may degrade with:
+
+* Responses over 10MB
+* Thousands of embedded resources
+* Deeply nested structures (10+ levels)
+
+For very large collections, implement pagination in your API.
+
+=== How many simultaneous requests can HAL Explorer make?
+
+HAL Explorer makes requests sequentially (one at a time) through the user interface. Browser limits on simultaneous connections to the same domain apply (typically 6-8 connections).
+
+=== Does HAL Explorer support WebSockets or Server-Sent Events?
+
+No, HAL Explorer only supports traditional HTTP request/response. For real-time features, use appropriate tools or libraries for your use case.
+
+=== Can HAL Explorer handle binary data?
+
+HAL Explorer is designed for JSON responses. It cannot display or handle binary data like images, PDFs, or file downloads. Binary data should be referenced via links rather than embedded in HAL responses.
+
+== Getting Started
+
+=== I'm new to HAL - where should I start?
+
+1. Read the http://stateless.co/hal_specification.html[HAL Specification]
+2. Try the https://toedter.github.io/hal-explorer/release/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[demo with examples]
+3. Explore the included test data
+4. Build a simple HAL API following tutorials
+5. Explore your API with HAL Explorer
+
+=== Where can I learn more about hypermedia APIs?
+
+Resources:
+
+* *Book*: "RESTful Web APIs" by Richardson, Amundsen, and Ruby
+* *Book*: "Building Hypermedia APIs with HTML5 and Node" by Mike Amundsen
+* *Website*: https://restfulapi.net/hateoas/[HATEOAS Introduction]
+* *Course*: Various REST and hypermedia courses on Udemy, Pluralsight
+* *Specification*: http://stateless.co/hal_specification.html[HAL Specification]
