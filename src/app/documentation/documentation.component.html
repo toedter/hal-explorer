@@ -7,22 +7,12 @@
           <h5>Documentation</h5>
         </div>
         <div>
-          @if (isScrollable) {
-            <iframe
-              id="doc-iframe-scrollable"
-              title="Documentation"
-              [src]="docUri"
-              [style.height]="iframeHeight"
-            ></iframe>
-          }
-          @if (!isScrollable) {
-            <iframe
-              id="doc-iframe"
-              title="Documentation"
-              [src]="docUri"
-              onload="setIframeHeight('doc-iframe')"
-            ></iframe>
-          }
+          <iframe
+            id="doc-iframe-scrollable"
+            title="Documentation"
+            [src]="docUri"
+            [style.height]="iframeHeight"
+          ></iframe>
         </div>
       </div>
     </div>

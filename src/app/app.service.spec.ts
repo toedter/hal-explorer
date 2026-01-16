@@ -20,7 +20,6 @@ describe('AppService', () => {
     expect(service.getColumnLayout()).toBe('2');
     expect(service.getHttpOptions()).toBe(false);
     expect(service.getAllHttpMethodsForLinks()).toBe(false);
-    expect(service.getScrollableDocumentation()).toBe(true);
     expect(service.getUri()).toBe('');
     expect(service.getCustomRequestHeaders()).toEqual([]);
   });
@@ -167,30 +166,6 @@ describe('AppService', () => {
     expect(service.requestHeadersObservable).toBeDefined();
     expect(service.themeObservable).toBeDefined();
     expect(service.uriObservable).toBeDefined();
-    expect(service.scrollableDocumentationObservable).toBeDefined();
-  });
-
-  it('should set scrollable documentation', () => {
-    service.setScrollableDocumentation(true);
-    expect(service.getScrollableDocumentation()).toBe(true);
-    expect(localStorage.getItem('hal-explorer.scrollableDocumentation')).toBe('true');
-  });
-
-  it('should unset scrollable documentation', () => {
-    service.setScrollableDocumentation(false);
-    expect(service.getScrollableDocumentation()).toBe(false);
-    expect(localStorage.getItem('hal-explorer.scrollableDocumentation')).toBe('false');
-  });
-
-  it('should parse scrollableDocumentation from localStorage', () => {
-    localStorage.setItem('hal-explorer.theme', 'Cosmo');
-    localStorage.setItem('hal-explorer.scrollableDocumentation', 'true');
-    window.location.hash = '#uri=https://example.com/api';
-    service = new AppService();
-
-    expect(service.getScrollableDocumentation()).toBe(true);
-    expect(service.getTheme()).toBe('Cosmo');
-    expect(service.getUri()).toBe('https://example.com/api');
   });
 
   it('should handle browser back/forward navigation correctly on consecutive hash changes', () => {

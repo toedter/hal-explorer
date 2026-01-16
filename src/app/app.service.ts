@@ -21,7 +21,6 @@ export class AppService {
   private columnLayoutParam = DEFAULT_LAYOUT;
   private httpOptionsParam = false;
   private allHttpMethodsForLinksParam = false;
-  private scrollableDocumentationParam = true;
   private customRequestHeaders: RequestHeader[] = [];
   private previousUriParam = '';
   private fromBrowserNavigation = false;
@@ -31,7 +30,6 @@ export class AppService {
   private readonly layoutSubject = new Subject<string>();
   private readonly httpOptionsSubject = new Subject<boolean>();
   private readonly allHttpMethodsForLinksSubject = new Subject<boolean>();
-  private readonly scrollableDocumentationSubject = new Subject<boolean>();
   private readonly requestHeadersSubject = new Subject<RequestHeader[]>();
 
   readonly uriObservable = this.uriSubject.asObservable();
@@ -39,7 +37,6 @@ export class AppService {
   readonly columnLayoutObservable = this.layoutSubject.asObservable();
   readonly httpOptionsObservable = this.httpOptionsSubject.asObservable();
   readonly allHttpMethodsForLinksObservable = this.allHttpMethodsForLinksSubject.asObservable();
-  readonly scrollableDocumentationObservable = this.scrollableDocumentationSubject.asObservable();
   readonly requestHeadersObservable = this.requestHeadersSubject.asObservable();
 
   constructor() {
@@ -53,7 +50,6 @@ export class AppService {
     this.columnLayoutParam = this.getFromStorage('columnLayout', DEFAULT_LAYOUT);
     this.httpOptionsParam = this.getBooleanFromStorage('httpOptions', false);
     this.allHttpMethodsForLinksParam = this.getBooleanFromStorage('allHttpMethodsForLinks', false);
-    this.scrollableDocumentationParam = this.getBooleanFromStorage('scrollableDocumentation', true);
   }
 
   private getFromStorage(key: string, defaultValue: string): string {
@@ -135,16 +131,6 @@ export class AppService {
     this.allHttpMethodsForLinksParam = options;
     this.saveToStorage('allHttpMethodsForLinks', options);
     this.allHttpMethodsForLinksSubject.next(this.allHttpMethodsForLinksParam);
-  }
-
-  getScrollableDocumentation(): boolean {
-    return this.scrollableDocumentationParam;
-  }
-
-  setScrollableDocumentation(scrollable: boolean): void {
-    this.scrollableDocumentationParam = scrollable;
-    this.saveToStorage('scrollableDocumentation', scrollable);
-    this.scrollableDocumentationSubject.next(this.scrollableDocumentationParam);
   }
 
   getCustomRequestHeaders(): RequestHeader[] {

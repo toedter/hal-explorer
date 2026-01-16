@@ -16,7 +16,6 @@ describe('AppComponent', () => {
   let layoutSubject;
   let httpOptionsSubject;
   let allHttpMethodsForLinksSubject;
-  let scrollableDocumentationSubject;
 
   beforeEach(async () => {
     const requestServiceMock = {
@@ -47,7 +46,6 @@ describe('AppComponent', () => {
     layoutSubject = new Subject<string>();
     httpOptionsSubject = new Subject<boolean>();
     allHttpMethodsForLinksSubject = new Subject<boolean>();
-    scrollableDocumentationSubject = new Subject<boolean>();
 
     const uriSubject = new Subject<string>();
     const requestHeaderSubject = new Subject<RequestHeader[]>();
@@ -63,13 +61,10 @@ describe('AppComponent', () => {
       setHttpOptions: vi.fn(),
       getAllHttpMethodsForLinks: vi.fn(),
       setAllHttpMethodsForLinks: vi.fn(),
-      getScrollableDocumentation: vi.fn(),
-      setScrollableDocumentation: vi.fn(),
       themeObservable: themeSubject,
       columnLayoutObservable: layoutSubject,
       httpOptionsObservable: httpOptionsSubject,
       allHttpMethodsForLinksObservable: allHttpMethodsForLinksSubject,
-      scrollableDocumentationObservable: scrollableDocumentationSubject,
       uriObservable: uriSubject,
       requestHeadersObservable: requestHeaderSubject,
     };
@@ -81,7 +76,6 @@ describe('AppComponent', () => {
     appServiceMock.getColumnLayout.mockReturnValue('2');
     appServiceMock.getHttpOptions.mockReturnValue(false);
     appServiceMock.getAllHttpMethodsForLinks.mockReturnValue(false);
-    appServiceMock.getScrollableDocumentation.mockReturnValue(false);
     const domSanitizerMock = {
       bypassSecurityTrustResourceUrl: vi.fn(),
     };
@@ -178,18 +172,6 @@ describe('AppComponent', () => {
     component.selectSetting('2 Column Layout');
 
     expect(component.isTwoColumnLayout).toBe(true);
-  });
-
-  it('should react on scrollable documentation change', () => {
-    scrollableDocumentationSubject.next(true);
-
-    expect(component.scrollableDocumentation).toBe(true);
-  });
-
-  it('should select settings (Scrollable Documentation)', () => {
-    component.selectSetting('Scrollable Documentation');
-
-    expect(component.scrollableDocumentation).toBe(true);
   });
 
   it('should initialize color mode from localStorage', () => {

@@ -410,7 +410,6 @@ The following configuration is stored in the browser's local storage and persist
 * Column Layout (2 or 3 columns; default is 2)
 * HTTP OPTIONS setting (default is off)
 * Enable all HTTP Methods for HAL-FORMS Links setting (default is off)
-* Scrollable Documentation setting (default is off)
 
 === Bookmarking
 

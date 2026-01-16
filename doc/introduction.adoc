@@ -137,13 +137,8 @@ Full implementation of the HAL-FORMS specification:
 
 * *CURIE-based Documentation*
 ** Click book icons to view inline documentation
-** Documentation appears in dedicated panel
+** Documentation appears in dedicated panel with fixed-height scrollable iframe
 ** No need to leave the interface or consult external docs
-
-* *Scrollable Documentation Mode*
-** Keep documentation visible without excessive page scrolling
-** Fixed-height iframe for large documentation sets
-** Configurable through settings
 
 ==== Error Handling
 
@@ -163,7 +158,6 @@ All settings and preferences persist across sessions:
 * Column layout choice
 * HTTP OPTIONS setting
 * HAL-FORMS method enablement
-* Documentation scrolling mode
 
 Storage uses the `hal-explorer.` namespace to avoid conflicts.
 

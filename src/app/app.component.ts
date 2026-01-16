@@ -45,8 +45,6 @@ const SETTINGS = [
   'Use HTTP OPTIONS',
   '---',
   'Enable all HTTP Methods for HAL-FORMS Links',
-  '---',
-  'Scrollable Documentation',
 ];
 
 type ColorMode = 'light' | 'dark' | 'auto';
@@ -69,7 +67,6 @@ export class AppComponent implements OnInit {
   isTwoColumnLayout = true;
   useHttpOptions = false;
   enableAllHttpMethodsForLinks = false;
-  scrollableDocumentation = false;
   activeColorMode: ColorMode = 'auto';
 
   private readonly appService = inject(AppService);
@@ -146,9 +143,6 @@ export class AppComponent implements OnInit {
     this.appService.columnLayoutObservable.subscribe(layout => this.applyLayout(layout));
     this.appService.httpOptionsObservable.subscribe(options => this.applyHttpOptions(options));
     this.appService.allHttpMethodsForLinksObservable.subscribe(enabled => this.applyAllHttpMethodsForLinks(enabled));
-    this.appService.scrollableDocumentationObservable.subscribe(scrollable =>
-      this.applyScrollableDocumentation(scrollable)
-    );
   }
 
   private applyCurrentSettings(): void {
@@ -156,7 +150,6 @@ export class AppComponent implements OnInit {
     this.applyLayout(this.appService.getColumnLayout());
     this.applyHttpOptions(this.appService.getHttpOptions());
     this.applyAllHttpMethodsForLinks(this.appService.getAllHttpMethodsForLinks());
-    this.applyScrollableDocumentation(this.appService.getScrollableDocumentation());
   }
 
   changeTheme(theme: string): void {
@@ -188,10 +181,6 @@ export class AppComponent implements OnInit {
     this.enableAllHttpMethodsForLinks = enabled;
   }
 
-  private applyScrollableDocumentation(scrollable: boolean): void {
-    this.scrollableDocumentation = scrollable;
-  }
-
   selectSetting(setting: string): void {
     if (setting.includes('OPTIONS')) {
       const newValue = !this.useHttpOptions;
@@ -201,10 +190,6 @@ export class AppComponent implements OnInit {
       const newValue = !this.enableAllHttpMethodsForLinks;
       this.enableAllHttpMethodsForLinks = newValue;
       this.appService.setAllHttpMethodsForLinks(newValue);
-    } else if (setting.includes('Scrollable')) {
-      const newValue = !this.scrollableDocumentation;
-      this.scrollableDocumentation = newValue;
-      this.appService.setScrollableDocumentation(newValue);
     } else {
       this.changeLayout(setting);
     }
@@ -218,8 +203,7 @@ export class AppComponent implements OnInit {
     const isActive =
       (setting.includes('OPTIONS') && this.useHttpOptions) ||
       setting.includes(this.appService.getColumnLayout()) ||
-      (setting.includes('Links') && this.enableAllHttpMethodsForLinks) ||
-      (setting.includes('Scrollable') && this.scrollableDocumentation);
+      (setting.includes('Links') && this.enableAllHttpMethodsForLinks);
 
     return isActive ? '' : 'visibility: hidden';
   }
