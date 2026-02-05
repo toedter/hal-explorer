@@ -68,7 +68,7 @@
     "eslint": "^9.39.2",
     "express": "^5.0.0",
     "husky": "^9.1.7",
-    "jsdom": "^27.3.0",
+    "jsdom": "^28.0.0",
     "lint-staged": "^16.2.7",
     "playwright": "^1.57.0",
     "prettier": "^3.7.4",
