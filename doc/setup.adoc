@@ -12,12 +12,12 @@ The fastest way to try HAL Explorer is through our hosted demos:
 | Version | Number | Demo | Documentation
 
 | Latest Release
-| 2.2.1
+| 2.3.0
 | https://toedter.github.io/hal-explorer/release/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
 | https://toedter.github.io/hal-explorer/release/reference-doc/[Reference Docs]
 
 | Current Snapshot
-| 2.2.2-SNAPSHOT
+| 2.3.1-SNAPSHOT
 | https://toedter.github.io/hal-explorer/snapshot/hal-explorer/#theme=Cosmo&uri=examples/examples.hal-forms.json[HAL Explorer Demo]
 | https://toedter.github.io/hal-explorer/snapshot/reference-doc/[Reference Docs]
 |===
@@ -68,20 +68,20 @@ The simplest way to integrate HAL Explorer into a Java-based project is using th
 <dependency>
     <groupId>org.webjars</groupId>
     <artifactId>hal-explorer</artifactId>
-    <version>2.2.1</version>
+    <version>2.3.0</version>
 </dependency>
 ----
 
 [source,indent=0,role="secondary"]
 .Gradle (Groovy)
 ----
-runtimeOnly 'org.webjars:hal-explorer:2.2.1'
+runtimeOnly 'org.webjars:hal-explorer:2.3.0'
 ----
 
 [source,indent=0,role="secondary"]
 .Gradle (Kotlin)
 ----
-runtimeOnly("org.webjars:hal-explorer:2.2.1")
+runtimeOnly("org.webjars:hal-explorer:2.3.0")
 ----
 
 *Access HAL Explorer:*
@@ -89,7 +89,7 @@ runtimeOnly("org.webjars:hal-explorer:2.2.1")
 Once the dependency is added, HAL Explorer is available at:
 
 ----
-http://localhost:8080/webjars/hal-explorer/2.2.1/index.html
+http://localhost:8080/webjars/hal-explorer/2.3.0/index.html
 ----
 
 TIP: You can create a redirect or custom controller to serve HAL Explorer at a more convenient path like `/explorer` or `/api/explorer`.
@@ -102,7 +102,7 @@ TIP: You can create a redirect or custom controller to serve HAL Explorer at a m
 public class ExplorerController {
     @GetMapping("/explorer")
     public String explorer() {
-        return "redirect:/webjars/hal-explorer/2.2.1/index.html";
+        return "redirect:/webjars/hal-explorer/2.3.0/index.html";
     }
 }
 ----
@@ -150,7 +150,7 @@ For non-Java backends or custom deployment scenarios, you can use the standalone
 
 *Download and Extract:*
 
-1. Download the https://github.com/toedter/hal-explorer/releases/download/v2.2.1/hal-explorer-2.2.1.zip[distribution ZIP file] (v2.2.1)
+1. Download the https://github.com/toedter/hal-explorer/releases/download/v2.3.0/hal-explorer-2.3.0.zip[distribution ZIP file] (v2.3.0)
 2. Extract the contents to your web server's static file directory
 
 *Example Deployment Locations:*
