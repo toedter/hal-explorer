@@ -29,7 +29,7 @@
 <div id="header">
 <h1>Setup and Installation</h1>
 <div class="details">
-<span id="revnumber">version 2.2.2-SNAPSHOT</span>
+<span id="revnumber">version 2.3.1-SNAPSHOT</span>
 </div>
 </div>
 <div id="content">
@@ -64,13 +64,13 @@
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Latest Release</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.2.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.3.0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://toedter.github.io/hal-explorer/release/hal-explorer/#theme=Cosmo&amp;uri=examples/examples.hal-forms.json">HAL Explorer Demo</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://toedter.github.io/hal-explorer/release/reference-doc/">Reference Docs</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Current Snapshot</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.2.2-SNAPSHOT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.3.1-SNAPSHOT</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://toedter.github.io/hal-explorer/snapshot/hal-explorer/#theme=Cosmo&amp;uri=examples/examples.hal-forms.json">HAL Explorer Demo</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://toedter.github.io/hal-explorer/snapshot/reference-doc/">Reference Docs</a></p></td>
 </tr>
@@ -145,20 +145,20 @@ This CORS configuration allows access from any origin. Use it only for developme
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;dependency&gt;
     &lt;groupId&gt;org.webjars&lt;/groupId&gt;
     &lt;artifactId&gt;hal-explorer&lt;/artifactId&gt;
-    &lt;version&gt;2.2.1&lt;/version&gt;
+    &lt;version&gt;2.3.0&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>
 <div class="listingblock secondary">
 <div class="title">Gradle (Groovy)</div>
 <div class="content">
-<pre class="highlight"><code>runtimeOnly 'org.webjars:hal-explorer:2.2.1'</code></pre>
+<pre class="highlight"><code>runtimeOnly 'org.webjars:hal-explorer:2.3.0'</code></pre>
 </div>
 </div>
 <div class="listingblock secondary">
 <div class="title">Gradle (Kotlin)</div>
 <div class="content">
-<pre class="highlight"><code>runtimeOnly("org.webjars:hal-explorer:2.2.1")</code></pre>
+<pre class="highlight"><code>runtimeOnly("org.webjars:hal-explorer:2.3.0")</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -169,7 +169,7 @@ This CORS configuration allows access from any origin. Use it only for developme
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>http://localhost:8080/webjars/hal-explorer/2.2.1/index.html</pre>
+<pre>http://localhost:8080/webjars/hal-explorer/2.3.0/index.html</pre>
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -193,7 +193,7 @@ You can create a redirect or custom controller to serve HAL Explorer at a more c
 public class ExplorerController {
     @GetMapping("/explorer")
     public String explorer() {
-        return "redirect:/webjars/hal-explorer/2.2.1/index.html";
+        return "redirect:/webjars/hal-explorer/2.3.0/index.html";
     }
 }
 </code></pre>
@@ -255,7 +255,7 @@ public class ExplorerController {
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Download the <a href="https://github.com/toedter/hal-explorer/releases/download/v2.2.1/hal-explorer-2.2.1.zip">distribution ZIP file</a> (v2.2.1)</p>
+<p>Download the <a href="https://github.com/toedter/hal-explorer/releases/download/v2.3.0/hal-explorer-2.3.0.zip">distribution ZIP file</a> (v2.3.0)</p>
 </li>
 <li>
 <p>Extract the contents to your web server&#8217;s static file directory</p>
@@ -343,8 +343,8 @@ cd hal-explorer</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.2.2-SNAPSHOT<br>
-Last updated 2026-03-04 08:04:32 UTC
+Version 2.3.1-SNAPSHOT<br>
+Last updated 2026-03-04 11:20:11 UTC
 </div>
 </div>
 </div>
