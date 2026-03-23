@@ -5,7 +5,8 @@ import utpl, { URITemplate } from 'uri-templates';
 import { AppService, RequestHeader } from '../app.service';
 import { Link } from '../response-explorer/response-explorer.component';
 
-const DEFAULT_ACCEPT_HEADER = 'application/prs.hal-forms+json, application/hal+json, application/json, */*';
+const DEFAULT_ACCEPT_HEADER =
+  'application/prs.hal-forms+json, application/hal+json, application/vnd.api+json, application/json, */*';
 
 export enum EventType {
   FillHttpRequest,

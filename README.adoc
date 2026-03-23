@@ -7,7 +7,7 @@ image:https://img.shields.io/badge/license-MIT-blue.svg["MIT", link="http://toed
 
 = HAL Explorer
 
-HAL Explorer helps you explore http://stateless.co/hal_specification.html[HAL]- and https://rwcbook.github.io/hal-forms/[HAL-FORMS]-based RESTful Hypermedia APIs.
+HAL Explorer helps you explore http://stateless.co/hal_specification.html[HAL]-, https://rwcbook.github.io/hal-forms/[HAL-FORMS]-, and https://jsonapi.org/format/[JSON:API]-based RESTful Hypermedia APIs.
 
 == Reference Docs and Demos
 
@@ -33,6 +33,7 @@ image::./doc/img/hal-explorer-light.png[HAL Explorer Light Mode]
 * Dark/Light/Auto color modes with 26+ Bootstrap themes
 * Full HTTP method support (GET, POST, PUT, PATCH, DELETE, OPTIONS)
 * HAL-FORMS support with property validation
+* JSON:API support with resource relationships and included resources
 * Spring Data REST integration with profile detection
 * URI template parameter editor
 * Custom request headers

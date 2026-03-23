@@ -1,0 +1,98 @@
+{
+  "jsonapi": {
+    "version": "1.1"
+  },
+  "data": [
+    {
+      "type": "movies",
+      "id": "1",
+      "attributes": {
+        "imdbId": "tt0111161",
+        "title": "The Shawshank Redemption",
+        "year": 1994,
+        "rating": 9.3,
+        "rank": 1
+      },
+      "relationships": {
+        "directors": {
+          "links": {
+            "self": "https://nexus.toedter.com/api/jsonapi/movies/1/relationships/directors",
+            "related": "https://nexus.toedter.com/api/jsonapi/movies/1/directors"
+          },
+          "data": [
+            {
+              "type": "directors",
+              "id": "1"
+            }
+          ]
+        }
+      },
+      "links": {
+        "self": "https://nexus.toedter.com/api/jsonapi/movies/1"
+      }
+    },
+    {
+      "type": "movies",
+      "id": "2",
+      "attributes": {
+        "imdbId": "tt0068646",
+        "title": "The Godfather",
+        "year": 1972,
+        "rating": 9.2,
+        "rank": 2
+      },
+      "relationships": {
+        "directors": {
+          "links": {
+            "self": "https://nexus.toedter.com/api/jsonapi/movies/2/relationships/directors",
+            "related": "https://nexus.toedter.com/api/jsonapi/movies/2/directors"
+          },
+          "data": [
+            {
+              "type": "directors",
+              "id": "2"
+            }
+          ]
+        }
+      },
+      "links": {
+        "self": "https://nexus.toedter.com/api/jsonapi/movies/2"
+      }
+    }
+  ],
+  "included": [
+    {
+      "type": "directors",
+      "id": "1",
+      "attributes": {
+        "name": "Frank Darabont"
+      },
+      "links": {
+        "self": "https://nexus.toedter.com/api/jsonapi/directors/1"
+      }
+    },
+    {
+      "type": "directors",
+      "id": "2",
+      "attributes": {
+        "name": "Francis Ford Coppola"
+      },
+      "links": {
+        "self": "https://nexus.toedter.com/api/jsonapi/directors/2"
+      }
+    }
+  ],
+  "links": {
+    "self": "https://nexus.toedter.com/api/jsonapi/movies?page[number]=0&page[size]=10&include=directors",
+    "next": "https://nexus.toedter.com/api/jsonapi/movies?page[number]=1&page[size]=10&include=directors",
+    "last": "https://nexus.toedter.com/api/jsonapi/movies?page[number]=24&page[size]=10&include=directors"
+  },
+  "meta": {
+    "page": {
+      "size": 10,
+      "totalElements": 250,
+      "totalPages": 25,
+      "number": 0
+    }
+  }
+}

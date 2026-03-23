@@ -60,3 +60,6 @@ build
 /blob-report/
 /playwright/.cache/
 
+# Claude
+.claude
+

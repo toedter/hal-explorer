@@ -45,17 +45,30 @@ export class ResponseExplorerComponent implements OnInit {
   @Input() prefix: string;
   @Input() curieLinks: Link[];
   @Input() isHalFormsMediaType: boolean;
+  @Input() isJsonApiMediaType = false;
 
   properties: string;
   links: Link[];
   selfLink: Link;
   embedded: EmbeddedResource[];
   templates: Record<string, HalFormsTemplate>;
+  meta: string;
+  jsonapi: string;
+  jsonApiResources: EmbeddedResource[];
+  jsonApiIncluded: EmbeddedResource[];
+  jsonApiResourceMetadata: { id: string; type: string } | null = null;
+  jsonApiRelationships: any[] = [];
 
   showProperties: boolean;
   showLinks: boolean;
   showEmbedded: boolean;
   hasHalFormsTemplates: boolean;
+  showMeta: boolean;
+  showJsonApi: boolean;
+  showJsonApiResources: boolean;
+  showJsonApiIncluded: boolean;
+  showJsonApiResourceMetadata: boolean;
+  showJsonApiRelationships: boolean;
   isLoading = false;
 
   command = Command;
@@ -109,17 +122,29 @@ export class ResponseExplorerComponent implements OnInit {
   private handleSuccessResponse(httpResponse: any): void {
     this.responseUrl = httpResponse.url;
     this.isHalFormsMediaType = this.isHalFormsContent(httpResponse.headers, this.responseUrl, httpResponse.body);
+    this.isJsonApiMediaType = this.isJsonApiContent(httpResponse.headers, this.responseUrl, httpResponse.body);
 
     const body = typeof httpResponse.body === 'string' ? {} : httpResponse.body || {};
-    this.processJsonObject(body);
+
+    if (this.isJsonApiMediaType) {
+      this.processJsonApiObject(body);
+    } else {
+      this.processJsonObject(body);
+    }
   }
 
   private handleErrorResponse(errorResponse: HttpErrorResponse): void {
     this.responseUrl = errorResponse.url;
     this.isHalFormsMediaType = this.isHalFormsContent(errorResponse.headers, this.responseUrl, errorResponse.error);
+    this.isJsonApiMediaType = this.isJsonApiContent(errorResponse.headers, this.responseUrl, errorResponse.error);
 
     const error = typeof errorResponse.error === 'string' ? {} : errorResponse.error || {};
-    this.processJsonObject(error);
+
+    if (this.isJsonApiMediaType) {
+      this.processJsonApiObject(error);
+    } else {
+      this.processJsonObject(error);
+    }
   }
 
   private isHalFormsContent(headers: any, url: string, body: any): boolean {
@@ -130,14 +155,220 @@ export class ResponseExplorerComponent implements OnInit {
     );
   }
 
+  private isJsonApiContent(headers: any, url: string, body: any): boolean {
+    const contentType = headers.get('content-type');
+    return Boolean(
+      contentType?.startsWith('application/vnd.api+json') ||
+      (url?.endsWith('.jsonapi.json') && (body?.data || body?.jsonapi)) ||
+      (body?.jsonapi && (body?.data !== undefined || body?.errors !== undefined))
+    );
+  }
+
   private processJsonObject(json: any): void {
     this.prefix = this.prefix || '';
     this.resetState();
 
-    this.processProperties(json);
+    // If this is a JSON:API nested resource (has both id and type), extract metadata
+    if (this.isJsonApiMediaType && json.id && json.type) {
+      this.jsonApiResourceMetadata = {
+        id: json.id,
+        type: json.type,
+      };
+      this.showJsonApiResourceMetadata = true;
+
+      // Remove id and type before processing properties
+      const jsonWithoutMetadata = { ...json };
+      delete jsonWithoutMetadata.id;
+      delete jsonWithoutMetadata.type;
+
+      this.processProperties(jsonWithoutMetadata);
+
+      // Process relationships if present
+      if (json._relationships) {
+        this.processJsonApiRelationships(json._relationships);
+      }
+    } else {
+      this.processProperties(json);
+    }
+
     this.processLinks(json._links);
     this.processEmbedded(json._embedded);
     this.processTemplates(json._templates);
+  }
+
+  private processJsonApiObject(json: any): void {
+    this.prefix = this.prefix || '';
+    this.resetState();
+
+    // Process meta and jsonapi version separately
+    this.processJsonApiMeta(json.meta);
+    this.processJsonApiVersion(json.jsonapi);
+
+    // Process JSON:API resources and included separately
+    this.processJsonApiResources(json.data);
+    this.processJsonApiIncluded(json.included);
+
+    // Convert document-level links
+    const documentLinks: any = {};
+    if (json.links) {
+      Object.keys(json.links).forEach(rel => {
+        const link = json.links[rel];
+        documentLinks[rel] = typeof link === 'string' ? { href: link } : link;
+      });
+    }
+
+    // For single resources, extract id/type and process properties
+    if (json.data && !Array.isArray(json.data)) {
+      // Extract and display id and type separately
+      if (json.data.id || json.data.type) {
+        this.jsonApiResourceMetadata = {
+          id: json.data.id || '',
+          type: json.data.type || '',
+        };
+        this.showJsonApiResourceMetadata = true;
+      }
+
+      const resource = this.convertJsonApiResourceToHal(json.data);
+      // Remove id and type before processing properties
+      const resourceWithoutMetadata = { ...resource };
+      delete resourceWithoutMetadata.id;
+      delete resourceWithoutMetadata.type;
+      this.processProperties(resourceWithoutMetadata);
+
+      if (resource._links) {
+        Object.assign(documentLinks, resource._links);
+      }
+
+      // Process relationships
+      if (resource._relationships) {
+        this.processJsonApiRelationships(resource._relationships);
+      }
+    }
+
+    // Process links
+    if (Object.keys(documentLinks).length > 0) {
+      this.processLinks(documentLinks);
+    }
+  }
+
+  private processJsonApiRelationships(relationships: any): void {
+    if (!relationships) return;
+
+    this.showJsonApiRelationships = true;
+    this.jsonApiRelationships = [];
+
+    Object.keys(relationships).forEach(relationName => {
+      const relationship = relationships[relationName];
+      const relationshipData: any = {
+        name: relationName,
+        self: null,
+        related: null,
+        data: null,
+      };
+
+      // Extract self and related links separately
+      if (relationship.links) {
+        if (relationship.links.self) {
+          const link = relationship.links.self;
+          relationshipData.self = typeof link === 'string' ? link : link.href;
+        }
+        if (relationship.links.related) {
+          const link = relationship.links.related;
+          relationshipData.related = typeof link === 'string' ? link : link.href;
+        }
+      }
+
+      // Add relationship data as reference
+      if (relationship.data) {
+        if (Array.isArray(relationship.data)) {
+          relationshipData.data = relationship.data.map((ref: any) => `${ref.type}:${ref.id}`).join(', ');
+        } else if (relationship.data) {
+          relationshipData.data = `${relationship.data.type}:${relationship.data.id}`;
+        }
+      }
+
+      this.jsonApiRelationships.push(relationshipData);
+    });
+  }
+
+  private processJsonApiResources(data: any): void {
+    if (!data) return;
+
+    if (Array.isArray(data)) {
+      // Collection of resources
+      this.showJsonApiResources = true;
+      const collectionName = data[0]?.type || 'items';
+      const resources = data.map((resource: any) => this.convertJsonApiResourceToHal(resource));
+      this.jsonApiResources = [new EmbeddedResource(collectionName, resources, true)];
+    }
+    // Single resources are handled in processJsonApiObject
+  }
+
+  private processJsonApiIncluded(included: any): void {
+    if (!included || !Array.isArray(included)) return;
+
+    this.showJsonApiIncluded = true;
+    this.jsonApiIncluded = [];
+
+    // Group included resources by type
+    const groupedByType: Record<string, any[]> = {};
+    included.forEach((resource: any) => {
+      const type = resource.type || 'included';
+      groupedByType[type] = groupedByType[type] || [];
+      groupedByType[type].push(this.convertJsonApiResourceToHal(resource));
+    });
+
+    // Add grouped resources to jsonApiIncluded
+    Object.keys(groupedByType).forEach(type => {
+      this.jsonApiIncluded.push(new EmbeddedResource(type, groupedByType[type], true));
+    });
+  }
+
+  private processJsonApiMeta(metaObj: any): void {
+    if (!metaObj) return;
+
+    this.showMeta = true;
+    this.meta = this.jsonHighlighterService.syntaxHighlight(JSON.stringify(metaObj, undefined, 2));
+  }
+
+  private processJsonApiVersion(jsonapiObj: any): void {
+    if (!jsonapiObj) return;
+
+    this.showJsonApi = true;
+    this.jsonapi = this.jsonHighlighterService.syntaxHighlight(JSON.stringify(jsonapiObj, undefined, 2));
+  }
+
+  private convertJsonApiResourceToHal(resource: any): any {
+    const halResource: any = {};
+
+    // Add type and id as properties
+    if (resource.type) {
+      halResource.type = resource.type;
+    }
+    if (resource.id) {
+      halResource.id = resource.id;
+    }
+
+    // Merge attributes into root
+    if (resource.attributes) {
+      Object.assign(halResource, resource.attributes);
+    }
+
+    // Convert resource links
+    if (resource.links) {
+      halResource._links = {};
+      Object.keys(resource.links).forEach(rel => {
+        const link = resource.links[rel];
+        halResource._links[rel] = typeof link === 'string' ? { href: link } : link;
+      });
+    }
+
+    // Store relationships separately (not in _links)
+    if (resource.relationships) {
+      halResource._relationships = resource.relationships;
+    }
+
+    return halResource;
   }
 
   private resetState(): void {
@@ -145,9 +376,21 @@ export class ResponseExplorerComponent implements OnInit {
     this.showLinks = false;
     this.showEmbedded = false;
     this.hasHalFormsTemplates = false;
+    this.showMeta = false;
+    this.showJsonApi = false;
+    this.showJsonApiResources = false;
+    this.showJsonApiIncluded = false;
+    this.showJsonApiResourceMetadata = false;
+    this.showJsonApiRelationships = false;
     this.properties = null;
     this.links = [];
     this.embedded = [];
+    this.meta = null;
+    this.jsonapi = null;
+    this.jsonApiResources = [];
+    this.jsonApiIncluded = [];
+    this.jsonApiResourceMetadata = null;
+    this.jsonApiRelationships = [];
   }
 
   private processProperties(json: any): void {
@@ -155,6 +398,7 @@ export class ResponseExplorerComponent implements OnInit {
     delete jsonProperties._links;
     delete jsonProperties._embedded;
     delete jsonProperties._templates;
+    delete jsonProperties._relationships;
 
     if (Object.keys(jsonProperties).length > 0) {
       this.showProperties = true;
