@@ -1,15 +1,12 @@
-name: Build
-
+﻿name: Build
 on:
   push:
     branches: ['**']
   pull_request:
     branches: ['**']
-
 # Shared setup steps are expressed as a reusable composite via the
 # "install" pattern below (each job restores the Yarn cache independently
 # so jobs can run fully in parallel without waiting on each other).
-
 jobs:
   # ─────────────────────────────────────────────
   # Job 1: Lint – fastest feedback, no build needed
@@ -18,27 +15,21 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v6.0.2
+      - uses: actions/setup-node@v6.3.0
         with:
           node-version: '24'
-
       - name: Get Yarn cache directory
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-
-      - uses: actions/cache@v5
+      - uses: actions/cache@v5.0.4
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-
       - name: Install dependencies
         run: yarn install --prefer-offline --frozen-lockfile
-
       - name: Lint
         run: yarn lint
-
   # ─────────────────────────────────────────────
   # Job 2: Unit tests + coverage upload
   # ─────────────────────────────────────────────
@@ -46,33 +37,26 @@ jobs:
     name: Unit Tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v6.0.2
+      - uses: actions/setup-node@v6.3.0
         with:
           node-version: '24'
-
       - name: Get Yarn cache directory
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-
-      - uses: actions/cache@v5
+      - uses: actions/cache@v5.0.4
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-
       - name: Install dependencies
         run: yarn install --prefer-offline --frozen-lockfile
-
       - name: Unit tests
         run: yarn test:headless
-
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v5.5.3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/vitest/lcov.info
-
   # ─────────────────────────────────────────────
   # Job 3: Build – produces dist artifact for E2E
   # ─────────────────────────────────────────────
@@ -80,96 +64,73 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v6.0.2
+      - uses: actions/setup-node@v6.3.0
         with:
           node-version: '24'
-
       - name: Get Yarn cache directory
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-
-      - uses: actions/cache@v5
+      - uses: actions/cache@v5.0.4
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-
       - name: Install dependencies
         run: yarn install --prefer-offline --frozen-lockfile
-
       - name: Build application
         run: yarn build
-
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: dist
-          path: dist/
-          retention-days: 1
-
   # ─────────────────────────────────────────────
-  # Job 4: E2E – waits for build artifact
+  # Job 4: E2E – uses ng serve, runs in parallel
   # ─────────────────────────────────────────────
   e2e:
     name: E2E Tests
     runs-on: ubuntu-latest
-    needs: build
     steps:
-      - uses: actions/checkout@v6
-
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v6.0.2
+      - uses: actions/setup-node@v6.3.0
         with:
           node-version: '24'
-
       - name: Get Yarn cache directory
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-
-      - uses: actions/cache@v5
+      - uses: actions/cache@v5.0.4
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-
       - name: Install dependencies
         run: yarn install --prefer-offline --frozen-lockfile
-
-      - name: Download build artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: dist
-          path: dist/
-
       - name: Install Playwright browsers
         run: yarn playwright install chromium --with-deps
-
       - name: E2E tests
         run: yarn e2e:chromium
-
       - name: Upload Playwright report
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 7
-
   # ─────────────────────────────────────────────
   # Job 5: Docs – fully independent, Java-based
   # ─────────────────────────────────────────────
   docs:
     name: Documentation
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v6
-
-      - uses: actions/setup-java@v5
+      - uses: actions/checkout@v6.0.2
+      - uses: actions/setup-java@v5.2.0
         with:
           java-version: '17'
           distribution: 'temurin'
-
       - name: Cache Gradle modules
-        uses: actions/cache@v5
+        uses: actions/cache@v5.0.4
         with:
           path: |
             ~/.gradle/caches
@@ -177,18 +138,19 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-
       - name: Build documentation
         run: ./gradlew doc
-
-      - name: Deploy documentation to GitHub Pages
+      - name: Configure GitHub Pages
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        uses: peaceiris/actions-gh-pages@v4
+        uses: actions/configure-pages@v5.0.0
+      - name: Upload Pages artifact
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v4.0.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/docs/gh-pages
-          publish_branch: gh-pages
-          keep_files: true
+          path: ./build/docs/gh-pages
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        id: deploy
+        uses: actions/deploy-pages@v4.0.5
