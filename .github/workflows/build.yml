@@ -105,7 +105,7 @@ jobs:
         run: yarn e2e:chromium
       - name: Upload Playwright report
         if: always()
-        uses: actions/upload-artifact@v7.0.0
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: playwright-report
           path: playwright-report/
