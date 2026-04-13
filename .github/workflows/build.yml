@@ -22,7 +22,7 @@ jobs:
       - name: Get Yarn cache directory
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-      - uses: actions/cache@v5.0.4
+      - uses: actions/cache@v5.0.5
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -44,7 +44,7 @@ jobs:
       - name: Get Yarn cache directory
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-      - uses: actions/cache@v5.0.4
+      - uses: actions/cache@v5.0.5
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -71,7 +71,7 @@ jobs:
       - name: Get Yarn cache directory
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-      - uses: actions/cache@v5.0.4
+      - uses: actions/cache@v5.0.5
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -93,7 +93,7 @@ jobs:
       - name: Get Yarn cache directory
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-      - uses: actions/cache@v5.0.4
+      - uses: actions/cache@v5.0.5
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -123,7 +123,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Cache Gradle modules
-        uses: actions/cache@v5.0.4
+        uses: actions/cache@v5.0.5
         with:
           path: |
             ~/.gradle/caches
