@@ -137,9 +137,9 @@
     "@jridgewell/trace-mapping" "^0.3.24"
 
 "@analogjs/vite-plugin-angular@^2.3.1":
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/@analogjs/vite-plugin-angular/-/vite-plugin-angular-2.4.4.tgz#5c5c8c627da534a7412a14962a54e4ce56c25f1d"
-  integrity sha512-ql/97qdYzO1iN+gJBxvi1hzKPwQnvOHxV5geGSY5V/Oa89dpGKg4SCxtsqW7ohlVovZxvtmpIAaaUCPI58aF9g==
+  version "2.4.7"
+  resolved "https://registry.yarnpkg.com/@analogjs/vite-plugin-angular/-/vite-plugin-angular-2.4.7.tgz#7f7f684461cf85756c5d1917579f8cbbf4bc54a3"
+  integrity sha512-N6skq9znXKMfIs7RtpfyAJIh4lxLawrkRD3ESbGurpMoL5ykbTIjY9rS6RnScbqPPxKmzACSIIJg+knaNcOzEQ==
   dependencies:
     tinyglobby "^0.2.14"
     ts-morph "^21.0.0"
@@ -2838,9 +2838,9 @@ brace-expansion@^2.0.1:
     balanced-match "^1.0.0"
 
 brace-expansion@^2.0.2:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-2.0.3.tgz#0493338bdd58e319b1039c67cf7ee439892c01d9"
-  integrity sha512-MCV/fYJEbqx68aE58kv2cA/kiky1G8vux3OR6/jbS+jIMe/6fJWa0DTzJU7dqijOWYwHi1t29FlfYI9uytqlpA==
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-2.1.0.tgz#4f41a41190216ee36067ec381526fe9539c4f0ae"
+  integrity sha512-TN1kCZAgdgweJhWWpgKYrQaMNHcDULHkWwQIspdtjV4Y5aurRdZpjAqn6yX3FPqTA9ngHCc4hJxMAMgGfve85w==
   dependencies:
     balanced-match "^1.0.0"
 
