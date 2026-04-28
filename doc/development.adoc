@@ -8,7 +8,7 @@ This section covers building HAL Explorer from source, running the development s
 *Required:*
 
 * *Node.js*: Version 18.x or higher (https://nodejs.org[Download])
-* *Yarn*: Package manager (`npm install -g yarn`)
+* *pnpm*: Package manager (`npm install -g pnpm`)
 
 *Optional (for Gradle build):*
 
@@ -17,7 +17,7 @@ This section covers building HAL Explorer from source, running the development s
 
 == Building for Production
 
-== Using Node.js/Yarn
+== Using Node.js/pnpm
 
 This is the recommended build method for most users.
 
@@ -26,10 +26,10 @@ This is the recommended build method for most users.
 [source,bash]
 ----
 # Install dependencies
-yarn install
+pnpm install
 
 # Build for production
-yarn build
+pnpm build
 ----
 
 The build artifacts will be stored in the `dist/` directory, optimized and minified for production deployment.
@@ -59,7 +59,7 @@ gradlew.bat build
 The Gradle build automatically:
 
 * Downloads and installs Node.js locally in the project directory
-* Installs dependencies via Yarn
+* Installs dependencies via pnpm
 * Runs the production build
 * Stores artifacts in the `dist/` directory
 
@@ -74,7 +74,7 @@ Start the development server with hot reload:
 
 [source,bash]
 ----
-yarn start
+pnpm start
 ----
 
 *Features:*
@@ -96,7 +96,7 @@ This allows you to develop against a local backend without CORS configuration.
 *Example Usage:*
 
 1. Start your backend API on port 8080
-2. Run `yarn start`
+2. Run `pnpm start`
 3. Navigate to http://localhost:4200/#uri=/api
 4. HAL Explorer will fetch data from `localhost:8080/api` without CORS issues
 
@@ -106,7 +106,7 @@ For frontend-only development, start the server with built-in test data:
 
 [source,bash]
 ----
-yarn start:fs
+pnpm start:fs
 ----
 
 *Features:*
@@ -139,7 +139,7 @@ HAL Explorer includes comprehensive unit and end-to-end tests.
 
 [source,bash]
 ----
-yarn test
+pnpm test
 ----
 
 Opens your default browser with the Karma test runner. Tests re-run automatically when files change.
@@ -148,7 +148,7 @@ Opens your default browser with the Karma test runner. Tests re-run automaticall
 
 [source,bash]
 ----
-yarn test:headless
+pnpm test:headless
 ----
 
 Runs tests once in headless Chrome and exits. Perfect for continuous integration pipelines.
@@ -158,37 +158,37 @@ Runs tests once in headless Chrome and exits. Perfect for continuous integration
 [source,bash]
 ----
 # Run tests with code coverage
-yarn test:coverage
+pnpm test:coverage
 
 # Run specific test file
-yarn test --include='**/app.component.spec.ts'
+pnpm test --include='**/app.component.spec.ts'
 ----
 
 == End-to-End Tests
 
 [source,bash]
 ----
-yarn e2e
+pnpm e2e
 ----
 
 Runs the full E2E test suite using Playwright across multiple browsers (Chromium, Firefox, WebKit).
 
 *Requirements:*
 
-* Playwright browsers installed (`npx playwright install`)
+* Playwright browsers installed (`pnpm playwright install`)
 
 *Additional E2E Commands:*
 
 [source,bash]
 ----
 # Run in headed mode (see the browser)
-yarn e2e:headed
+pnpm e2e:headed
 
 # Run only in Chromium
-yarn e2e --project=chromium
+pnpm e2e --project=chromium
 
 # Debug mode with Playwright Inspector
-yarn e2e:debug
+pnpm e2e:debug
 ----
 
 See `package.json` for all available test options.

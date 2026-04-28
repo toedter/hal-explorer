@@ -76,23 +76,23 @@ For Spring Data REST integration, see the https://toedter.github.io/hal-explorer
 **Dev Server:**
 [source,bash]
 ----
-yarn start
+pnpm start
 ----
 Navigate to http://localhost:4200/. The dev server proxies `/api` and `/docs` to `localhost:8080` (no CORS needed).
 
 **Build:**
 [source,bash]
 ----
-yarn build
+pnpm build
 ----
 Build artifacts are in `dist/` directory.
 
 **Tests:**
 [source,bash]
 ----
-yarn test           # unit tests
-yarn test:headless  # headless unit tests
-yarn e2e            # e2e tests (Playwright)
+pnpm test           # unit tests
+pnpm test:headless  # headless unit tests
+pnpm e2e            # e2e tests (Playwright)
 ----
 
 **Code Quality:**

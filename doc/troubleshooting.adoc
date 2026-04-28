@@ -24,7 +24,7 @@ Add CORS headers to your API responses. See the <<setup.adoc#_using_online_demos
 
 2. *Use the Development Server*:
 +
-Clone HAL Explorer and run it locally with `yarn start`. The development server includes proxy configuration that avoids CORS issues. See <<setup.adoc#dev-server,Development Server>>.
+Clone HAL Explorer and run it locally with `pnpm start`. The development server includes proxy configuration that avoids CORS issues. See <<setup.adoc#dev-server,Development Server>>.
 
 3. *Integrate HAL Explorer into Your Backend*:
 +
