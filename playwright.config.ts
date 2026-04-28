@@ -73,18 +73,17 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: [
     {
-      command: 'yarn test-server',
+      command: 'pnpm test-server',
       url: 'http://localhost:3000/index.hal.json',
       reuseExistingServer: !process.env.CI,
       timeout: 60 * 1000,
       ignoreHTTPSErrors: true,
     },
     {
-      command: 'yarn start',
+      command: 'pnpm start',
       url: 'http://localhost:4200',
       reuseExistingServer: !process.env.CI,
       timeout: 120 * 1000,
     },
   ],
 });
-
