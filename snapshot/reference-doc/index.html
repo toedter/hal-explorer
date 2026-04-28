@@ -173,7 +173,7 @@
 <ul class="sectlevel2">
 <li><a href="#_prerequisites_2">4.1. Prerequisites</a></li>
 <li><a href="#_building_for_production">4.2. Building for Production</a></li>
-<li><a href="#_using_node_jsyarn">4.3. Using Node.js/Yarn</a></li>
+<li><a href="#_using_node_jspnpm">4.3. Using Node.js/pnpm</a></li>
 <li><a href="#_using_gradle">4.4. Using Gradle</a></li>
 <li><a href="#dev-server">4.5. Development Server</a></li>
 <li><a href="#_basic_development_server">4.6. Basic Development Server</a></li>
@@ -2229,7 +2229,7 @@ A simple example JSON looks like:</p>
 <p><strong>Node.js</strong>: Version 18.x or higher (<a href="https://nodejs.org">Download</a>)</p>
 </li>
 <li>
-<p><strong>Yarn</strong>: Package manager (<code>npm install -g yarn</code>)</p>
+<p><strong>pnpm</strong>: Package manager (<code>npm install -g pnpm</code>)</p>
 </li>
 </ul>
 </div>
@@ -2252,7 +2252,7 @@ A simple example JSON looks like:</p>
 
 </div>
 <div class="sect2">
-<h3 id="_using_node_jsyarn"><a class="anchor" href="#_using_node_jsyarn"></a>4.3. Using Node.js/Yarn</h3>
+<h3 id="_using_node_jspnpm"><a class="anchor" href="#_using_node_jspnpm"></a>4.3. Using Node.js/pnpm</h3>
 <div class="paragraph">
 <p>This is the recommended build method for most users.</p>
 </div>
@@ -2262,10 +2262,10 @@ A simple example JSON looks like:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-bash" data-lang="bash"># Install dependencies
-yarn install
+pnpm install
 
 # Build for production
-yarn build</code></pre>
+pnpm build</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2317,7 +2317,7 @@ gradlew.bat build</code></pre>
 <p>Downloads and installs Node.js locally in the project directory</p>
 </li>
 <li>
-<p>Installs dependencies via Yarn</p>
+<p>Installs dependencies via pnpm</p>
 </li>
 <li>
 <p>Runs the production build</p>
@@ -2342,7 +2342,7 @@ gradlew.bat build</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">yarn start</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">pnpm start</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2392,7 +2392,7 @@ gradlew.bat build</code></pre>
 <p>Start your backend API on port 8080</p>
 </li>
 <li>
-<p>Run <code>yarn start</code></p>
+<p>Run <code>pnpm start</code></p>
 </li>
 <li>
 <p>Navigate to <a href="http://localhost:4200/#uri=/api" class="bare">http://localhost:4200/#uri=/api</a></p>
@@ -2410,7 +2410,7 @@ gradlew.bat build</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">yarn start:fs</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">pnpm start:fs</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2475,7 +2475,7 @@ gradlew.bat build</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">yarn test</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">pnpm test</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2486,7 +2486,7 @@ gradlew.bat build</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">yarn test:headless</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">pnpm test:headless</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2498,10 +2498,10 @@ gradlew.bat build</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-bash" data-lang="bash"># Run tests with code coverage
-yarn test:coverage
+pnpm test:coverage
 
 # Run specific test file
-yarn test --include='**/app.component.spec.ts'</code></pre>
+pnpm test --include='**/app.component.spec.ts'</code></pre>
 </div>
 </div>
 </div>
@@ -2509,7 +2509,7 @@ yarn test --include='**/app.component.spec.ts'</code></pre>
 <h3 id="_end_to_end_tests"><a class="anchor" href="#_end_to_end_tests"></a>4.10. End-to-End Tests</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">yarn e2e</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">pnpm e2e</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2521,7 +2521,7 @@ yarn test --include='**/app.component.spec.ts'</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Playwright browsers installed (<code>npx playwright install</code>)</p>
+<p>Playwright browsers installed (<code>pnpm playwright install</code>)</p>
 </li>
 </ul>
 </div>
@@ -2531,13 +2531,13 @@ yarn test --include='**/app.component.spec.ts'</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-bash" data-lang="bash"># Run in headed mode (see the browser)
-yarn e2e:headed
+pnpm e2e:headed
 
 # Run only in Chromium
-yarn e2e --project=chromium
+pnpm e2e --project=chromium
 
 # Debug mode with Playwright Inspector
-yarn e2e:debug</code></pre>
+pnpm e2e:debug</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3219,7 +3219,7 @@ on the requested resource.</pre>
 <li>
 <p><strong>Use the Development Server</strong>:</p>
 <div class="paragraph">
-<p>Clone HAL Explorer and run it locally with <code>yarn start</code>. The development server includes proxy configuration that avoids CORS issues. See <a href="#dev-server">Development Server</a>.</p>
+<p>Clone HAL Explorer and run it locally with <code>pnpm start</code>. The development server includes proxy configuration that avoids CORS issues. See <a href="#dev-server">Development Server</a>.</p>
 </div>
 </li>
 <li>
@@ -3325,7 +3325,7 @@ Only use CORS browser extensions for development. They disable important securit
 <div id="footer">
 <div id="footer-text">
 Version 2.3.1-SNAPSHOT<br>
-Last updated 2026-04-28 06:50:27 UTC
+Last updated 2026-04-28 12:39:59 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

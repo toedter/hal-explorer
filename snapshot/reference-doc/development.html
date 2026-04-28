@@ -52,7 +52,7 @@
 <p><strong>Node.js</strong>: Version 18.x or higher (<a href="https://nodejs.org">Download</a>)</p>
 </li>
 <li>
-<p><strong>Yarn</strong>: Package manager (<code>npm install -g yarn</code>)</p>
+<p><strong>pnpm</strong>: Package manager (<code>npm install -g pnpm</code>)</p>
 </li>
 </ul>
 </div>
@@ -78,7 +78,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_using_node_jsyarn"><a class="anchor" href="#_using_node_jsyarn"></a>Using Node.js/Yarn</h2>
+<h2 id="_using_node_jspnpm"><a class="anchor" href="#_using_node_jspnpm"></a>Using Node.js/pnpm</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This is the recommended build method for most users.</p>
@@ -89,10 +89,10 @@
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-bash" data-lang="bash"># Install dependencies
-yarn install
+pnpm install
 
 # Build for production
-yarn build</code></pre>
+pnpm build</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -146,7 +146,7 @@ gradlew.bat build</code></pre>
 <p>Downloads and installs Node.js locally in the project directory</p>
 </li>
 <li>
-<p>Installs dependencies via Yarn</p>
+<p>Installs dependencies via pnpm</p>
 </li>
 <li>
 <p>Runs the production build</p>
@@ -175,7 +175,7 @@ gradlew.bat build</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">yarn start</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">pnpm start</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -225,7 +225,7 @@ gradlew.bat build</code></pre>
 <p>Start your backend API on port 8080</p>
 </li>
 <li>
-<p>Run <code>yarn start</code></p>
+<p>Run <code>pnpm start</code></p>
 </li>
 <li>
 <p>Navigate to <a href="http://localhost:4200/#uri=/api" class="bare">http://localhost:4200/#uri=/api</a></p>
@@ -245,7 +245,7 @@ gradlew.bat build</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">yarn start:fs</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">pnpm start:fs</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -314,7 +314,7 @@ gradlew.bat build</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">yarn test</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">pnpm test</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -325,7 +325,7 @@ gradlew.bat build</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">yarn test:headless</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">pnpm test:headless</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -337,10 +337,10 @@ gradlew.bat build</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-bash" data-lang="bash"># Run tests with code coverage
-yarn test:coverage
+pnpm test:coverage
 
 # Run specific test file
-yarn test --include='**/app.component.spec.ts'</code></pre>
+pnpm test --include='**/app.component.spec.ts'</code></pre>
 </div>
 </div>
 </div>
@@ -350,7 +350,7 @@ yarn test --include='**/app.component.spec.ts'</code></pre>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">yarn e2e</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">pnpm e2e</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -362,7 +362,7 @@ yarn test --include='**/app.component.spec.ts'</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Playwright browsers installed (<code>npx playwright install</code>)</p>
+<p>Playwright browsers installed (<code>pnpm playwright install</code>)</p>
 </li>
 </ul>
 </div>
@@ -372,13 +372,13 @@ yarn test --include='**/app.component.spec.ts'</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-bash" data-lang="bash"># Run in headed mode (see the browser)
-yarn e2e:headed
+pnpm e2e:headed
 
 # Run only in Chromium
-yarn e2e --project=chromium
+pnpm e2e --project=chromium
 
 # Debug mode with Playwright Inspector
-yarn e2e:debug</code></pre>
+pnpm e2e:debug</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -437,7 +437,7 @@ gradlew.bat doc</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 2.3.1-SNAPSHOT<br>
-Last updated 2026-04-28 06:50:27 UTC
+Last updated 2026-04-28 12:39:59 UTC
 </div>
 </div>
 </div>
