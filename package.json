@@ -63,7 +63,7 @@
     "@vitest/coverage-v8": "^4.0.18",
     "@vitest/ui": "^4.0.18",
     "angular-eslint": "21.4.0",
-    "concurrently": "^9.2.1",
+    "concurrently": "^10.0.0",
     "cors": "^2.8.6",
     "eslint": "^9.39.3",
     "express": "^5.2.1",
