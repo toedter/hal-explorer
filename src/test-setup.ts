@@ -1,5 +1,3 @@
-import 'zone.js';
-import 'zone.js/testing';
 import { getTestBed } from '@angular/core/testing';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore - BrowserDynamicTestingModule is deprecated but required for proper TestBed initialization

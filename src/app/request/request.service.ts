@@ -52,6 +52,7 @@ export class RequestService {
   private readonly needInfoSubject = new Subject<any>();
   private readonly documentationSubject = new Subject<string>();
   private readonly loadingSubject = new Subject<boolean>();
+  private readonly optionsLoadedSubject = new Subject<void>();
 
   private requestHeaders = new HttpHeaders({ Accept: DEFAULT_ACCEPT_HEADER });
   private customRequestHeaders: RequestHeader[] = [];
@@ -73,6 +74,10 @@ export class RequestService {
 
   getLoadingObservable(): Observable<boolean> {
     return this.loadingSubject.asObservable();
+  }
+
+  getOptionsLoadedObservable(): Observable<void> {
+    return this.optionsLoadedSubject.asObservable();
   }
 
   private setLoading(loading: boolean): void {
@@ -289,10 +294,12 @@ export class RequestService {
     this.http.options(href, { headers, observe: 'response' }).subscribe({
       next: (httpResponse: HttpResponse<any>) => {
         link.options = httpResponse.headers.get('allow');
+        this.optionsLoadedSubject.next();
       },
       error: () => {
         // Silently handle - OPTIONS is exploratory, 404 is expected for servers that don't support it
         link.options = 'http-options-error';
+        this.optionsLoadedSubject.next();
       },
     });
   }

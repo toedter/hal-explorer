@@ -28,6 +28,7 @@ describe('AppComponent', () => {
       requestUri: vi.fn(),
       computeHalFormsOptionsFromLink: vi.fn(),
       getDocumentationObservable: vi.fn(),
+      getOptionsLoadedObservable: vi.fn(),
     };
     const needInfoSubject = new Subject<string>();
     responseSubject = new Subject<string>();
@@ -41,6 +42,7 @@ describe('AppComponent', () => {
       property.options.inline = ['a', 'b'];
     });
     requestServiceMock.getDocumentationObservable.mockReturnValue(documentationSubject);
+    requestServiceMock.getOptionsLoadedObservable.mockReturnValue(new Subject<void>());
 
     themeSubject = new Subject<string>();
     layoutSubject = new Subject<string>();

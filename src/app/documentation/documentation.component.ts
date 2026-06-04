@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, inject, HostListener } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation, inject, HostListener } from '@angular/core';
 import { RequestService } from '../request/request.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
@@ -13,6 +13,7 @@ export class DocumentationComponent implements OnInit {
   docUri: SafeResourceUrl;
   iframeHeight = '0px';
 
+  private readonly cdr = inject(ChangeDetectorRef);
   private readonly requestService = inject(RequestService);
   private readonly sanitizer = inject(DomSanitizer);
 
@@ -21,11 +22,13 @@ export class DocumentationComponent implements OnInit {
       next: (docUri: string) => {
         this.docUri = this.sanitizer.bypassSecurityTrustResourceUrl(docUri);
         this.updateIframeHeight();
+        this.cdr.markForCheck();
       },
       error: error => console.error('DocumentationComponent: ' + error),
     });
     this.requestService.getResponseObservable().subscribe(() => {
       this.docUri = undefined;
+      this.cdr.markForCheck();
     });
   }
 

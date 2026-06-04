@@ -60,9 +60,6 @@ importers:
       webdriver-manager:
         specifier: ^12.1.9
         version: 12.1.9
-      zone.js:
-        specifier: ~0.16.2
-        version: 0.16.2
     devDependencies:
       '@analogjs/vite-plugin-angular':
         specifier: ^2.6.0
@@ -8142,4 +8139,5 @@ snapshots:
 
   zod@4.4.3: {}
 
-  zone.js@0.16.2: {}
+  zone.js@0.16.2:
+    optional: true

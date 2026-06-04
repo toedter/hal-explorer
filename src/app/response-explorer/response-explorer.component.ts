@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { Command, RequestService, Response } from '../request/request.service';
 import { JsonHighlighterService } from '../json-highlighter/json-highlighter.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -62,6 +62,7 @@ export class ResponseExplorerComponent implements OnInit {
   responseUrl: string;
   httpErrorResponse: HttpErrorResponse;
 
+  private readonly cdr = inject(ChangeDetectorRef);
   private readonly requestService = inject(RequestService);
   private readonly jsonHighlighterService = inject(JsonHighlighterService);
   private readonly appService = inject(AppService);
@@ -69,6 +70,7 @@ export class ResponseExplorerComponent implements OnInit {
   ngOnInit(): void {
     this.requestService.getLoadingObservable().subscribe(loading => {
       this.isLoading = loading;
+      this.cdr.markForCheck();
     });
 
     this.appService.httpOptionsObservable.subscribe(useHttpOptions => {
@@ -81,7 +83,12 @@ export class ResponseExplorerComponent implements OnInit {
             link.options = undefined;
           });
         }
+        this.cdr.markForCheck();
       }
+    });
+
+    this.requestService.getOptionsLoadedObservable().subscribe(() => {
+      this.cdr.markForCheck();
     });
 
     if (this.jsonRoot) {
@@ -92,8 +99,10 @@ export class ResponseExplorerComponent implements OnInit {
   }
 
   private subscribeToResponses(): void {
+    console.log('[DEBUG] response-explorer subscribed to responses');
     this.requestService.getResponseObservable().subscribe({
       next: (response: Response) => {
+        console.log('[DEBUG] response-explorer got response', !!response.httpResponse);
         this.httpErrorResponse = response.httpErrorResponse;
 
         if (response.httpResponse) {
@@ -101,12 +110,19 @@ export class ResponseExplorerComponent implements OnInit {
         } else if (this.httpErrorResponse) {
           this.handleErrorResponse(this.httpErrorResponse);
         }
+        this.cdr.markForCheck();
       },
       error: error => console.error('Error during HTTP request: ' + JSON.stringify(error)),
     });
   }
 
   private handleSuccessResponse(httpResponse: any): void {
+    console.log(
+      '[DEBUG] handleSuccessResponse bodyType=',
+      typeof httpResponse.body,
+      'hasLinks=',
+      !!httpResponse.body?._links
+    );
     this.responseUrl = httpResponse.url;
     this.isHalFormsMediaType = this.isHalFormsContent(httpResponse.headers, this.responseUrl, httpResponse.body);
 

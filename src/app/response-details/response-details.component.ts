@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { RequestService, Response } from '../request/request.service';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { JsonHighlighterService } from '../json-highlighter/json-highlighter.service';
@@ -21,6 +21,7 @@ export class ResponseDetailsComponent implements OnInit {
 
   httpResponseReasonPhrase: string;
 
+  private readonly cdr = inject(ChangeDetectorRef);
   private readonly requestService = inject(RequestService);
   private readonly jsonHighlighterService = inject(JsonHighlighterService);
 
@@ -68,6 +69,7 @@ export class ResponseDetailsComponent implements OnInit {
             }
           }
         }
+        this.cdr.markForCheck();
       },
       error: error => console.error('Error during HTTP request: ' + JSON.stringify(error)),
     });

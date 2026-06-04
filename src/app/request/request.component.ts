@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import utpl, { URITemplate } from 'uri-templates';
 import { AppService, RequestHeader } from '../app.service';
 import { Command, EventType, HttpRequestEvent, RequestService, UriTemplateParameter } from './request.service';
@@ -42,6 +42,7 @@ export class RequestComponent implements OnInit {
 
   noValueSelected = '<No Value Selected>';
 
+  private readonly cdr = inject(ChangeDetectorRef);
   private readonly appService = inject(AppService);
   private readonly requestService = inject(RequestService);
 
@@ -54,6 +55,7 @@ export class RequestComponent implements OnInit {
 
     this.requestService.getLoadingObservable().subscribe(loading => {
       this.isLoading = loading;
+      this.cdr.markForCheck();
     });
 
     this.requestService.getNeedInfoObservable().subscribe(async (value: any) => {
@@ -145,6 +147,7 @@ export class RequestComponent implements OnInit {
         }
 
         this.propertyChanged();
+        this.cdr.markForCheck();
       }
     });
 
@@ -157,10 +160,12 @@ export class RequestComponent implements OnInit {
       if (this.appService.isFromBrowserNavigation()) {
         this.requestService.getUri(url);
       }
+      this.cdr.markForCheck();
     });
     this.appService.requestHeadersObservable.subscribe(requestHeaders => {
       this.tempRequestHeaders = requestHeaders;
       this.updateRequestHeaders();
+      this.cdr.markForCheck();
     });
 
     this.updateRequestHeaders();

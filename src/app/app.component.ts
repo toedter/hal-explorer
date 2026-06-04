@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal, computed, effect } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject, signal, computed, effect } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RequestService } from './request/request.service';
 import { AppService } from './app.service';
@@ -69,6 +69,7 @@ export class AppComponent implements OnInit {
   enableAllHttpMethodsForLinks = false;
   activeColorMode: ColorMode = 'auto';
 
+  private readonly cdr = inject(ChangeDetectorRef);
   private readonly appService = inject(AppService);
   private readonly requestService = inject(RequestService);
   private readonly sanitizer = inject(DomSanitizer);
@@ -133,16 +134,30 @@ export class AppComponent implements OnInit {
   private subscribeToServices(): void {
     this.requestService.getResponseObservable().subscribe(() => {
       this.showDocumentation = false;
+      this.cdr.markForCheck();
     });
 
     this.requestService.getDocumentationObservable().subscribe(() => {
       this.showDocumentation = true;
+      this.cdr.markForCheck();
     });
 
-    this.appService.themeObservable.subscribe(theme => this.applyTheme(theme));
-    this.appService.columnLayoutObservable.subscribe(layout => this.applyLayout(layout));
-    this.appService.httpOptionsObservable.subscribe(options => this.applyHttpOptions(options));
-    this.appService.allHttpMethodsForLinksObservable.subscribe(enabled => this.applyAllHttpMethodsForLinks(enabled));
+    this.appService.themeObservable.subscribe(theme => {
+      this.applyTheme(theme);
+      this.cdr.markForCheck();
+    });
+    this.appService.columnLayoutObservable.subscribe(layout => {
+      this.applyLayout(layout);
+      this.cdr.markForCheck();
+    });
+    this.appService.httpOptionsObservable.subscribe(options => {
+      this.applyHttpOptions(options);
+      this.cdr.markForCheck();
+    });
+    this.appService.allHttpMethodsForLinksObservable.subscribe(enabled => {
+      this.applyAllHttpMethodsForLinks(enabled);
+      this.cdr.markForCheck();
+    });
   }
 
   private applyCurrentSettings(): void {

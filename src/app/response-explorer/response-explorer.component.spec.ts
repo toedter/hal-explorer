@@ -77,6 +77,7 @@ describe('ResponseExplorerComponent', () => {
       getResponseObservable: vi.fn(),
       getDocumentationObservable: vi.fn(),
       getLoadingObservable: vi.fn(),
+      getOptionsLoadedObservable: vi.fn(),
       processCommand: vi.fn(),
       getHttpOptions: vi.fn(),
     };
@@ -84,6 +85,7 @@ describe('ResponseExplorerComponent', () => {
     vi.spyOn(responseSubject, 'subscribe');
     requestServiceMock.getResponseObservable.mockReturnValue(responseSubject);
     requestServiceMock.getLoadingObservable.mockReturnValue(new Subject<boolean>());
+    requestServiceMock.getOptionsLoadedObservable.mockReturnValue(new Subject<void>());
 
     appServiceMock = {
       getHttpOptions: vi.fn(),
