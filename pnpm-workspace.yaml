@@ -1,3 +1,27 @@
+allowBuilds:
+  '@parcel/watcher': true
+  core-js: true
+  esbuild: true
+  lmdb: true
+  msgpackr-extract: true
+minimumReleaseAgeExclude:
+  - '@analogjs/vite-plugin-angular@2.6.0'
+  - '@angular-devkit/architect@0.2200.0'
+  - '@angular-devkit/core@22.0.0'
+  - '@angular-devkit/schematics@22.0.0'
+  - '@angular/animations@22.0.0'
+  - '@angular/build@22.0.0'
+  - '@angular/cli@22.0.0'
+  - '@angular/common@22.0.0'
+  - '@angular/compiler-cli@22.0.0'
+  - '@angular/compiler@22.0.0'
+  - '@angular/core@22.0.0'
+  - '@angular/forms@22.0.0'
+  - '@angular/language-service@22.0.0'
+  - '@angular/platform-browser-dynamic@22.0.0'
+  - '@angular/platform-browser@22.0.0'
+  - '@angular/router@22.0.0'
+  - '@schematics/angular@22.0.0'
 overrides:
   form-data@<2.5.4: '>=2.5.4'
   qs@<6.14.1: '>=6.14.1'
