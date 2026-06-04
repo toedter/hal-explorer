@@ -152,6 +152,12 @@ importers:
         specifier: ^4.1.8
         version: 4.1.8(@types/node@25.9.1)(@vitest/coverage-v8@4.1.8)(@vitest/ui@4.1.8)(jsdom@29.1.1)(vite@7.3.2(@types/node@25.9.1)(jiti@2.6.1)(sass@1.99.0)(yaml@2.9.0))
 
+  .angular/cache/angular-cli-tmp-packages-adNZnv:
+    dependencies:
+      '@angular/cli':
+        specifier: 21.2.14
+        version: 21.2.14(@types/node@25.9.1)(chokidar@5.0.0)
+
   .angular/cache/angular-cli-tmp-packages-kdyvD2:
     dependencies:
       '@angular/cli':
