@@ -62,7 +62,7 @@
     "@types/uri-templates": "^0.1.34",
     "@vitest/coverage-v8": "^4.1.8",
     "@vitest/ui": "^4.1.8",
-    "angular-eslint": "21.4.0",
+    "angular-eslint": "22.0.0",
     "concurrently": "^10.0.3",
     "cors": "^2.8.6",
     "eslint": "^10.4.1",
