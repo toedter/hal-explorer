@@ -6,6 +6,14 @@ allowBuilds:
   msgpackr-extract: true
 minimumReleaseAgeExclude:
   - '@analogjs/vite-plugin-angular@2.6.0'
+  - '@angular-eslint/builder@22.0.0'
+  - '@angular-eslint/bundled-angular-compiler@22.0.0'
+  - '@angular-eslint/eslint-plugin@22.0.0'
+  - '@angular-eslint/eslint-plugin-template@22.0.0'
+  - '@angular-eslint/schematics@22.0.0'
+  - '@angular-eslint/template-parser@22.0.0'
+  - '@angular-eslint/utils@22.0.0'
+  - 'angular-eslint@22.0.0'
   - '@angular-devkit/architect'
   - '@angular-devkit/architect@0.2200.0'
   - '@angular-devkit/core'
