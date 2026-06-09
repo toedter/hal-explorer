@@ -6,5 +6,7 @@
   },
   "automerge": true,
   "platformAutomerge": true,
-  "automergeType": "pr"
+  "automergeType": "pr",
+  "minimumReleaseAge": "3 days",
+  "internalChecksFilter": "strict"
 }
