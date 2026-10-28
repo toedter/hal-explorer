@@ -58,7 +58,7 @@
     "@commitlint/config-conventional": "^21.0.2",
     "@playwright/test": "^1.60.0",
     "@popperjs/core": "^2.11.8",
-    "@types/node": "^25.9.1",
+    "@types/node": "^26.0.0",
     "@types/uri-templates": "^0.1.34",
     "@vitest/coverage-v8": "^5.0.0",
     "@vitest/ui": "^5.0.0",
